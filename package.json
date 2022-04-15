@@ -17,7 +17,7 @@
 		"dev": "tsup --watch",
 		"test": "eslint --ext ts,tsx ./src",
 		"storybook": "start-storybook -p 9009",
-		"build-storybook": "build-storybook -o docs-build -s ./stories/assets"
+		"build-storybook": "build-storybook -o docs-build"
 	},
 	"dependencies": {
 		"date-fns": "2.28.0",
