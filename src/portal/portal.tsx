@@ -2,12 +2,12 @@ import * as React from 'react';
 import uniqueId from 'lodash/uniqueId';
 import { PortalContext } from './provider';
 
-interface Props {
+interface PortalProps {
 	children: React.ReactNode;
 	keyPrefix: string;
 }
 
-const Portal = ({ children, keyPrefix = '' }: Props) => {
+const Portal = ({ children, keyPrefix = '' }: PortalProps) => {
 	const key = React.useMemo(() => uniqueId(keyPrefix), [keyPrefix]);
 	const { setComponent } = React.useContext(PortalContext);
 

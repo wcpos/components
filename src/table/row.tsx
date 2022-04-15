@@ -13,12 +13,7 @@ export interface TableRowProps {
 	style?: ViewStyle;
 }
 
-const Row = ({ rowData, columns, style, children }: TableRowProps) => {
-	// const key = rowData.id;
-	// const renderCells = React.memo(() => {
-
-	// }, [columns])
-
+const Row = ({ rowData, columns = [], style, children }: TableRowProps) => {
 	return (
 		<Styled.Row style={style}>
 			{columns &&
@@ -26,36 +21,11 @@ const Row = ({ rowData, columns, style, children }: TableRowProps) => {
 					if (column.hide) return;
 					const dataKey = column.key || index;
 					const cellData = rowData[dataKey];
-					const { flexGrow, flexShrink, flexBasis, width } = column;
 
-					const getCellProps: GetCellPropsFunction = () => ({
-						cellData,
-						column,
-						dataKey,
-						flexGrow,
-						flexShrink,
-						flexBasis,
-						width,
-						rowData,
-						index,
-						key: dataKey,
-					});
-
-					if (typeof children === 'function') {
-						return children({ cellData, column, getCellProps });
-					}
-
-					return <Cell {...getCellProps()} />;
+					return <Cell dataKey={dataKey} cellData={cellData} />;
 				})}
 		</Styled.Row>
 	);
 };
 
-/**
- * note: statics need to be added after React.memo
- */
-const MemoizedRow = React.memo(Row) as unknown as React.FC<TableRowProps> & { Cell: typeof Cell };
-MemoizedRow.displayName = 'Table.Row';
-MemoizedRow.Cell = Cell;
-
-export default MemoizedRow;
+export default Row;

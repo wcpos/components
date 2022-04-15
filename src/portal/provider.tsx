@@ -11,11 +11,11 @@ export const PortalContext = React.createContext<PortalContext>({
 	setComponent: () => {},
 });
 
-interface Props {
+interface ProviderProps {
 	children: React.ReactNode;
 }
 
-const Provider = ({ children }: Props) => {
+const Provider = ({ children }: ProviderProps) => {
 	const [components, setComponents] = React.useState<{ [key: string]: React.ReactNode }>({});
 
 	const setComponent = React.useCallback<PortalContext['setComponent']>(

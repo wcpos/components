@@ -85,11 +85,7 @@ export const Icon = ({
 	const showRipple = useSharedValue(false);
 
 	const IconComponent = (
-		<SvgIcon
-			width={width || theme.iconSizes[size]}
-			height={height || theme.iconSizes[size]}
-			fill={iconColor}
-		/>
+		<SvgIcon width={width || theme.iconSizes[size]} height={height || theme.iconSizes[size]} fill={iconColor} />
 	);
 
 	if (onPress) {
@@ -136,9 +132,7 @@ export interface IconSkeletonProps {
  */
 export const IconSkeleton = ({ size = 'medium' }: IconSkeletonProps) => {
 	const theme = useTheme();
-	return (
-		<Skeleton border="circular" width={theme.iconSizes[size]} height={theme.iconSizes[size]} />
-	);
+	return <Skeleton border="circular" width={theme.iconSizes[size]} height={theme.iconSizes[size]} />;
 };
 
 Icon.Skeleton = IconSkeleton;

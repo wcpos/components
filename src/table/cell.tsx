@@ -18,36 +18,12 @@ export interface TableCellProps {
 	index?: number;
 }
 
-const Cell = ({
-	children,
-	cellData,
-	flexGrow = 1,
-	flexShrink = 1,
-	flexBasis = 'auto',
-	width = '100%',
-	style,
-	rowData,
-	dataKey,
-}: TableCellProps) => {
-	if (children) {
-		return (
-			<Styled.Cell style={[{ flexGrow, flexShrink, flexBasis, width }, style]}>
-				{typeof children === 'function' ? children({ cellData }) : children}
-			</Styled.Cell>
-		);
-	}
-
+const Cell = ({ dataKey, cellData }) => {
 	return (
-		<Styled.Cell style={[{ flexGrow, flexShrink, flexBasis, width }, style]}>
+		<Styled.Cell>
 			<Text>{String(cellData ?? '')}</Text>
 		</Styled.Cell>
 	);
 };
 
-/**
- * note: statics need to be added after React.memo
- */
-const MemoizedCell = React.memo(Cell);
-MemoizedCell.displayName = 'Table.Body.Row.Cell';
-
-export default MemoizedCell;
+export default Cell;

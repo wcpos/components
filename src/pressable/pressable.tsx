@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Styled from './styles';
+import { Pressable as RNPressable, StyleSheet } from 'react-native';
 
 export type PressableProps = import('react-native').PressableProps & {
 	onHoverIn?: () => void;
@@ -10,5 +10,5 @@ export type PressableProps = import('react-native').PressableProps & {
  *
  */
 export const Pressable = (props: PressableProps) => {
-	return <Styled.Pressable {...props} />;
+	return <RNPressable style={[{ flexDirection: 'row' }, props.style]} {...props} />;
 };
