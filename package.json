@@ -9,12 +9,15 @@
 		"url": "https://github.com/wcpos/components.git"
 	},
 	"license": "MIT",
+	"main": "src/index.ts",
 	"files": [
-		"dist/**"
+		"src/**"
 	],
+	"exports": {
+		"./comment": "need/to/wait/for/expo/to/update/to/support/webpack5",
+		"./error-boundary": "./src/error-boundary/index.tsx"
+	},
 	"scripts": {
-		"build": "tsup",
-		"dev": "tsup --watch",
 		"test": "eslint --ext ts,tsx ./src",
 		"storybook": "start-storybook -p 9009",
 		"build-storybook": "build-storybook -o docs-build"
@@ -72,7 +75,6 @@
 		"react-scripts": "5.0.1",
 		"react-test-renderer": "17.0.2",
 		"ts-jest": "27.1.4",
-		"tsup": "5.12.5",
 		"typescript": "4.6.3"
 	},
 	"eslintConfig": {
