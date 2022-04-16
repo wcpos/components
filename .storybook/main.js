@@ -31,7 +31,6 @@ module.exports = {
     // Make whatever fine-grained changes you need
     // Return the altered config
 		console.log(config);
-		console.log(config.module.rules[2].oneOf[9].type);
     return config;
 	},
 };
