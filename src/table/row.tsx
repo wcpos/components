@@ -1,31 +1,67 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
-import * as Styled from './styles';
-import Cell, { TableCellProps } from './cell';
+import { isRxDocument } from 'rxdb/plugins/core';
+import { useObservableState } from 'observable-hooks';
+import Text from '../text';
+import Box from '../box';
 
-type ColumnProps = import('./types').ColumnProps;
-export type GetCellPropsFunction = () => TableCellProps;
-
-export interface TableRowProps {
-	children?: React.ReactNode;
-	rowData: any;
-	columns?: ColumnProps[];
-	style?: ViewStyle;
-}
-
-const Row = ({ rowData, columns = [], style, children }: TableRowProps) => {
-	return (
-		<Styled.Row style={style}>
-			{columns &&
-				columns.map((column: ColumnProps, index: number) => {
-					if (column.hide) return;
-					const dataKey = column.key || index;
-					const cellData = rowData[dataKey];
-
-					return <Cell dataKey={dataKey} cellData={cellData} />;
-				})}
-		</Styled.Row>
+/**
+ *
+ */
+export const renderCell: <T>(
+	item: T,
+	column: import('./table').ColumnProps<T>,
+	index: number
+) => React.ReactNode = (item, column, index) => {
+	return column.onRender ? (
+		column.onRender(item, column, index)
+	) : (
+		<Text>{String(item[column.key] ?? '')}</Text>
 	);
 };
 
-export default Row;
+export interface TableRowProps<T> {
+	item: T;
+	columns: import('./table').ColumnProps<T>[];
+	rowStyle?: ViewStyle;
+	cellStyle?: ViewStyle;
+	cellRenderer?: (
+		item: T,
+		column: import('./table').ColumnProps<T>,
+		index: number
+	) => React.ReactNode;
+}
+
+/**
+ *
+ */
+const TableRow = <T extends object>({
+	item,
+	columns,
+	rowStyle,
+	cellStyle,
+	cellRenderer,
+}: TableRowProps<T>) => {
+	return (
+		<Box horizontal align="center" style={rowStyle}>
+			{columns.map((column, index) => {
+				const { flexGrow = 1, flexShrink = 1, flexBasis = 'auto', width = '100%' } = column;
+				return (
+					<Box
+						key={column.key}
+						padding="small"
+						style={[{ flexGrow, flexShrink, flexBasis, width }, cellStyle]}
+					>
+						{typeof cellRenderer === 'function' ? (
+							cellRenderer(item, column, index)
+						) : (
+							<Text>{String(item[column.key] ?? '')}</Text>
+						)}
+					</Box>
+				);
+			})}
+		</Box>
+	);
+};
+
+export default React.memo(TableRow);

@@ -6,28 +6,48 @@ import Text from '../text';
 import Table, { TableProps } from './table';
 
 export default {
-	title: 'Components/Table2',
+	title: 'Components/Table3',
 	component: Table,
 };
 
-export const BasicUsage = (props: TableProps) => <Table {...props} />;
+const size = ['Small', 'Medium', 'Large', 'Massive'];
+const colour = ['Red', 'Blue', 'Green', 'Yellow'];
+const noun = ['Apple', 'Pear', 'Orange', 'Banana'];
+
+const name = () =>
+	`${size[Math.floor(Math.random() * noun.length)]} ${
+		colour[Math.floor(Math.random() * colour.length)]
+	} ${noun[Math.floor(Math.random() * noun.length)]}`;
+const price = () => Math.floor(Math.random() * 100);
+const quantity = () => Math.floor(Math.random() * 10);
+const height = () => 25 + Math.floor(Math.random() * 100);
+
+interface Data {
+	name: string;
+	price: number;
+	quantity: number;
+	height: number;
+}
+
+const data = new Array(1000)
+	.fill(true)
+	.map(() => ({ name: name(), price: price(), quantity: quantity(), height: height() }));
+
+export const BasicUsage = (props: TableProps<Data>) => <Table<Data> {...props} />;
 BasicUsage.args = {
 	columns: [
 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
 		{ key: 'name', label: 'Name', flexGrow: 1, flexShrink: 0, width: '50%' },
 		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
 	],
-	data: [
-		{ name: 'Apples', price: 1.29, quantity: 2 },
-		{ name: 'Pears', price: 3.1, quantity: 0 },
-		{ name: 'Oranges', price: 0.99, quantity: 44 },
-	],
-	sort: action('Sort'),
-	sortBy: 'name',
-	sortDirection: 'asc',
+	data,
+	style: { height: 300 },
+	// sort: action('Sort'),
+	// sortBy: 'name',
+	// sortDirection: 'asc',
 };
 
-export const Empty = (props: TableProps) => <Table {...props} />;
+export const Empty = (props: TableProps<Data>) => <Table<Data> {...props} />;
 Empty.args = {
 	columns: [
 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
@@ -35,80 +55,65 @@ Empty.args = {
 		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
 	],
 	data: [],
+	style: { height: 300 },
 	sort: action('Sort'),
 	sortBy: 'name',
 	sortDirection: 'asc',
 	empty: 'Nothing Found',
 };
 
-export const CustomTableRow = (props: TableProps) => {
-	return (
-		<Table {...props}>
-			<Table.Row rowData={item} columns={props.columns} style={{ backgroundColor: 'pink' }} />
-		</Table>
-	);
-};
-CustomTableRow.args = {
-	columns: [
-		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
-		{ key: 'name', label: 'Name', flexGrow: 1, flexShrink: 0, width: '50%' },
-		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
-	],
-	data: [
-		{ name: 'Apples', price: 1.29, quantity: 2 },
-		{ name: 'Pears', price: 3.1, quantity: 0 },
-		{ name: 'Oranges', price: 0.99, quantity: 44 },
-	],
-	sort: action('Sort'),
-	sortBy: 'name',
-	sortDirection: 'asc',
-};
-
-// export const CustomTableCell = (props: TableProps) => {
-// 	const columns = [
-// 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
-// 		{ key: 'name', label: 'Name', flexGrow: 1, flexShrink: 0, width: '50%' },
-// 		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
-// 	];
+// export const CustomTableRow = (props: TableProps<Data>) => {
 // 	return (
 // 		<Table {...props}>
-// 			{({ item }) => (
-// 				<Table.Body.Row rowData={item} columns={props.columns}>
-// 					{({ cellData, column, getCellProps }) => {
-// 						if (column.key === 'price') {
-// 							const fixedDecimal = cellData.toFixed(2);
-// 							return (
-// 								<Table.Body.Row.Cell {...getCellProps()}>
-// 									<Text>{`$ ${fixedDecimal}`}</Text>
-// 								</Table.Body.Row.Cell>
-// 							);
-// 						}
-// 						return (
-// 							<Table.Body.Row.Cell {...getCellProps()}>
-// 								<Text>{cellData}</Text>
-// 							</Table.Body.Row.Cell>
-// 						);
-// 					}}
-// 				</Table.Body.Row>
-// 			)}
+// 			{(rowProps) => {
+// 				const { item, ...rest } = rowProps;
+// 				return (
+// 					<Table.Row
+// 						item={item}
+// 						{...rest}
+// 						columns={props.columns}
+// 						style={{ height: item.height }}
+// 					/>
+// 				);
+// 			}}
 // 		</Table>
 // 	);
 // };
-// CustomTableCell.args = {
+// CustomTableRow.args = {
 // 	columns: [
 // 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
 // 		{ key: 'name', label: 'Name', flexGrow: 1, flexShrink: 0, width: '50%' },
 // 		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
 // 	],
-// 	data: [
-// 		{ name: 'Apples', price: 1.29, quantity: 2 },
-// 		{ name: 'Pears', price: 3.1, quantity: 0 },
-// 		{ name: 'Oranges', price: 0.99, quantity: 44 },
-// 	],
-// 	sort: action('Sort'),
-// 	sortBy: 'name',
-// 	sortDirection: 'asc',
+// 	data,
+// 	style: { height: 300 },
+// 	// sort: action('Sort'),
+// 	// sortBy: 'name',
+// 	// sortDirection: 'asc',
 // };
+
+export const CustomTableCell = (props: TableProps<Data>) => {
+	return <Table<Data> {...props} />;
+};
+CustomTableCell.args = {
+	columns: [
+		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
+		{ key: 'name', label: 'Name', flexGrow: 1, flexShrink: 0, width: '50%' },
+		{
+			key: 'price',
+			label: 'Price',
+			flexGrow: 0,
+			flexShrink: 1,
+			width: '30%',
+			onRender: (item: Data) => <Text>{`$ ${item.price.toFixed(2)}`}</Text>,
+		},
+	],
+	data,
+	style: { height: 300 },
+	sort: action('Sort'),
+	sortBy: 'name',
+	sortDirection: 'asc',
+};
 
 // export const CustomTable = (props: TableProps) => {
 // 	return (
@@ -150,3 +155,20 @@ CustomTableRow.args = {
 // 	sortBy: 'name',
 // 	sortDirection: 'asc',
 // };
+
+export const TableFooter = (props: TableProps<Data>) => {
+	return <Table<Data> {...props} />;
+};
+TableFooter.args = {
+	columns: [
+		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
+		{ key: 'name', label: 'Name', flexGrow: 1, flexShrink: 0, width: '50%' },
+		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
+	],
+	data,
+	style: { height: 300 },
+	sort: action('Sort'),
+	sortBy: 'name',
+	sortDirection: 'asc',
+	footer: <Text>hi</Text>,
+};
