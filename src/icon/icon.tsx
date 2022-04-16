@@ -11,7 +11,7 @@ import Ripple from '../ripple';
 import * as Styled from './styles';
 
 export type IconName = Extract<keyof typeof Svgs, string>;
-type IconSizes = import('@wcpos/common/src/themes').IconSizes;
+type IconSizes = import('@wcpos/themes').IconSizes;
 
 /**
  *
@@ -60,7 +60,7 @@ export interface IconProps {
 	/**
 	 * Icon colour
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/themes').ColorTypes;
 }
 
 /**

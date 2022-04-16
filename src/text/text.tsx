@@ -31,7 +31,7 @@ export interface TextProps {
 	/**
 	 *
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/themes').ColorTypes;
 	/**
 	 *
 	 */

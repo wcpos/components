@@ -50,5 +50,5 @@ export const LocalAssets = (props: ImageProps) => {
 	return <Image {...props} />;
 };
 LocalAssets.args = {
-	// source: { require('@wcpos/common/src/assets/placeholder.png') },
+	// source: { require('@wcpos/core/src/assets/placeholder.png') },
 };

@@ -5,7 +5,7 @@ export interface SpaceProps {
 	/**
 	 * Spacing value.
 	 */
-	value: import('@wcpos/common/src/themes').Spacing;
+	value: import('@wcpos/themes').Spacing;
 }
 
 /**

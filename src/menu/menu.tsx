@@ -18,7 +18,7 @@ export interface TextAction {
 	/**
 	 * Color of menu item
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/themes').ColorTypes;
 }
 
 // export interface IconAction {

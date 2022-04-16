@@ -3,8 +3,8 @@ import { View, ViewStyle, StyleProp, ViewProps, ScrollView } from 'react-native'
 import Space from '../space';
 import * as Styled from './styles';
 
-type Spacing = import('@wcpos/common/src/themes').Spacing;
-type Rounding = import('@wcpos/common/src/themes').Rounding;
+type Spacing = import('@wcpos/themes').Spacing;
+type Rounding = import('@wcpos/themes').Rounding;
 
 export interface BoxProps extends ViewProps {
 	/**

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Platform from '@wcpos/common/src/lib/platform';
+import Platform from '@wcpos/core/src/lib/platform';
 import Popover, { PopoverPlacement } from '../popover';
 import Text from '../text';
 

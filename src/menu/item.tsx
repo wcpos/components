@@ -23,7 +23,7 @@ export interface ItemProps {
 	/**
 	 * Color of menu item
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/themes').ColorTypes;
 	/**
 	 *
 	 */

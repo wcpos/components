@@ -1,5 +1,5 @@
 import * as React from 'react';
-import renderWithTheme from '@wcpos/common/jest/render-with-theme';
+import renderWithTheme from '@wcpos/core/jest/render-with-theme';
 import Text from '.';
 
 describe('Text', () => {

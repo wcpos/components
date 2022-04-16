@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Modal as RNModal, KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native';
-import Platform from '@wcpos/common/src/utils/platform';
+import Platform from '@wcpos/core/src/utils/platform';
 import Portal from '../portal';
 import Backdrop from '../backdrop';
 import ErrorBoundary from '../error-boundary';
@@ -25,7 +25,7 @@ export interface Action {
 	/**
 	 *
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/themes').ColorTypes;
 }
 
 export type ModalProps = {

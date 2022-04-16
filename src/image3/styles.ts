@@ -1,9 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-type Props = import('@wcpos/common/src/lib/utility-types').Omit<
-	import('./image').ImageProps,
-	'src'
->;
+type Props = import('@wcpos/core/src/lib/utility-types').Omit<import('./image').ImageProps, 'src'>;
 
 export const Img = styled.Image<Props>`
 	width: 100px;

@@ -9,7 +9,7 @@ import Animated, {
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import get from 'lodash/get';
 import useMeasure from '@wcpos/hooks/src/use-measure';
-import Platform from '@wcpos/common/src/lib/platform';
+import Platform from '@wcpos/core/src/lib/platform';
 import { useScrollEvents } from '../scrollview';
 import Portal from '../portal';
 import Pressable from '../pressable';

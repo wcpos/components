@@ -10,7 +10,7 @@ export interface LoaderProps {
 	/**
 	 *
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/themes').ColorTypes;
 	/**
 	 *
 	 */

@@ -71,7 +71,7 @@ export type Props = {
 	/**
 	 *
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/core/src/themes').ColorTypes;
 };
 
 /**
