@@ -8,7 +8,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import get from 'lodash/get';
-import useMeasure from '@wcpos/common/src/hooks/use-measure';
+import useMeasure from '@wcpos/hooks/src/use-measure';
 import Platform from '@wcpos/common/src/lib/platform';
 import { useScrollEvents } from '../scrollview';
 import Portal from '../portal';

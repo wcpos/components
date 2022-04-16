@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StoryWrapper } from '@storybook/addons';
-import { AppProviderSizeProvider } from '@wcpos/common/src/hooks/use-position-in-app';
+import { AppProviderSizeProvider } from '@wcpos/hooks/src/use-position-in-app';
 import { Select, SelectProps } from './select';
 import Portal from '../portal';
 

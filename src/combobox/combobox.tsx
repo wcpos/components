@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ScrollView } from 'react-native';
-import { useUncontrolledState } from '@wcpos/common/src/hooks/use-uncontrolled-state';
+import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
 import Dropdown from '../dropdown';
 import TextInput from '../textinput';
 // import Search from '../search';

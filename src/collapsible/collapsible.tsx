@@ -10,7 +10,7 @@ import Animated, {
 	withTiming,
 	runOnUI,
 } from 'react-native-reanimated';
-import useOnLayout from '@wcpos/common/src/hooks/use-on-layout';
+import useOnLayout from '@wcpos/hooks/src/use-on-layout';
 import Pressable from '../pressable';
 import Box from '../box';
 import { CollapsibleHeader } from './header';

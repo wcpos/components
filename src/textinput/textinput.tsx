@@ -9,9 +9,9 @@ import {
 	StyleProp,
 	ViewStyle,
 } from 'react-native';
-import useUncontrolledState from '@wcpos/common/src/hooks/use-uncontrolled-state';
+import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import get from 'lodash/get';
-import useMeasure from '@wcpos/common/src/hooks/use-measure';
+import useMeasure from '@wcpos/hooks/src/use-measure';
 import * as Styled from './styles';
 import Box from '../box';
 import Button from '../button';
@@ -32,7 +32,7 @@ export interface Action {
 	/**
 	 *
 	 */
-	type?: import('@wcpos/common/src/themes').ColorTypes;
+	type?: import('@wcpos/themes').ColorTypes;
 }
 
 export interface TextInputProps {

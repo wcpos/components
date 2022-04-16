@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import useMeasure from '@wcpos/common/src/hooks/use-measure';
+import useMeasure from '@wcpos/hooks/src/use-measure';
 
-type Measurements = import('@wcpos/common/src/hooks/use-measure/use-measure').Measurements;
+type Measurements = import('@wcpos/hooks/src/use-measure/use-measure').Measurements;
 type MeasureRenderProp = (props: Measurements) => React.ReactElement;
 
 interface Props {

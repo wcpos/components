@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ScrollView } from 'react-native';
 import get from 'lodash/get';
 import isPlainObject from 'lodash/isPlainObject';
-import { useUncontrolledState } from '@wcpos/common/src/hooks/use-uncontrolled-state';
+import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
 import Dropdown, { useDropdown } from '../dropdown';
 import Arrow from '../arrow';
 import BaseInput, { BaseInputContainer } from '../base-input';

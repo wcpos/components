@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
-import useUncontrolledState from '@wcpos/common/src/hooks/use-uncontrolled-state';
+import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import Label from './label';
 import Icon from './icon';
 import * as Styled from './styles';

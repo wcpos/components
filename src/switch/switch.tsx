@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Switch as RNSwitch } from 'react-native';
 import Platform from '@wcpos/common/src/lib/platform';
-import { useUncontrolledState } from '@wcpos/common/src/hooks/use-uncontrolled-state';
+import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
 import { useTheme } from 'styled-components/native';
 
 export interface SwitchProps {

@@ -1,6 +1,6 @@
 import * as React from 'react';
-// import useKey from '@wcpos/common/src/hooks/use-key';
-import useAllKeysPress from '@wcpos/common/src/hooks/useAllKeysPress';
+// import useKey from '@wcpos/hooks/src/use-key';
+import useAllKeysPress from '@wcpos/hooks/src/useAllKeysPress';
 import Icon from '../icon';
 import Box from '../box';
 import Text from '../text';

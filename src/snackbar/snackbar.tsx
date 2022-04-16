@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useTheme } from 'styled-components/native';
-import useTimeout from '@wcpos/common/src/hooks/use-timeout';
+import useTimeout from '@wcpos/hooks/src/use-timeout';
 import Box from '../box';
 import Text from '../text';
 import Button from '../button';
