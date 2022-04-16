@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import Platform from '@wcpos/core/src/lib/platform';
+import Platform from '@wcpos/utils/src/platform';
 
 export const Box = styled.View<{ focused: boolean }>`
 	background: ${({ theme }) => theme.SEGMENT_BACKGROUND_COLOR};

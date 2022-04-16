@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import Platform from '@wcpos/core/src/lib/platform';
+import Platform from '@wcpos/utils/src/platform';
 import Pressable from '../pressable';
 import { Text } from '../text/styles';
 

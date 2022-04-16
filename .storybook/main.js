@@ -6,7 +6,7 @@ module.exports = {
     builder: 'webpack5',
 	},
 	
-	stories: ['src/**/*.stories.tsx'],
+	stories: ['../src/**/*.stories.tsx'],
 
 	addons: [
 		'@storybook/preset-create-react-app',
@@ -25,12 +25,21 @@ module.exports = {
 	babel: async (options) => ({
     // Update your babel configuration here
     ...options,
+		presets: ['@wcpos/babel-preset-expo']
   }),
 
 	webpackFinal: async (config, { configType }) => {
-    // Make whatever fine-grained changes you need
-    // Return the altered config
-		console.log(config);
+		// I need to transpile the packages from @wcpos 
+		config.module.rules[7].exclude = [/node_modules\/(?!(@wcpos)\/)/]
+		config.module.rules[7].include = /\.(js|jsx|ts|tsx)$/;
+		console.log(config.module.rules[7]);
+
+		config.resolve.alias = {
+			...(config.resolve.alias || {}),
+			// Mock expo-haptics
+			'expo-haptics$': path.resolve(__dirname, 'utils/expo-haptics'),
+		}
+			 
     return config;
 	},
 };
