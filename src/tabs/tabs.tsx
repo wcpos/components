@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleProp, ViewStyle, View, Text, Pressable } from 'react-native';
-import Box from '@wcpos/components/src/box';
+import Box from '../box';
 import TabBar from './tab-bar';
 
 export type Route = {

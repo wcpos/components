@@ -12,7 +12,19 @@ module.exports = {
 		'@storybook/preset-create-react-app',
 		'@storybook/addon-essentials',
 		'@storybook/addon-actions',
-		'@storybook/addon-react-native-web'
+		{
+      name: '@storybook/addon-react-native-web',
+      options: {
+				modulesToTranspile: [
+					'@wcpos/hooks',
+					'@wcpos/themes',
+					'@wcpos/utils',
+					'react-native-reanimated',
+					'react-native-gesture-handler'
+				],
+        babelPlugins: ['react-native-reanimated/plugin'],
+      },
+    },
 	],
 
 	framework: '@storybook/react',
@@ -29,11 +41,6 @@ module.exports = {
   }),
 
 	webpackFinal: async (config, { configType }) => {
-		// I need to transpile the packages from @wcpos 
-		config.module.rules[7].exclude = [/node_modules\/(?!(@wcpos)\/)/]
-		config.module.rules[7].include = /\.(js|jsx|ts|tsx)$/;
-		console.log(config.module.rules[7]);
-
 		config.resolve.alias = {
 			...(config.resolve.alias || {}),
 			// Mock expo-haptics

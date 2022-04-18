@@ -10,7 +10,7 @@ export interface BoxProps extends ViewProps {
 	/**
 	 * Children Views.
 	 */
-	children: React.ReactNode;
+	// children: React.ReactNode;
 	/**
 	 * Padding applied on all sides.
 	 */

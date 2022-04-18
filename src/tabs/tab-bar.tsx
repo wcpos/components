@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Box from '@wcpos/components/src/box';
+import Box from '../box';
 import TabItem from './tab-item';
 
 export interface TabBarProps {
