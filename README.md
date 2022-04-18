@@ -1,2 +1,2 @@
-# components
-Shared components for WooCommerce POS
+# Shared Components for [WooCommerce POS](https://wcpos.com)
+[![Storybook](https://github.com/wcpos/components/actions/workflows/build-storybook.yml/badge.svg?branch=main)](https://wcpos.github.io/components) [![npm version](https://badge.fury.io/js/@wcpos%2Fcomponents.svg)](https://www.npmjs.com/package/@wcpos/components)
