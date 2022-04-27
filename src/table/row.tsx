@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
-import { isRxDocument } from 'rxdb/plugins/core';
+import { isRxDocument } from 'rxdb';
 import { useObservableState } from 'observable-hooks';
 import Text from '../text';
 import Box from '../box';
