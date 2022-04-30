@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native';
-import { math } from 'polished';
 
 type ButtonProps = import('./button').Props;
 type BackgroundProps = Pick<ButtonProps, 'background' | 'type' | 'disabled' | 'size' | 'fill'>;
