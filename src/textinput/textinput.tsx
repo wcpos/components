@@ -10,6 +10,7 @@ import {
 	ViewStyle,
 } from 'react-native';
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
+import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
 import get from 'lodash/get';
 import useMeasure from '@wcpos/hooks/src/use-measure';
 import * as Styled from './styles';
@@ -238,14 +239,17 @@ export const TextInputBase = (
 	React.useImperativeHandle(ref, () => inputRef.current as RNTextInput);
 
 	const [hasFocus, setHasFocus] = React.useState(focused);
+
 	const onFocus = React.useCallback(() => {
 		onFocusProp?.();
 		setHasFocus(true);
 	}, [onFocusProp]);
+
 	const onBlur = React.useCallback(() => {
 		onBlurProp?.();
 		setHasFocus(false);
 	}, [onBlurProp]);
+
 	const onLabelClick = React.useCallback(() => {
 		const input = inputRef.current;
 
@@ -264,7 +268,7 @@ export const TextInputBase = (
 	/**
 	 * autosize
 	 */
-	const [measuredWidth, setMeasuredWidth] = React.useState(0);
+	// const [measuredWidth, setMeasuredWidth] = React.useState(0);
 	// const [measuredHeight, setMeasureHeight] = React.useState(0);
 	// const handleContentSizeChange = (
 	// 	event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
@@ -274,9 +278,9 @@ export const TextInputBase = (
 	// 	// setWidth(contentSize.width);
 	// 	setMeasureHeight(contentSize.height);
 	// };
-	const handleMeasure = ({ width }: { width: number }) => {
-		setMeasuredWidth(width + 3);
-	};
+	// const handleMeasure = ({ width }: { width: number }) => {
+	// 	setMeasuredWidth(width + 3);
+	// };
 
 	/**
 	 * action
@@ -354,6 +358,8 @@ export const TextInputBase = (
 				return {};
 		}
 	}, [type, autoCapitalize]);
+
+	// useWhyDidYouUpdate('TextInput', []);
 
 	return (
 		<BaseInputContainer
