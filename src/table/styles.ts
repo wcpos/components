@@ -1,16 +1,16 @@
 import styled from 'styled-components/native';
+import Box, { BoxProps } from '../box';
 
 export const Table = styled.View`
 	width: 100%;
 	height: 100%;
 `;
 
-export const Row = styled.View`
-	flex-direction: row;
-	align-items: center;
+export const Row = styled(Box)<BoxProps & { alt: boolean }>`
 	border-bottom-width: 1px;
 	border-style: solid;
-	border-bottom-color: #000000;
+	border-bottom-color: ${({ theme }) => theme.colors.lightGrey};
+	background-color: ${({ alt, theme }) => (alt ? 'transparent' : theme.colors.lightestGrey)};
 `;
 
 export const Cell = styled.View`
@@ -18,12 +18,10 @@ export const Cell = styled.View`
 	align-items: flex-start;
 `;
 
-export const HeaderRow = styled.View`
-	flex-direction: row;
+export const HeaderRow = styled(Box)`
 	border-bottom-width: 2px;
 	border-style: solid;
-	border-bottom-color: #000000;
-	background-color: #ffffff;
+	border-bottom-color: ${({ theme }) => theme.colors.lightGrey};
 `;
 
 export const HeaderCell = styled.View`

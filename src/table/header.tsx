@@ -22,7 +22,7 @@ const TableHeader = <T extends object>({
 	sortDirection,
 }: TableHeaderProps<T>) => {
 	return (
-		<Box horizontal align="center">
+		<Styled.HeaderRow horizontal align="center">
 			{columns.map((column) => {
 				const {
 					key,
@@ -61,7 +61,9 @@ const TableHeader = <T extends object>({
 							<Pressable onPress={handlePress}>
 								{({ hovered }: any) => (
 									<Box horizontal space="xxSmall" align="center">
-										<Text>{label}</Text>
+										<Text uppercase size="small">
+											{label}
+										</Text>
 										<SortIcon
 											visible={hovered || showSortIndicator}
 											direction={showSortIndicator ? sortDirection : undefined}
@@ -70,12 +72,16 @@ const TableHeader = <T extends object>({
 								)}
 							</Pressable>
 						) : (
-							!hideLabel && <Text>{label}</Text>
+							!hideLabel && (
+								<Text uppercase size="small">
+									{label}
+								</Text>
+							)
 						)}
 					</Box>
 				);
 			})}
-		</Box>
+		</Styled.HeaderRow>
 	);
 };
 

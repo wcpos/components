@@ -1,24 +1,8 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
-import { isRxDocument } from 'rxdb';
-import { useObservableState } from 'observable-hooks';
 import Text from '../text';
 import Box from '../box';
-
-/**
- *
- */
-export const renderCell: <T>(
-	item: T,
-	column: import('./table').ColumnProps<T>,
-	index: number
-) => React.ReactNode = (item, column, index) => {
-	return column.onRender ? (
-		column.onRender(item, column, index)
-	) : (
-		<Text>{String(item[column.key] ?? '')}</Text>
-	);
-};
+import * as Styled from './styles';
 
 export interface TableRowProps<T> {
 	item: T;
@@ -30,20 +14,35 @@ export interface TableRowProps<T> {
 		column: import('./table').ColumnProps<T>,
 		index: number
 	) => React.ReactNode;
+	itemIndex: number;
 }
 
-/**
- *
- */
 const TableRow = <T extends object>({
 	item,
 	columns,
 	rowStyle,
 	cellStyle,
 	cellRenderer,
+	itemIndex,
 }: TableRowProps<T>) => {
+	/**
+	 *
+	 */
+	const renderCell = React.useCallback(
+		(column, index) => {
+			if (typeof cellRenderer === 'function') {
+				return cellRenderer(item, column, index);
+			}
+			return <Text>{String(item[column.key] ?? '')}</Text>;
+		},
+		[cellRenderer, item]
+	);
+
+	/**
+	 *
+	 */
 	return (
-		<Box horizontal align="center" style={rowStyle}>
+		<Styled.Row horizontal align="center" style={rowStyle} alt={itemIndex % 2 !== 0}>
 			{columns.map((column, index) => {
 				const { flexGrow = 1, flexShrink = 1, flexBasis = 'auto', width = '100%' } = column;
 				return (
@@ -52,15 +51,11 @@ const TableRow = <T extends object>({
 						padding="small"
 						style={[{ flexGrow, flexShrink, flexBasis, width }, cellStyle]}
 					>
-						{typeof cellRenderer === 'function' ? (
-							cellRenderer(item, column, index)
-						) : (
-							<Text>{String(item[column.key] ?? '')}</Text>
-						)}
+						{renderCell(column, index)}
 					</Box>
 				);
 			})}
-		</Box>
+		</Styled.Row>
 	);
 };
 

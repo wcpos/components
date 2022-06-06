@@ -89,9 +89,8 @@ const Table = <T extends object>({
 				<TableRow<T>
 					// config={renderContext}
 					item={item}
-					// @ts-ignore
 					columns={columns}
-					// itemIndex={index}
+					itemIndex={index}
 				/>
 			);
 		},
