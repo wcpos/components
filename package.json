@@ -50,7 +50,7 @@
 		"@babel/core": "7.18.2",
 		"@storybook/addon-actions": "6.5.5",
 		"@storybook/addon-controls": "6.5.5",
-		"@storybook/addon-essentials": "6.5.5",
+		"@storybook/addon-essentials": "6.5.7",
 		"@storybook/addon-knobs": "6.4.0",
 		"@storybook/addon-react-native-web": "0.0.19--canary.37.cb55428.0",
 		"@storybook/builder-webpack5": "6.5.5",
