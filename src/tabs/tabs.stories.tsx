@@ -11,6 +11,8 @@ const FirstRoute = () => <View style={{ backgroundColor: '#ff4081', width: 100, 
 
 const SecondRoute = () => <View style={{ backgroundColor: '#673ab7', width: 100, height: 100 }} />;
 
+const Default = () => <View style={{ backgroundColor: '#000000', width: 100, height: 100 }} />;
+
 const renderScene = ({ route }) => {
 	switch (route.key) {
 		case 'first':
@@ -18,7 +20,7 @@ const renderScene = ({ route }) => {
 		case 'second':
 			return <SecondRoute />;
 		default:
-			return null;
+			return <Default />;
 	}
 };
 
@@ -38,4 +40,34 @@ export const BasicUsage = (props: TabsProps<typeof routes[number]>) => {
 			{...props}
 		/>
 	);
+};
+
+export const Scrollable = (props: TabsProps) => {
+	const [index, setIndex] = React.useState(0);
+
+	return (
+		<View style={{ width: 100, overflow: 'hidden' }}>
+			<Tabs<typeof routes[number]>
+				navigationState={{ index, routes: props.routes }}
+				renderScene={renderScene}
+				onIndexChange={setIndex}
+				{...props}
+			/>
+		</View>
+	);
+};
+Scrollable.args = {
+	scrollable: true,
+	routes: [
+		{ key: 'first', title: 'First' },
+		{ key: 'second', title: 'Second' },
+		{ key: 'third', title: 'Third' },
+		{ key: 'fourth', title: 'Fourth' },
+		{ key: 'fifth', title: 'Fifth' },
+		{ key: 'sixth', title: 'Sixth' },
+		{ key: 'seventh', title: 'Seventh' },
+		{ key: 'eighth', title: 'Eighth' },
+		{ key: 'ninth', title: 'Ninth' },
+		{ key: 'tenth', title: 'Tenth' },
+	],
 };

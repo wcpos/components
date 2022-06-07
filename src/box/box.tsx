@@ -105,18 +105,21 @@ export interface BoxProps extends ViewProps {
  * >
  * >For example, if you apply `padding="small"` and `paddingTop="large"`, the `Box` will have a `small` padding on all sides, except top where the padding will be `large`.
  */
-export const Box = ({
-	children,
-	padding = 'none',
-	fill = false,
-	space = 'none',
-	horizontal = false,
-	align = 'fill',
-	distribution = 'start',
-	reverse = false,
-	border = false,
-	...rest
-}: BoxProps) => {
+const BoxBase = (
+	{
+		children,
+		padding = 'none',
+		fill = false,
+		space = 'none',
+		horizontal = false,
+		align = 'fill',
+		distribution = 'start',
+		reverse = false,
+		border = false,
+		...rest
+	}: BoxProps,
+	ref
+) => {
 	// Filter only children that are JSX elements
 	const items = useMemo(() => {
 		const filtered = React.Children.toArray(children).filter((x) => x);
@@ -131,6 +134,7 @@ export const Box = ({
 
 	return (
 		<Styled.Box
+			ref={ref}
 			padding={padding}
 			fill={fill}
 			space={space}
@@ -145,3 +149,5 @@ export const Box = ({
 		</Styled.Box>
 	);
 };
+
+export const Box = React.forwardRef(BoxBase);
