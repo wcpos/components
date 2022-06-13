@@ -1,6 +1,6 @@
 {
 	"name": "@wcpos/components",
-	"version": "1.0.10",
+	"version": "1.0.11",
 	"description": "Shared components for WooCommerce POS",
 	"author": "kilbot <paul@kilbot.com>",
 	"homepage": "https://github.com/wcpos/components#readme",
@@ -15,7 +15,7 @@
 	],
 	"scripts": {
 		"test": "eslint --ext ts,tsx ./src",
-		"storybook": "BABEL_SHOW_CONFIG_FOR=.storybook/preview.js start-storybook -p 9009",
+		"storybook": "BABEL_SHOW_CONFIG_FOR=.storybook/preview.js start-storybook -p 9009 --debug-webpack",
 		"build-storybook": "build-storybook -o docs-build"
 	},
 	"resolutions": {
@@ -81,5 +81,5 @@
 	"eslintConfig": {
 		"extends": "@wcpos/eslint-config"
 	},
-	"packageManager": "yarn@3.2.0"
+	"packageManager": "yarn@3.2.1"
 }

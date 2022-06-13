@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import { Tabs, TabsProps } from './tabs';
+import Text from '../text';
 
 export default {
 	title: 'Components/Tabs',
@@ -46,10 +47,14 @@ export const Scrollable = (props: TabsProps) => {
 	const [index, setIndex] = React.useState(0);
 
 	return (
-		<View style={{ width: 100, overflow: 'hidden' }}>
+		<View style={{ width: '100%', overflow: 'hidden' }}>
 			<Tabs<typeof routes[number]>
 				navigationState={{ index, routes: props.routes }}
-				renderScene={renderScene}
+				renderScene={({ route }) => (
+					<View style={{ backgroundColor: '#000000', width: '100%', height: 100 }}>
+						<Text type="inverse">{route.title}</Text>
+					</View>
+				)}
 				onIndexChange={setIndex}
 				{...props}
 			/>
@@ -57,7 +62,6 @@ export const Scrollable = (props: TabsProps) => {
 	);
 };
 Scrollable.args = {
-	scrollable: true,
 	routes: [
 		{ key: 'first', title: 'First' },
 		{ key: 'second', title: 'Second' },
