@@ -10,6 +10,7 @@ import {
 import Platform from '@wcpos/utils/src/platform';
 import Box from '../box';
 import Icon from '../icon';
+import Button from '../button';
 import TabItem from './tab-item';
 
 export interface TabBarProps {
@@ -24,6 +25,7 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 	const scroll = useSharedValue(0);
 	const totalWidth = useSharedValue(0);
 	const containerWidth = useSharedValue(0);
+	const tabRefs = React.useMemo(() => routes.map(() => React.createRef<View>()), [routes]);
 	const [scrollable, setScrollable] = React.useState(false);
 
 	/**
@@ -54,19 +56,26 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 	}, setScrollable);
 
 	/**
-	 * Super hacky way to scroll to the right position
+	 *
 	 */
-	const handleIndexChange = (index: number) => {
-		onIndexChange(index);
-		scroll.value = index * ((totalWidth.value - containerWidth.value + 100) / routes.length);
-	};
+	React.useEffect(() => {
+		if (focusedIndex >= 0) {
+			const activeTabRef = tabRefs[focusedIndex].current;
+			if (activeTabRef) {
+				activeTabRef.measure((x, y, width, height, pageX, pageY) => {
+					scroll.value = x - containerWidth.value / 2 + width / 2;
+				});
+			}
+		}
+	}, [containerWidth.value, focusedIndex, scroll, tabRefs]);
 
 	/**
 	 *
 	 */
 	return (
-		<View onLayout={onLayout} style={{ flexDirection: 'row' }}>
+		<View style={{ flexDirection: 'row' }}>
 			<ScrollView
+				onLayout={onLayout}
 				ref={scrollViewRef}
 				horizontal={direction === 'horizontal'}
 				showsHorizontalScrollIndicator={false}
@@ -76,38 +85,37 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 				}}
 				style={{ width: '100%' }}
 			>
-				<Box horizontal space="medium" padding="medium" style={{ width: '100%' }}>
+				<Box horizontal space="xSmall" padding="xSmall" style={{ width: '100%' }}>
 					{routes.map((route, i) => {
 						const focused = i === focusedIndex;
 						return (
-							<TabItem
-								key={route.key}
-								title={route.title}
-								onPress={() => handleIndexChange(i)}
-								focused={focused}
-							/>
+							<View key={route.key} ref={tabRefs[i]}>
+								<TabItem title={route.title} onPress={() => onIndexChange(i)} focused={focused} />
+							</View>
 						);
 					})}
 				</Box>
 			</ScrollView>
 			{scrollable && (
-				<Box horizontal space="medium" padding="medium">
-					<Icon
-						name="caretLeft"
+				<Box horizontal space="xSmall" padding="xSmall">
+					<Button
 						onPress={() => {
 							if (focusedIndex > 0) {
-								handleIndexChange(focusedIndex - 1);
+								onIndexChange(focusedIndex - 1);
 							}
 						}}
-					/>
-					<Icon
-						name="caretRight"
+					>
+						<Icon name="caretLeft" />
+					</Button>
+					<Button
 						onPress={() => {
 							if (focusedIndex < routes.length - 1) {
-								handleIndexChange(focusedIndex + 1);
+								onIndexChange(focusedIndex + 1);
 							}
 						}}
-					/>
+					>
+						<Icon name="caretRight" />
+					</Button>
 				</Box>
 			)}
 		</View>

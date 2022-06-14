@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { StyleProp, ViewStyle, View } from 'react-native';
 import isFunction from 'lodash/isFunction';
 import Text from '../text';
-import * as Styled from './styles';
+import Button from '../button';
+// import * as Styled from './styles';
 
 export interface TabItemProps {
 	title: string | ((props: { focused: boolean }) => React.ReactNode);
@@ -14,13 +14,13 @@ const TabItem = ({ onPress, focused, ...props }: TabItemProps) => {
 	const title = isFunction(props.title) ? props.title({ focused }) : props.title;
 
 	return (
-		<Styled.PressableTabItem onPress={onPress} focused={focused}>
+		<Button onPress={onPress} background={focused ? 'solid' : 'clear'}>
 			{typeof title === 'string' ? (
 				<Text type={focused ? 'inverse' : 'primary'}>{title}</Text>
 			) : (
 				title
 			)}
-		</Styled.PressableTabItem>
+		</Button>
 	);
 };
 
