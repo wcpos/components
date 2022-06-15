@@ -4,7 +4,7 @@ import { action } from '@storybook/addon-actions';
 import random from 'lodash/random';
 import { Icon, IconProps, IconSkeletonProps } from './icon';
 import Portal from '../portal';
-import * as Svgs from './svg/fontawesome/solid';
+import * as Svgs from './components/fontawesome/solid';
 
 export default {
 	title: 'Components/Icon',

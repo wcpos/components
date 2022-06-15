@@ -18,6 +18,8 @@
     <a href="https://github.com/wcpos/components#-workflows"><b>Workflows</b></a>
     &ensp;&mdash;&ensp;
     <a href="https://github.com/wcpos/components#-how-to-use-it"><b>How to use it</b></a>
+    &ensp;&mdash;&ensp;
+    <a href="https://github.com/wcpos/components#-how-to-use-it"><b>TODO</b></a>
   </p>
 </div>
 
@@ -34,3 +36,7 @@ Coming soon.
 ## 🚀 How to use it
 
 Coming soon.
+
+## ✅ TODO 
+
+<!-- - [ ]  -->

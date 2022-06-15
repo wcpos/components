@@ -3,12 +3,12 @@ import { ViewStyle } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import get from 'lodash/get';
 import { useTheme } from 'styled-components/native';
-import * as Svgs from './svg/fontawesome/solid';
+import * as Svgs from './components/fontawesome/solid';
 import Tooltip from '../tooltip';
 import Skeleton from '../skeleton';
 import Pressable from '../pressable';
 import Ripple from '../ripple';
-import * as Styled from './styles';
+// import * as Styled from './styles';
 
 export type IconName = Extract<keyof typeof Svgs, string>;
 type IconSizes = import('@wcpos/themes').IconSizes;
@@ -85,7 +85,11 @@ export const Icon = ({
 	const showRipple = useSharedValue(false);
 
 	const IconComponent = (
-		<SvgIcon width={width || theme.iconSizes[size]} height={height || theme.iconSizes[size]} fill={iconColor} />
+		<SvgIcon
+			width={width || theme.iconSizes[size]}
+			height={height || theme.iconSizes[size]}
+			fill={iconColor}
+		/>
 	);
 
 	if (onPress) {
@@ -132,7 +136,9 @@ export interface IconSkeletonProps {
  */
 export const IconSkeleton = ({ size = 'medium' }: IconSkeletonProps) => {
 	const theme = useTheme();
-	return <Skeleton border="circular" width={theme.iconSizes[size]} height={theme.iconSizes[size]} />;
+	return (
+		<Skeleton border="circular" width={theme.iconSizes[size]} height={theme.iconSizes[size]} />
+	);
 };
 
 Icon.Skeleton = IconSkeleton;
