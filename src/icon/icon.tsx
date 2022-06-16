@@ -77,10 +77,10 @@ export const Icon = ({
 	tooltip,
 	tooltipPlacement = 'top',
 	backgroundStyle = 'ripple',
-	type = 'primary',
+	type,
 }: IconProps) => {
 	const theme = useTheme();
-	const iconColor = color || get(theme, `COLOR_${type.toUpperCase()}`);
+	const iconColor = color || get(theme, ['colors', type], theme.colors.text);
 	const SvgIcon = get(Svgs, name, Svgs.circleExclamation);
 	const showRipple = useSharedValue(false);
 

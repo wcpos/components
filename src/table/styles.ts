@@ -10,7 +10,7 @@ export const Row = styled(Box)<BoxProps & { alt: boolean }>`
 	border-bottom-width: 1px;
 	border-style: solid;
 	border-bottom-color: ${({ theme }) => theme.colors.lightGrey};
-	background-color: ${({ alt, theme }) => (alt ? 'transparent' : theme.colors.lightestGrey)};
+	background-color: ${({ alt, theme }) => (alt ? 'rgba(250, 251, 252, 0.8)' : 'transparent')};
 `;
 
 export const Cell = styled.View`
@@ -21,7 +21,8 @@ export const Cell = styled.View`
 export const HeaderRow = styled(Box)`
 	border-bottom-width: 2px;
 	border-style: solid;
-	border-bottom-color: ${({ theme }) => theme.colors.lightGrey};
+	border-bottom-color: ${({ theme }) => theme.colors.grey};
+	background-color: ${({ theme }) => theme.colors.lightGrey};
 `;
 
 export const HeaderCell = styled.View`

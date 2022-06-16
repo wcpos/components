@@ -9,49 +9,15 @@ export const Background = styled.View<BackgroundProps>`
 		if (background === 'clear' || background === 'outline') {
 			return 'transparent';
 		}
-		switch (type) {
-			case 'secondary':
-				return theme.BUTTON_COLOR_SECONDARY;
-			case 'attention':
-				return theme.BUTTON_COLOR_ATTENTION;
-			case 'critical':
-				return theme.BUTTON_COLOR_CRITICAL;
-			case 'info':
-				return theme.BUTTON_COLOR_INFO;
-			case 'success':
-				return theme.BUTTON_COLOR_SUCCESS;
-			case 'warning':
-				return theme.BUTTON_COLOR_WARNING;
-			case 'inverse':
-				return theme.BUTTON_COLOR_INVERSE;
-			default:
-				return theme.BUTTON_COLOR;
-		}
-	}};
+		return type ? theme.colors[type] : theme.colors.primary;
+	}}};
 
 	border-color: ${({ type, theme }) => {
-		switch (type) {
-			case 'secondary':
-				return theme.BUTTON_COLOR_SECONDARY;
-			case 'attention':
-				return theme.BUTTON_COLOR_ATTENTION;
-			case 'critical':
-				return theme.BUTTON_COLOR_CRITICAL;
-			case 'info':
-				return theme.BUTTON_COLOR_INFO;
-			case 'success':
-				return theme.BUTTON_COLOR_SUCCESS;
-			case 'warning':
-				return theme.BUTTON_COLOR_WARNING;
-			case 'inverse':
-				return theme.BUTTON_COLOR_INVERSE;
-			default:
-				return theme.BUTTON_COLOR;
-		}
+		return type ? theme.colors[type] : theme.colors.primary;
 	}};
 
 	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)}
-	border-radius: ${({ theme }) => theme.BUTTON_BORDER_RADIUS};
+	border-radius: ${({ theme }) => theme.rounding.medium};
 	border-width: ${({ background }) =>
 		background === 'outline' ? `${StyleSheet.hairlineWidth}px` : 0};
 	

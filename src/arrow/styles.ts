@@ -24,7 +24,7 @@ export const Left = styled.View<Pick<ArrowProps, 'size' | 'color'>>`
 	border-top-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-bottom-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-right-width: ${({ size }) => sizes[size || 'default'] / 2}px;
-	border-right-color: ${({ theme, color }) => color || theme.COLOR_PRIMARY};
+	border-right-color: ${({ theme, color }) => color || theme.colors.primary};
 	border-top-color: transparent;
 	border-bottom-color: transparent;
 `;
@@ -33,7 +33,7 @@ export const Right = styled.View<Pick<ArrowProps, 'size' | 'color'>>`
 	border-top-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-bottom-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-left-width: ${({ size }) => sizes[size || 'default'] / 2}px;
-	border-left-color: ${({ theme, color }) => color || theme.COLOR_PRIMARY};
+	border-left-color: ${({ theme, color }) => color || theme.colors.primary};
 	border-top-color: transparent;
 	border-bottom-color: transparent;
 `;
@@ -42,7 +42,7 @@ export const Up = styled.View<Pick<ArrowProps, 'size' | 'color'>>`
 	border-left-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-right-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-bottom-width: ${({ size }) => sizes[size || 'default'] / 2}px;
-	border-bottom-color: ${({ theme, color }) => color || theme.COLOR_PRIMARY};
+	border-bottom-color: ${({ theme, color }) => color || theme.colors.primary};
 	border-left-color: transparent;
 	border-right-color: transparent;
 `;
@@ -51,7 +51,7 @@ export const Down = styled.View<Pick<ArrowProps, 'size' | 'color'>>`
 	border-left-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-right-width: ${({ size }) => sizes[size || 'default'] / 2}px;
 	border-top-width: ${({ size }) => sizes[size || 'default'] / 2}px;
-	border-top-color: ${({ theme, color }) => color || theme.COLOR_PRIMARY};
+	border-top-color: ${({ theme, color }) => color || theme.colors.primary};
 	border-left-color: transparent;
 	border-right-color: transparent;
 `;

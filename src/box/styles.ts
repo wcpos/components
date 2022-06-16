@@ -55,6 +55,6 @@ export const Box = styled.View<BoxProps>`
 		`${theme.rounding[roundingBottomLeft || rounding || 'none']}px`};
 
 	border-width: ${({ border }) => (border ? '1px' : 0)};
-	border-color: ${({ theme }) => theme.colors.primary};
+	border-color: ${({ theme }) => theme.colors.border};
 	border-style: solid;
 `;

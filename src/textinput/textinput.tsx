@@ -9,6 +9,7 @@ import {
 	StyleProp,
 	ViewStyle,
 } from 'react-native';
+import { useTheme } from 'styled-components/native';
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
 import get from 'lodash/get';
@@ -233,6 +234,7 @@ export const TextInputBase = (
 	ref
 ) => {
 	const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
+	const theme = useTheme();
 
 	// Register the form field in the Form
 	const inputRef = React.useRef<RNTextInput>(null);
@@ -376,7 +378,7 @@ export const TextInputBase = (
 				rounding="small"
 				align="center"
 				// focused={hasFocus}
-				style={style}
+				style={[{ backgroundColor: theme.colors.inputBackground }, style]}
 			>
 				{leftAccessory || null}
 				{prefix ? (
@@ -389,6 +391,7 @@ export const TextInputBase = (
 						ref={inputRef}
 						{...inputType}
 						placeholder={placeholder}
+						placeholderTextColor={theme.colors.textMuted}
 						editable={!disabled && !readonly}
 						value={value}
 						onChangeText={onChange}

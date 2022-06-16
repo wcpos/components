@@ -12,7 +12,7 @@ export const Tag = styled.View<{ disabled?: boolean }>`
 `;
 
 export const Label = styled(Text)`
-	color: ${({ theme }) => theme.TAG_TEXT_COLOR};
+	color: ${({ theme }) => theme.colors.inverse};
 `;
 
 export const Group = styled.View`

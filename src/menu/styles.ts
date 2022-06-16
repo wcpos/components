@@ -14,6 +14,6 @@ export const Label = styled(Text)<{ hovered: boolean }>`
 		// @ts-ignore
 		(type === 'critical') | (type === 'warning') &&
 		`
-    color: ${theme.TEXT_COLOR_INVERSE};
+    color: ${theme.colors.inverse};
   `}
 `;

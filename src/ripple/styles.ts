@@ -7,7 +7,6 @@ export const RippleEffect = styled.View`
 	left: 0;
 	width: 100%;
 	height: 100%;
-	border-radius: 25px;
-	opacity: 0.1;
-	background-color: black;
+	border-radius: ${({ theme }) => theme.rounding.circle};
+	background-color: rgba(0, 0, 0, 0.1);
 `;

@@ -57,6 +57,7 @@ export interface TableProps<T> {
 	sortBy?: keyof T & string;
 	sortDirection?: SortDirection;
 	virtual?: boolean;
+	striped?: boolean;
 }
 
 const Table = <T extends object>({
@@ -70,6 +71,7 @@ const Table = <T extends object>({
 	sortDirection,
 	virtual,
 	rowRenderer,
+	striped,
 }: TableProps<T>) => {
 	const virtualize = React.useMemo(
 		() => (virtual === undefined ? data.length > 50 : virtual),

@@ -6,21 +6,21 @@ export const Text = styled.Text<TextProps>`
 	color: ${({ type, theme }) => {
 		switch (type) {
 			case 'secondary':
-				return theme.TEXT_COLOR_SECONDARY;
+				return theme.colors.secondary;
 			case 'attention':
-				return theme.TEXT_COLOR_ATTENTION;
+				return theme.colors.attention;
 			case 'critical':
-				return theme.TEXT_COLOR_CRITICAL;
+				return theme.colors.critical;
 			case 'info':
-				return theme.TEXT_COLOR_INFO;
+				return theme.colors.info;
 			case 'success':
-				return theme.TEXT_COLOR_SUCCESS;
+				return theme.colors.success;
 			case 'warning':
-				return theme.TEXT_COLOR_WARNING;
+				return theme.colors.warning;
 			case 'inverse':
-				return theme.TEXT_COLOR_INVERSE;
+				return theme.colors.inverse;
 			default:
-				return theme.TEXT_COLOR;
+				return theme.colors.text;
 		}
 	}};
 	font-family: ${({ theme }) => theme.FONT_FAMILY};
