@@ -4,10 +4,10 @@ import Pressable from '../pressable';
 export const BorderedPressable = styled(Pressable)`
 	flex-direction: row;
 	align-items: center;
-	background: ${({ theme }) => theme.SEGMENT_BACKGROUND_COLOR};
-	border-width: ${({ theme }) => theme.SEGMENT_BORDER_WIDTH};
-	border-color: transparent;
+	background: ${({ theme }) => theme.colors.inputBackground};
+	border-width: ${({ theme }) => theme.border.thinner};
+	border-color: ${({ theme }) => theme.colors.border};
 	border-style: solid;
-	border-radius: ${({ theme }) => theme.SEGMENT_BORDER_RADIUS};
-	padding: ${({ theme }) => theme.SEGMENT_PADDING};
+	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
+	padding: ${({ theme }) => `${theme.spacing.small}px`};
 `;

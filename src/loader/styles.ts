@@ -5,5 +5,5 @@ import { Props as LoaderProps } from './loader';
 type Props = { theme: ThemeProps } & LoaderProps;
 
 export const ActivityIndicator = styled.ActivityIndicator.attrs<Props>(({ color, theme }) => ({
-  color: color || theme.LOADER_COLOR,
+	color: color || theme.colors.primary,
 }))``;

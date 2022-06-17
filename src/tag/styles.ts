@@ -5,10 +5,10 @@ import { Skeleton } from '../skeleton/skeleton';
 export const Tag = styled.View<{ disabled?: boolean }>`
 	flex-direction: row;
 	align-items: center;
-	padding: ${({ theme }) => `${theme.TAG_PADDING_Y} ${theme.TAG_PADDING_X}`};
-	border-radius: ${({ theme }) => theme.TAG_BORDER_RADIUS}
+	padding: ${({ theme }) => `${theme.spacing.xxSmall}px ${theme.spacing.small}px`};
+	border-radius: ${({ theme }) => `${theme.rounding.large}px`}
 	background-color: ${({ theme, disabled }) =>
-		disabled ? theme.TAG_BACKGROUND_DISABLED : theme.TAG_BACKGROUND_COLOR};
+		disabled ? theme.colors.disabled : theme.colors.primary};
 `;
 
 export const Label = styled(Text)`
@@ -22,5 +22,5 @@ export const Group = styled.View`
 `;
 
 export const TagSkeleton = styled(Skeleton)`
-	border-radius: ${({ theme }) => theme.TAG_BORDER_RADIUS};
+	border-radius: ${({ theme }) => `${theme.rounding.large}px`};
 `;

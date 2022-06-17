@@ -23,26 +23,26 @@ export const Text = styled.Text<TextProps>`
 				return theme.colors.text;
 		}
 	}};
-	font-family: ${({ theme }) => theme.FONT_FAMILY};
+	font-family: ${({ theme }) => theme.font.family};
 	font-style: ${({ italic }) => (italic ? 'italic' : 'normal')};
 	font-weight: ${({ weight, theme }) => {
 		switch (weight) {
 			case 'bold':
-				return theme.FONT_WEIGHT_BOLD;
+				return theme.font.weight.bold;
 			case 'light':
-				return theme.FONT_WEIGHT_LIGHT;
+				return theme.font.weight.light;
 			default:
-				return theme.FONT_WEIGHT;
+				return theme.font.weight.regular;
 		}
 	}};
 	font-size: ${({ size, theme }) => {
 		switch (size) {
 			case 'large':
-				return theme.FONT_SIZE_LARGE;
+				return theme.font.size.large;
 			case 'small':
-				return theme.FONT_SIZE_SMALL;
+				return theme.font.size.small;
 			default:
-				return theme.FONT_SIZE;
+				return theme.font.size.medium;
 		}
 	}};
 	text-align: ${({ align }) => align || 'left'};

@@ -17,15 +17,15 @@ export const Image = styled.Image<Props>`
 		switch (border) {
 			case 'rounded':
 				return css`
-					border-radius: ${theme.IMAGE_BORDER_RADIUS};
+					border-radius: ${theme.rounding.small}px;
 				`;
 			case 'circular':
 				return css`
-					border-radius: 500px;
+					border-radius: ${theme.rounding.circle}px;
 				`;
 			default:
 				return css`
-					border-radius: 0px;
+					border-radius: ${theme.rounding.none}px;
 				`;
 		}
 	}}

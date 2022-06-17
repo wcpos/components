@@ -17,7 +17,7 @@ export const Background = styled.View<BackgroundProps>`
 	}};
 
 	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)}
-	border-radius: ${({ theme }) => theme.rounding.medium};
+	border-radius: ${({ theme }) => `${theme.rounding.medium}px`};
 	border-width: ${({ background }) =>
 		background === 'outline' ? `${StyleSheet.hairlineWidth}px` : 0};
 	
@@ -26,6 +26,16 @@ export const Background = styled.View<BackgroundProps>`
 	justify-content: center;
 	flex-grow: ${({ fill }) => (fill ? 1 : 0)};
 	height: ${({ fill }) => (fill ? '100%' : 'auto')};
+
+	padding: ${({ size, theme }) => {
+		if (size === 'small') {
+			return `${theme.spacing.xxSmall}px ${theme.spacing.xSmall}px`;
+		}
+		if (size === 'large') {
+			return `${theme.spacing.small}px ${theme.spacing.medium}px`;
+		}
+		return `${theme.spacing.xSmall}px ${theme.spacing.small}px`;
+	}};
 `;
 
 type ButtonGroupProps = import('./group').ButtonGroupProps;
@@ -45,6 +55,6 @@ export const Group = styled.View<ButtonGroupProps>`
 `;
 
 export const GroupChild = styled.View<ButtonGroupProps & { last: boolean }>`
-	margin-end: ${({ last, theme }) => (last ? '0' : theme.BUTTONGROUP_SPACING)};
+	margin-end: ${({ last, theme }) => (last ? '0' : theme.spacing.small)};
 	flex: ${({ alignment }) => (alignment === 'full' ? '1 1 auto' : 0)};
 `;

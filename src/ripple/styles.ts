@@ -7,6 +7,6 @@ export const RippleEffect = styled.View`
 	left: 0;
 	width: 100%;
 	height: 100%;
-	border-radius: ${({ theme }) => theme.rounding.circle};
+	border-radius: ${({ theme }) => `${theme.rounding.circle}px`};
 	background-color: rgba(0, 0, 0, 0.1);
 `;

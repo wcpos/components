@@ -28,7 +28,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({ children }) 
 				style={[
 					StyleSheet.absoluteFill,
 					{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-start' },
-					{ padding: '30px' },
+					// { padding: '30px' },
 				]}
 				pointerEvents="none"
 			>

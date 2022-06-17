@@ -6,7 +6,7 @@ import Button from '../button';
 export const Raw = styled.TextInput`
 	background-color: ${({ theme }) => theme.colors.lightestGrey};
 	border-color: ${({ theme }) => theme.colors.grey};
-	border-radius: ${({ theme }) => theme.rounding.small};
+	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
 	border-width: ${({ theme }) => theme.border.thinner};
 	font-family: monospace;
 `;

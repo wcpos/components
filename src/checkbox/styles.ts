@@ -17,13 +17,12 @@ export const Box = styled.View<{ checked: boolean | undefined }>`
 	align-items: center;
 	justify-content: center;
 	border-style: solid;
-	background-color: ${({ theme, checked }) =>
-		checked ? theme.CHECKBOX_BACKGROUND_COLOR : 'transparent'};
-	width: ${({ theme }) => theme.CHECKBOX_WIDTH};
-	height: ${({ theme }) => theme.CHECKBOX_HEIGHT};
-	border-width: ${({ theme }) => theme.CHECKBOX_BORDER_WIDTH};
-	border-color: ${({ theme }) => theme.CHECKBOX_BORDER_COLOR};
-	border-radius: ${({ theme }) => theme.CHECKBOX_BORDER_RADIUS};
+	background-color: ${({ theme, checked }) => (checked ? theme.colors.primary : 'transparent')};
+	width: ${({ theme }) => theme.font.size.medium};
+	height: ${({ theme }) => theme.font.size.medium};
+	border-width: ${({ theme }) => theme.border.thinner};
+	border-color: ${({ theme }) => theme.colors.border};
+	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
 `;
 
 export const Check = styled(Icon)`

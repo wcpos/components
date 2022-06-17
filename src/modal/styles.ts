@@ -6,5 +6,5 @@ export const Container = styled.View`
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
-	z-index: ${({ theme }) => theme.MODAL_Z_INDEX};
+	z-index: ${({ theme }) => theme.zIndex.modal};
 `;

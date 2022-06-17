@@ -6,14 +6,14 @@ import styled from 'styled-components/native';
 // `;
 
 export const Container = styled.View`
-	z-index: ${({ theme }) => theme.POPOVER_Z_INDEX};
+	z-index: ${({ theme }) => theme.zIndex.popover};
 	position: absolute;
 `;
 
 export const Popover = styled.View`
-	background-color: ${({ theme }) => theme.POPOVER_BACKGROUND_COLOR};
+	background-color: #FFFFFF;
 	padding: 5px;
-	border-radius: 3px;
+	border-radius: ${({ theme }) => theme.rounding.small}px;
 	
 	shadow-offset: { width: 0, height: 1 };
 	shadow-opacity: 0.22;

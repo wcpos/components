@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Check } from './styles';
+import * as Styled from './styles';
 
 type Props = {
 	checked?: boolean;
@@ -21,8 +21,8 @@ export default function CheckboxIcon({
 	const errorState = hasError && !disabled && !checked;
 	const iconColor = disabled ? '#ccc' : '#FFFFFF';
 	return (
-		<Box checked={checked}>
-			{checked && <Check name="check" size="small" disabled={disabled} color="#FFF" />}
-		</Box>
+		<Styled.Box checked={checked}>
+			{checked && <Styled.Check name="check" size="small" disabled={disabled} color="#FFF" />}
+		</Styled.Box>
 	);
 }

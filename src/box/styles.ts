@@ -41,7 +41,7 @@ export const Box = styled.View<BoxProps>`
 			shadow-offset: { width: 0, height: 1 };
 			shadow-opacity: 0.22;
 			shadow-radius: 7.5px;
-			shadow-color: ${({ theme }) => theme.PAGE_BACKGROUND_COLOR};
+			shadow-color: #000;
 			elevation: 5;
 		`};
 
