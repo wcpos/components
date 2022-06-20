@@ -49,7 +49,7 @@ export const Text = ({
 	onPress,
 	size = 'medium',
 	style = {},
-	type = 'primary',
+	type,
 	uppercase,
 	weight = 'normal',
 }: TextProps) => {
@@ -59,7 +59,6 @@ export const Text = ({
 			italic={italic}
 			onPress={onPress}
 			size={size}
-			// @ts-ignore
 			style={style}
 			type={type}
 			uppercase={uppercase}

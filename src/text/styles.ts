@@ -5,6 +5,8 @@ type TextProps = import('./text').TextProps;
 export const Text = styled.Text<TextProps>`
 	color: ${({ type, theme }) => {
 		switch (type) {
+			case 'primary':
+				return theme.colors.primary;
 			case 'secondary':
 				return theme.colors.secondary;
 			case 'attention':
