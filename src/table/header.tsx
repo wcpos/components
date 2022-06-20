@@ -64,10 +64,12 @@ const TableHeader = <T extends object>({
 										<Text uppercase size="small">
 											{label}
 										</Text>
-										<SortIcon
-											visible={hovered || showSortIndicator}
-											direction={showSortIndicator ? sortDirection : undefined}
-										/>
+										{(showSortIndicator || hovered) && (
+											<SortIcon
+												hovered={hovered}
+												direction={showSortIndicator ? sortDirection : undefined}
+											/>
+										)}
 									</Box>
 								)}
 							</Pressable>

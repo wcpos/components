@@ -11,7 +11,7 @@ export const Box = styled(Pressable)`
 	border-color: ${({ theme }) => theme.colors.border};
 	border-style: solid;
 	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
-	padding: ${({ theme }) => theme.spacing.small};
+	padding: ${({ theme }) => `${theme.spacing.small}px`};
 
 	${Platform.OS === 'ios' &&
 	css`

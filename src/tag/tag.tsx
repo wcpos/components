@@ -40,7 +40,7 @@ export const Tag = ({ children, removable, disabled, onRemove, onPress }: TagPro
 					size="xSmall"
 					disabled={disabled}
 					onPress={onRemove}
-					backgroundStyle={{ marginLeft: 2, padding: 0, backgroundColor: 'transparent' }}
+					backgroundStyle={{ paddingHorizontal: '2px', backgroundColor: 'transparent' }}
 					type="inverse"
 				/>
 			)}

@@ -11,14 +11,14 @@ export interface SortIconProps {
 	/**
 	 *
 	 */
-	visible?: boolean;
+	hovered?: boolean;
 }
 
-export const SortIcon = ({ direction, visible = true }: SortIconProps) => {
+export const SortIcon = ({ direction, hovered = false }: SortIconProps) => {
 	return (
 		<Styled.Container>
-			<Styled.Up active={direction === 'asc'} />
-			<Styled.Down active={direction === 'desc'} />
+			<Styled.Up active={direction === 'asc'} hovered={hovered} />
+			<Styled.Down active={direction === 'desc'} hovered={hovered} />
 		</Styled.Container>
 	);
 };
