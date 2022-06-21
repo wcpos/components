@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Button from '../button';
 
-type Props = {
+type WebViewProps = {
 	src: string;
 	title?: string;
 	onMessage?: (event: MessageEvent) => void;
@@ -9,7 +9,10 @@ type Props = {
 	onError?: (event: React.SyntheticEvent<HTMLIFrameElement, Event>) => void;
 };
 
-const WebView: React.FC<Props> = ({ src, title, onError, onMessage, onLoad }) => {
+const WebViewBase = (
+	{ src, title, onError, onMessage, onLoad }: WebViewProps,
+	ref: React.Ref<HTMLIFrameElement>
+) => {
 	// eslint-disable-next-line consistent-return
 	React.useEffect(() => {
 		if (typeof onMessage === 'function') {
@@ -21,19 +24,19 @@ const WebView: React.FC<Props> = ({ src, title, onError, onMessage, onLoad }) =>
 	}, []);
 
 	return (
-		<>
-			<iframe
-				title={title}
-				src={src}
-				onLoad={onLoad}
-				onError={onError}
-				width="100%"
-				height="100%"
-				// @ts-ignore
-				allowpaymentrequest
-			/>
-		</>
+		<iframe
+			ref={ref}
+			title={title}
+			src={src}
+			onLoad={onLoad}
+			onError={onError}
+			width="100%"
+			height="100%"
+			// @ts-ignore
+			// allowpaymentrequest
+			style={{ border: 'none' }}
+		/>
 	);
 };
 
-export default WebView;
+export const WebView = React.forwardRef(WebViewBase);

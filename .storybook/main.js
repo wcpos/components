@@ -17,7 +17,7 @@ module.exports = {
   }],
   framework: '@storybook/react',
   typescript: {// @TODO remove this https://github.com/styleguidist/react-docgen-typescript/issues/356
-    reactDocgen: false,
+    // reactDocgen: false,
   },
 
   babel: async options => ({ // Update your babel configuration here

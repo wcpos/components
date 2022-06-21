@@ -1,1 +1,1 @@
-export { default } from './webview';
+export { WebView as default } from './webview';

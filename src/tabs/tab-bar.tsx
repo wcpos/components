@@ -85,7 +85,12 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 				}}
 				style={{ width: '100%' }}
 			>
-				<Box horizontal space="xSmall" padding="xSmall" style={{ width: '100%' }}>
+				<Box
+					horizontal={direction === 'horizontal'}
+					space="xSmall"
+					padding="xSmall"
+					style={{ width: '100%' }}
+				>
 					{routes.map((route, i) => {
 						const focused = i === focusedIndex;
 						return (
