@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Popover, { PopoverProps } from '../popover';
 import Menu from '../menu';
-import * as Styled from './styles';
 
 type TextAction = import('../menu/menu').TextAction;
 

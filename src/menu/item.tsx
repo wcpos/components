@@ -50,12 +50,7 @@ export const Item = ({ children, label = '', onPress, action, type, style }: Ite
 	 */
 	const calculatedStyled = React.useCallback(
 		({ hovered }) => {
-			let hoverBackgroundColor = theme.colors.lightGrey;
-			if (type) {
-				const color = `color_${type}`.toUpperCase();
-				// @ts-ignore
-				hoverBackgroundColor = theme[color];
-			}
+			const hoverBackgroundColor = type ? theme.colors[type] : theme.colors.lightGrey;
 			return [{ backgroundColor: hovered ? hoverBackgroundColor : 'transparent' }, style];
 		},
 		[style, theme, type]

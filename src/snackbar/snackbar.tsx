@@ -34,15 +34,16 @@ export interface SnackbarProps {
 }
 
 const durationValues = {
-	default: 2500,
-	longer: 4000,
+	shorter: 2500,
+	default: 4000,
+	longer: 6000,
 };
 
 export const Snackbar = ({
 	id,
 	message,
 	action,
-	duration,
+	duration = 'default',
 	onDismiss,
 	dismissable = true,
 }: SnackbarProps) => {
@@ -58,7 +59,7 @@ export const Snackbar = ({
 	/**
 	 * Auto dismiss the Snackbar after a certain amount of time.
 	 */
-	useTimeout(dismiss, durationValues[duration] || durationValues.default);
+	useTimeout(dismiss, durationValues[duration]);
 
 	/**
 	 *
@@ -79,14 +80,14 @@ export const Snackbar = ({
 			paddingY="small"
 			space="medium"
 			rounding="large"
-			style={{ backgroundColor: theme.colors.primary }}
+			style={{ backgroundColor: theme.colors.headerBackground }}
 			horizontal
 			align="center"
 			pointerEvents="auto"
 		>
 			<Text type="inverse">{message}</Text>
 			{action ? (
-				<Button type="inverse" onPress={onActionClick}>
+				<Button type="primary" size="small" onPress={onActionClick}>
 					{action.label}
 				</Button>
 			) : null}
