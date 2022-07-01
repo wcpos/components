@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ViewStyle } from 'react-native';
 import TextInput from '../textinput';
 import Icon from '../icon';
-import Tag from '../tag';
+import Tag from '../pill';
 import * as Styled from './styles';
 
 /**
@@ -23,7 +23,7 @@ export type SearchFiltersProps = {
 	 *
 	 */
 	label: string;
-} & Pick<import('../tag/tag').TagProps, 'onRemove'>; // pass-through props
+} & Pick<import('../pill/tag').TagProps, 'onRemove'>; // pass-through props
 
 /**
  *

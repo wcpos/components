@@ -26,7 +26,7 @@ export const Text = styled.Text<TextProps>`
 		}
 	}};
 	font-family: ${({ theme }) => theme.font.family};
-	font-style: ${({ italic }) => (italic ? 'italic' : 'normal')};
+	// font-style: ${({ italic }) => (italic ? 'italic' : 'normal')};
 	font-weight: ${({ weight, theme }) => {
 		switch (weight) {
 			case 'bold':

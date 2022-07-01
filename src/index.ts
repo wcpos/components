@@ -51,7 +51,7 @@ export { default as Space } from './space';
 export { default as Switch } from './switch';
 export { default as Table } from './table';
 export { default as Tabs } from './tabs';
-export { default as Tag } from './tag';
+export { default as Tag } from './pill';
 export { default as Text } from './text';
 export { default as TextArea } from './textarea';
 export { default as TextInput } from './textinput';
