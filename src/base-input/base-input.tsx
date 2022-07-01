@@ -40,7 +40,7 @@ export const BaseInput = ({
 	// const renderLeftAccessory = leftAccessory && 
 
 	return (
-		<Styled.Box
+		<Styled.InputAndAccessoryContainer
 			// viewStyle={[
 			// 	styles.inputContainer,
 			// 	focused && styles.inputContainerFocused,
@@ -58,6 +58,6 @@ export const BaseInput = ({
 				{showPlaceholder ? placeholder : value}
 			</Styled.InputText>
 			{rightAccessory}
-		</Styled.Box>
+		</Styled.InputAndAccessoryContainer>
 	);
 };

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, ViewStyle, StyleProp, ViewProps, ScrollView } from 'react-native';
 import Space from '../space';
+import ErrorBoundary from '../error-boundary';
 import * as Styled from './styles';
 
 type Spacing = import('@wcpos/themes').SpacingTypes;
@@ -10,7 +11,7 @@ export interface BoxProps extends ViewProps {
 	/**
 	 * Children Views.
 	 */
-	// children: React.ReactNode;
+	// children?: React.ReactNode;
 	/**
 	 * Padding applied on all sides.
 	 */
@@ -96,6 +97,10 @@ export interface BoxProps extends ViewProps {
 	 */
 	scrollable?: boolean;
 	style?: StyleProp<ViewStyle>;
+	/**
+	 * If true, children will be wraped in ErrorBoundary.
+	 */
+	errorBoundary?: boolean;
 }
 
 /**
@@ -116,6 +121,7 @@ const BoxBase = (
 		distribution = 'start',
 		reverse = false,
 		border = false,
+		errorBoundary = false,
 		...rest
 	}: BoxProps,
 	ref
@@ -124,13 +130,15 @@ const BoxBase = (
 	const items = useMemo(() => {
 		const filtered = React.Children.toArray(children).filter((x) => x);
 
-		return React.Children.map(filtered, (child, index) => (
+		const withSpaces = React.Children.map(filtered, (child, index) => (
 			<>
 				{index > 0 && space !== 'none' && <Space value={space} />}
 				{child}
 			</>
 		));
-	}, [children, space]);
+
+		return errorBoundary ? <ErrorBoundary>{withSpaces}</ErrorBoundary> : withSpaces;
+	}, [children, errorBoundary, space]);
 
 	return (
 		<Styled.Box

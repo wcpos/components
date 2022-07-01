@@ -25,15 +25,26 @@ export interface TagProps {
 	 * Called if tag is pressed
 	 */
 	onPress?: () => void;
+	/**
+	 * Called if tag is pressed
+	 */
+	size: 'small' | 'medium' | 'large';
 }
 
 /**
  *
  */
-export const Tag = ({ children, removable, disabled, onRemove, onPress }: TagProps) => {
+export const Tag = ({
+	children,
+	removable,
+	disabled,
+	onRemove,
+	onPress,
+	size = 'medium',
+}: TagProps) => {
 	const tag = (
 		<Styled.Tag disabled={disabled} style={removable ? { paddingRight: 1 } : {}}>
-			<Styled.Label size="small">{children}</Styled.Label>
+			<Styled.Label size={size}>{children}</Styled.Label>
 			{removable && (
 				<Icon
 					name="xmark"

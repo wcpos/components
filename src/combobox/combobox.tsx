@@ -91,8 +91,12 @@ export const Combobox = ({
 	// 	[choices, onChange]
 	// );
 
+	// const handleSelect = React.useCallback((val) => {
+	// 	console.log(val);
+	// }, []);
+
 	return (
-		<Dropdown withArrow={false} matchWidth items={options}>
+		<Dropdown withArrow={false} matchWidth items={options} onSelect={onChange}>
 			<TextInput
 				label={label}
 				hideLabel={hideLabel}

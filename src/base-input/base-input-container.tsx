@@ -47,7 +47,7 @@ export const BaseInputContainer = ({
 	onLabelClick,
 	hideLabel = false,
 }: BaseInputContainerProps) => (
-	<Box space="xSmall">
+	<Box space="xSmall" style={{ flex: 1 }}>
 		{!hideLabel && (
 			<TouchableWithoutFeedback onPress={onLabelClick} disabled={disabled}>
 				<Box>

@@ -3,7 +3,7 @@ import Platform from '@wcpos/utils/src/platform';
 import Pressable from '../pressable';
 import { Text } from '../text/styles';
 
-export const Box = styled(Pressable)`
+export const InputAndAccessoryContainer = styled(Pressable)`
 	flex-direction: row;
 	align-items: center;
 	background: ${({ theme }) => theme.colors.inputBackground};
