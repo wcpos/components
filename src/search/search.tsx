@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ViewStyle } from 'react-native';
 import TextInput from '../textinput';
 import Icon from '../icon';
-import Tag from '../pill';
+import Pill from '../pill';
 import * as Styled from './styles';
 
 /**
@@ -23,7 +23,7 @@ export type SearchFiltersProps = {
 	 *
 	 */
 	label: string;
-} & Pick<import('../pill/tag').TagProps, 'onRemove'>; // pass-through props
+} & Pick<import('../pill/pill').PillProps, 'onRemove'>; // pass-through props
 
 /**
  *
@@ -38,7 +38,7 @@ export type SearchProps = {
 	 */
 	actions?: (SearchActionsProps | React.ReactElement)[];
 	/**
-	 * Tags displayed in the search field
+	 * Pills displayed in the search field
 	 */
 	filters?: SearchFiltersProps[];
 	style?: ViewStyle;
@@ -54,9 +54,9 @@ export const Search = ({ actions, onSearch, filters, style, ...rest }: SearchPro
 	const renderFilters = React.useMemo(() => {
 		if (filters) {
 			return filters.map(({ label: filterLabel, onRemove }) => (
-				<Tag removable onRemove={onRemove}>
+				<Pill removable onRemove={onRemove}>
 					{filterLabel}
-				</Tag>
+				</Pill>
 			));
 		}
 		return undefined;

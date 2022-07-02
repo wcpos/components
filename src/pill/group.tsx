@@ -3,6 +3,8 @@ import { Pill } from './pill';
 import Box from '../box';
 import * as Styled from './styles';
 
+type ColorTypes = import('@wcpos/themes/src/index').ColorTypes;
+
 /**
  * Action with a Label.
  */
@@ -33,6 +35,10 @@ export interface PillGroupProps {
 	 *
 	 */
 	size?: 'small' | 'medium' | 'large';
+	/**
+	 * Background color of the pill
+	 */
+	color?: ColorTypes;
 }
 
 const spacingMap = {
@@ -44,16 +50,16 @@ const spacingMap = {
 /**
  *
  */
-export const PillGroup = ({ pills, size = 'medium' }: PillGroupProps) => {
+export const PillGroup = ({ pills, size = 'medium', color }: PillGroupProps) => {
 	return (
 		<Box horizontal space={spacingMap[size]}>
 			{pills.map((pill, i) =>
 				typeof pill === 'string' ? (
-					<Pill key={i} size={size}>
+					<Pill key={i} size={size} color={color}>
 						pill
 					</Pill>
 				) : (
-					<Pill key={pill.key || i} size={size} onPress={pill.action}>
+					<Pill key={pill.key || i} size={size} onPress={pill.action} color={color}>
 						{pill.label}
 					</Pill>
 				)

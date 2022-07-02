@@ -115,7 +115,7 @@ export const Select = ({
 		>
 			<Dropdown ref={ref} items={options} onSelect={handleSelect} matchWidth withArrow={false}>
 				<BaseInput
-					value={selected?.label ?? ''}
+					value={selectedRaw?.label ?? selectedRaw}
 					placeholder={placeholder}
 					disabled={disabled}
 					// focused={open}

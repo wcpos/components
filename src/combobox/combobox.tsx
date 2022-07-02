@@ -105,7 +105,7 @@ export const Combobox = ({
 				onChange={onSearch}
 				value={searchValue || selected}
 				clearable
-				onClear={() => onChange(null)}
+				// onClear={() => onSearch('')}
 			/>
 		</Dropdown>
 	);

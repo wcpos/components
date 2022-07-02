@@ -155,7 +155,7 @@ export interface TextInputProps {
 	 */
 	prefix?: string;
 	/**
-	 * Adds functionality to the TextInput, eg: buttons, tags
+	 * Adds functionality to the TextInput, eg: buttons, pills, etc.
 	 */
 	leftAccessory?: React.ReactNode;
 	/**
