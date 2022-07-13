@@ -26,10 +26,21 @@ module.exports = {
   }),
 
   webpackFinal: async (config, { configType }) => {
+
+    const rules = [
+      {
+        test: /\.(md|html)$/,
+        type: 'asset/source',
+      },
+    ];
+    config.module.rules = config.module.rules.concat(rules);
+
     config.resolve.alias = { ...(config.resolve.alias || {}),
       // Mock expo-haptics
       'expo-haptics$': path.resolve(__dirname, 'utils/expo-haptics')
     };
+
+    console.log(config.module.rules);
     return config;
   }
 
