@@ -88,11 +88,11 @@ const WebViewBase = (
 			onMessage?.(message as any);
 		};
 
-		iframeRef?.current?.contentWindow?.addEventListener('message', onIframeMessage);
+		iframeRef?.current?.addEventListener('message', onIframeMessage, true);
 		// (window as any).attachEvent('onmessage', onIframeMessage);
 
 		return () => {
-			iframeRef?.current?.contentWindow?.removeEventListener('message', onIframeMessage);
+			iframeRef?.current?.removeEventListener('message', onIframeMessage, true);
 			// TODO: need to remove attachEvent?
 		};
 	}, [onMessage]);
@@ -108,6 +108,7 @@ const WebViewBase = (
 			src={source?.uri || src}
 			srcDoc={srcDoc}
 			onLoad={onLoad}
+			frameBorder="0"
 			style={style}
 		/>
 	);

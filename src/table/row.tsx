@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ViewStyle } from 'react-native';
+import { ViewStyle, FlexAlignType } from 'react-native';
 import Text from '../text';
 import Box from '../box';
 import * as Styled from './styles';
@@ -17,6 +17,18 @@ export interface TableRowProps<T> {
 	itemIndex: number;
 }
 
+/**
+ *
+ */
+const alignItemsMap: Record<string, FlexAlignType> = {
+	left: 'flex-start',
+	center: 'center',
+	right: 'flex-end',
+};
+
+/**
+ *
+ */
 const TableRow = <T extends object>({
 	item,
 	columns,
@@ -44,12 +56,28 @@ const TableRow = <T extends object>({
 	return (
 		<Styled.Row horizontal align="center" style={rowStyle} alt={itemIndex % 2 !== 0}>
 			{columns.map((column, index) => {
-				const { flexGrow = 1, flexShrink = 1, flexBasis = 'auto', width = '100%' } = column;
+				const {
+					flexGrow = 1,
+					flexShrink = 1,
+					flexBasis = 'auto',
+					width = '100%',
+					align = 'left',
+				} = column;
+
 				return (
 					<Box
 						key={column.key}
 						padding="small"
-						style={[{ flexGrow, flexShrink, flexBasis, width }, cellStyle]}
+						style={[
+							{
+								flexGrow,
+								flexShrink,
+								flexBasis,
+								width,
+								alignItems: alignItemsMap[align],
+							},
+							cellStyle,
+						]}
 					>
 						{renderCell(column, index)}
 					</Box>

@@ -30,6 +30,7 @@ export interface ColumnProps<T = any> {
 	flexBasis?: any;
 	width?: string;
 	defaultSortDirection?: SortDirection;
+	align?: 'left' | 'center' | 'right';
 }
 
 export interface TableProps<T> {

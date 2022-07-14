@@ -14,6 +14,18 @@ export interface TableHeaderProps<T> {
 	sortDirection?: import('./table').SortDirection;
 }
 
+/**
+ *
+ */
+const alignItemsMap: Record<string, FlexAlignType> = {
+	left: 'flex-start',
+	center: 'center',
+	right: 'flex-end',
+};
+
+/**
+ *
+ */
 const TableHeader = <T extends object>({
 	columns,
 	style,
@@ -34,6 +46,7 @@ const TableHeader = <T extends object>({
 					defaultSortDirection = 'asc',
 					hideLabel = false,
 					label,
+					align = 'left',
 				} = column;
 				const sortable = !disableSort && typeof sort === 'function';
 				const showSortIndicator = sortable && sortBy === key;
@@ -55,13 +68,16 @@ const TableHeader = <T extends object>({
 					<Box
 						key={key}
 						padding="small"
-						style={[{ flexGrow, flexShrink, flexBasis, width }, style]}
+						style={[
+							{ flexGrow, flexShrink, flexBasis, width, alignItems: alignItemsMap[align] },
+							style,
+						]}
 					>
 						{sortable ? (
 							<Pressable onPress={handlePress}>
 								{({ hovered }: any) => (
-									<Box horizontal space="xxSmall" align="center">
-										<Text uppercase size="small">
+									<Box horizontal space="xxSmall" align="center" style={{ flex: 1 }}>
+										<Text uppercase size="small" numberOfLines={1} type="textMuted">
 											{label}
 										</Text>
 										{(showSortIndicator || hovered) && (
@@ -75,7 +91,7 @@ const TableHeader = <T extends object>({
 							</Pressable>
 						) : (
 							!hideLabel && (
-								<Text uppercase size="small">
+								<Text uppercase size="small" numberOfLines={1} type="textMuted">
 									{label}
 								</Text>
 							)

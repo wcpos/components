@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle, TextProps as RNTextProps } from 'react-native';
 import { decode } from 'html-entities';
 import * as Styled from './styles';
 
-export interface TextProps {
+export interface TextProps extends RNTextProps {
 	/**
 	 *
 	 */
@@ -52,6 +52,7 @@ export const Text = ({
 	type,
 	uppercase,
 	weight = 'normal',
+	...props
 }: TextProps) => {
 	return (
 		<Styled.Text
@@ -63,6 +64,7 @@ export const Text = ({
 			type={type}
 			uppercase={uppercase}
 			weight={weight}
+			{...props}
 		>
 			{typeof children === 'string' ? decode(children) : children}
 		</Styled.Text>
