@@ -179,18 +179,32 @@ export const ModalBase = (
 				<Box horizontal>
 					{secondaryActions.map((secondaryAction, index) => (
 						<Button
-							fill
 							key={secondaryAction.label}
+							fill
+							size="large"
 							title={secondaryAction.label}
 							onPress={secondaryAction.action}
 							type={secondaryAction.type || 'secondary'}
+							style={{
+								flex: 1,
+								borderTopLeftRadius: 0,
+								borderTopRightRadius: 0,
+								borderBottomRightRadius: 0,
+							}}
 						/>
 					))}
 					<Button
 						fill
+						size="large"
 						title={primaryAction.label}
 						onPress={primaryAction.action}
 						type={primaryAction.type || 'primary'}
+						style={{
+							flex: 1,
+							borderTopLeftRadius: 0,
+							borderTopRightRadius: 0,
+							borderBottomLeftRadius: 0,
+						}}
 					/>
 				</Box>
 			);
