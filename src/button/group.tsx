@@ -27,13 +27,14 @@ export type ButtonGroupProps = {
  * Arrange `Button` components with consistent spacing.
  */
 export const Group = ({
-	children,
 	alignment = 'full',
 	style,
 	type = 'primary',
 	size = 'medium',
 	background = 'solid',
+	...props
 }: ButtonGroupProps) => {
+	const children = React.Children.toArray(props.children).filter(Boolean);
 	const childrenLength = React.Children.count(children);
 
 	/**
@@ -65,12 +66,12 @@ export const Group = ({
 			};
 		}
 
-		return React.cloneElement(child, {
-			style,
-			size, // override size
-			type, // override type
-			background, // override background
-		});
+		if (childrenLength === 1) {
+			style = {};
+		}
+
+		const newProps = { size, type, background, ...child.props, style };
+		return React.cloneElement(child, newProps);
 	});
 
 	/**
