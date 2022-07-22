@@ -19,9 +19,6 @@
 		"build-storybook": "build-storybook -o docs-build",
 		"svg": "svgr --config-file ./svgr.config.js src/icon/svg/fontawesome/solid --out-dir src/icon/components/fontawesome/solid"
 	},
-	"resolutions": {
-		"react-refresh": "^0.11.0"
-	},
 	"dependencies": {
 		"@shopify/flash-list": "^1.2.0",
 		"@wcpos/hooks": "*",
@@ -53,8 +50,7 @@
 		"@storybook/addon-actions": "6.5.9",
 		"@storybook/addon-controls": "6.5.9",
 		"@storybook/addon-essentials": "6.5.9",
-		"@storybook/addon-knobs": "6.4.0",
-		"@storybook/addon-react-native-web": "0.0.19--canary.37.cb55428.0",
+		"@storybook/addon-react-native-web": "0.0.18",
 		"@storybook/builder-webpack5": "6.5.9",
 		"@storybook/manager-webpack5": "6.5.9",
 		"@storybook/preset-create-react-app": "4.1.2",
