@@ -6,14 +6,10 @@ import * as Styled from './styles';
 
 export interface TableRowProps<T> {
 	item: T;
-	columns: import('./table').ColumnProps<T>[];
+	columns: import('./').ColumnProps<T>[];
 	rowStyle?: ViewStyle;
 	cellStyle?: ViewStyle;
-	cellRenderer?: (
-		item: T,
-		column: import('./table').ColumnProps<T>,
-		index: number
-	) => React.ReactNode;
+	cellRenderer?: (item: T, column: import('./').ColumnProps<T>, index: number) => React.ReactNode;
 	itemIndex: number;
 }
 

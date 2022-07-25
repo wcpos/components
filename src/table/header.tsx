@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { GestureResponderEvent, ViewStyle } from 'react-native';
+import { GestureResponderEvent, ViewStyle, FlexAlignType } from 'react-native';
 import * as Styled from './styles';
 import Text from '../text';
 import Pressable from '../pressable';
@@ -7,11 +7,11 @@ import Box from '../box';
 import SortIcon from '../sort-icon';
 
 export interface TableHeaderProps<T> {
-	columns: import('./table').ColumnProps<T>[];
+	columns: import('./').ColumnProps<T>[];
 	style?: ViewStyle;
-	sort?: import('./table').Sort;
+	sort?: import('./').Sort;
 	sortBy?: keyof T & string;
-	sortDirection?: import('./table').SortDirection;
+	sortDirection?: import('./').SortDirection;
 }
 
 /**

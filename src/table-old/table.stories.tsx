@@ -6,7 +6,7 @@ import Text from '../text';
 import Table, { TableProps } from './table';
 
 export default {
-	title: 'Components/Table2',
+	title: 'Components/TableOld',
 	component: Table,
 };
 

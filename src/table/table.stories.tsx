@@ -1,14 +1,16 @@
 import * as React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import Text from '../text';
+import Button from '../button';
 // import { text, select, boolean } from '@storybook/addon-knobs';
 
-import Table, { TableProps } from './table';
+import Table, { TableProps } from '.';
 
 export default {
 	title: 'Components/Table',
 	component: Table,
-};
+} as ComponentMeta<typeof Table>;
 
 const size = ['Small', 'Medium', 'Large', 'Massive'];
 const colour = ['Red', 'Blue', 'Green', 'Yellow'];
@@ -33,7 +35,12 @@ const data = new Array(1000)
 	.fill(true)
 	.map(() => ({ name: name(), price: price(), quantity: quantity(), height: height() }));
 
-export const BasicUsage = (props: TableProps<Data>) => <Table<Data> {...props} />;
+/**
+ *
+ */
+export const BasicUsage: ComponentStory<typeof Table> = (props: TableProps<Data>) => (
+	<Table<Data> {...props} />
+);
 BasicUsage.args = {
 	columns: [
 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
@@ -41,13 +48,16 @@ BasicUsage.args = {
 		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
 	],
 	data,
+	estimatedItemSize: 32,
 	style: { height: 300 },
 	// sort: action('Sort'),
 	// sortBy: 'name',
 	// sortDirection: 'asc',
 };
 
-export const Empty = (props: TableProps<Data>) => <Table<Data> {...props} />;
+export const Empty: ComponentStory<typeof Table> = (props: TableProps<Data>) => (
+	<Table<Data> {...props} />
+);
 Empty.args = {
 	columns: [
 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
@@ -55,11 +65,11 @@ Empty.args = {
 		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
 	],
 	data: [],
-	style: { height: 300 },
 	sort: action('Sort'),
 	sortBy: 'name',
 	sortDirection: 'asc',
 	empty: 'Nothing Found',
+	estimatedItemSize: 32,
 };
 
 // export const CustomTableRow = (props: TableProps<Data>) => {
@@ -92,7 +102,7 @@ Empty.args = {
 // 	// sortDirection: 'asc',
 // };
 
-export const CustomTableCell = (props: TableProps<Data>) => {
+export const CustomTableCell: ComponentStory<typeof Table> = (props: TableProps<Data>) => {
 	return <Table<Data> {...props} />;
 };
 CustomTableCell.args = {
@@ -105,14 +115,13 @@ CustomTableCell.args = {
 			flexGrow: 0,
 			flexShrink: 1,
 			width: '30%',
-			onRender: (item: Data) => <Text>{`$ ${item.price.toFixed(2)}`}</Text>,
 		},
 	],
 	data,
-	style: { height: 300 },
 	sort: action('Sort'),
 	sortBy: 'name',
 	sortDirection: 'asc',
+	style: { height: 300 },
 };
 
 // export const CustomTable = (props: TableProps) => {
@@ -156,7 +165,7 @@ CustomTableCell.args = {
 // 	sortDirection: 'asc',
 // };
 
-export const TableFooter = (props: TableProps<Data>) => {
+export const TableFooter: ComponentStory<typeof Table> = (props: TableProps<Data>) => {
 	return <Table<Data> {...props} />;
 };
 TableFooter.args = {
@@ -171,4 +180,81 @@ TableFooter.args = {
 	sortBy: 'name',
 	sortDirection: 'asc',
 	footer: <Text>hi</Text>,
+};
+
+/**
+ *
+ */
+export const AddOrRemoveRows: ComponentStory<typeof Table> = (props: TableProps<Data>) => {
+	const [d, setData] = React.useState(props.data);
+
+	const cellRenderer = React.useCallback(
+		(item, column, itemIndex) => {
+			if (column.key === 'action') {
+				return (
+					<Button
+						title="Remove"
+						onPress={() => {
+							debugger;
+							const newData = [...d];
+							newData.splice(itemIndex, 1);
+							setData(newData);
+						}}
+					/>
+				);
+			}
+			return <Text>{String(item[column.key])}</Text>;
+		},
+		[d]
+	);
+
+	/**
+	 *
+	 */
+	const renderItem = React.useCallback(
+		({ item, index }) =>
+			// renderContext: TableRowRenderContext<T>,
+			{
+				// subscribe to item, special case to trigger render for data changes
+				// @TODO: find a better way to do this
+				// @ts-ignore
+				// const forceRender = useObservableState(item.$);
+
+				return (
+					<Table.Row
+						// config={renderContext}
+						item={item}
+						columns={props.columns}
+						itemIndex={index}
+						cellRenderer={cellRenderer}
+					/>
+				);
+			},
+		[cellRenderer, props.columns]
+	);
+
+	return (
+		<Table<Data>
+			{...props}
+			data={d}
+			renderItem={renderItem}
+			footer={
+				<Button
+					title="Add"
+					onPress={() => setData([{ name: 'New Row', price: 0, quantity: 0 }, ...d])}
+				/>
+			}
+		/>
+	);
+};
+AddOrRemoveRows.args = {
+	columns: [
+		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
+		{ key: 'name', label: 'Name', flexGrow: 1, flexShrink: 0, width: '50%' },
+		{ key: 'price', label: 'Price', flexGrow: 0, flexShrink: 1, width: '30%' },
+		{ key: 'action', label: '', flexGrow: 0, flexShrink: 1, width: '30%' },
+	],
+	data,
+	estimatedItemSize: 48,
+	style: { height: 300 },
 };
