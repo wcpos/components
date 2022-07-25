@@ -24,7 +24,7 @@
 		"@wcpos/hooks": "*",
 		"@wcpos/themes": "*",
 		"@wcpos/utils": "*",
-		"date-fns": "2.29.0",
+		"date-fns": "2.29.1",
 		"expo-haptics": "~11.3.0",
 		"html-entities": "^2.3.3",
 		"lodash": "4.17.21",
