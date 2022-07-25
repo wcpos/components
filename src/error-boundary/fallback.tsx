@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { FallbackProps } from 'react-error-boundary';
 import { useTheme } from 'styled-components/native';
+import type { FallbackProps } from 'react-error-boundary';
 import Box from '../box';
 import Icon from '../icon';
 import Text from '../text';

@@ -10,12 +10,8 @@ type Props = Omit<ErrorBoundaryPropsWithComponent, 'FallbackComponent'> & {
 	FallbackComponent?: React.ComponentType<FallbackProps>;
 };
 
-const Boundary: React.FC<Props> = (props) => {
-	return (
-		<ErrorBoundary {...props} FallbackComponent={props.FallbackComponent || Fallback}>
-			{props.children}
-		</ErrorBoundary>
-	);
+const Boundary = (props: Props) => {
+	return <ErrorBoundary {...props} FallbackComponent={props.FallbackComponent || Fallback} />;
 };
 
 export default Boundary;

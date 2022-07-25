@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { StoryWrapper } from '@storybook/addons';
-import { action } from '@storybook/addon-actions';
 import Text from '../text';
-import Icon from '../icon';
 import Portal from '../portal';
 
 import { Tooltip, TooltipProps } from './tooltip';
@@ -12,10 +9,10 @@ import { Tooltip, TooltipProps } from './tooltip';
  * Tooltips require
  * - Portals
  */
-const AppProvider: StoryWrapper = (Story, context) => {
+const AppProvider = ({ children }) => {
 	return (
 		<Portal.Provider>
-			<Story {...context} />
+			{children}
 			<Portal.Manager />
 		</Portal.Provider>
 	);
@@ -24,15 +21,16 @@ const AppProvider: StoryWrapper = (Story, context) => {
 export default {
 	title: 'Components/Tooltip',
 	component: Tooltip,
-	decorators: [AppProvider],
 };
 
 export const BasicUsage = (props: TooltipProps) => (
-	<View style={{ padding: 50, alignItems: 'flex-start' }}>
-		<Tooltip {...props}>
-			<Text>This is some unclear text.</Text>
-		</Tooltip>
-	</View>
+	<AppProvider>
+		<View style={{ padding: 50, alignItems: 'flex-start' }}>
+			<Tooltip {...props}>
+				<Text>This is some unclear text.</Text>
+			</Tooltip>
+		</View>
+	</AppProvider>
 );
 BasicUsage.args = {
 	content: 'Here is some very important clarification!',

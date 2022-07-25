@@ -9,17 +9,17 @@ import * as Svgs from './components/fontawesome/solid';
 export default {
 	title: 'Components/Icon',
 	component: Icon,
-	argTypes: {
-		color: { control: 'color' },
-		size: {
-			control: {
-				type: 'inline-radio',
-				// options: [
-				// 	'default', 'small', 'large'
-				// ],
-			},
-		},
-	},
+	// argTypes: {
+	// 	color: { control: 'color' },
+	// 	size: {
+	// 		control: {
+	// 			type: 'inline-radio',
+	// 			// options: [
+	// 			// 	'default', 'small', 'large'
+	// 			// ],
+	// 		},
+	// 	},
+	// },
 };
 
 const getRandomIconName = () => {
@@ -31,7 +31,7 @@ const getRandomIconName = () => {
  * Tooltips require
  * - Portals
  */
-const AppProvider: React.FC = ({ children }) => {
+const AppProvider = ({ children }) => {
 	return (
 		<Portal.Provider>
 			{children}

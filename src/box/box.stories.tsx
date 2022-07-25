@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { View } from 'react-native';
 import Text from '../text';
@@ -8,9 +9,9 @@ import { Box, BoxProps } from './box';
 export default {
 	title: 'Components/Box',
 	component: Box,
-};
+} as ComponentMeta<typeof Box>;
 
-export const Basic = (props: BoxProps) => (
+export const Basic: ComponentStory<typeof Box> = (props: BoxProps) => (
 	<Box {...props}>
 		<Text>A</Text>
 		<Text>B</Text>

@@ -2,17 +2,17 @@ export const selectionAsync = async (): Promise<void> => {}
 export const notificationAsync = async (): Promise<void> => {}
 export const impactAsync = async (): Promise<void> => {}
 
-export enum ImpactFeedbackStyle {
+export const ImpactFeedbackStyle = {
   /**
    * A collision between small, light user interface elements
    */
-  Light = 'light',
+  Light: 'light',
   /**
    * A collision between moderately sized user interface elements
    */
-  Medium = 'medium',
+  Medium: 'medium',
   /**
    * A collision between large, heavy user interface elements
    */
-  Heavy = 'heavy',
+  Heavy: 'heavy'
 }

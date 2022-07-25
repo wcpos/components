@@ -6,7 +6,8 @@ import Animated, {
 	withTiming,
 	FadeInDown,
 } from 'react-native-reanimated';
-import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+// @TODO - haptics is breaking Storybook
+// import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import get from 'lodash/get';
 import useMeasure from '@wcpos/hooks/src/use-measure';
 import Platform from '@wcpos/utils/src/platform';
@@ -135,9 +136,9 @@ const PopoverBase = (
 	const handleOpen = React.useCallback(() => {
 		setVisible(true);
 		if (Platform.isNative) {
-			impactAsync(ImpactFeedbackStyle.Light).catch((err) => {
-				console.log(err);
-			});
+			// 	impactAsync(ImpactFeedbackStyle.Light).catch((err) => {
+			// 		console.log(err);
+			// 	});
 		}
 	}, []);
 
