@@ -2,7 +2,7 @@ import { NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
 import Table from './table';
 import Row from './row';
 
-export { TableProps } from './table';
+export type { TableProps } from './table';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -17,7 +17,6 @@ export type Sort = (props: SortProps) => void;
 
 export interface ColumnProps<T = any> {
 	key: keyof T & string;
-	onRender?: (item: T, column: ColumnProps<T>, index: number) => React.ReactNode;
 	label: string;
 	hide?: boolean;
 	disableSort?: boolean;
