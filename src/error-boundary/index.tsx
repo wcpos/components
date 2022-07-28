@@ -1,17 +1,13 @@
 import * as React from 'react';
-import {
-	ErrorBoundary,
-	ErrorBoundaryPropsWithComponent,
-	FallbackProps,
-} from 'react-error-boundary';
-import Fallback from './fallback';
+import { ErrorBoundary, ErrorBoundaryPropsWithComponent } from 'react-error-boundary';
+import DefaultFallback from './fallback';
 
-type Props = Omit<ErrorBoundaryPropsWithComponent, 'FallbackComponent'> & {
-	FallbackComponent?: React.ComponentType<FallbackProps>;
+type Props = Omit<React.PropsWithChildren<ErrorBoundaryPropsWithComponent>, 'FallbackComponent'> & {
+	FallbackComponent?: React.ComponentType<any>;
 };
 
-const Boundary = (props: Props) => {
-	return <ErrorBoundary {...props} FallbackComponent={props.FallbackComponent || Fallback} />;
+const Boundary = ({ FallbackComponent = DefaultFallback, ...props }: Props) => {
+	return <ErrorBoundary FallbackComponent={FallbackComponent} {...props} />;
 };
 
 export default Boundary;

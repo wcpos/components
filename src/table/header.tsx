@@ -1,18 +1,11 @@
 import * as React from 'react';
-import { GestureResponderEvent, ViewStyle, FlexAlignType } from 'react-native';
+import { GestureResponderEvent, FlexAlignType } from 'react-native';
 import * as Styled from './styles';
 import Text from '../text';
 import Pressable from '../pressable';
 import Box from '../box';
 import SortIcon from '../sort-icon';
-
-export interface TableHeaderProps<T> {
-	columns: import('./').ColumnProps<T>[];
-	style?: ViewStyle;
-	sort?: import('./').Sort;
-	sortBy?: keyof T & string;
-	sortDirection?: import('./').SortDirection;
-}
+import { useTableContext } from './context';
 
 /**
  *
@@ -26,13 +19,9 @@ const alignItemsMap: Record<string, FlexAlignType> = {
 /**
  *
  */
-const TableHeader = <T extends object>({
-	columns,
-	style,
-	sort,
-	sortBy,
-	sortDirection,
-}: TableHeaderProps<T>) => {
+const TableHeader = () => {
+	const { columns, sort, sortBy, sortDirection, headerLabel } = useTableContext();
+
 	return (
 		<Styled.HeaderRow horizontal align="center">
 			{columns.map((column) => {
@@ -68,17 +57,14 @@ const TableHeader = <T extends object>({
 					<Box
 						key={key}
 						padding="small"
-						style={[
-							{ flexGrow, flexShrink, flexBasis, width, alignItems: alignItemsMap[align] },
-							style,
-						]}
+						style={[{ flexGrow, flexShrink, flexBasis, width, alignItems: alignItemsMap[align] }]}
 					>
 						{sortable ? (
 							<Pressable onPress={handlePress}>
 								{({ hovered }: any) => (
 									<Box horizontal space="xxSmall" align="center" style={{ flex: 1 }}>
 										<Text uppercase size="small" numberOfLines={1} type="textMuted">
-											{label}
+											{headerLabel({ column })}
 										</Text>
 										{(showSortIndicator || hovered) && (
 											<SortIcon
@@ -92,7 +78,7 @@ const TableHeader = <T extends object>({
 						) : (
 							!hideLabel && (
 								<Text uppercase size="small" numberOfLines={1} type="textMuted">
-									{label}
+									{headerLabel({ column })}
 								</Text>
 							)
 						)}
@@ -103,4 +89,4 @@ const TableHeader = <T extends object>({
 	);
 };
 
-export default React.memo(TableHeader);
+export default TableHeader;

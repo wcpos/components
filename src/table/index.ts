@@ -3,6 +3,7 @@ import Table from './table';
 import Row from './row';
 
 export type { TableProps } from './table';
+export type { TableContextProps } from './context';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -29,4 +30,5 @@ export interface ColumnProps<T = any> {
 	align?: 'left' | 'center' | 'right';
 }
 
+export { useTableContext } from './context';
 export default Object.assign(Table, { Row });

@@ -137,8 +137,9 @@ const BoxBase = (
 			</>
 		));
 
-		return errorBoundary ? <ErrorBoundary>{withSpaces}</ErrorBoundary> : withSpaces;
-	}, [children, errorBoundary, space]);
+		// return errorBoundary ? <ErrorBoundary>{withSpaces}</ErrorBoundary> : withSpaces;
+		return withSpaces;
+	}, [children, space]);
 
 	return (
 		<Styled.Box

@@ -3,10 +3,10 @@ import { ViewStyle, FlexAlignType } from 'react-native';
 import Text from '../text';
 import Box from '../box';
 import * as Styled from './styles';
+import { useTableContext } from './context';
 
 export interface TableRowProps<T> {
 	item: T;
-	columns: import('./').ColumnProps<T>[];
 	rowStyle?: ViewStyle;
 	cellStyle?: ViewStyle;
 	cellRenderer?: (item: T, column: import('./').ColumnProps<T>, index: number) => React.ReactNode;
@@ -25,26 +25,21 @@ const alignItemsMap: Record<string, FlexAlignType> = {
 /**
  *
  */
-const TableRow = <T extends object>({
-	item,
-	columns,
-	rowStyle,
-	cellStyle,
-	cellRenderer,
-	itemIndex,
-}: TableRowProps<T>) => {
+const TableRow = <T extends object>({ item, rowStyle, cellStyle, itemIndex }: TableRowProps<T>) => {
+	const { columns, cellRenderer } = useTableContext();
+
 	/**
 	 *
 	 */
-	const renderCell = React.useCallback(
-		(column, index) => {
-			if (typeof cellRenderer === 'function') {
-				return cellRenderer(item, column, index);
-			}
-			return <Text>{String(item[column.key] ?? '')}</Text>;
-		},
-		[cellRenderer, item]
-	);
+	// const renderCell = React.useCallback(
+	// 	(column, index) => {
+	// 		if (typeof cellRenderer === 'function') {
+	// 			return cellRenderer({ item, column, index });
+	// 		}
+	// 		return <Text>{String(item[column.key] ?? '')}</Text>;
+	// 	},
+	// 	[cellRenderer, item]
+	// );
 
 	/**
 	 *
@@ -75,7 +70,7 @@ const TableRow = <T extends object>({
 							cellStyle,
 						]}
 					>
-						{renderCell(column, index)}
+						{cellRenderer({ item, column, index })}
 					</Box>
 				);
 			})}

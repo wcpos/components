@@ -5,43 +5,59 @@ import Row from './row';
 import Header from './header';
 import Empty from './empty';
 import * as Styled from './styles';
+import { TableContext, TableContextProps } from './context';
+import ErrorBoundary from '../error-boundary';
 
 export type TableProps<T> = {
-	columns: import('./').ColumnProps<T>[];
-	sort?: import('./').Sort;
-	sortBy?: keyof T & string;
-	sortDirection?: import('./').SortDirection;
 	style?: StyleProp<ViewStyle>;
 	footer?: React.ReactNode;
+	context?: TableContextProps<T>;
 } & FlashListProps<T>;
 
+/**
+ *
+ */
+const defaultRenderItem = ({ item, index }) => (
+	<ErrorBoundary>
+		<Row item={item} itemIndex={index} />
+	</ErrorBoundary>
+);
+
+/**
+ *
+ */
 const Table = <T extends object>({
-	columns,
-	sort,
-	sortBy,
-	sortDirection,
 	style,
 	footer,
+	renderItem = defaultRenderItem,
+	context,
 	...props
 }: TableProps<T>) => {
+	/**
+	 *
+	 */
 	const keyExtractor = React.useCallback((item, index) => {
 		return item._id || `${index}`;
 	}, []);
 
+	/**
+	 *
+	 */
 	return (
-		<Styled.Table style={style}>
-			<Header columns={columns} sort={sort} sortBy={sortBy} sortDirection={sortDirection} />
-			<FlashList
-				keyExtractor={keyExtractor}
-				renderItem={({ item, index }) => <Row columns={columns} item={item} itemIndex={index} />}
-				// ListHeaderComponent={
-				// 	<Header columns={columns} sort={sort} sortBy={sortBy} sortDirection={sortDirection} />
-				// }
-				ListEmptyComponent={<Empty />}
-				{...props}
-			/>
-			{footer}
-		</Styled.Table>
+		<TableContext.Provider value={context}>
+			<Styled.Table style={style}>
+				<ErrorBoundary>
+					<Header />
+				</ErrorBoundary>
+				<FlashList
+					keyExtractor={keyExtractor}
+					ListEmptyComponent={<Empty />}
+					renderItem={renderItem}
+					{...props}
+				/>
+				<ErrorBoundary>{footer}</ErrorBoundary>
+			</Styled.Table>
+		</TableContext.Provider>
 	);
 };
 

@@ -102,7 +102,7 @@ export const ModalBase = (
 		alwaysOpen = false,
 		size = 'medium',
 		primaryAction,
-		secondaryActions = [],
+		secondaryActions,
 		HeaderComponent,
 		title,
 	}: ModalProps,
@@ -124,6 +124,9 @@ export const ModalBase = (
 		setIsVisible(false);
 	};
 
+	/**
+	 *
+	 */
 	const handleClose = (dest?: Close, callback?: () => void): void => {
 		if (onClose) {
 			onClose();
@@ -132,10 +135,16 @@ export const ModalBase = (
 		handleAnimateClose(dest, callback);
 	};
 
+	/**
+	 *
+	 */
 	const handleBackdropPress = (): void => {
 		handleClose();
 	};
 
+	/**
+	 *
+	 */
 	React.useImperativeHandle(ref, () => ({
 		open(dest?: Open): void {
 			if (onOpen) {
@@ -150,19 +159,31 @@ export const ModalBase = (
 		},
 	}));
 
+	/**
+	 *
+	 */
 	React.useEffect(() => {
 		if (alwaysOpen) {
 			handleAnimateOpen();
 		}
 	}, [alwaysOpen]);
 
+	/**
+	 *
+	 */
 	const renderElement = (Element: React.ReactNode): JSX.Element =>
 		typeof Element === 'function' ? Element() : Element;
 
+	/**
+	 *
+	 */
 	const renderChildren = (): React.ReactNode => {
 		return children;
 	};
 
+	/**
+	 *
+	 */
 	const renderHeader = () => {
 		if (HeaderComponent) {
 			return renderElement(HeaderComponent);
@@ -173,8 +194,28 @@ export const ModalBase = (
 		return null;
 	};
 
+	/**
+	 *
+	 */
 	const renderFooter = () => {
-		if (primaryAction)
+		if (primaryAction && !secondaryActions) {
+			return (
+				<Button
+					fill
+					size="large"
+					title={primaryAction.label}
+					onPress={primaryAction.action}
+					type={primaryAction.type || 'primary'}
+					style={{
+						flex: 1,
+						borderTopLeftRadius: 0,
+						borderTopRightRadius: 0,
+					}}
+				/>
+			);
+		}
+
+		if (primaryAction && Array.isArray(secondaryActions))
 			return (
 				<Box horizontal>
 					{secondaryActions.map((secondaryAction, index) => (
@@ -211,7 +252,10 @@ export const ModalBase = (
 		return null;
 	};
 
-	const renderModal = (
+	/**
+	 *
+	 */
+	const renderModal = () => (
 		<KeyboardAvoidingView
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			style={[{ flex: 1 }, StyleSheet.absoluteFill]}
@@ -243,6 +287,9 @@ export const ModalBase = (
 		</KeyboardAvoidingView>
 	);
 
+	/**
+	 *
+	 */
 	const renderReactModal = (child: JSX.Element): JSX.Element => (
 		<RNModal
 			supportedOrientations={['landscape', 'portrait', 'portrait-upside-down']}
@@ -260,10 +307,10 @@ export const ModalBase = (
 	}
 
 	if (withReactModal) {
-		return renderReactModal(renderModal);
+		return renderReactModal(renderModal());
 	}
 
-	return <Portal keyPrefix="Modal">{renderModal}</Portal>;
+	return <Portal keyPrefix="Modal">{renderModal()}</Portal>;
 };
 
 export const Modal = React.forwardRef(ModalBase);
