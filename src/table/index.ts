@@ -16,10 +16,15 @@ export interface SortProps {
 
 export type Sort = (props: SortProps) => void;
 
+export interface DisplayProps<T = any> {
+	key: keyof T & string;
+	show?: boolean;
+}
+
 export interface ColumnProps<T = any> {
 	key: keyof T & string;
-	label: string;
-	hide?: boolean;
+	label?: string;
+	show?: boolean;
 	disableSort?: boolean;
 	hideLabel?: boolean;
 	flexGrow?: 0 | 1;
@@ -28,6 +33,7 @@ export interface ColumnProps<T = any> {
 	width?: string;
 	defaultSortDirection?: SortDirection;
 	align?: 'left' | 'center' | 'right';
+	display?: DisplayProps<T>[];
 }
 
 export { useTableContext } from './context';
