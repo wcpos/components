@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, GestureResponderEvent, FlexAlignType } from 'react-native';
+import { GestureResponderEvent, FlexAlignType } from 'react-native';
 import * as Styled from './styles';
 import Text from '../text';
 import Pressable from '../pressable';
@@ -64,14 +64,12 @@ const TableHeader = () => {
 						]}
 					>
 						{sortable ? (
-							<Pressable onPress={handlePress}>
+							<Pressable onPress={handlePress} style={{ width: '100%' }}>
 								{({ hovered }: any) => (
 									<Box horizontal space="xxSmall" align="center">
-										<View style={{ flex: 1 }}>
-											<Text uppercase size="small" numberOfLines={1} type="textMuted">
-												{headerLabel({ column })}
-											</Text>
-										</View>
+										<Text uppercase size="small" numberOfLines={1} type="textMuted">
+											{headerLabel({ column })}
+										</Text>
 										{(showSortIndicator || hovered) && (
 											<SortIcon
 												hovered={hovered}
