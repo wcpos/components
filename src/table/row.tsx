@@ -9,7 +9,7 @@ export interface TableRowProps<T> {
 	item: T;
 	rowStyle?: ViewStyle;
 	cellStyle?: ViewStyle;
-	cellRenderer?: (item: T, column: import('./').ColumnProps<T>, index: number) => React.ReactNode;
+	// cellRenderer?: (item: T, column: import('./').ColumnProps<T>, index: number) => React.ReactNode;
 	itemIndex: number;
 }
 
@@ -48,10 +48,11 @@ const TableRow = <T extends object>({ item, rowStyle, cellStyle, itemIndex }: Ta
 		<Styled.Row horizontal align="center" style={rowStyle} alt={itemIndex % 2 !== 0}>
 			{columns.map((column, index) => {
 				const {
-					flexGrow = 1,
-					flexShrink = 1,
-					flexBasis = 'auto',
-					width = '100%',
+					flex = '1',
+					// flexGrow = 0,
+					// flexShrink = 1,
+					// flexBasis = 'auto',
+					// width = '100%',
 					align = 'left',
 				} = column;
 
@@ -61,10 +62,11 @@ const TableRow = <T extends object>({ item, rowStyle, cellStyle, itemIndex }: Ta
 						padding="small"
 						style={[
 							{
-								flexGrow,
-								flexShrink,
-								flexBasis,
-								width,
+								flex,
+								// flexGrow,
+								// flexShrink,
+								// flexBasis,
+								// width,
 								alignItems: alignItemsMap[align],
 							},
 							cellStyle,

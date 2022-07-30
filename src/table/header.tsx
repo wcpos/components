@@ -27,10 +27,8 @@ const TableHeader = () => {
 			{columns.map((column) => {
 				const {
 					key,
-					flexGrow = 1,
-					flexShrink = 1,
-					flexBasis = 'auto',
-					width = '100%',
+					flex = '1',
+					// width = '100%',
 					disableSort = false,
 					defaultSortDirection = 'asc',
 					hideLabel = false,
@@ -57,7 +55,13 @@ const TableHeader = () => {
 					<Box
 						key={key}
 						padding="small"
-						style={[{ flexGrow, flexShrink, flexBasis, width, alignItems: alignItemsMap[align] }]}
+						style={[
+							{
+								flex,
+								// width,
+								alignItems: alignItemsMap[align],
+							},
+						]}
 					>
 						{sortable ? (
 							<Pressable onPress={handlePress}>

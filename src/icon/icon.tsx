@@ -46,6 +46,10 @@ export interface IconProps {
 	 */
 	onPress?: null | ((event: import('react-native').GestureResponderEvent) => void);
 	/**
+	 * Turns icon into a button. Called when icon is long pressed.
+	 */
+	onLongPress?: null | ((event: import('react-native').GestureResponderEvent) => void);
+	/**
 	 * Wraps the icon in a Tooltip component
 	 */
 	tooltip?: string;
@@ -74,6 +78,7 @@ export const Icon = ({
 	width,
 	height,
 	onPress,
+	onLongPress,
 	tooltip,
 	tooltipPlacement = 'top',
 	backgroundStyle = 'ripple',
@@ -92,10 +97,11 @@ export const Icon = ({
 		/>
 	);
 
-	if (onPress) {
+	if (onPress || onLongPress) {
 		return (
 			<Pressable
 				onPress={onPress}
+				onLongPress={onLongPress}
 				onHoverIn={() => {
 					showRipple.value = true;
 				}}
