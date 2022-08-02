@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components/native';
 export const BackgroundCircle = styled.View`
 	background-color: ${({ theme }) => theme.colors.background};
 	border-color: ${({ theme }) => theme.colors.primary};
-	border-width: ${({ theme }) => theme.border.small};
+	border-width: ${({ theme }) => `${theme.border.small}px`};
 	border-radius: ${({ theme }) => `${theme.rounding.circle}px`};
 	width: 16;
 	height: 16;

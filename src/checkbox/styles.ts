@@ -20,7 +20,7 @@ export const Box = styled.View<{ checked: boolean | undefined }>`
 	background-color: ${({ theme, checked }) => (checked ? theme.colors.primary : 'transparent')};
 	width: ${({ theme }) => theme.font.size.medium};
 	height: ${({ theme }) => theme.font.size.medium};
-	border-width: ${({ theme }) => theme.border.thinner};
+	border-width: ${({ theme }) => `${theme.border.thinner}px`};
 	border-color: ${({ theme }) => theme.colors.border};
 	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
 `;

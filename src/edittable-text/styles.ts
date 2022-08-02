@@ -5,7 +5,7 @@ export const BorderedPressable = styled(Pressable)`
 	flex-direction: row;
 	align-items: center;
 	background: ${({ theme }) => theme.colors.inputBackground};
-	border-width: ${({ theme }) => theme.border.thinner};
+	border-width: ${({ theme }) => `${theme.border.thinner}px`};
 	border-color: ${({ theme }) => theme.colors.border};
 	border-style: solid;
 	border-radius: ${({ theme }) => `${theme.rounding.small}px`};

@@ -7,7 +7,7 @@ export const Raw = styled.TextInput`
 	background-color: ${({ theme }) => theme.colors.lightestGrey};
 	border-color: ${({ theme }) => theme.colors.grey};
 	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
-	border-width: ${({ theme }) => theme.border.thinner};
+	border-width: ${({ theme }) => `${theme.border.thinner}px`};
 	font-family: monospace;
 `;
 
