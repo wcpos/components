@@ -66,7 +66,12 @@ const TableHeader = () => {
 						{sortable ? (
 							<Pressable onPress={handlePress} style={{ width: '100%' }}>
 								{({ hovered }: any) => (
-									<Box horizontal space="xxSmall" align="center">
+									<Box
+										horizontal
+										space="xxSmall"
+										align="center"
+										style={{ justifyContent: alignItemsMap[align] }}
+									>
 										<Text uppercase size="small" numberOfLines={1} type="textMuted">
 											{headerLabel({ column })}
 										</Text>
