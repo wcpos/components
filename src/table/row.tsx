@@ -1,16 +1,13 @@
 import * as React from 'react';
 import { ViewStyle, FlexAlignType } from 'react-native';
-import Text from '../text';
+import type { ListRenderItemInfo } from '@shopify/flash-list';
 import Box from '../box';
 import * as Styled from './styles';
-import { useTableContext } from './context';
 
-export interface TableRowProps<T> {
-	item: T;
+export interface TableRowProps<T> extends ListRenderItemInfo<T> {
 	rowStyle?: ViewStyle;
 	cellStyle?: ViewStyle;
-	// cellRenderer?: (item: T, column: import('./').ColumnProps<T>, index: number) => React.ReactNode;
-	itemIndex: number;
+	extraData: import('./').TableExtraDataProps<T>;
 }
 
 /**
@@ -25,8 +22,14 @@ const alignItemsMap: Record<string, FlexAlignType> = {
 /**
  *
  */
-const TableRow = <T extends object>({ item, rowStyle, cellStyle, itemIndex }: TableRowProps<T>) => {
-	const { columns, cellRenderer } = useTableContext();
+const TableRow = <T extends object>({
+	item,
+	rowStyle,
+	cellStyle,
+	index,
+	extraData,
+}: TableRowProps<T>) => {
+	const { columns, cellRenderer } = extraData;
 
 	/**
 	 *
@@ -45,16 +48,9 @@ const TableRow = <T extends object>({ item, rowStyle, cellStyle, itemIndex }: Ta
 	 *
 	 */
 	return (
-		<Styled.Row horizontal align="center" style={rowStyle} alt={itemIndex % 2 !== 0}>
-			{columns.map((column, index) => {
-				const {
-					flex = '1',
-					// flexGrow = 0,
-					// flexShrink = 1,
-					// flexBasis = 'auto',
-					// width = '100%',
-					align = 'left',
-				} = column;
+		<Styled.Row horizontal align="center" style={rowStyle} alt={index % 2 !== 0}>
+			{columns.map((column, idx) => {
+				const { flex = 1, align = 'left' } = column;
 
 				return (
 					<Box
@@ -63,16 +59,12 @@ const TableRow = <T extends object>({ item, rowStyle, cellStyle, itemIndex }: Ta
 						style={[
 							{
 								flex,
-								// flexGrow,
-								// flexShrink,
-								// flexBasis,
-								// width,
 								alignItems: alignItemsMap[align],
 							},
 							cellStyle,
 						]}
 					>
-						{cellRenderer({ item, column, index })}
+						{cellRenderer({ item, column, index: idx })}
 					</Box>
 				);
 			})}

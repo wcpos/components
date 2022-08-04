@@ -1,9 +1,8 @@
-import { NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
+import { NativeSyntheticEvent, NativeTouchEvent, ViewStyle, StyleProp } from 'react-native';
 import Table from './table';
 import Row from './row';
 
 export type { TableProps } from './table';
-export type { TableContextProps } from './context';
 
 export type SortDirection = 'asc' | 'desc';
 
@@ -27,14 +26,27 @@ export interface ColumnProps<T = any> {
 	show?: boolean;
 	disableSort?: boolean;
 	hideLabel?: boolean;
-	flexGrow?: 0 | 1;
-	flexShrink?: 0 | 1;
-	flexBasis?: any;
+	flex?: StyleProp<ViewStyle['flex']>;
 	width?: string;
 	defaultSortDirection?: SortDirection;
 	align?: 'left' | 'center' | 'right';
 	display?: DisplayProps<T>[];
 }
 
-export { useTableContext } from './context';
+export interface CellRendererProps<T> {
+	item: T;
+	column: ColumnProps<T>;
+	index: number;
+}
+
+export type CellRenderer<T> = (props: CellRendererProps<T>) => React.ReactNode;
+
+export interface TableExtraDataProps<T> {
+	columns: import('./').ColumnProps<T>[];
+	sort?: import('./').Sort;
+	sortBy?: keyof T & string;
+	sortDirection?: import('./').SortDirection;
+	cellRenderer: CellRenderer<T>;
+}
+
 export default Object.assign(Table, { Row });

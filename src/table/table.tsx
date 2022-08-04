@@ -1,20 +1,21 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
-import { FlashList, FlashListProps, ListRenderItem, ListRenderItemInfo } from '@shopify/flash-list';
+import { FlashList, FlashListProps, ListRenderItemInfo, ListRenderItem } from '@shopify/flash-list';
 import Row from './row';
 import Header from './header';
 import Empty from './empty';
 import * as Styled from './styles';
-import { TableContext, TableContextProps } from './context';
 import ErrorBoundary from '../error-boundary';
 
+/**
+ *
+ */
 export type TableProps<T> = {
 	style?: StyleProp<ViewStyle>;
 	footer?: React.ReactNode;
-	context?: TableContextProps<T>;
-} & Omit<FlashListProps<T>, 'renderItem'> & {
-		renderItem?: ListRenderItem<T> | null | undefined;
-	};
+	extraData: import('./').TableExtraDataProps<T>;
+	renderItem?: ListRenderItem<T>;
+} & Omit<FlashListProps<T>, 'extraData' | 'renderItem'>;
 
 /**
  *
@@ -23,7 +24,7 @@ const Table = <T extends object>({
 	style,
 	footer,
 	renderItem,
-	context,
+	extraData,
 	...props
 }: TableProps<T>) => {
 	/**
@@ -37,9 +38,9 @@ const Table = <T extends object>({
 	 *
 	 */
 	const defaultRenderItem = React.useCallback(
-		({ item, index }: ListRenderItemInfo<T>) => (
+		({ item, index, extraData: context, target }: ListRenderItemInfo<T>) => (
 			<ErrorBoundary>
-				<Row item={item} itemIndex={index} />
+				<Row item={item} index={index} extraData={context} target={target} />
 			</ErrorBoundary>
 		),
 		[]
@@ -49,20 +50,19 @@ const Table = <T extends object>({
 	 *
 	 */
 	return (
-		<TableContext.Provider value={context}>
-			<Styled.Table style={style}>
-				<ErrorBoundary>
-					<Header />
-				</ErrorBoundary>
-				<FlashList
-					keyExtractor={keyExtractor}
-					ListEmptyComponent={<Empty />}
-					renderItem={renderItem || defaultRenderItem}
-					{...props}
-				/>
-				<ErrorBoundary>{footer}</ErrorBoundary>
-			</Styled.Table>
-		</TableContext.Provider>
+		<Styled.Table style={style}>
+			<ErrorBoundary>
+				<Header extraData={extraData} />
+			</ErrorBoundary>
+			<FlashList
+				keyExtractor={keyExtractor}
+				ListEmptyComponent={<Empty />}
+				renderItem={renderItem || defaultRenderItem}
+				extraData={extraData}
+				{...props}
+			/>
+			<ErrorBoundary>{footer}</ErrorBoundary>
+		</Styled.Table>
 	);
 };
 

@@ -5,7 +5,7 @@ import Text from '../text';
 import Pressable from '../pressable';
 import Box from '../box';
 import SortIcon from '../sort-icon';
-import { useTableContext } from './context';
+// import { useTableContext } from './context';
 
 /**
  *
@@ -19,8 +19,8 @@ const alignItemsMap: Record<string, FlexAlignType> = {
 /**
  *
  */
-const TableHeader = () => {
-	const { columns, sort, sortBy, sortDirection, headerLabel } = useTableContext();
+const TableHeader = ({ extraData }) => {
+	const { columns, sort, sortBy, sortDirection, headerLabel } = extraData;
 
 	return (
 		<Styled.HeaderRow horizontal align="center">
