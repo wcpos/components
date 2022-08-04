@@ -51,8 +51,11 @@ export type SearchProps = {
  *
  */
 export const Search = ({ actions, onSearch, filters, style, ...rest }: SearchProps) => {
+	/**
+	 *
+	 */
 	const renderFilters = React.useMemo(() => {
-		if (filters) {
+		if (filters && filters.length > 0) {
 			return filters.map(({ label: filterLabel, onRemove }) => (
 				<Pill removable onRemove={onRemove}>
 					{filterLabel}
@@ -62,6 +65,9 @@ export const Search = ({ actions, onSearch, filters, style, ...rest }: SearchPro
 		return undefined;
 	}, [filters]);
 
+	/**
+	 *
+	 */
 	return (
 		<Styled.Container style={style}>
 			<Styled.Input>
