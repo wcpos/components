@@ -86,7 +86,7 @@ export interface TextInputProps {
 	/**
 	 * Set to `true` to expand width to fit text.
 	 */
-	autosize?: boolean;
+	// autosize?: boolean;
 	/**
 	 * Set to `true` to add icon for clearing textfield.
 	 */
@@ -172,32 +172,32 @@ export interface TextInputProps {
 	style?: StyleProp<ViewStyle>;
 }
 
-/**
- * Measure Text
- */
-const MeasureText = ({
-	value,
-	onMeasure,
-}: {
-	value: string;
-	onMeasure: ({ width }: { width: number }) => void;
-}) => {
-	const ref = React.useRef<RNText>(null);
-	const { onLayout } = useMeasure({ onMeasure, ref });
+// /**
+//  * Measure Text
+//  */
+// const MeasureText = ({
+// 	value,
+// 	onMeasure,
+// }: {
+// 	value: string;
+// 	onMeasure: ({ width }: { width: number }) => void;
+// }) => {
+// 	const ref = React.useRef<RNText>(null);
+// 	const { onLayout } = useMeasure({ onMeasure, ref });
 
-	/**
-	 * Place text in hidden portal
-	 */
-	return (
-		<Portal keyPrefix="TextInputSize">
-			<View style={{ position: 'absolute', top: '100%', height: 0, alignItems: 'flex-start' }}>
-				<RNText onLayout={onLayout} ref={ref}>
-					{value}
-				</RNText>
-			</View>
-		</Portal>
-	);
-};
+// 	/**
+// 	 * Place text in hidden portal
+// 	 */
+// 	return (
+// 		<Portal keyPrefix="TextInputSize">
+// 			<View style={{ position: 'absolute', top: '100%', height: 0, alignItems: 'flex-start' }}>
+// 				<RNText onLayout={onLayout} ref={ref}>
+// 					{value}
+// 				</RNText>
+// 			</View>
+// 		</Portal>
+// 	);
+// };
 
 /**
  * Input field that users can type into.
@@ -226,7 +226,7 @@ export const TextInputBase = (
 		onFocus: onFocusProp,
 		onBlur: onBlurProp,
 		action,
-		autosize = false,
+		// autosize = false,
 		clearable = false,
 		style,
 		loading,
@@ -404,7 +404,8 @@ export const TextInputBase = (
 						onKeyPress={onKeyPress}
 						// multiline
 						// onContentSizeChange={handleContentSizeChange}
-						style={{ width: autosize ? measuredWidth : '100%' }}
+						// style={{ width: autosize ? measuredWidth : '100%' }}
+						style={{ width: '100%' }}
 					/>
 				</Box>
 				{clearable && value !== '' && (
@@ -427,7 +428,6 @@ export const TextInputBase = (
 						loading={loading}
 					/>
 				)}
-				{autosize && <MeasureText value={value} onMeasure={handleMeasure} />}
 			</Box>
 		</BaseInputContainer>
 	);
