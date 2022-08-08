@@ -1,5 +1,7 @@
 export { default as addressCard } from "./addressCard";
 export { default as arrowDown } from "./arrowDown";
+export { default as arrowLeft } from "./arrowLeft";
+export { default as arrowRight } from "./arrowRight";
 export { default as arrowRotateLeft } from "./arrowRotateLeft";
 export { default as arrowRotateRight } from "./arrowRotateRight";
 export { default as arrowUp } from "./arrowUp";

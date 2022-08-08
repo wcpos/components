@@ -31,7 +31,7 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({ children }) 
 						flexDirection: 'row',
 						alignItems: 'flex-end',
 						justifyContent: 'flex-start',
-						padding: '30px',
+						padding: 30,
 					},
 				]}
 				pointerEvents="none"
