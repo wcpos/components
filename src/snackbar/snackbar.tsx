@@ -31,6 +31,10 @@ export interface SnackbarProps {
 	 * Function to call when the Snackbar is dismissed.
 	 */
 	dismissable?: boolean;
+	/**
+	 * Changes the background color of the Snackbar.
+	 */
+	type?: import('@wcpos/themes').ColorTypes;
 }
 
 const durationValues = {
@@ -46,6 +50,7 @@ export const Snackbar = ({
 	duration = 'default',
 	onDismiss,
 	dismissable = true,
+	type,
 }: SnackbarProps) => {
 	const theme = useTheme();
 
@@ -80,7 +85,7 @@ export const Snackbar = ({
 			paddingY="small"
 			space="medium"
 			rounding="large"
-			style={{ backgroundColor: theme.colors.headerBackground }}
+			style={{ backgroundColor: type ? theme.colors[type] : theme.colors.headerBackground }}
 			horizontal
 			align="center"
 			pointerEvents="auto"
