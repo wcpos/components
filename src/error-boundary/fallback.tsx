@@ -13,7 +13,6 @@ const Fallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 
 	return (
 		<Box
-			fill
 			horizontal
 			space="small"
 			padding="small"
