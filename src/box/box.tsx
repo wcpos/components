@@ -142,7 +142,7 @@ const BoxBase = (
 	return (
 		<Styled.Box
 			ref={ref}
-			padding={padding}
+			// padding={padding}
 			fill={fill}
 			space={space}
 			horizontal={horizontal}

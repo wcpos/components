@@ -57,7 +57,7 @@ const TableHeader = ({ extraData }) => {
 						padding="small"
 						style={[
 							{
-								flex,
+								flex: Number(flex), // react-native wants flex to be a number?
 								// width,
 								alignItems: alignItemsMap[align],
 							},

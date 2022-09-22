@@ -49,11 +49,12 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 	});
 
 	/**
-	 *
+	 * @TODO - react-native throws an error with this
+	 * tried to sychronously call function setScrollable
 	 */
-	useAnimatedReaction(() => {
-		return totalWidth.value > containerWidth.value;
-	}, setScrollable);
+	// useAnimatedReaction(() => {
+	// 	return totalWidth.value > containerWidth.value;
+	// }, setScrollable);
 
 	/**
 	 *

@@ -1,11 +1,13 @@
 import React from 'react';
 import * as Styled from './styles';
 
+type Spacing = import('@wcpos/themes').SpacingTypes;
+
 export interface SpaceProps {
 	/**
 	 * Spacing value.
 	 */
-	value: import('@wcpos/themes').Spacing;
+	value: Spacing;
 }
 
 /**

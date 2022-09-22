@@ -37,10 +37,11 @@ export interface PillProps {
 	color?: ColorTypes;
 }
 
+// can't have negative in react-native
 const marginMap = {
-	small: '-3px',
-	medium: '-3px',
-	large: '-6px',
+	small: 0,
+	medium: 3,
+	large: 6,
 };
 
 /**
@@ -62,9 +63,9 @@ export const Pill = ({
 	 */
 	const removeIconPadding = React.useMemo(
 		() => ({
-			small: `${theme.spacing.xxSmall}px`,
-			medium: `${theme.spacing.xSmall}px`,
-			large: `${theme.spacing.small}px`,
+			small: theme.spacing.xxSmall,
+			medium: theme.spacing.xSmall,
+			large: theme.spacing.small,
 		}),
 		[theme.spacing.small, theme.spacing.xSmall, theme.spacing.xxSmall]
 	);
