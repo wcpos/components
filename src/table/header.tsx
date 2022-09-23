@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { GestureResponderEvent, FlexAlignType } from 'react-native';
+import { GestureResponderEvent } from 'react-native';
 import * as Styled from './styles';
 import Text from '../text';
 import Pressable from '../pressable';
@@ -8,12 +8,12 @@ import SortIcon from '../sort-icon';
 // import { useTableContext } from './context';
 
 /**
- *
+ * Map column align (left, right, center) to box align prop (start, end, center)
  */
-const alignItemsMap: Record<string, FlexAlignType> = {
-	left: 'flex-start',
+const alignItemsMap = {
+	left: 'start',
 	center: 'center',
-	right: 'flex-end',
+	right: 'end',
 };
 
 /**
@@ -27,8 +27,8 @@ const TableHeader = ({ extraData }) => {
 			{columns.map((column) => {
 				const {
 					key,
-					flex = '1',
-					// width = '100%',
+					flex = 1,
+					width,
 					disableSort = false,
 					defaultSortDirection = 'asc',
 					hideLabel = false,
@@ -52,16 +52,12 @@ const TableHeader = ({ extraData }) => {
 				};
 
 				return (
-					<Box
+					<Styled.HeaderCell
 						key={key}
 						padding="small"
-						style={[
-							{
-								flex: Number(flex), // react-native wants flex to be a number?
-								// width,
-								alignItems: alignItemsMap[align],
-							},
-						]}
+						flex={flex}
+						width={width}
+						align={alignItemsMap[align]}
 					>
 						{sortable ? (
 							<Pressable onPress={handlePress} style={{ width: '100%' }}>
@@ -70,7 +66,7 @@ const TableHeader = ({ extraData }) => {
 										horizontal
 										space="xxSmall"
 										align="center"
-										style={{ justifyContent: alignItemsMap[align] }}
+										distribution={alignItemsMap[align]}
 									>
 										<Text uppercase size="small" numberOfLines={1} type="textMuted">
 											{headerLabel({ column })}
@@ -91,7 +87,7 @@ const TableHeader = ({ extraData }) => {
 								</Text>
 							)
 						)}
-					</Box>
+					</Styled.HeaderCell>
 				);
 			})}
 		</Styled.HeaderRow>

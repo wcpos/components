@@ -3,14 +3,14 @@ import styled, { css } from 'styled-components/native';
 type BoxProps = import('./box').BoxProps;
 
 export const Box = styled.View<BoxProps>`
-	padding-top: ${({ theme, paddingTop, paddingY, padding }) =>
-		`${theme.spacing[paddingTop || paddingY || padding || 'none']}px`};
-	padding-bottom: ${({ theme, paddingBottom, paddingY, padding }) =>
-		`${theme.spacing[paddingBottom || paddingY || padding || 'none']}px`};
-	padding-left: ${({ theme, paddingLeft, paddingX, padding }) =>
-		`${theme.spacing[paddingLeft || paddingX || padding || 'none']}px`};
-	padding-right: ${({ theme, paddingRight, paddingX, padding }) =>
-		`${theme.spacing[paddingRight || paddingX || padding || 'none']}px`};
+	padding-top: ${({ theme, paddingTop, paddingY, _padding }) =>
+		`${theme.spacing[paddingTop || paddingY || _padding || 'none']}px`};
+	padding-bottom: ${({ theme, paddingBottom, paddingY, _padding }) =>
+		`${theme.spacing[paddingBottom || paddingY || _padding || 'none']}px`};
+	padding-left: ${({ theme, paddingLeft, paddingX, _padding }) =>
+		`${theme.spacing[paddingLeft || paddingX || _padding || 'none']}px`};
+	padding-right: ${({ theme, paddingRight, paddingX, _padding }) =>
+		`${theme.spacing[paddingRight || paddingX || _padding || 'none']}px`};
 
 	flex-grow: ${({ fill }) => (fill ? 1 : 0)};
 

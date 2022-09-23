@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ViewStyle, FlexAlignType } from 'react-native';
+import { ViewStyle } from 'react-native';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 import Box from '../box';
 import * as Styled from './styles';
@@ -13,10 +13,10 @@ export interface TableRowProps<T> extends ListRenderItemInfo<T> {
 /**
  *
  */
-const alignItemsMap: Record<string, FlexAlignType> = {
-	left: 'flex-start',
+const alignItemsMap = {
+	left: 'start',
 	center: 'center',
-	right: 'flex-end',
+	right: 'end',
 };
 
 /**
@@ -50,22 +50,19 @@ const TableRow = <T extends object>({
 	return (
 		<Styled.Row horizontal align="center" style={rowStyle} alt={index % 2 !== 0}>
 			{columns.map((column, idx) => {
-				const { flex = 1, align = 'left' } = column;
+				const { flex = 1, align = 'left', width } = column;
 
 				return (
-					<Box
+					<Styled.Cell
 						key={column.key}
 						padding="small"
-						style={[
-							{
-								flex,
-								alignItems: alignItemsMap[align],
-							},
-							cellStyle,
-						]}
+						flex={flex}
+						width={width}
+						align={alignItemsMap[align]}
+						style={[cellStyle]}
 					>
 						{cellRenderer({ item, column, index: idx })}
-					</Box>
+					</Styled.Cell>
 				);
 			})}
 		</Styled.Row>

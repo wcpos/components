@@ -13,9 +13,8 @@ export const Row = styled(Box)<BoxProps & { alt: boolean }>`
 	background-color: ${({ alt, theme }) => (alt ? theme.colors.lightestGrey : 'transparent')};
 `;
 
-export const Cell = styled.View`
-	padding: 5px;
-	align-items: flex-start;
+export const Cell = styled(Box)<BoxProps & { flex: number; width: number }>`
+	flex: ${({ flex, width }) => (width ? `0 0 ${width}px` : flex)};
 `;
 
 export const HeaderRow = styled(Box)`
@@ -25,8 +24,8 @@ export const HeaderRow = styled(Box)`
 	background-color: ${({ theme }) => theme.colors.lightGrey};
 `;
 
-export const HeaderCell = styled.View`
-	padding: 5px;
+export const HeaderCell = styled(Box)<BoxProps & { flex: number; width: number }>`
+	flex: ${({ flex, width }) => (width ? `0 0 ${width}px` : flex)};
 `;
 
 export const HeaderTextWrapper = styled.View`

@@ -137,12 +137,13 @@ const BoxBase = (
 	}, [children, space]);
 
 	/**
-	 *
+	 * @TODO - something weird happens in native when I use padding prop
+	 * I need to investigate more
 	 */
 	return (
 		<Styled.Box
 			ref={ref}
-			// padding={padding}
+			_padding={padding}
 			fill={fill}
 			space={space}
 			horizontal={horizontal}
