@@ -52,9 +52,9 @@ export const Group = styled.View<ButtonGroupProps>`
 				return 'center';
 		}
 	}};
+	width: ${({ fill }) => (fill ? '100%' : 'auto')};
 `;
 
 export const GroupChild = styled.View<ButtonGroupProps & { last: boolean }>`
 	margin-end: ${({ last, theme }) => (last ? '0' : theme.spacing.small)};
-	flex: ${({ alignment }) => (alignment === 'full' ? '1 1 auto' : 0)};
 `;

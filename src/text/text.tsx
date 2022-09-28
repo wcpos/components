@@ -23,7 +23,7 @@ export interface TextProps extends RNTextProps {
 	/**
 	 *
 	 */
-	size?: 'medium' | 'large' | 'small';
+	size?: 'medium' | 'large' | 'small' | 'xSmall' | 'xLarge';
 	/**
 	 *
 	 */

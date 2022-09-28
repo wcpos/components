@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import * as React from 'react';
 import { ViewStyle, StyleProp, ViewProps } from 'react-native';
+import flatMap from 'lodash/flatMap';
 import Space from '../space';
 import * as Styled from './styles';
 
@@ -107,7 +108,6 @@ export interface BoxProps extends ViewProps {
  */
 const BoxBase = (
 	{
-		children,
 		padding = 'none',
 		fill = false,
 		space = 'none',
@@ -120,21 +120,19 @@ const BoxBase = (
 	}: BoxProps,
 	ref
 ) => {
+	let children = React.Children.toArray(rest.children).filter(Boolean);
+	const childrenLength = React.Children.count(children);
+
 	/**
-	 * Filter only children that are JSX elements
+	 *
 	 */
-	const items = useMemo(() => {
-		const filtered = React.Children.toArray(children).filter((x) => x);
-
-		const withSpaces = React.Children.map(filtered, (child, index) => (
-			<>
-				{index > 0 && space !== 'none' && <Space value={space} />}
-				{child}
-			</>
-		));
-
-		return withSpaces;
-	}, [children, space]);
+	if (space !== 'none' && childrenLength > 1) {
+		children = flatMap(children, (value, index, array) =>
+			array.length - 1 !== index // check for the last item
+				? [value, <Space key={`space-${index}`} value={space} />]
+				: value
+		);
+	}
 
 	/**
 	 * @TODO - something weird happens in native when I use padding prop
@@ -153,7 +151,7 @@ const BoxBase = (
 			border={border}
 			{...rest}
 		>
-			{items}
+			{children}
 		</Styled.Box>
 	);
 };

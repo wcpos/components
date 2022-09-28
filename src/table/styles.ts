@@ -1,6 +1,11 @@
 import styled from 'styled-components/native';
 import Box, { BoxProps } from '../box';
 
+// export const Table = styled.View`
+// 	width: 677px;
+// 	height: 700px;
+// `;
+
 export const Table = styled.View`
 	width: 100%;
 	height: 100%;

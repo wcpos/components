@@ -12,11 +12,14 @@ export type ButtonGroupProps = {
 	/**
 	 * Alignment of the children.
 	 *
-	 * - `fill` will make all buttons have the same width.
 	 * - `start` will align the buttons at the start.
 	 * - `end` will align the buttons at the end.
 	 */
-	alignment?: 'start' | 'end' | 'full';
+	alignment?: 'start' | 'end' | 'center';
+	/**
+	 *
+	 */
+	fill?: boolean;
 	/**
 	 * Style for button group container
 	 */
@@ -27,11 +30,12 @@ export type ButtonGroupProps = {
  * Arrange `Button` components with consistent spacing.
  */
 export const Group = ({
-	alignment = 'full',
+	alignment = 'start',
 	style,
 	type = 'primary',
 	size = 'medium',
 	background = 'solid',
+	fill = false,
 	...props
 }: ButtonGroupProps) => {
 	const children = React.Children.toArray(props.children).filter(Boolean);
@@ -70,6 +74,12 @@ export const Group = ({
 			style = {};
 		}
 
+		if (fill) {
+			style.flexGrow = 1;
+			style.flexShrink = 0;
+			style.flexBasis = `${100 / childrenLength}%`;
+		}
+
 		const newProps = { size, type, background, ...child.props, style };
 		return React.cloneElement(child, newProps);
 	});
@@ -78,7 +88,7 @@ export const Group = ({
 	 *
 	 */
 	return (
-		<Styled.Group alignment={alignment} style={style}>
+		<Styled.Group alignment={alignment} style={style} fill={fill}>
 			{items}
 		</Styled.Group>
 	);
