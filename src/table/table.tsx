@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
 import { FlashList, FlashListProps, ListRenderItemInfo, ListRenderItem } from '@shopify/flash-list';
+import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
 import Row from './row';
 import Header from './header';
 import Empty from './empty';
@@ -45,6 +46,16 @@ const Table = <T extends object>({
 		),
 		[]
 	);
+
+	useWhyDidYouUpdate('Table', {
+		style,
+		footer,
+		renderItem,
+		extraData,
+		...props,
+		keyExtractor,
+		defaultRenderItem,
+	});
 
 	/**
 	 *
