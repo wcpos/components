@@ -52,7 +52,6 @@ const Table = <T extends object>({
 		footer,
 		renderItem,
 		extraData,
-		...props,
 		keyExtractor,
 		defaultRenderItem,
 	});

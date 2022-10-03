@@ -85,7 +85,9 @@ export const Icon = ({
 	type,
 }: IconProps) => {
 	const theme = useTheme();
-	const iconColor = color || get(theme, ['colors', type], theme.colors.text);
+	// @TODO: I shouldn't have two ways to set color
+	// const iconColor = color || get(theme, ['colors', type], theme.colors.text);
+	const iconColor = get(theme, ['colors', type], theme.colors.text);
 	const SvgIcon = get(Svgs, name, Svgs.circleExclamation);
 	const showRipple = useSharedValue(false);
 

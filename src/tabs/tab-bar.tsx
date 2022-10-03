@@ -52,9 +52,18 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 	 * @TODO - react-native throws an error with this
 	 * tried to sychronously call function setScrollable
 	 */
-	// useAnimatedReaction(() => {
-	// 	return totalWidth.value > containerWidth.value;
-	// }, setScrollable);
+	useAnimatedReaction(
+		() => {
+			return totalWidth.value > containerWidth.value;
+		},
+		(result, previous) => {
+			// @TODO - do I need worklet or runOnJS here?
+			if (result !== previous) {
+				setScrollable(result);
+			}
+		},
+		[totalWidth, containerWidth, setScrollable]
+	);
 
 	/**
 	 *
@@ -111,7 +120,7 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 							}
 						}}
 					>
-						<Icon name="caretLeft" />
+						<Icon name="caretLeft" type="inverse" />
 					</Button>
 					<Button
 						onPress={() => {
@@ -120,7 +129,7 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 							}
 						}}
 					>
-						<Icon name="caretRight" />
+						<Icon name="caretRight" type="inverse" />
 					</Button>
 				</Box>
 			)}
