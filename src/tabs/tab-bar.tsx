@@ -11,7 +11,7 @@ import Platform from '@wcpos/utils/src/platform';
 import Box from '../box';
 import Icon from '../icon';
 import Button from '../button';
-import TabItem from './tab-item';
+import { TabItem } from './tab-item';
 
 export interface TabBarProps {
 	routes: import('./tabs').Route[];
@@ -20,7 +20,12 @@ export interface TabBarProps {
 	focusedIndex: number;
 }
 
-const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex }: TabBarProps) => {
+export const TabBar = ({
+	routes,
+	onIndexChange,
+	direction = 'horizontal',
+	focusedIndex,
+}: TabBarProps) => {
 	const scrollViewRef = useAnimatedRef<ScrollView>();
 	const scroll = useSharedValue(0);
 	const totalWidth = useSharedValue(0);
@@ -136,5 +141,3 @@ const TabBar = ({ routes, onIndexChange, direction = 'horizontal', focusedIndex 
 		</View>
 	);
 };
-
-export default TabBar;

@@ -10,7 +10,7 @@ export interface TabItemProps {
 	focused: boolean;
 }
 
-const TabItem = ({ onPress, focused, ...props }: TabItemProps) => {
+export const TabItem = ({ onPress, focused, ...props }: TabItemProps) => {
 	const title = isFunction(props.title) ? props.title({ focused }) : props.title;
 
 	return (
@@ -23,5 +23,3 @@ const TabItem = ({ onPress, focused, ...props }: TabItemProps) => {
 		</Button>
 	);
 };
-
-export default TabItem;
