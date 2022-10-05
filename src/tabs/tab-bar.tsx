@@ -6,6 +6,7 @@ import {
 	useDerivedValue,
 	useSharedValue,
 	useAnimatedReaction,
+	runOnJS,
 } from 'react-native-reanimated';
 import Platform from '@wcpos/utils/src/platform';
 import Box from '../box';
@@ -56,15 +57,15 @@ export const TabBar = ({
 	/**
 	 * @TODO - react-native throws an error with this
 	 * tried to sychronously call function setScrollable
+	 * cannot set state in useAnimatedReaction
 	 */
 	useAnimatedReaction(
 		() => {
 			return totalWidth.value > containerWidth.value;
 		},
 		(result, previous) => {
-			// @TODO - do I need worklet or runOnJS here?
 			if (result !== previous) {
-				setScrollable(result);
+				runOnJS(setScrollable)(result);
 			}
 		},
 		[totalWidth, containerWidth, setScrollable]
