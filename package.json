@@ -47,7 +47,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.19.6",
 		"@storybook/addon-actions": "6.5.12",
-		"@storybook/addon-controls": "6.5.12",
+		"@storybook/addon-controls": "6.5.13",
 		"@storybook/addon-essentials": "6.5.12",
 		"@storybook/addon-react-native-web": "0.0.18",
 		"@storybook/builder-webpack5": "6.5.12",
