@@ -93,6 +93,21 @@ export const Pill = ({
 	);
 };
 
+const skeletonSizeMap = {
+	small: {
+		width: 50,
+		height: 18,
+	},
+	medium: {
+		width: 80,
+		height: 24,
+	},
+	large: {
+		width: 100,
+		height: 36,
+	},
+};
+
 /**
  *
  */
@@ -107,7 +122,11 @@ export interface PillSkeletonProps {
  *
  */
 const PillSkeleton = ({ size = 'medium' }: PillSkeletonProps) => (
-	<Styled.PillSkeleton size={size} />
+	<Styled.PillSkeleton
+		size={size}
+		width={skeletonSizeMap[size].width}
+		height={skeletonSizeMap[size].height}
+	/>
 );
 
 Pill.Skeleton = PillSkeleton;

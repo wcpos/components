@@ -36,26 +36,6 @@ export const Label = styled(Text)`
 `;
 
 export const PillSkeleton = styled(Skeleton)<Pick<PillProps, 'size'>>`
-	width: ${({ size }) => {
-		switch (size) {
-			case 'small':
-				return 50;
-			case 'large':
-				return 100;
-			default:
-				return 80;
-		}
-	}};
-	height: ${({ size }) => {
-		switch (size) {
-			case 'small':
-				return 18;
-			case 'large':
-				return 36;
-			default:
-				return 24;
-		}
-	}};
 	border-radius: ${({ theme, size }) => {
 		switch (size) {
 			case 'small':
