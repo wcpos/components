@@ -66,6 +66,11 @@ export type ModalProps = {
 	 */
 	withReactModal?: boolean;
 	/**
+	 * Define if Modalize has to be wrap with the Modal component from react-native.
+	 * @default true
+	 */
+	withPortal?: boolean;
+	/**
 	 *
 	 */
 	title?: string;
@@ -99,6 +104,7 @@ export const ModalBase = (
 		onOpen,
 		onClose,
 		withReactModal = false,
+		withPortal = true,
 		alwaysOpen = false,
 		size = 'medium',
 		primaryAction,
@@ -308,6 +314,10 @@ export const ModalBase = (
 
 	if (withReactModal) {
 		return renderReactModal(renderModal());
+	}
+
+	if (!withPortal) {
+		return renderModal();
 	}
 
 	return <Portal keyPrefix="Modal">{renderModal()}</Portal>;
