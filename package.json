@@ -1,6 +1,6 @@
 {
 	"name": "@wcpos/components",
-	"version": "1.0.59",
+	"version": "1.0.60",
 	"description": "Shared components for WooCommerce POS",
 	"author": "kilbot <paul@kilbot.com>",
 	"homepage": "https://github.com/wcpos/components#readme",
@@ -72,6 +72,7 @@
 		"babel-loader": "9.1.0",
 		"babel-plugin-react-native-web": "0.18.10",
 		"jest": "^29.3.1",
+		"patch-package": "^6.5.0",
 		"postinstall-postinstall": "^2.1.0",
 		"react-scripts": "5.0.1",
 		"react-test-renderer": "18.2.0",
