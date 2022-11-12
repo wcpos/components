@@ -1,6 +1,6 @@
 {
 	"name": "@wcpos/components",
-	"version": "1.0.60",
+	"version": "1.0.61",
 	"description": "Shared components for WooCommerce POS",
 	"author": "kilbot <paul@kilbot.com>",
 	"homepage": "https://github.com/wcpos/components#readme",

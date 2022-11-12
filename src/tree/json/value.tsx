@@ -2,7 +2,7 @@ import * as React from 'react';
 import Text from '../../text';
 import * as Styled from './styles';
 
-export interface JsonValueProps {
+export interface JSONValueProps {
 	name: string;
 	value: any;
 	originalValue: any;
@@ -12,7 +12,7 @@ export interface JsonValueProps {
 	onExpand: (keyPath: string[], deep: number, data: any) => void;
 }
 
-export const JsonValue = ({ name, value, keyPath = [], deep = 0 }: JsonValueProps) => {
+export const JSONValue = ({ name, value, keyPath = [], deep = 0 }: JSONValueProps) => {
 	return (
 		<Styled.ObjectNode style={{ flexDirection: 'row' }}>
 			<Text type="info">{name} : </Text>

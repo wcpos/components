@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Raw } from './raw';
-import { JsonNode } from './json/node';
+import registry from './registry';
 import Button from '../button';
 import Icon from '../icon';
 import Box from '../box';
@@ -22,18 +22,20 @@ export const Tree = ({
 	fallback = null,
 }: TreeProps) => {
 	const [raw, setRaw] = React.useState(false);
+	const JSONNode = registry.node;
 
 	return (
 		<Box paddingY="small">
 			{raw ? (
 				<Raw data={data} />
 			) : (
-				<JsonNode
+				<JSONNode
 					data={data}
 					name={rootName}
 					deep={-1}
 					isCollapsed={isCollapsed}
 					onExpand={onExpand}
+					registry={registry}
 				/>
 			)}
 			<Styled.RawButtonContainer>

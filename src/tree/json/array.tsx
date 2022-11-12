@@ -3,29 +3,31 @@ import { View } from 'react-native';
 import Text from '../../text';
 import Arrow from '../../arrow';
 import Pressable from '../../pressable';
-import { JsonNode } from './node';
 import * as Styled from './styles';
 
-export interface JsonArrayProps {
+export interface JSONArrayProps {
 	data: any;
 	name: string;
 	isCollapsed: (keyPath: string[], deep: number, data: any) => boolean;
 	onExpand: (keyPath: string[], deep: number, data: any) => void;
 	keyPath?: string[];
 	deep?: number;
+	registry: any;
 }
 
-export const JsonArray = ({
+export const JSONArray = ({
 	data,
 	name,
 	isCollapsed,
 	onExpand,
 	keyPath = [],
 	deep = 0,
-}: JsonArrayProps) => {
+	registry,
+}: JSONArrayProps) => {
 	const _keyPath = deep === -1 ? [] : [...keyPath, name];
 	const nextDeep = deep + 1;
 	const [collapsed, setCollapsed] = React.useState(isCollapsed(_keyPath, deep, data));
+	const JSONNode = registry.node;
 
 	const handleCollapse = () => {
 		if (collapsed) {
@@ -50,7 +52,7 @@ export const JsonArray = ({
 		const keyList = Object.getOwnPropertyNames(data);
 
 		const list = data.map((item: any, index: number) => (
-			<JsonNode
+			<JSONNode
 				key={index}
 				name={`${index}`}
 				data={item}
@@ -58,6 +60,7 @@ export const JsonArray = ({
 				deep={nextDeep}
 				isCollapsed={isCollapsed}
 				onExpand={onExpand}
+				registry={registry}
 			/>
 		));
 
