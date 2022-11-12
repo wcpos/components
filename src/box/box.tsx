@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { ViewStyle, StyleProp, ViewProps } from 'react-native';
 import flatMap from 'lodash/flatMap';
+import * as React from 'react';
+import { ViewStyle, StyleProp, ViewProps, View } from 'react-native';
+
 import Space from '../space';
 import * as Styled from './styles';
 
@@ -106,54 +107,70 @@ export interface BoxProps extends ViewProps {
  * >
  * >For example, if you apply `padding="small"` and `paddingTop="large"`, the `Box` will have a `small` padding on all sides, except top where the padding will be `large`.
  */
-const BoxBase = (
-	{
-		padding = 'none',
-		fill = false,
-		space = 'none',
-		horizontal = false,
-		align = 'fill',
-		distribution = 'start',
-		reverse = false,
-		border = false,
-		...rest
-	}: BoxProps,
-	ref
-) => {
-	let children = React.Children.toArray(rest.children).filter(Boolean);
-	const childrenLength = React.Children.count(children);
+export const Box = React.forwardRef<View, BoxProps>(
+	(
+		{
+			padding = 'none',
+			fill = false,
+			space = 'none',
+			horizontal = false,
+			align = 'fill',
+			distribution = 'start',
+			reverse = false,
+			border = false,
+			...rest
+		},
+		ref
+	) => {
+		// const BoxBase = (
+		// 	{
+		// 		padding = 'none',
+		// 		fill = false,
+		// 		space = 'none',
+		// 		horizontal = false,
+		// 		align = 'fill',
+		// 		distribution = 'start',
+		// 		reverse = false,
+		// 		border = false,
+		// 		...rest
+		// 	}: BoxProps,
+		// 	ref
+		// ) => {
+		let children = React.Children.toArray(rest.children).filter(Boolean);
+		const childrenLength = React.Children.count(children);
 
-	/**
-	 *
-	 */
-	if (space !== 'none' && childrenLength > 1) {
-		children = flatMap(children, (value, index, array) =>
-			array.length - 1 !== index // check for the last item
-				? [value, <Space key={`space-${index}`} value={space} />]
-				: value
+		/**
+		 *
+		 */
+		if (space !== 'none' && childrenLength > 1) {
+			children = flatMap(children, (value, index, array) =>
+				array.length - 1 !== index // check for the last item
+					? [value, <Space key={`space-${index}`} value={space} />]
+					: value
+			);
+		}
+
+		/**
+		 * @TODO - something weird happens in native when I use padding prop
+		 * I need to investigate more
+		 */
+		return (
+			<Styled.Box
+				ref={ref}
+				_padding={padding}
+				fill={fill}
+				space={space}
+				horizontal={horizontal}
+				align={align}
+				distribution={distribution}
+				reverse={reverse}
+				border={border}
+				// {...rest} @TODO - fix this WARN  Node of type rule not supported as an inline style
+			>
+				{children}
+			</Styled.Box>
 		);
 	}
+);
 
-	/**
-	 * @TODO - something weird happens in native when I use padding prop
-	 * I need to investigate more
-	 */
-	return (
-		<Styled.Box
-			ref={ref}
-			_padding={padding}
-			fill={fill}
-			space={space}
-			horizontal={horizontal}
-			align={align}
-			distribution={distribution}
-			reverse={reverse}
-			border={border}
-			{...rest}
-		>
-			{children}
-		</Styled.Box>
-	);
-};
-
-export const Box = React.forwardRef(BoxBase);
+// export const Box = React.forwardRef(BoxBase);

@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import Text from '../../text';
+
 import Arrow from '../../arrow';
 import Pressable from '../../pressable';
+import Text from '../../text';
 import { JsonNode } from './node';
 import * as Styled from './styles';
 

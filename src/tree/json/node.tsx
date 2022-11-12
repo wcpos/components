@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { JsonValue } from './value';
-import { JsonObject } from './object';
+
 import { JsonArray } from './array';
+import { JsonObject } from './object';
 import { getObjectType } from './utils';
+import { JsonValue } from './value';
 
 export interface JsonNodeProps {
 	data: any;
