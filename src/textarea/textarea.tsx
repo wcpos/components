@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import TextInput, { TextInputProps } from '../textinput';
 
 export interface TextAreaProps extends TextInputProps {

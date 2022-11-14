@@ -9,7 +9,9 @@ jobs:
       - uses: actions/setup-node@v3.5.1
         with:
           node-version: 16.x
-      - run: npm install --force
+      - name: Install NPM packages
+        run: YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
+      # - run: npm install --force
       # - run: npm test
       - uses: JS-DevTools/npm-publish@v1
         with:

@@ -1,9 +1,10 @@
 import * as React from 'react';
-import { Raw } from './raw';
-import registry from './registry';
+
+import Box from '../box';
 import Button from '../button';
 import Icon from '../icon';
-import Box from '../box';
+import { Raw } from './raw';
+import registry from './registry';
 import * as Styled from './styles';
 
 export interface TreeProps {

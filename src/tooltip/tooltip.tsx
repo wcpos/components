@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 // import Platform from '@wcpos/utils/src/platform';
 import Popover, { PopoverPlacement } from '../popover';
 import Text from '../text';
