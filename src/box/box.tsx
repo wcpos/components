@@ -1,6 +1,7 @@
-import flatMap from 'lodash/flatMap';
 import * as React from 'react';
 import { ViewStyle, StyleProp, ViewProps, View } from 'react-native';
+
+import flatMap from 'lodash/flatMap';
 
 import Space from '../space';
 import * as Styled from './styles';
@@ -165,7 +166,7 @@ export const Box = React.forwardRef<View, BoxProps>(
 				distribution={distribution}
 				reverse={reverse}
 				border={border}
-				// {...rest} @TODO - fix this WARN  Node of type rule not supported as an inline style
+				{...rest} // @TODO - fix this WARN  Node of type rule not supported as an inline style
 			>
 				{children}
 			</Styled.Box>
