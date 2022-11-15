@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import { StoryWrapper } from '@storybook/addons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import { AppProviderSizeProvider } from '@wcpos/hooks/src/use-position-in-app';
-import { Select, SelectProps } from './select';
+
 import Portal from '../portal';
+import { Select, SelectProps } from './select';
 
 /**
  * Select require (uses Popover)
