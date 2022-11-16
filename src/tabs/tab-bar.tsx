@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ScrollView, LayoutChangeEvent, View } from 'react-native';
+
 import {
 	scrollTo,
 	useAnimatedRef,
@@ -8,10 +9,12 @@ import {
 	useAnimatedReaction,
 	runOnJS,
 } from 'react-native-reanimated';
+
 import Platform from '@wcpos/utils/src/platform';
+
 import Box from '../box';
-import Icon from '../icon';
 import Button from '../button';
+import Icon from '../icon';
 import { TabItem } from './tab-item';
 
 export interface TabBarProps {
@@ -89,7 +92,7 @@ export const TabBar = ({
 	 *
 	 */
 	return (
-		<View style={{ flexDirection: 'row' }}>
+		<View style={{ flexDirection: 'row', width: direction === 'vertical' ? 200 : 'auto' }}>
 			<ScrollView
 				onLayout={onLayout}
 				ref={scrollViewRef}

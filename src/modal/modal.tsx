@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Modal as RNModal, KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native';
+
 import Platform from '@wcpos/utils/src/platform';
-import Portal from '../portal';
+
 import Backdrop from '../backdrop';
-import ErrorBoundary from '../error-boundary';
-import Button from '../button';
 import Box from '../box';
+import Button from '../button';
+import ErrorBoundary from '../error-boundary';
+import Portal from '../portal';
 import Header from './header';
 import * as Styled from './styles';
 
@@ -281,7 +283,10 @@ export const ModalBase = (
 				>
 					<ErrorBoundary>
 						{renderHeader()}
-						<Box padding="medium" style={{ flex: 1 }}>
+						<Box
+							padding="medium"
+							// style={{ flex: 1 }} - this causes problem on iOS, why is this here?
+						>
 							<ScrollView>
 								<ErrorBoundary>{renderChildren()}</ErrorBoundary>
 							</ScrollView>

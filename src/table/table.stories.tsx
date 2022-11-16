@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+
 import { action } from '@storybook/addon-actions';
-import Text from '../text';
-import Button from '../button';
-// import { text, select, boolean } from '@storybook/addon-knobs';
+import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Table, { TableProps } from '.';
+import Button from '../button';
+import Text from '../text';
+// import { text, select, boolean } from '@storybook/addon-knobs';
 
 export default {
 	title: 'Components/Table',
@@ -195,7 +196,6 @@ export const AddOrRemoveRows: ComponentStory<typeof Table> = (props: TableProps<
 					<Button
 						title="Remove"
 						onPress={() => {
-							debugger;
 							const newData = [...d];
 							newData.splice(itemIndex, 1);
 							setData(newData);
