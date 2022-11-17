@@ -5,7 +5,7 @@ import * as Styled from './styles';
 
 export interface JSONValueProps {
 	name: string;
-	value: any;
+	data: any;
 	originalValue: any;
 	keyPath?: string[];
 	deep?: number;
@@ -13,11 +13,11 @@ export interface JSONValueProps {
 	onExpand: (keyPath: string[], deep: number, data: any) => void;
 }
 
-export const JSONValue = ({ name, value, keyPath = [], deep = 0 }: JSONValueProps) => {
+export const JSONValue = ({ name, data, keyPath = [], deep = 0 }: JSONValueProps) => {
 	return (
 		<Styled.ObjectNode style={{ flexDirection: 'row' }}>
 			<Text type="info">{name} : </Text>
-			<Text>{String(value)}</Text>
+			<Text>{String(data)}</Text>
 		</Styled.ObjectNode>
 	);
 };

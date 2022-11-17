@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import Arrow from '../../arrow';
 import Pressable from '../../pressable';
 import Text from '../../text';
-// import { JSONNode } from './node';
 import * as Styled from './styles';
 
 export interface JSONObjectProps {

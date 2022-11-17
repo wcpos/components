@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { WebView as RNWebView, WebViewProps as RNWebViewProps } from 'react-native-webview';
+
 import noop from 'lodash/noop';
+import { WebView as RNWebView, WebViewProps as RNWebViewProps } from 'react-native-webview';
 
 type WebViewMessage = import('react-native-webview/lib/WebViewTypes').WebViewMessage;
 type WebViewError = import('react-native-webview/lib/WebViewTypes').WebViewError;

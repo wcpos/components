@@ -1,9 +1,6 @@
 import * as React from 'react';
 
-// import { JSONArray } from './array';
-// import { JSONObject } from './object';
 import { getObjectType } from './utils';
-// import { JSONValue } from './value';
 
 const dataTypeToComponent = {
 	string: 'string',
@@ -70,103 +67,4 @@ export const JSONNode = ({
 			registry={registry}
 		/>
 	);
-
-	// switch (dataType) {
-	// 	case 'String':
-	// 		return (
-	// 			<JSONValue
-	// 				name={name}
-	// 				value={`"${data}"`}
-	// 				originalValue={data}
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	case 'Number':
-	// 		return (
-	// 			<JSONValue
-	// 				name={name}
-	// 				value={data}
-	// 				originalValue={data}
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	case 'Boolean':
-	// 		return (
-	// 			<JSONValue
-	// 				name={name}
-	// 				value={!!data}
-	// 				originalValue={data}
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	case 'Date':
-	// 		return (
-	// 			<JSONValue
-	// 				name={name}
-	// 				value={data.toISOString()}
-	// 				originalValue={data}
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	case 'Null':
-	// 		return (
-	// 			<JSONValue
-	// 				name={name}
-	// 				value="null"
-	// 				originalValue="null"
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	case 'Undefined':
-	// 		return (
-	// 			<JSONValue
-	// 				name={name}
-	// 				value="undefined"
-	// 				originalValue="undefined"
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	case 'Object':
-	// 		return (
-	// 			<JSONObject
-	// 				name={name}
-	// 				data={data}
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	case 'Array':
-	// 		return (
-	// 			<JSONArray
-	// 				name={name}
-	// 				data={data}
-	// 				keyPath={keyPath}
-	// 				deep={deep}
-	// 				isCollapsed={isCollapsed}
-	// 				onExpand={onExpand}
-	// 			/>
-	// 		);
-	// 	default:
-	// 		return null;
-	// }
 };
