@@ -208,18 +208,20 @@ export const ModalBase = (
 	const renderFooter = () => {
 		if (primaryAction && !secondaryActions) {
 			return (
-				<Button
-					fill
-					size="large"
-					title={primaryAction.label}
-					onPress={primaryAction.action}
-					type={primaryAction.type || 'primary'}
-					style={{
-						flex: 1,
-						borderTopLeftRadius: 0,
-						borderTopRightRadius: 0,
-					}}
-				/>
+				<Box horizontal>
+					<Button
+						fill
+						size="large"
+						title={primaryAction.label}
+						onPress={primaryAction.action}
+						type={primaryAction.type || 'primary'}
+						style={{
+							flex: 1,
+							borderTopLeftRadius: 0,
+							borderTopRightRadius: 0,
+						}}
+					/>
+				</Box>
 			);
 		}
 
@@ -285,6 +287,7 @@ export const ModalBase = (
 						{renderHeader()}
 						<Box
 							padding="medium"
+							// style={{ flexGrow: 1, flexShrink: 0 }}
 							// style={{ flex: 1 }} - this causes problem on iOS, why is this here?
 						>
 							<ScrollView>
