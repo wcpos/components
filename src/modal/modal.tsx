@@ -1,5 +1,11 @@
 import * as React from 'react';
-import { Modal as RNModal, KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native';
+import {
+	Modal as RNModal,
+	KeyboardAvoidingView,
+	ScrollView,
+	StyleSheet,
+	ViewStyle,
+} from 'react-native';
 
 import Platform from '@wcpos/utils/src/platform';
 
@@ -77,6 +83,10 @@ export type ModalProps = {
 	 */
 	title?: string;
 	/**
+	 *
+	 */
+	style?: ViewStyle;
+	/**
 	 * A header component outside of the ScrollView, on top of the modal.
 	 */
 	HeaderComponent?: React.ReactNode;
@@ -113,6 +123,7 @@ export const ModalBase = (
 		secondaryActions,
 		HeaderComponent,
 		title,
+		style,
 	}: ModalProps,
 	ref
 ) => {
@@ -276,21 +287,25 @@ export const ModalBase = (
 				<Box
 					raised
 					rounding="medium"
-					style={{
-						width: modalSizes[size],
-						maxWidth: '80%',
-						backgroundColor: 'white',
-						maxHeight: '80%',
-					}}
+					style={[
+						{
+							width: modalSizes[size],
+							maxWidth: '80%',
+							backgroundColor: 'white',
+							maxHeight: '80%',
+						},
+						style,
+					]}
 				>
 					<ErrorBoundary>
 						{renderHeader()}
 						<Box
 							padding="medium"
-							// style={{ flexGrow: 1, flexShrink: 0 }}
-							// style={{ flex: 1 }} - this causes problem on iOS, why is this here?
+							// - this causes problem on iOS
+							// @TODO - test with ScrollView contentContainerStyle
+							style={Platform.isNative ? undefined : { flex: 1 }}
 						>
-							<ScrollView>
+							<ScrollView contentContainerStyle={{ flexBasis: '100%' }}>
 								<ErrorBoundary>{renderChildren()}</ErrorBoundary>
 							</ScrollView>
 						</Box>
