@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { StoryWrapper } from '@storybook/addons';
+
 import { action } from '@storybook/addon-actions';
+import { StoryWrapper } from '@storybook/addons';
+
+import Button from '../button';
 import { SnackbarProvider } from './provider';
 import { useSnackbar } from './use-snackbar';
-import Button from '../button';
 
 /**
  * Snackbar require
