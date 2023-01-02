@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { TouchableWithoutFeedback, NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
+
 import isFunction from 'lodash/isFunction';
 import Animated, {
 	useAnimatedStyle,
@@ -8,6 +9,7 @@ import Animated, {
 	FadeIn,
 	FadeOut,
 } from 'react-native-reanimated';
+
 import * as Styled from './styles';
 
 export interface BackdropProps {
