@@ -1,30 +1,34 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
 
+import isString from 'lodash/isString';
 import { useTheme } from 'styled-components/native';
 
 import Box from '../box';
-import Icon from '../icon';
+import Icon, { IconName } from '../icon';
 import Pressable from '../pressable';
 import Text from '../text';
 
+/**
+ *
+ */
 export interface ItemProps {
 	/**
 	 *
 	 */
-	children?: string | React.ReactNode;
+	children: React.ReactNode;
 	/**
 	 *
 	 */
-	label?: string;
+	icon?: IconName | React.ReactElement;
+	/**
+	 *
+	 */
+	accessoryRight?: React.ReactElement;
 	/**
 	 *
 	 */
 	onPress?: (value: any) => void;
-	/**
-	 *
-	 */
-	action?: () => void;
 	/**
 	 * Color of menu item
 	 */
@@ -35,20 +39,24 @@ export interface ItemProps {
 	style?: ViewStyle;
 }
 
-export const Item = ({ label = '', onPress, action, type, style }: ItemProps) => {
-	const theme = useTheme();
+/**
+ * Spacer is the same width as icon and right accessory to keep the menu item aligned
+ */
+const Spacer = () => <Box style={{ width: 16 }} />;
 
-	/**
-	 *
-	 */
-	const handlePress = React.useCallback(() => {
-		if (typeof action === 'function') {
-			action();
-		}
-		if (typeof onPress === 'function') {
-			onPress(label);
-		}
-	}, [action, label, onPress]);
+/**
+ *
+ */
+export const Item = ({
+	children,
+	icon = <Spacer />,
+	accessoryRight = <Spacer />,
+	onPress,
+	type,
+	style,
+}: ItemProps) => {
+	const theme = useTheme();
+	const accessoryLeft = isString(icon) ? <Icon name={icon} /> : icon;
 
 	/**
 	 *
@@ -62,12 +70,12 @@ export const Item = ({ label = '', onPress, action, type, style }: ItemProps) =>
 	);
 
 	return (
-		<Pressable onPress={handlePress} style={calculatedStyled}>
+		<Pressable onPress={onPress} style={calculatedStyled}>
 			{({ hovered }) => (
-				<Box horizontal space="small" padding="small" style={{ minWidth: 150 }}>
-					<Icon name="cog" />
-					<Text>{label}</Text>
-					<Icon name="cog" />
+				<Box horizontal space="small" padding="small">
+					{accessoryLeft}
+					<Text style={{ flex: 1 }}>{children}</Text>
+					{accessoryRight}
 				</Box>
 			)}
 		</Pressable>

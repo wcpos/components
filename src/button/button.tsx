@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { StyleProp, ViewStyle, GestureResponderEvent } from 'react-native';
-import Text from '../text';
-import Pressable from '../pressable';
-import Icon from '../icon';
+
 import Box from '../box';
+import Icon from '../icon';
 import Loader from '../loader';
+import Pressable from '../pressable';
+import Text from '../text';
 import * as Styled from './styles';
 
 export type Props = {

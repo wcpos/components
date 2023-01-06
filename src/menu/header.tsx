@@ -3,10 +3,12 @@ import * as React from 'react';
 import Box from '../box';
 import Text from '../text';
 
-export const Header = () => {
+export const Header = ({ children }: { children: string }) => {
 	return (
-		<Box>
-			<Text>Header</Text>
+		<Box padding="small">
+			<Text size="small" type="secondary" uppercase>
+				{children}
+			</Text>
 		</Box>
 	);
 };

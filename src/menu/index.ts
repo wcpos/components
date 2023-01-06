@@ -1,4 +1,8 @@
+import { Divider } from './divider';
+import { Header } from './header';
 import { Item } from './item';
-import { Menu } from './menu';
+import { Menu, MenuProps } from './menu';
 
-export default Object.assign(Menu, { Item });
+export type { MenuProps };
+
+export default Object.assign(Menu, { Item, Divider, Header });

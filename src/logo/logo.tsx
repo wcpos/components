@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleProp, ViewProps } from 'react-native';
+
 import Svg, { Path, G, Defs, Use, Symbol } from 'react-native-svg';
 
 interface Props {

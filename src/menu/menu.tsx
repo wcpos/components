@@ -1,73 +1,91 @@
 import * as React from 'react';
 import { View } from 'react-native';
 
+import isFunction from 'lodash/isFunction';
+import isString from 'lodash/isString';
 import snakeCase from 'lodash/snakeCase';
 
+import Box from '../box';
 import { Item, ItemProps } from './item';
-import * as Styled from './styles';
 
 /**
- * Action with a Label.
+ * Action with a Label and accessories
  */
-export interface TextAction {
+export interface MenuOption {
 	/**
-	 * Label to display.
+	 * Value to return on select.
 	 */
-	label: string;
+	value?: string;
 	/**
 	 * Action to execute on click.
 	 */
-	action?: () => void;
+	action?: ItemProps['onPress'];
 	/**
 	 * Color of menu item
 	 */
-	type?: import('@wcpos/themes').ColorTypes;
+	type?: ItemProps['type'];
+	/**
+	 * Label to display.
+	 */
+	icon?: ItemProps['icon'];
+	/**
+	 * Label to display.
+	 */
+	accessoryRight?: ItemProps['accessoryRight'];
 }
 
-// export interface IconAction {
-// 	/**
-// 	 * Icon to display.
-// 	 */
-// 	icon: IconName;
-// 	/**
-// 	 * Color of the icon.
-// 	 */
-// 	color?: IconProps['color'];
-// 	/**
-// 	 * Action to execute on click.
-// 	 */
-// 	action?: () => void;
-// }
+/**
+ * Menu can have children or use the shorthand items array.
+ */
+type MenuWithChildren = {
+	items?: never;
+	children: React.ReactNode;
+};
+type MenuWithItems = {
+	items: (MenuOption | string)[];
+	children?: never;
+};
 
-// export type TextWithIconAction = TextAction & IconAction;
-// export type TextWithOptionalIconAction = TextAction & Partial<IconAction>;
-
-export interface MenuProps {
-	/**
-	 *
-	 */
-	items: (TextAction | string)[];
+/**
+ * Menu
+ */
+type MenuProps = {
 	/**
 	 *
 	 */
 	onSelect?: (value: any) => void;
-}
+} & (MenuWithChildren | MenuWithItems);
 
-export const Menu = React.forwardRef<View, MenuProps>(({ items, onSelect = () => {} }, ref) => {
-	return (
-		<Styled.Container ref={ref}>
-			{items.map((rawItem, index) => {
-				const item = typeof rawItem === 'string' ? { label: rawItem } : rawItem;
-				return (
-					<Item
-						key={snakeCase(`${item.label}_${index}`)}
-						{...item}
-						onPress={() => {
-							onSelect(item);
-						}}
-					/>
-				);
-			})}
-		</Styled.Container>
-	);
-});
+/**
+ * Action with a Label.
+ */
+export const Menu = React.forwardRef<View, MenuProps>(
+	({ children, items, onSelect = () => {} }, ref) => {
+		return (
+			<Box ref={ref}>
+				{children
+					? children
+					: items.map((rawItem, index) => {
+							const item = isString(rawItem)
+								? { label: rawItem, value: rawItem, action: null }
+								: rawItem;
+
+							return (
+								<Item
+									key={snakeCase(`${item.label}_${index}`)}
+									onPress={() => {
+										if (isFunction(item.action)) {
+											item.action(item.value || item.label);
+										}
+										isFunction(onSelect) && onSelect(item.value || item.label);
+									}}
+									{...item}
+								>
+									{item.label}
+								</Item>
+							);
+					  })}
+			</Box>
+		);
+	}
+);

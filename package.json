@@ -1,6 +1,6 @@
 {
 	"name": "@wcpos/components",
-	"version": "1.0.70",
+	"version": "1.0.71",
 	"description": "Shared components for WooCommerce POS",
 	"author": "kilbot <paul@kilbot.com>",
 	"homepage": "https://github.com/wcpos/components#readme",
@@ -81,5 +81,6 @@
 	},
 	"eslintConfig": {
 		"extends": "@wcpos/eslint-config"
-	}
+	},
+	"packageManager": "yarn@3.3.1"
 }

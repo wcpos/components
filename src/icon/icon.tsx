@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
-import { useSharedValue } from 'react-native-reanimated';
+
 import get from 'lodash/get';
+import { useSharedValue } from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
-import * as Svgs from './components/fontawesome/solid';
-import Tooltip from '../tooltip';
-import Skeleton from '../skeleton';
+
 import Pressable from '../pressable';
 import Ripple from '../ripple';
+import Skeleton from '../skeleton';
+import Tooltip from '../tooltip';
+import * as Svgs from './components/fontawesome/solid';
 // import * as Styled from './styles';
 
 export type IconName = Extract<keyof typeof Svgs, string>;

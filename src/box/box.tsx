@@ -67,6 +67,22 @@ export interface BoxProps extends ViewProps {
 	 */
 	border?: boolean;
 	/**
+	 * Padding applied to top side.
+	 */
+	borderTop?: boolean;
+	/**
+	 * Padding applied to bottom side.
+	 */
+	borderBottom?: boolean;
+	/**
+	 * Padding applied to left side.
+	 */
+	borderLeft?: boolean;
+	/**
+	 * Padding applied to right side.
+	 */
+	borderRight?: boolean;
+	/**
 	 * Set to `true` to set underlying view `flex` property to `1` to fill parent view.
 	 */
 	fill?: boolean;
