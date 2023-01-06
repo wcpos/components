@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
+
 import { useTheme } from 'styled-components/native';
-import * as Styled from './styles';
+
+import Box from '../box';
+import Icon from '../icon';
+import Pressable from '../pressable';
+import Text from '../text';
 
 export interface ItemProps {
 	/**
 	 *
 	 */
-	children?: string;
+	children?: string | React.ReactNode;
 	/**
 	 *
 	 */
@@ -30,7 +35,7 @@ export interface ItemProps {
 	style?: ViewStyle;
 }
 
-export const Item = ({ children, label = '', onPress, action, type, style }: ItemProps) => {
+export const Item = ({ label = '', onPress, action, type, style }: ItemProps) => {
 	const theme = useTheme();
 
 	/**
@@ -57,15 +62,14 @@ export const Item = ({ children, label = '', onPress, action, type, style }: Ite
 	);
 
 	return (
-		<Styled.Item onPress={handlePress} style={calculatedStyled}>
-			{
-				// @ts-ignore
-				({ hovered }) => (
-					<Styled.Label type={type} hovered={hovered}>
-						{children || label}
-					</Styled.Label>
-				)
-			}
-		</Styled.Item>
+		<Pressable onPress={handlePress} style={calculatedStyled}>
+			{({ hovered }) => (
+				<Box horizontal space="small" padding="small" style={{ minWidth: 150 }}>
+					<Icon name="cog" />
+					<Text>{label}</Text>
+					<Icon name="cog" />
+				</Box>
+			)}
+		</Pressable>
 	);
 };

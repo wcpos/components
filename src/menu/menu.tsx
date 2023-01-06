@@ -1,5 +1,8 @@
 import * as React from 'react';
+import { View } from 'react-native';
+
 import snakeCase from 'lodash/snakeCase';
+
 import { Item, ItemProps } from './item';
 import * as Styled from './styles';
 
@@ -50,13 +53,9 @@ export interface MenuProps {
 	onSelect?: (value: any) => void;
 }
 
-export const Menu: React.FC<MenuProps> & { Item: typeof Item } = ({
-	items,
-	// @ts-ignore
-	onSelect = () => {},
-}) => {
+export const Menu = React.forwardRef<View, MenuProps>(({ items, onSelect = () => {} }, ref) => {
 	return (
-		<Styled.Container>
+		<Styled.Container ref={ref}>
 			{items.map((rawItem, index) => {
 				const item = typeof rawItem === 'string' ? { label: rawItem } : rawItem;
 				return (
@@ -71,7 +70,4 @@ export const Menu: React.FC<MenuProps> & { Item: typeof Item } = ({
 			})}
 		</Styled.Container>
 	);
-};
-
-export type MenuItemProps = ItemProps;
-Menu.Item = Item;
+});

@@ -14,8 +14,11 @@ module.exports = {
       modulesToTranspile: [
         '@wcpos/hooks',
         '@wcpos/themes',
-        '@wcpos/utils', 'react-native-reanimated', 'react-native-gesture-handler'],
-      babelPlugins: ['react-native-reanimated/plugin',  '@babel/plugin-proposal-export-namespace-from'],
+        '@wcpos/utils',
+        'react-native-reanimated',
+        'react-native-gesture-handler'
+      ],
+      babelPlugins: ['react-native-reanimated/plugin', '@babel/plugin-proposal-export-namespace-from'],
     }
   }],
   framework: '@storybook/react',
@@ -25,7 +28,7 @@ module.exports = {
 
   babel: async options => ({ // Update your babel configuration here
     ...options,
-		presets: [['babel-preset-expo', { jsxRuntime: 'automatic' }], '@babel/preset-typescript'],
+    presets: [['babel-preset-expo', { jsxRuntime: 'automatic' }], '@babel/preset-typescript'],
   }),
 
   webpackFinal: async (config, { configType }) => {
@@ -38,7 +41,8 @@ module.exports = {
     ];
     config.module.rules = config.module.rules.concat(rules);
 
-    config.resolve.alias = { ...(config.resolve.alias || {}),
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
       // Mock expo-haptics
       'expo-haptics$': path.resolve(__dirname, 'utils/expo-haptics')
     };

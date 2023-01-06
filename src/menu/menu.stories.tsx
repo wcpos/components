@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import { Menu, MenuProps } from './menu';
 
 export default {

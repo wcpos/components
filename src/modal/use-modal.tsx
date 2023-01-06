@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import { Modal, Close, Open } from './modal';
 
 export const useModal = () => {

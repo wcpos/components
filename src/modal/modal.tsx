@@ -7,6 +7,7 @@ import {
 	ViewStyle,
 } from 'react-native';
 
+import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 import Platform from '@wcpos/utils/src/platform';
 
 import Backdrop from '../backdrop';
@@ -127,6 +128,7 @@ export const ModalBase = (
 	}: ModalProps,
 	ref
 ) => {
+	const focusTrapRef = useFocusTrap();
 	const [isVisible, setIsVisible] = React.useState(false);
 
 	const handleAnimateOpen = (dest: Open = 'default'): void => {
@@ -305,7 +307,7 @@ export const ModalBase = (
 							// @TODO - test with ScrollView contentContainerStyle
 							style={Platform.isNative ? undefined : { flex: 1 }}
 						>
-							<ScrollView contentContainerStyle={{ flexBasis: '100%' }}>
+							<ScrollView ref={focusTrapRef} contentContainerStyle={{ flexBasis: '100%' }}>
 								<ErrorBoundary>{renderChildren()}</ErrorBoundary>
 							</ScrollView>
 						</Box>

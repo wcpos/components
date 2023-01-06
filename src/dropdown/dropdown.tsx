@@ -1,6 +1,10 @@
 import * as React from 'react';
-import Popover, { PopoverProps } from '../popover';
+import { ScrollView } from 'react-native';
+
+import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
+
 import Menu from '../menu';
+import Popover, { PopoverProps } from '../popover';
 
 type TextAction = import('../menu/menu').TextAction;
 
@@ -21,21 +25,33 @@ export type DropdownProps = Omit<PopoverProps, 'content'> & {
 /**
  *
  */
-const DropdownBase = (
-	{ children, items, onSelect, style, ...rest }: DropdownProps,
-	ref: React.Ref<typeof Popover>
-) => {
-	return (
-		<Popover
-			ref={ref}
-			content={<Menu items={items} onSelect={onSelect} />}
-			placement="bottom-end"
-			style={[{ paddingLeft: 0, paddingRight: 0 }, style]}
-			{...rest}
-		>
-			{children}
-		</Popover>
-	);
-};
+export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
+	({ children, items, onSelect, style, ...rest }, ref) => {
+		const focusTrapRef = useFocusTrap();
 
-export const Dropdown = React.forwardRef(DropdownBase);
+		/**
+		 * when to close the popover?
+		 * - close onSelect
+		 * - another option is to close on blur, but how would this work in native?
+		 */
+		const handleSelect = (value: any) => {
+			onSelect?.(value);
+		};
+
+		return (
+			<Popover
+				ref={ref}
+				content={
+					<ScrollView ref={focusTrapRef} contentContainerStyle={{ maxHeight: 200 }}>
+						<Menu items={items} onSelect={handleSelect} />
+					</ScrollView>
+				}
+				placement="bottom-end"
+				style={[{ paddingLeft: 0, paddingRight: 0 }, style]}
+				{...rest}
+			>
+				{children}
+			</Popover>
+		);
+	}
+);
