@@ -6,10 +6,12 @@ import isPlainObject from 'lodash/isPlainObject';
 
 import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
 
-import Arrow from '../arrow';
 import BaseInput, { BaseInputContainer } from '../base-input';
 import Dropdown, { useDropdown } from '../dropdown';
 
+/**
+ *
+ */
 export interface SelectOption {
 	/**
 	 * Label for the Option.
@@ -25,6 +27,9 @@ export interface SelectOption {
 	disabled?: boolean;
 }
 
+/**
+ *
+ */
 export interface SelectProps {
 	/**
 	 * Label for the Select.
@@ -81,6 +86,9 @@ export const Select = ({
 		onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
 	);
 
+	/**
+	 *
+	 */
 	const options = React.useMemo(() => {
 		let _options = optionsRaw;
 
@@ -99,10 +107,16 @@ export const Select = ({
 		return _options;
 	}, [optionsRaw]);
 
+	/**
+	 *
+	 */
 	const selectedChoice = React.useMemo(() => {
 		return options.find((x) => x.value === selected);
 	}, [options, selected]);
 
+	/**
+	 *
+	 */
 	const handleSelect = (selected: any) => {
 		onChange(selected);
 		close();

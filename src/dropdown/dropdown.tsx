@@ -6,7 +6,7 @@ import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 import Menu from '../menu';
 import Popover, { PopoverProps } from '../popover';
 
-type TextAction = import('../menu/menu').TextAction;
+type MenuOption = import('../menu/menu').MenuOption;
 
 /**
  *
@@ -15,7 +15,7 @@ export type DropdownProps = Omit<PopoverProps, 'content'> & {
 	/**
 	 *
 	 */
-	items: string[] | TextAction[];
+	items: string[] | MenuOption[];
 	/**
 	 *
 	 */

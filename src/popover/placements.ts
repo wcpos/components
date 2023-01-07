@@ -187,14 +187,14 @@ export const getArrowAlign = (
 	if (isStart(placement))
 		return {
 			alignSelf: 'flex-start',
-			paddingTop: isLeft(placement) || isRight(placement) ? 6 : 0,
-			paddingLeft: isTop(placement) || isBottom(placement) ? 6 : 0,
+			paddingTop: isLeft(placement) || isRight(placement) ? 10 : 0,
+			paddingLeft: isTop(placement) || isBottom(placement) ? 10 : 0,
 		};
 	if (isEnd(placement))
 		return {
 			alignSelf: 'flex-end',
-			paddingBottom: isLeft(placement) || isRight(placement) ? 6 : 0,
-			paddingRight: isTop(placement) || isBottom(placement) ? 6 : 0,
+			paddingBottom: isLeft(placement) || isRight(placement) ? 10 : 0,
+			paddingRight: isTop(placement) || isBottom(placement) ? 10 : 0,
 		};
 	return { alignSelf: 'center' };
 };

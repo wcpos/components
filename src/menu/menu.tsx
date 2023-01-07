@@ -9,9 +9,13 @@ import Box from '../box';
 import { Item, ItemProps } from './item';
 
 /**
- * Action with a Label and accessories
+ * Menu option with a Label and accessories
  */
 export interface MenuOption {
+	/**
+	 * Menu item label.
+	 */
+	label: React.ReactNode;
 	/**
 	 * Value to return on select.
 	 */
@@ -35,32 +39,34 @@ export interface MenuOption {
 }
 
 /**
- * Menu can have children or use the shorthand items array.
- */
-type MenuWithChildren = {
-	items?: never;
-	children: React.ReactNode;
-};
-type MenuWithItems = {
-	items: (MenuOption | string)[];
-	children?: never;
-};
-
-/**
  * Menu
  */
 type MenuProps = {
 	/**
-	 *
+	 * Callback called when selection is changed. Returns the value of the selected itemm. If no value is set, returns the label.
 	 */
 	onSelect?: (value: any) => void;
-} & (MenuWithChildren | MenuWithItems);
+} & (
+	| {
+			items?: never;
+			children: React.ReactNode;
+	  }
+	| {
+			items: (MenuOption | string)[];
+			children?: never;
+	  }
+);
 
 /**
- * Action with a Label.
+ *
  */
 export const Menu = React.forwardRef<View, MenuProps>(
-	({ children, items, onSelect = () => {} }, ref) => {
+	({ children, items = [], onSelect = () => {} }, ref) => {
+		/**
+		 * If any item has an icon, we need to add a spacer to keep the menu item aligned
+		 */
+		const iconSpacer = items.some((item) => !isString(item) && !!item.icon);
+
 		return (
 			<Box ref={ref}>
 				{children
@@ -79,6 +85,7 @@ export const Menu = React.forwardRef<View, MenuProps>(
 										}
 										isFunction(onSelect) && onSelect(item.value || item.label);
 									}}
+									iconSpacer={iconSpacer}
 									{...item}
 								>
 									{item.label}
