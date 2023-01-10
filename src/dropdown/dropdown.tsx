@@ -27,7 +27,7 @@ export type DropdownProps = Omit<PopoverProps, 'content'> & {
  */
 export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 	({ children, items, onSelect, style, ...rest }, ref) => {
-		const focusTrapRef = useFocusTrap();
+		// const focusTrapRef = useFocusTrap();
 
 		/**
 		 * when to close the popover?
@@ -42,7 +42,10 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 			<Popover
 				ref={ref}
 				content={
-					<ScrollView ref={focusTrapRef} contentContainerStyle={{ maxHeight: 200 }}>
+					<ScrollView
+						//ref={focusTrapRef}
+						contentContainerStyle={{ maxHeight: 200 }}
+					>
 						<Menu items={items} onSelect={handleSelect} />
 					</ScrollView>
 				}

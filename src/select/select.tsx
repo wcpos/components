@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { ScrollView } from 'react-native';
 
-import get from 'lodash/get';
 import isPlainObject from 'lodash/isPlainObject';
 
 import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';

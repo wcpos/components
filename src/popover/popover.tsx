@@ -1,20 +1,24 @@
 import * as React from 'react';
 import { View, Dimensions, ViewStyle, StyleProp, StyleSheet } from 'react-native';
+
+import get from 'lodash/get';
 import Animated, {
 	useAnimatedStyle,
 	useSharedValue,
 	withTiming,
 	FadeInDown,
 } from 'react-native-reanimated';
+
 // @TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
-import get from 'lodash/get';
 import useMeasure from '@wcpos/hooks/src/use-measure';
 import Platform from '@wcpos/utils/src/platform';
-import { useScrollEvents } from '../scrollview';
+
+import Arrow from '../arrow';
+import Backdrop from '../backdrop';
 import Portal from '../portal';
 import Pressable from '../pressable';
-import Backdrop from '../backdrop';
+import { useScrollEvents } from '../scrollview';
 import {
 	PopoverPlacement,
 	isBottom,
@@ -28,7 +32,6 @@ import {
 	getContainerAlign,
 	getPopoverPosition,
 } from './placements';
-import Arrow from '../arrow';
 import * as Styled from './styles';
 
 export interface PopoverProps {
@@ -36,6 +39,10 @@ export interface PopoverProps {
 	 * The content which will trigger the Popover. The Popover will be anchored to this component.
 	 */
 	children: React.ReactNode;
+	/**
+	 * Determines if Popover is visible or not.
+	 */
+	open: boolean;
 	/**
 	 * The content to display inside the Popover.
 	 */
@@ -53,6 +60,15 @@ export interface PopoverProps {
 	 * Method for activating the Popover.
 	 */
 	trigger?: 'press' | 'longpress' | 'hover';
+	/**
+	 * Called when popover closes
+	 */
+	onClose?(): void;
+
+	/**
+	 * Called when popover opens
+	 */
+	onOpen?(): void;
 	/**
 	 * Show arrow pointing to the target.
 	 */
@@ -88,6 +104,7 @@ const PopoverBase = (
 	{
 		children,
 		content,
+		open = false,
 		placement = 'bottom',
 		trigger = 'press',
 		withArrow = true,
@@ -131,6 +148,19 @@ const PopoverBase = (
 	}, [forceContainerMeasure, forceTriggerMeasure, visible]);
 
 	/**
+	 * Allow external access to the popover's visibility state.
+	 */
+	React.useImperativeHandle(ref, () => ({
+		open(): void {
+			setVisible(true);
+		},
+
+		close(): void {
+			setVisible(false);
+		},
+	}));
+
+	/**
 	 * Add haptic feedback when the popover is opened
 	 */
 	const handleOpen = React.useCallback(() => {
@@ -161,19 +191,6 @@ const PopoverBase = (
 	const handleHoverOut = React.useCallback(() => {
 		if (trigger === 'hover') setVisible(false);
 	}, [trigger]);
-
-	/**
-	 * Allow external access to the popover's visibility state.
-	 */
-	React.useImperativeHandle(ref, () => ({
-		open(): void {
-			setVisible(true);
-		},
-
-		close(): void {
-			setVisible(false);
-		},
-	}));
 
 	/**
 	 * Special case for Pressables and Icons

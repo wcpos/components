@@ -9,18 +9,21 @@ import {
 	StyleProp,
 	ViewStyle,
 } from 'react-native';
+
+import get from 'lodash/get';
 import { useTheme } from 'styled-components/native';
+
+import useMeasure from '@wcpos/hooks/src/use-measure';
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
-import get from 'lodash/get';
-import useMeasure from '@wcpos/hooks/src/use-measure';
-import * as Styled from './styles';
+
+import { BaseInputContainer } from '../base-input';
 import Box from '../box';
 import Button from '../button';
-import Text from '../text';
 import Icon from '../icon';
 import Portal from '../portal';
-import { BaseInputContainer } from '../base-input';
+import Text from '../text';
+import * as Styled from './styles';
 
 export interface Action {
 	/**

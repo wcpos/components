@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
+
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
+
 import Box from '../box';
-import Text from '../text';
 import InlineError from '../inline-error';
+import Text from '../text';
 import { BackgroundCircle, CheckMark } from './styles';
 
 export interface RadioProps {

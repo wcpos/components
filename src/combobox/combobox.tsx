@@ -1,15 +1,17 @@
 import * as React from 'react';
-import { ScrollView } from 'react-native';
+
+import isPlainObject from 'lodash/isPlainObject';
+
 import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
+
 import Dropdown from '../dropdown';
 import TextInput from '../textinput';
 // import Search from '../search';
 
-export interface ComboboxOptions {
-	/**
-	 * Label for the Option.
-	 */
-	key: string;
+/**
+ *
+ */
+export interface ComboboxOption {
 	/**
 	 * Label for the Option.
 	 */
@@ -24,6 +26,9 @@ export interface ComboboxOptions {
 	disabled?: boolean;
 }
 
+/**
+ *
+ */
 export interface ComboboxProps {
 	/**
 	 * Label to display above the input.
@@ -32,11 +37,11 @@ export interface ComboboxProps {
 	/**
 	 * Options available in the Select.
 	 */
-	options: ComboboxOptions[];
+	options: ComboboxOption[] | string[];
 	/**
 	 * Currently selected value. If null, no value is selected.
 	 */
-	selected?: string | null;
+	value?: ComboboxOption | string | null;
 	/**
 	 * Callback called when selection is changed.
 	 */
@@ -60,50 +65,86 @@ export interface ComboboxProps {
 }
 
 /**
+ * Format options to be used in the Dropdown.
+ * Note: this should return a new array, not mutate the original one.
+ */
+const formatOptions = (options: ComboboxOption[] | string[]) => {
+	// special case for { 0: '', 1: '', ... } or { '0': { label: '', value: ''}, ... }
+	if (isPlainObject(options)) {
+		return Object.values(options);
+	}
+
+	// turn strings into [{ label: '', value: '' }, ...]
+	if (Array.isArray(options)) {
+		return options.map((choice) =>
+			typeof choice === 'string' ? { label: choice, value: choice } : { ...choice }
+		);
+	}
+
+	// this should never happen?
+	return options;
+};
+
+/**
  * Let the user search and choose one option from multiple ones.
  */
 export const Combobox = ({
 	label,
-	options,
-	selected: selectedRaw = null,
-	onChange: onChangeRaw,
+	value: selected = null,
+	onChange,
 	placeholder,
-	searchValue,
+	// searchValue,
 	onSearch,
 	hideLabel,
+	...props
 }: ComboboxProps) => {
-	const [selected, onChange] = useUncontrolledState(
-		selectedRaw,
-		onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
+	// const [selected, onChange] = useUncontrolledState(
+	// 	selectedRaw,
+	// 	onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
+	// );
+	const [searchValue, setSearchValue] = React.useState('');
+	const options = React.useMemo(() => formatOptions(props.options), [props.options]);
+
+	/**
+	 * Handle search change.
+	 */
+	const onSearchChange = React.useCallback(
+		(value: string) => {
+			setSearchValue(value);
+			if (onSearch) {
+				onSearch(value);
+			}
+		},
+		[onSearch]
 	);
 
-	// const choiceComponents = React.useMemo(
-	// 	() =>
-	// 		choices.map((choice) => (
-	// 			<Popover.Item
-	// 				key={choice.key}
-	// 				label={choice.label}
-	// 				disabled={choice.disabled}
-	// 				// eslint-disable-next-line react/jsx-no-bind
-	// 				onSelect={() => onChange(choice.value)}
-	// 			/>
-	// 		)),
-	// 	[choices, onChange]
-	// );
+	/**
+	 * Maybe filter options based on the search term.
+	 */
+	const filteredOptions = React.useMemo(() => {
+		// early exit if the parent is controlling the search
+		if (onSearch || !searchValue || searchValue === '') {
+			return options;
+		}
 
-	// const handleSelect = React.useCallback((val) => {
-	// 	console.log(val);
-	// }, []);
+		// filter option.label on the search term
+		return options.filter((option) =>
+			option.label.toLowerCase().includes(searchValue.toLowerCase())
+		);
+	}, [options, searchValue, onSearch]);
 
+	/**
+	 *
+	 */
 	return (
-		<Dropdown withArrow={false} matchWidth items={options} onSelect={onChange}>
+		<Dropdown withArrow={false} matchWidth items={filteredOptions} onSelect={onChange}>
 			<TextInput
 				label={label}
 				hideLabel={hideLabel}
 				// onFocus={showPopover}
-				placeholder={placeholder}
-				onChange={onSearch}
-				value={searchValue || selected}
+				value={searchValue}
+				placeholder={selected?.label ?? (selected || placeholder)}
+				onChange={onSearchChange}
 				clearable
 				// onClear={() => onSearch('')}
 			/>
