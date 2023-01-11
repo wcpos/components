@@ -34,7 +34,7 @@ export const Group = ({
 	alignment = 'start',
 	style,
 	type = 'primary',
-	size = 'medium',
+	size = 'normal',
 	background = 'solid',
 	fill = false,
 	...props

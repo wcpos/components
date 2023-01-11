@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
-import { Text } from '../text/text';
+
 import { Skeleton } from '../skeleton/skeleton';
+import { Text } from '../text/text';
 
 type PillProps = import('./pill').PillProps;
 
@@ -9,9 +10,11 @@ export const Pill = styled.View<Pick<PillProps, 'disabled' | 'size' | 'color'>>`
 	align-items: center;
 	padding: ${({ theme, size }) => {
 		switch (size) {
+			case 'xSmall':
 			case 'small':
 				return `${theme.spacing.xxSmall}px ${theme.spacing.small}px`;
 			case 'large':
+			case 'xLarge':
 				return `${theme.spacing.small}px ${theme.spacing.medium}px`;
 			default:
 				return `${theme.spacing.xSmall}px ${theme.spacing.small}px`;
@@ -19,9 +22,11 @@ export const Pill = styled.View<Pick<PillProps, 'disabled' | 'size' | 'color'>>`
 	}}
 	border-radius: ${({ theme, size }) => {
 		switch (size) {
+			case 'xSmall':
 			case 'small':
 				return `${theme.rounding.large}px`;
 			case 'large':
+			case 'xLarge':
 				return `${theme.rounding.xxLarge}px`;
 			default:
 				return `${theme.rounding.xLarge}px`;
@@ -38,9 +43,11 @@ export const Label = styled(Text)`
 export const PillSkeleton = styled(Skeleton)<Pick<PillProps, 'size'>>`
 	border-radius: ${({ theme, size }) => {
 		switch (size) {
+			case 'xSmall':
 			case 'small':
 				return `${theme.rounding.large}px`;
 			case 'large':
+			case 'xLarge':
 				return `${theme.rounding.xxLarge}px`;
 			default:
 				return `${theme.rounding.xLarge}px`;

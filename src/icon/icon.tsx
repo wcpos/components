@@ -13,7 +13,6 @@ import * as Svgs from './components/fontawesome/solid';
 // import * as Styled from './styles';
 
 export type IconName = Extract<keyof typeof Svgs, string>;
-type IconSizes = import('@wcpos/themes').IconSizes;
 
 /**
  *
@@ -38,7 +37,7 @@ export interface IconProps {
 	/**
 	 * Set icon size.
 	 */
-	size?: IconSizes;
+	size?: import('@wcpos/themes').IconSizesTypes;
 	/**
 	 * Set icon width.
 	 */
@@ -76,7 +75,7 @@ export const Icon = ({
 	color,
 	disabled,
 	name,
-	size = 'medium',
+	size = 'normal',
 	width,
 	height,
 	onPress,
@@ -138,13 +137,13 @@ export interface IconSkeletonProps {
 	/**
 	 *
 	 */
-	size?: IconSizes;
+	size?: import('@wcpos/themes').IconSizesTypes;
 }
 
 /**
  *
  */
-export const IconSkeleton = ({ size = 'medium' }: IconSkeletonProps) => {
+export const IconSkeleton = ({ size = 'normal' }: IconSkeletonProps) => {
 	const theme = useTheme();
 	return (
 		<Skeleton border="circular" width={theme.iconSizes[size]} height={theme.iconSizes[size]} />

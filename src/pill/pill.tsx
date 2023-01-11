@@ -1,8 +1,10 @@
 import * as React from 'react';
+
 import { useTheme } from 'styled-components/native';
-import * as Styled from './styles';
+
 import Icon from '../icon';
 import Pressable from '../pressable';
+import * as Styled from './styles';
 
 type ColorTypes = import('@wcpos/themes/src/index').ColorTypes;
 
@@ -30,7 +32,7 @@ export interface PillProps {
 	/**
 	 * Called if pill is pressed
 	 */
-	size?: 'small' | 'medium' | 'large';
+	size?: import('@wcpos/themes').FontSizeTypes;
 	/**
 	 * Background color of the pill
 	 */
@@ -39,9 +41,13 @@ export interface PillProps {
 
 // can't have negative in react-native
 const marginMap = {
+	xSmall: 0,
 	small: 0,
+	normal: 0,
 	medium: 3,
 	large: 6,
+	xLarge: 6,
+	xxLarge: 6,
 };
 
 /**
@@ -53,7 +59,7 @@ export const Pill = ({
 	disabled,
 	onRemove,
 	onPress,
-	size = 'medium',
+	size = 'normal',
 	color = 'primary',
 }: PillProps) => {
 	const theme = useTheme();
@@ -63,9 +69,13 @@ export const Pill = ({
 	 */
 	const removeIconPadding = React.useMemo(
 		() => ({
+			xSmall: theme.spacing.xxSmall,
 			small: theme.spacing.xxSmall,
+			normal: theme.spacing.xSmall,
 			medium: theme.spacing.xSmall,
 			large: theme.spacing.small,
+			xLarge: theme.spacing.small,
+			xxLarge: theme.spacing.small,
 		}),
 		[theme.spacing.small, theme.spacing.xSmall, theme.spacing.xxSmall]
 	);
@@ -94,17 +104,33 @@ export const Pill = ({
 };
 
 const skeletonSizeMap = {
+	xSmall: {
+		width: 30,
+		height: 12,
+	},
 	small: {
 		width: 50,
 		height: 18,
 	},
-	medium: {
+	normal: {
 		width: 80,
 		height: 24,
+	},
+	medium: {
+		width: 90,
+		height: 28,
 	},
 	large: {
 		width: 100,
 		height: 36,
+	},
+	xLarge: {
+		width: 120,
+		height: 48,
+	},
+	xxLarge: {
+		width: 140,
+		height: 60,
 	},
 };
 
@@ -115,7 +141,7 @@ export interface PillSkeletonProps {
 	/**
 	 * Called if pill is pressed
 	 */
-	size?: 'small' | 'medium' | 'large';
+	size?: import('@wcpos/themes').FontSizeTypes;
 }
 
 /**
