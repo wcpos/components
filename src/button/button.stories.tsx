@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
+
 import Icon from '../icon';
 import Button from './button';
-import Group from './group';
+import { Group } from './group';
 
 export default {
 	title: 'Components/Button',

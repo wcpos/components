@@ -20,7 +20,7 @@ export interface RadioProps {
 	/**
 	 * Display an error state.
 	 */
-	error: boolean | string;
+	error?: boolean | string;
 	/**
 	 * Additional text to aid in use.
 	 */

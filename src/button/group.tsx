@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
+
 import * as Styled from './styles';
 
 type ButtonProps = import('./button').Props;
