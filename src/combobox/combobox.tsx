@@ -147,6 +147,7 @@ export const Combobox = ({
 				onChange={onSearchChange}
 				clearable
 				// onClear={() => onSearch('')}
+				style={{ flex: 1 }} // this doesn't work, @TODO refactor TextInput and BaseInput
 			/>
 		</Dropdown>
 	);

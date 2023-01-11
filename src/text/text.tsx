@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { StyleProp, ViewStyle, TextProps as RNTextProps } from 'react-native';
+
 import { decode } from 'html-entities';
+
 import * as Styled from './styles';
 
 export interface TextProps extends RNTextProps {
@@ -23,7 +25,7 @@ export interface TextProps extends RNTextProps {
 	/**
 	 *
 	 */
-	size?: 'medium' | 'large' | 'small' | 'xSmall' | 'xLarge';
+	size?: import('@wcpos/themes').FontSizeTypes;
 	/**
 	 *
 	 */
@@ -39,7 +41,7 @@ export interface TextProps extends RNTextProps {
 	/**
 	 *
 	 */
-	weight?: 'normal' | 'bold' | 'light';
+	weight?: import('@wcpos/themes').FontWeightTypes;
 }
 
 export const Text = ({
@@ -47,7 +49,7 @@ export const Text = ({
 	children,
 	italic,
 	onPress,
-	size = 'medium',
+	size = 'normal',
 	style = {},
 	type,
 	uppercase,

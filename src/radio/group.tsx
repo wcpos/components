@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import isPlainObject from 'lodash/isPlainObject';
 
+import { BaseInputContainer } from '../base-input';
 import Box from '../box';
 import { Radio } from './radio';
 
@@ -28,7 +29,11 @@ export interface RadioOption {
  */
 export interface RadioGroupProps {
 	/**
-	 * Options available in the Select.
+	 * Label for the Radio Group.
+	 */
+	label: string;
+	/**
+	 * Options available for selection.
 	 */
 	options: RadioOption[] | string[];
 	/**
@@ -44,7 +49,7 @@ export interface RadioGroupProps {
 /**
  *
  */
-export const Group = ({ options: optionsRaw, value, onChange }: RadioGroupProps) => {
+export const Group = ({ options: optionsRaw, value, onChange, label }: RadioGroupProps) => {
 	/**
 	 * Options can be passed as an array of strings or an array of objects.
 	 * @Note - this mirrors select
@@ -80,17 +85,19 @@ export const Group = ({ options: optionsRaw, value, onChange }: RadioGroupProps)
 	 *
 	 */
 	return (
-		<Box space="medium">
-			{options.map((option) => (
-				<Radio
-					key={option.value}
-					label={option.label}
-					checked={option.value === value}
-					onChange={() => {
-						handleChange(option);
-					}}
-				/>
-			))}
-		</Box>
+		<BaseInputContainer label={label}>
+			<Box space="small">
+				{options.map((option) => (
+					<Radio
+						key={option.value}
+						label={option.label}
+						checked={option.value === value}
+						onChange={() => {
+							handleChange(option);
+						}}
+					/>
+				))}
+			</Box>
+		</BaseInputContainer>
 	);
 };

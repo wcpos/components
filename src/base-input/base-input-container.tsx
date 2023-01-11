@@ -1,8 +1,9 @@
 import React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
+
+import Box from '../box';
 import InlineError from '../inline-error';
 import Text from '../text';
-import Box from '../box';
 
 export interface BaseInputContainerProps {
 	/**

@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
+
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
-import Label from './label';
+
 import Icon from './icon';
+import Label from './label';
 import * as Styled from './styles';
 
 export interface CheckboxProps {

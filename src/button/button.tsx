@@ -56,7 +56,7 @@ export type Props = {
 	/**
 	 *
 	 */
-	size?: 'medium' | 'large' | 'small';
+	size?: import('@wcpos/themes').FontSizeTypes;
 	/**
 	 *
 	 */
@@ -90,7 +90,7 @@ const Button = ({
 	onPressOut,
 	onLongPress,
 	raised,
-	size = 'medium',
+	size = 'normal',
 	style,
 	type = 'primary',
 	...props

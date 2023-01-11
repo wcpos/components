@@ -151,7 +151,7 @@ export const ButtonWithIcon = ({ title }) => (
 		</View>
 		<View style={{ padding: 10 }}>
 			<Button onPress={action('pressed')}>
-				<Icon name="circleXmark" />
+				<Icon name="circleXmark" type="inverse" />
 			</Button>
 		</View>
 	</>

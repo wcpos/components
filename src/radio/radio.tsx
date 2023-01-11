@@ -56,7 +56,7 @@ export const Radio = ({
 
 	return (
 		<TouchableWithoutFeedback onPress={onClick} disabled={disabled}>
-			<Box horizontal space="medium">
+			<Box horizontal space="small">
 				<BackgroundCircle>
 					<CheckMark checked={checked} />
 				</BackgroundCircle>

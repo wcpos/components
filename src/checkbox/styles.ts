@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import Icon from '../icon';
+
 import Pressable from '../pressable';
 
 export const PressableContainer = styled(Pressable)`
@@ -18,15 +18,11 @@ export const Box = styled.View<{ checked: boolean | undefined }>`
 	justify-content: center;
 	border-style: solid;
 	background-color: ${({ theme, checked }) => (checked ? theme.colors.primary : 'transparent')};
-	width: ${({ theme }) => theme.font.size.medium};
-	height: ${({ theme }) => theme.font.size.medium};
+	width: ${({ theme }) => theme.font.size.normal};
+	height: ${({ theme }) => theme.font.size.normal};
 	border-width: ${({ theme }) => `${theme.border.thinner}px`};
 	border-color: ${({ theme }) => theme.colors.border};
 	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
-`;
-
-export const Check = styled(Icon)`
-	color: #fff;
 `;
 
 export const LabelWrapper = styled.View`
