@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
 import { StoryWrapper } from '@storybook/addons';
+
 import { Dropdown, DropdownProps } from './dropdown';
-import { useDropdown } from '.';
+import Button from '../button';
 import Icon from '../icon';
 import Portal from '../portal';
 import Text from '../text';
-import Button from '../button';
 
 /**
  * Dropdowns require (same as popover)
@@ -34,13 +35,23 @@ export default {
 /**
  *
  */
-export const BasicUsage = (props: DropdownProps) => (
-	<View style={{ padding: '100px' }}>
-		<Dropdown {...props}>
-			<Text>Click me</Text>
-		</Dropdown>
-	</View>
-);
+export const BasicUsage = (props: DropdownProps) => {
+	const [open, setOpen] = React.useState(false);
+
+	return (
+		<View style={{ padding: '100px' }}>
+			<Dropdown {...props} open={open}>
+				<Button
+					onPress={() => {
+						setOpen(true);
+					}}
+				>
+					Click me
+				</Button>
+			</Dropdown>
+		</View>
+	);
+};
 BasicUsage.args = {
 	items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
 	onSelect: action('Select'),
@@ -49,13 +60,22 @@ BasicUsage.args = {
 /**
  *
  */
-export const IconActivator = (props: DropdownProps) => (
-	<View style={{ padding: '100px' }}>
-		<Dropdown {...props}>
-			<Icon name="ellipsisVertical" />
-		</Dropdown>
-	</View>
-);
+export const IconActivator = (props: DropdownProps) => {
+	const [open, setOpen] = React.useState(false);
+
+	return (
+		<View style={{ padding: '100px' }}>
+			<Dropdown {...props} open={open}>
+				<Icon
+					name="ellipsisVertical"
+					onPress={() => {
+						setOpen(true);
+					}}
+				/>
+			</Dropdown>
+		</View>
+	);
+};
 IconActivator.args = {
 	items: [
 		{ label: 'Item 1', action: action('Item 1') },
@@ -63,27 +83,5 @@ IconActivator.args = {
 		{ label: 'Item 3', action: action('Item 3') },
 		{ label: 'Item 4', action: action('Item 4') },
 	],
-	onSelect: action('Select'),
-};
-
-/**
- *
- */
-export const UseDropdown = (props: DropdownProps) => {
-	const { ref, open, close } = useDropdown();
-
-	return (
-		<>
-			<Button onPress={open} title="Open" />
-			<View style={{ padding: '100px' }}>
-				<Dropdown ref={ref} onSelect={close} {...props}>
-					<Text>Anchor</Text>
-				</Dropdown>
-			</View>
-		</>
-	);
-};
-UseDropdown.args = {
-	items: ['Item 1', 'Item 2', 'Item 3', 'Item 4'],
 	onSelect: action('Select'),
 };

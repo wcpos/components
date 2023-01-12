@@ -8,7 +8,10 @@ export default function (renderStory) {
 		<React.Suspense fallback={<ActivityIndicator />}>
 			<ThemeProvider theme={getTheme()}>
 				<View
-				// style={{ padding: '3em', flexDirection: 'row' }}
+					style={{
+						// padding: '3em', 
+						flexDirection: 'row'
+					}}
 				>{renderStory()}</View>
 			</ThemeProvider>
 		</React.Suspense>
