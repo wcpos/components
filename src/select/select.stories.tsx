@@ -4,10 +4,9 @@ import { View } from 'react-native';
 import { StoryWrapper } from '@storybook/addons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AppProviderSizeProvider } from '@wcpos/hooks/src/use-position-in-app';
-
-import Portal from '../portal';
 import { Select, SelectProps } from './select';
+import { SelectWithLabel, SelectWithLabelProps } from './with-label';
+import Portal from '../portal';
 
 /**
  * Select require (uses Popover)
@@ -18,14 +17,12 @@ import { Select, SelectProps } from './select';
 const AppProvider: StoryWrapper = (Story, context) => {
 	return (
 		<SafeAreaProvider>
-			<AppProviderSizeProvider>
-				<Portal.Provider>
-					<View style={{ height: '600px' }}>
-						<Story {...context} />
-					</View>
-					<Portal.Manager />
-				</Portal.Provider>
-			</AppProviderSizeProvider>
+			<Portal.Provider>
+				<View style={{ height: '600px' }}>
+					<Story {...context} />
+				</View>
+				<Portal.Manager />
+			</Portal.Provider>
 		</SafeAreaProvider>
 	);
 };
@@ -36,14 +33,36 @@ export default {
 	decorators: [AppProvider],
 };
 
+/**
+ *
+ */
 export const BasicUsage = (props: SelectProps) => {
-	const [selected, setSelected] = React.useState(props.selected);
+	const [selected, setSelected] = React.useState(props.value);
 
-	return <Select {...props} selected={selected} onChange={setSelected} />;
+	return <Select {...props} value={selected} onChange={setSelected} />;
 };
 BasicUsage.args = {
+	value: null,
+	placeholder: 'Should be a color',
+	options: [
+		{ label: 'Blue', value: 'blue' },
+		{ label: 'Red', value: 'red' },
+		{ label: 'Green', value: 'green' },
+		{ label: 'Yellow', value: 'yellow' },
+	],
+};
+
+/**
+ *
+ */
+export const WithLabel = (props: SelectWithLabelProps) => {
+	const [selected, setSelected] = React.useState(props.value);
+
+	return <SelectWithLabel {...props} value={selected} onChange={setSelected} />;
+};
+WithLabel.args = {
 	label: 'Select your favorite color',
-	selected: null,
+	value: null,
 	placeholder: 'Should be a color',
 	helpText: 'Colors are displayed in neutral color, in case you are color blind.',
 	options: [
@@ -54,7 +73,10 @@ BasicUsage.args = {
 	],
 };
 
-export const WithManyOptions: React.FC = () => {
+/**
+ *
+ */
+export const WithManyOptions = () => {
 	const [selected, setSelected] = React.useState<string | null>(null);
 	const options: number[] = [];
 
@@ -63,10 +85,10 @@ export const WithManyOptions: React.FC = () => {
 	}
 
 	return (
-		<Select
+		<SelectWithLabel
 			label="Choose a number"
 			placeholder="choose"
-			selected={selected}
+			value={selected}
 			options={options.map((x) => ({
 				label: x.toString(),
 				value: x.toString(),
@@ -78,13 +100,16 @@ export const WithManyOptions: React.FC = () => {
 	);
 };
 
+/**
+ *
+ */
 export const Disabled: React.FC = () => {
 	const [selected, setSelected] = React.useState<string | null>(null);
 
 	return (
-		<Select
+		<SelectWithLabel
 			label="Choose a color"
-			selected={selected}
+			value={selected}
 			options={[
 				{ label: 'Blue', value: 'blue' },
 				{ label: 'Red', value: 'red' },
@@ -101,9 +126,9 @@ export const WithError: React.FC = () => {
 	const [selected, setSelected] = React.useState<string | null>(null);
 
 	return (
-		<Select
+		<SelectWithLabel
 			label="Choose a color"
-			selected={selected}
+			value={selected}
 			options={[
 				{ label: 'Blue', value: 'blue' },
 				{ label: 'Red', value: 'red' },

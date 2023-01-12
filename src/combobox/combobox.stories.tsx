@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import { StoryWrapper } from '@storybook/addons';
-import { AppProviderSizeProvider } from '@wcpos/hooks/src/use-position-in-app';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import { Combobox, ComboboxProps } from './combobox';
+import { ComboboxWithLabel, ComboboxWithLabelProps } from './with-label';
 import Portal from '../portal';
 
 /**
@@ -15,12 +17,10 @@ import Portal from '../portal';
 const AppProvider: StoryWrapper = (Story, context) => {
 	return (
 		<SafeAreaProvider>
-			<AppProviderSizeProvider>
-				<Portal.Provider>
-					<Story {...context} />
-					<Portal.Manager />
-				</Portal.Provider>
-			</AppProviderSizeProvider>
+			<Portal.Provider>
+				<Story {...context} />
+				<Portal.Manager />
+			</Portal.Provider>
 		</SafeAreaProvider>
 	);
 };
@@ -32,17 +32,32 @@ export default {
 };
 
 export const BasicUsage = (props: ComboboxProps) => {
-	return (
-		<View style={{ height: '500px' }}>
-			<Combobox {...props} />
-		</View>
-	);
+	const [selected, setSelected] = React.useState(props.value);
+
+	return <Combobox {...props} value={selected} onChange={setSelected} />;
 };
 BasicUsage.args = {
-	// label: 'Select your favorite color',
-	selected: null,
-	// placeholder: 'Should be a color',
-	// helpText: 'Colors are displayed in neutral color, in case you are color blind.',
+	value: null,
+	placeholder: 'Select a color',
+	options: [
+		{ label: 'Blue', value: 'blue' },
+		{ label: 'Red', value: 'red' },
+		{ label: 'Green', value: 'green' },
+		{ label: 'Yellow', value: 'yellow' },
+	],
+};
+
+export const WithLabel = (props: ComboboxWithLabelProps) => {
+	const [selected, setSelected] = React.useState(props.value);
+
+	return <ComboboxWithLabel {...props} value={selected} onChange={setSelected} />;
+};
+WithLabel.args = {
+	label: 'Select your favorite color',
+	value: null,
+	placeholder: 'Select a color',
+	helpText: 'Colors are displayed in neutral color, in case you are color blind.',
+	error: 'Error message',
 	options: [
 		{ label: 'Blue', value: 'blue' },
 		{ label: 'Red', value: 'red' },

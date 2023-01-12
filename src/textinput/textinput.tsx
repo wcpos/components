@@ -17,14 +17,14 @@ import useMeasure from '@wcpos/hooks/src/use-measure';
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
 
-import { BaseInputContainer } from '../base-input';
-import Box from '../box';
-import Button from '../button';
-import Icon from '../icon';
-import Portal from '../portal';
-import Text from '../text';
+import { TextInputContainer } from './container';
+import { getModifiers } from './modifiers';
 import * as Styled from './styles';
+import Button from '../button';
 
+/**
+ *
+ */
 export interface Action {
 	/**
 	 * Label to display.
@@ -40,15 +40,10 @@ export interface Action {
 	type?: import('@wcpos/themes').ColorTypes;
 }
 
-export interface TextInputProps {
-	/**
-	 * Label to display above the input.
-	 */
-	label: string;
-	/**
-	 * Text value in the input.
-	 */
-	value?: string;
+/**
+ *
+ */
+type TextInputProps = RNTextInputProps & {
 	/**
 	 * Type of the TextField.
 	 *
@@ -66,14 +61,6 @@ export interface TextInputProps {
 		| 'integer'
 		| 'url' // iOS only
 		| 'username';
-	/**
-	 * Placeholder text when input is empty.
-	 */
-	placeholder?: string;
-	/**
-	 * Help text shown to help the user with usage of this input.
-	 */
-	helpText?: string;
 	/**
 	 * Set to `true` to disable.
 	 */
@@ -95,11 +82,9 @@ export interface TextInputProps {
 	 */
 	clearable?: boolean;
 	/**
-	 * Error text to display _(shown in a `InlineError` component)_.
-	 *
-	 * User can also pass `true` boolean value to display the `InlineError` without any message.
+	 * Put input into error state.
 	 */
-	error?: string | boolean;
+	error?: boolean;
 	/**
 	 * Type of the return key for the software keyboard.
 	 */
@@ -115,40 +100,15 @@ export interface TextInputProps {
 	 */
 	focused?: boolean;
 	/**
-	 * Set this to `true` to hide the label on top of the input. `label` property is still mandatory for accessibility purposes, even if not shown.
-	 */
-	hideLabel?: boolean;
-	/**
-	 * Set to `true` to select all text when focused.
-	 */
-	selectTextOnFocus?: boolean;
-	/**
-	 * Automatically handled by `type` property. Use this to override or when using `type="text"`.
-	 *
-	 * @see https://reactnative.dev/docs/textinput#autocapitalize
-	 */
-	autoCapitalize?: RNTextInputProps['autoCapitalize'];
-	/**
 	 * Called when the input value changes. `value` property should be changed to reflect this new value.
 	 *
 	 * If not set, component will be an uncontrolled component. @see https://reactjs.org/docs/uncontrolled-components.html
 	 */
 	onChange?: (value: string) => void;
 	/**
-	 * Called when focused.
-	 */
-	onFocus?: () => void;
-	/**
-	 * Called when blurred.
-	 */
-	onBlur?: () => void;
-	/**
 	 * Called when the keyboard submit to this field.
 	 */
 	onSubmit?: () => void;
-	// action?: string;
-	// invalid?: boolean;
-	// onAction?: (value: string) => void;
 	/**
 	 * Called when the clear icon is pressed
 	 */
@@ -162,18 +122,10 @@ export interface TextInputProps {
 	 */
 	leftAccessory?: React.ReactNode;
 	/**
-	 * Called when a key is pressed.
-	 */
-	onKeyPress?: RNTextInputProps['onKeyPress'];
-	/**
 	 * Primary action to perform in the TextInput.
 	 */
 	action?: Action;
-	/**
-	 * Styles for the textinput container
-	 */
-	style?: StyleProp<ViewStyle>;
-}
+};
 
 // /**
 //  * Measure Text
@@ -205,235 +157,159 @@ export interface TextInputProps {
 /**
  * Input field that users can type into.
  */
-export const TextInputBase = (
-	{
-		label,
-		value: valueRaw = '',
-		onChange: onChangeRaw,
-		type = 'text',
-		placeholder,
-		helpText,
-		disabled = false,
-		readonly = false,
-		error = false,
-		returnKeyType = 'next',
-		focused = false,
-		onSubmit,
-		onClear,
-		hideLabel = false,
-		selectTextOnFocus = false,
-		autoCapitalize,
-		prefix,
-		leftAccessory,
-		onKeyPress,
-		onFocus: onFocusProp,
-		onBlur: onBlurProp,
-		action,
-		// autosize = false,
-		clearable = false,
-		style,
-		loading,
-	}: TextInputProps,
-	ref
-) => {
-	const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
-	const theme = useTheme();
+export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
+	(
+		{
+			value: valueRaw = '',
+			onChange: onChangeRaw,
+			type = 'text',
+			placeholder,
+			disabled = false,
+			readonly = false,
+			error = false,
+			returnKeyType = 'next',
+			focused = false,
+			onSubmit,
+			onClear,
+			selectTextOnFocus = false,
+			autoCapitalize,
+			prefix,
+			leftAccessory,
+			onKeyPress,
+			onFocus: onFocusProp,
+			onBlur: onBlurProp,
+			action,
+			// autosize = false,
+			clearable = false,
+			style,
+			loading,
+		}: TextInputProps,
+		ref
+	) => {
+		const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
+		const theme = useTheme();
+		const [hasFocus, setHasFocus] = React.useState(focused);
 
-	// Register the form field in the Form
-	const inputRef = React.useRef<RNTextInput>(null);
-	React.useImperativeHandle(ref, () => inputRef.current as RNTextInput);
+		/**
+		 *
+		 */
+		const onFocus = React.useCallback(
+			(e) => {
+				onFocusProp?.(e);
+				setHasFocus(true);
+			},
+			[onFocusProp]
+		);
 
-	const [hasFocus, setHasFocus] = React.useState(focused);
+		/**
+		 *
+		 */
+		const onBlur = React.useCallback(
+			(e) => {
+				onBlurProp?.(e);
+				setHasFocus(false);
+			},
+			[onBlurProp]
+		);
 
-	const onFocus = React.useCallback(() => {
-		onFocusProp?.();
-		setHasFocus(true);
-	}, [onFocusProp]);
+		/**
+		 * clearable
+		 */
+		const handleClear = React.useCallback(() => {
+			return typeof onClear === 'function' ? onClear() : onChange('');
+		}, [onChange, onClear]);
 
-	const onBlur = React.useCallback(() => {
-		onBlurProp?.();
-		setHasFocus(false);
-	}, [onBlurProp]);
+		/**
+		 * autosize
+		 */
+		// const [measuredWidth, setMeasuredWidth] = React.useState(0);
+		// const [measuredHeight, setMeasureHeight] = React.useState(0);
+		// const handleContentSizeChange = (
+		// 	event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
+		// ) => {
+		// 	const contentSize = get(event, 'nativeEvent.contentSize');
+		// 	console.log(contentSize.width);
+		// 	// setWidth(contentSize.width);
+		// 	setMeasureHeight(contentSize.height);
+		// };
+		// const handleMeasure = ({ width }: { width: number }) => {
+		// 	setMeasuredWidth(width + 3);
+		// };
 
-	const onLabelClick = React.useCallback(() => {
-		const input = inputRef.current;
+		/**
+		 * action
+		 */
+		const handleSubmitText = () => {
+			if (typeof action?.action === 'function') {
+				action?.action(value);
+			}
+		};
 
-		if (input) {
-			input.focus();
-		}
-	}, []);
+		/**
+		 * Handle focus changes
+		 */
+		// React.useEffect(() => {
+		// 	const input = ref.current;
 
-	/**
-	 * clearable
-	 */
-	const handleClear = React.useCallback(() => {
-		return typeof onClear === 'function' ? onClear() : onChange('');
-	}, [onChange, onClear]);
+		// 	if (!input) {
+		// 		return;
+		// 	}
 
-	/**
-	 * autosize
-	 */
-	// const [measuredWidth, setMeasuredWidth] = React.useState(0);
-	// const [measuredHeight, setMeasureHeight] = React.useState(0);
-	// const handleContentSizeChange = (
-	// 	event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
-	// ) => {
-	// 	const contentSize = get(event, 'nativeEvent.contentSize');
-	// 	console.log(contentSize.width);
-	// 	// setWidth(contentSize.width);
-	// 	setMeasureHeight(contentSize.height);
-	// };
-	// const handleMeasure = ({ width }: { width: number }) => {
-	// 	setMeasuredWidth(width + 3);
-	// };
+		// 	if (focused) {
+		// 		input.focus();
+		// 	} else {
+		// 		input.blur();
+		// 	}
+		// }, [focused, ref]);
 
-	/**
-	 * action
-	 */
-	const handleSubmitText = () => {
-		if (typeof action?.action === 'function') {
-			action?.action(value);
-		}
-	};
+		// useWhyDidYouUpdate('TextInput', []);
 
-	/**
-	 * Handle focus changes
-	 */
-	React.useEffect(() => {
-		const input = inputRef.current;
-
-		if (!input) {
-			return;
-		}
-
-		if (focused) {
-			input.focus();
-		} else {
-			input.blur();
-		}
-	}, [focused]);
-
-	/**
-	 *
-	 */
-	const inputType = React.useMemo<
-		Pick<
-			RNTextInputProps,
-			'keyboardType' | 'textContentType' | 'autoCapitalize' | 'autoCorrect' | 'autoComplete'
-		>
-	>(() => {
-		switch (type) {
-			case 'text':
-				return { textContentType: 'none', autoCapitalize };
-			case 'email':
-				return {
-					keyboardType: 'email-address',
-					textContentType: 'emailAddress',
-					autoComplete: 'email',
-					autoCapitalize: 'none',
-				};
-			case 'password':
-				return {
-					textContentType: 'password',
-					autoComplete: 'password',
-					autoCapitalize: 'none',
-				};
-			case 'new-password':
-				return {
-					textContentType: 'newPassword',
-					autoComplete: 'password',
-					autoCapitalize: 'none',
-				};
-			case 'first-name':
-				return { textContentType: 'name', autoCapitalize: 'words' };
-			case 'last-name':
-				return { textContentType: 'familyName', autoCapitalize: 'words' };
-			case 'integer':
-				return { textContentType: 'none', keyboardType: 'number-pad' };
-			case 'url':
-				return {
-					textContentType: 'URL',
-					keyboardType: 'url',
-					autoCapitalize: 'none',
-					autoComplete: 'off',
-				};
-			case 'username':
-				return { textContentType: 'none', autoCapitalize: 'none' };
-			default:
-				return {};
-		}
-	}, [type, autoCapitalize]);
-
-	// useWhyDidYouUpdate('TextInput', []);
-
-	return (
-		<BaseInputContainer
-			label={label}
-			hideLabel={hideLabel}
-			error={error}
-			helpText={helpText}
-			onLabelClick={onLabelClick}
-			disabled={disabled}
-		>
-			<Box
-				horizontal
-				border
-				rounding="small"
-				align="center"
-				// focused={hasFocus}
-				style={[{ backgroundColor: theme.colors.inputBackground }, style]}
-			>
-				{leftAccessory || null}
-				{prefix ? (
-					<Box padding="small" paddingRight="none">
-						<Text>{prefix}</Text>
-					</Box>
-				) : null}
-				<Box fill padding="small">
-					<Styled.TextInput
-						ref={inputRef}
-						{...inputType}
-						placeholder={placeholder}
-						placeholderTextColor={theme.colors.textMuted}
-						editable={!disabled && !readonly}
-						value={value}
-						onChangeText={onChange}
-						returnKeyType={returnKeyType}
-						blurOnSubmit={returnKeyType !== 'next'} // Prevent keyboard flicker when going from one field to another
-						onFocus={onFocus}
-						onBlur={onBlur}
-						onSubmitEditing={onSubmit}
-						selectTextOnFocus={selectTextOnFocus}
-						onKeyPress={onKeyPress}
-						// multiline
-						// onContentSizeChange={handleContentSizeChange}
-						// style={{ width: autosize ? measuredWidth : '100%' }}
-						style={{ width: '100%' }}
-					/>
-				</Box>
-				{clearable && value !== '' && (
-					<Box padding="small">
-						<Icon
-							name="xmark"
-							size="small"
-							// type="secondary"
-							onPress={handleClear}
-							// backgroundStyle="none"
+		/**
+		 *
+		 */
+		return (
+			<TextInputContainer
+				showClear={clearable && value !== ''}
+				onClear={handleClear}
+				leftAccessory={leftAccessory}
+				prefix={prefix}
+				rightAccessory={
+					action && (
+						<Button
+							title={action.label}
+							onPress={handleSubmitText}
+							style={{
+								borderTopLeftRadius: 0,
+								borderBottomLeftRadius: 0,
+								borderTopRightRadius: theme.rounding.small,
+								borderBottomRightRadius: theme.rounding.small,
+							}}
+							loading={loading}
 						/>
-					</Box>
-				)}
-				{action && (
-					<Button
-						fill
-						title={action.label}
-						onPress={handleSubmitText}
-						style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-						loading={loading}
-					/>
-				)}
-			</Box>
-		</BaseInputContainer>
-	);
-};
-
-export const TextInput = React.forwardRef(TextInputBase);
+					)
+				}
+			>
+				<Styled.TextInput
+					ref={ref}
+					{...getModifiers(type, autoCapitalize)}
+					placeholder={placeholder}
+					placeholderTextColor={theme.colors.textMuted}
+					editable={!disabled && !readonly}
+					value={value}
+					onChangeText={onChange}
+					returnKeyType={returnKeyType}
+					blurOnSubmit={returnKeyType !== 'next'} // Prevent keyboard flicker when going from one field to another
+					onFocus={onFocus}
+					onBlur={onBlur}
+					onSubmitEditing={onSubmit}
+					selectTextOnFocus={selectTextOnFocus}
+					onKeyPress={onKeyPress}
+					// multiline
+					// onContentSizeChange={handleContentSizeChange}
+					// style={{ width: autosize ? measuredWidth : '100%' }}
+					style={{ width: '100%' }}
+				/>
+			</TextInputContainer>
+		);
+	}
+);

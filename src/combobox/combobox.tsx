@@ -31,10 +31,6 @@ export interface ComboboxOption {
  */
 export interface ComboboxProps {
 	/**
-	 * Label to display above the input.
-	 */
-	label: string;
-	/**
 	 * Options available in the Select.
 	 */
 	options: ComboboxOption[] | string[];
@@ -58,10 +54,6 @@ export interface ComboboxProps {
 	 * Text to display as a placeholder.
 	 */
 	placeholder?: string;
-	/**
-	 * Set this to `true` to hide the label on top of the input. `label` property is still mandatory for accessibility purposes, even if not shown.
-	 */
-	hideLabel?: boolean;
 }
 
 /**
@@ -89,19 +81,18 @@ const formatOptions = (options: ComboboxOption[] | string[]) => {
  * Let the user search and choose one option from multiple ones.
  */
 export const Combobox = ({
-	label,
 	value: selected = null,
 	onChange,
 	placeholder,
 	// searchValue,
 	onSearch,
-	hideLabel,
 	...props
 }: ComboboxProps) => {
 	// const [selected, onChange] = useUncontrolledState(
 	// 	selectedRaw,
 	// 	onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
 	// );
+	const [open, setOpen] = React.useState(false);
 	const [searchValue, setSearchValue] = React.useState('');
 	const options = React.useMemo(() => formatOptions(props.options), [props.options]);
 
@@ -137,14 +128,15 @@ export const Combobox = ({
 	 *
 	 */
 	return (
-		<Dropdown withArrow={false} matchWidth items={filteredOptions} onSelect={onChange}>
+		<Dropdown open={open} withArrow={false} matchWidth items={filteredOptions} onSelect={onChange}>
 			<TextInput
-				label={label}
-				hideLabel={hideLabel}
 				// onFocus={showPopover}
 				value={searchValue}
 				placeholder={selected?.label ?? (selected || placeholder)}
 				onChange={onSearchChange}
+				onFocus={() => {
+					setOpen(true);
+				}}
 				clearable
 				// onClear={() => onSearch('')}
 				style={{ flex: 1 }} // this doesn't work, @TODO refactor TextInput and BaseInput

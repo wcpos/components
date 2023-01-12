@@ -1,6 +1,7 @@
 import * as React from 'react';
-import Collapsable from '../collapsible';
+
 import Box from '../box';
+import Collapsable from '../collapsible';
 
 interface AccordionItemProps {
 	title: React.ReactNode;

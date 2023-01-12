@@ -12,13 +12,9 @@ import Animated, {
 // @TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import useMeasure from '@wcpos/hooks/src/use-measure';
+import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import Platform from '@wcpos/utils/src/platform';
 
-import Arrow from '../arrow';
-import Backdrop from '../backdrop';
-import Portal from '../portal';
-import Pressable from '../pressable';
-import { useScrollEvents } from '../scrollview';
 import {
 	PopoverPlacement,
 	isBottom,
@@ -33,16 +29,17 @@ import {
 	getPopoverPosition,
 } from './placements';
 import * as Styled from './styles';
+import Arrow from '../arrow';
+import Backdrop from '../backdrop';
+import Portal from '../portal';
+import Pressable from '../pressable';
+import { useScrollEvents } from '../scrollview';
 
 export interface PopoverProps {
 	/**
 	 * The content which will trigger the Popover. The Popover will be anchored to this component.
 	 */
 	children: React.ReactNode;
-	/**
-	 * Determines if Popover is visible or not.
-	 */
-	open: boolean;
 	/**
 	 * The content to display inside the Popover.
 	 */
@@ -57,14 +54,18 @@ export interface PopoverProps {
 	 */
 	placement?: PopoverPlacement;
 	/**
-	 * Method for activating the Popover.
+	 * Determines if Popover is visible or not.
+	 * Note: Popover can be controlled or uncontrolled
+	 */
+	open: boolean;
+	/**
+	 * Method for activating an uncontrolled Popover.
 	 */
 	trigger?: 'press' | 'longpress' | 'hover';
 	/**
 	 * Called when popover closes
 	 */
 	onClose?(): void;
-
 	/**
 	 * Called when popover opens
 	 */
@@ -100,24 +101,24 @@ export interface PopoverProps {
 /**
  *
  */
-const PopoverBase = (
-	{
-		children,
-		content,
-		open = false,
-		placement = 'bottom',
-		trigger = 'press',
-		withArrow = true,
-		showBackdrop = false,
-		clickThrough = false,
-		matchWidth = false,
-		style,
-	}: PopoverProps,
-	ref: React.Ref<React.ReactNode>
-) => {
+export const Popover = ({
+	children,
+	content,
+	open = false,
+	placement = 'bottom',
+	trigger = 'press',
+	withArrow = true,
+	showBackdrop = false,
+	clickThrough = false,
+	matchWidth = false,
+	style,
+}: PopoverProps) => {
+	// const onOpenOrClose = React.useCallback((value) => {
+	// 	console.log(value);
+	// }, []);
+	// const [open, setOpen] = useUncontrolledState(openRaw, onOpenOrClose);
 	const triggerRef = React.useRef<View>(null);
 	const containerRef = React.useRef<View>(null);
-	const [visible, setVisible] = React.useState(false);
 	const {
 		measurements: triggerRect,
 		onLayout: onTriggerLayout,
@@ -141,92 +142,79 @@ const PopoverBase = (
 	 * Hack to make sure the position is always re-measured on open
 	 */
 	React.useEffect(() => {
-		if (visible) {
+		if (open) {
 			forceTriggerMeasure();
 			forceContainerMeasure();
 		}
-	}, [forceContainerMeasure, forceTriggerMeasure, visible]);
-
-	/**
-	 * Allow external access to the popover's visibility state.
-	 */
-	React.useImperativeHandle(ref, () => ({
-		open(): void {
-			setVisible(true);
-		},
-
-		close(): void {
-			setVisible(false);
-		},
-	}));
+	}, [forceContainerMeasure, forceTriggerMeasure, open]);
 
 	/**
 	 * Add haptic feedback when the popover is opened
 	 */
-	const handleOpen = React.useCallback(() => {
-		setVisible(true);
-		if (Platform.isNative) {
-			// 	impactAsync(ImpactFeedbackStyle.Light).catch((err) => {
-			// 		console.log(err);
-			// 	});
-		}
-	}, []);
+	// const handleOpen = React.useCallback(() => {
+	// 	setOpen(true);
+	// 	if (Platform.isNative) {
+	// 		// 	impactAsync(ImpactFeedbackStyle.Light).catch((err) => {
+	// 		// 		console.log(err);
+	// 		// 	});
+	// 	}
+	// }, []);
 
 	/**
 	 *
 	 */
-	const handlePress = React.useCallback(() => {
-		// setVisible((prev) => !prev);
-		if (!visible) {
-			handleOpen();
-		} else {
-			setVisible(false);
-		}
-	}, [handleOpen, visible]);
+	// const handlePress = React.useCallback(() => {
+	// 	// setVisible((prev) => !prev);
+	// 	if (!open) {
+	// 		handleOpen();
+	// 	} else {
+	// 		setOpen(false);
+	// 	}
+	// }, [handleOpen, open, setOpen]);
 
-	const handleHoverIn = React.useCallback(() => {
-		if (trigger === 'hover') setVisible(true);
-	}, [trigger]);
+	// const handleHoverIn = React.useCallback(() => {
+	// 	if (trigger === 'hover') setOpen(true);
+	// }, [setOpen, trigger]);
 
-	const handleHoverOut = React.useCallback(() => {
-		if (trigger === 'hover') setVisible(false);
-	}, [trigger]);
+	// const handleHoverOut = React.useCallback(() => {
+	// 	if (trigger === 'hover') setOpen(false);
+	// }, [setOpen, trigger]);
 
 	/**
 	 * Special case for Pressables and Icons
 	 * - clone and wrap touch events
 	 */
-	const triggerElement = React.useMemo(() => {
-		if (React.Children.count(children) === 1) {
-			const type = get(children, ['type', 'name']);
-			if (type === 'Pressable' || type === 'Icon' || type === 'Button') {
-				const child = React.Children.only(children) as React.ReactElement;
-				const { onPress, onHoverIn, onHoverOut } = child.props;
-				return React.cloneElement(child, {
-					onPress: (event: any) => {
-						handlePress();
-						onPress?.(event);
-					},
-					onHoverIn: (event: any) => {
-						handleHoverIn();
-						onHoverIn?.(event);
-					},
-					onHoverOut: (event: any) => {
-						handleHoverOut();
-						onHoverOut?.(event);
-					},
-				});
-			}
-		}
+	// const triggerElement = React.useMemo(() => {
+	// 	if (React.Children.count(children) === 1) {
+	// 		const type = get(children, ['type', 'name']);
+	// 		if (type === 'Pressable' || type === 'Icon' || type === 'Button') {
+	// 			const child = React.Children.only(children) as React.ReactElement;
+	// 			const { onPress, onHoverIn, onHoverOut } = child.props;
+	// 			return React.cloneElement(child, {
+	// 				onPress: (event: any) => {
+	// 					handlePress();
+	// 					onPress?.(event);
+	// 				},
+	// 				onHoverIn: (event: any) => {
+	// 					handleHoverIn();
+	// 					onHoverIn?.(event);
+	// 				},
+	// 				onHoverOut: (event: any) => {
+	// 					handleHoverOut();
+	// 					onHoverOut?.(event);
+	// 				},
+	// 			});
+	// 		}
+	// 	}
 
-		return ref ? (
-			children
-		) : (
-			<Pressable onPress={handlePress} onHoverIn={handleHoverIn} onHoverOut={handleHoverOut}>
-				{children}
-			</Pressable>
-		);
-	}, [children, handleHoverIn, handleHoverOut, handlePress, ref]);
+	// 	return ref ? (
+	// 		children
+	// 	) : (
+	// 		<Pressable onPress={handlePress} onHoverIn={handleHoverIn} onHoverOut={handleHoverOut}>
+	// 			{children}
+	// 		</Pressable>
+	// 	);
+	// }, [children, handleHoverIn, handleHoverOut, handlePress, ref]);
 
 	/**
 	 *
@@ -237,7 +225,7 @@ const PopoverBase = (
 		}
 
 		// @TODO - use `entering` when reanimated is stable
-		const opacity = withTiming(visible ? 1 : 0, { duration: 200 });
+		const opacity = withTiming(open ? 1 : 0, { duration: 200 });
 		const position = getPopoverPosition(placement, triggerRect.value, containerRect.value);
 		return { opacity, ...position };
 	});
@@ -257,15 +245,15 @@ const PopoverBase = (
 	return (
 		<>
 			<View ref={triggerRef} onLayout={onTriggerLayout}>
-				{triggerElement}
+				{children}
 			</View>
-			{visible && (
+			{open && (
 				<Portal keyPrefix="Popover">
-					<Backdrop
+					{/* <Backdrop
 						invisible={!showBackdrop}
 						clickThrough={clickThrough || trigger === 'hover'}
 						onPress={handlePress}
-					/>
+					/> */}
 					<Styled.Container
 						as={Animated.View}
 						style={[containerStyle, { width: matchWidth ? triggerRect.value.width : undefined }]}
@@ -283,4 +271,4 @@ const PopoverBase = (
 	);
 };
 
-export const Popover = React.forwardRef(PopoverBase);
+// export const Popover = React.forwardRef(PopoverBase);

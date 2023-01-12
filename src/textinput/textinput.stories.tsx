@@ -1,11 +1,15 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import { TextInput, TextInputProps } from './textinput';
+import { TextInputWithLabel, TextInputWithLabelProps } from './with-label';
 import Portal from '../portal';
 
 export default {
 	title: 'Components/TextInput',
 	component: TextInput,
+	subcomponents: { TextInputWithLabel },
 };
 
 /**
@@ -21,14 +25,27 @@ export const BasicUsage = (props: TextInputProps) => {
 	return <TextInput value={value} onChange={onTextChanged} {...props} />;
 };
 BasicUsage.args = {
-	label: 'Label',
 	placeholder: 'Placeholder Text',
 	returnKeyType: 'done',
-	helpText: 'Help Text meant to help you',
 	onFocus: action('Focused'),
 	onBlur: action('Blurred'),
 	onSubmit: action('Submitted'),
 	onKeyPress: action('Key Pressed'),
+};
+
+/**
+ *
+ */
+export const WithInputContainer = (props: TextInputWithLabelProps) => {
+	return <TextInputWithLabel {...props} />;
+};
+WithInputContainer.args = {
+	label: 'Label',
+	placeholder: 'Placeholder Text',
+	returnKeyType: 'done',
+	helpText: 'Help Text meant to help you',
+	error: 'Error Text meant to help you',
+	onLabelPress: action('Label pressed'),
 };
 
 /**
@@ -73,6 +90,4 @@ export const autosize = (props: TextInputProps) => (
 /**
  *
  */
-export const Uncontrolled = (props: TextInputProps) => (
-	<TextInput label="Uncontrolled" {...props} />
-);
+export const Uncontrolled = (props: TextInputProps) => <TextInput {...props} />;

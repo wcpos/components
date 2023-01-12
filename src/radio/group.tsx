@@ -2,9 +2,9 @@ import * as React from 'react';
 
 import isPlainObject from 'lodash/isPlainObject';
 
-import { BaseInputContainer } from '../base-input';
-import Box from '../box';
 import { Radio } from './radio';
+import Box from '../box';
+import { InputWithLabel } from '../form-layout';
 
 /**
  *
@@ -28,10 +28,6 @@ export interface RadioOption {
  *
  */
 export interface RadioGroupProps {
-	/**
-	 * Label for the Radio Group.
-	 */
-	label: string;
 	/**
 	 * Options available for selection.
 	 */
@@ -85,19 +81,17 @@ export const Group = ({ options: optionsRaw, value, onChange, label }: RadioGrou
 	 *
 	 */
 	return (
-		<BaseInputContainer label={label}>
-			<Box space="small">
-				{options.map((option) => (
-					<Radio
-						key={option.value}
-						label={option.label}
-						checked={option.value === value}
-						onChange={() => {
-							handleChange(option);
-						}}
-					/>
-				))}
-			</Box>
-		</BaseInputContainer>
+		<Box space="small">
+			{options.map((option) => (
+				<Radio
+					key={option.value}
+					label={option.label}
+					checked={option.value === value}
+					onChange={() => {
+						handleChange(option);
+					}}
+				/>
+			))}
+		</Box>
 	);
 };

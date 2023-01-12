@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, ViewStyle } from 'react-native';
+
 import Animated, {
 	useAnimatedRef,
 	// measure,
@@ -10,10 +11,12 @@ import Animated, {
 	withTiming,
 	runOnUI,
 } from 'react-native-reanimated';
+
 import useOnLayout from '@wcpos/hooks/src/use-on-layout';
-import Pressable from '../pressable';
-import Box from '../box';
+
 import { CollapsibleHeader } from './header';
+import Box from '../box';
+import Pressable from '../pressable';
 
 export interface CollapsibleProps {
 	/**

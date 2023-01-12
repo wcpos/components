@@ -4,8 +4,9 @@ import isPlainObject from 'lodash/isPlainObject';
 
 import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
 
-import BaseInput, { BaseInputContainer } from '../base-input';
 import Dropdown, { useDropdown } from '../dropdown';
+import Text from '../text';
+import { TextInputContainer } from '../textinput';
 
 /**
  *
@@ -30,10 +31,6 @@ export interface SelectOption {
  */
 export interface SelectProps {
 	/**
-	 * Label for the Select.
-	 */
-	label: string;
-	/**
 	 * Options available in the Select.
 	 */
 	options: SelectOption[] | string[];
@@ -50,10 +47,6 @@ export interface SelectProps {
 	 */
 	placeholder?: string;
 	/**
-	 * Additional text to help the user.
-	 */
-	helpText?: React.ReactNode;
-	/**
 	 * Display an error state.
 	 */
 	error?: boolean | string;
@@ -69,16 +62,13 @@ const maxHeight = 300;
  * Let the user choose one option from multiple ones.
  */
 export const Select = ({
-	label,
 	options: optionsRaw,
 	value: selectedRaw = null,
 	onChange: onChangeRaw,
 	placeholder = 'Select',
-	helpText,
-	error = false,
 	disabled = false,
 }: SelectProps) => {
-	const { ref, open, close } = useDropdown();
+	const [open, setOpen] = React.useState(false);
 	const [selected, onChange] = useUncontrolledState(
 		selectedRaw,
 		onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
@@ -117,28 +107,14 @@ export const Select = ({
 	 */
 	const handleSelect = (selected: any) => {
 		onChange(selected);
-		close();
+		setOpen(false);
 	};
 
 	return (
-		<BaseInputContainer
-			label={label}
-			disabled={disabled}
-			helpText={helpText}
-			error={error}
-			onLabelClick={open}
-		>
-			<Dropdown ref={ref} items={options} onSelect={handleSelect} matchWidth withArrow={false}>
-				<BaseInput
-					value={selectedRaw?.label ?? selectedRaw}
-					placeholder={placeholder}
-					disabled={disabled}
-					// focused={open}
-					onPress={open}
-					// rightAccessory={<Arrow direction={open ? 'up' : 'down'} />}
-					style={{ minWidth: '100px' }}
-				/>
-			</Dropdown>
-		</BaseInputContainer>
+		<Dropdown open={open} items={options} onSelect={handleSelect} matchWidth withArrow={false}>
+			<TextInputContainer onPress={() => setOpen(true)}>
+				{selected ? <Text>{selected}</Text> : <Text type="secondary">{placeholder}</Text>}
+			</TextInputContainer>
+		</Dropdown>
 	);
 };

@@ -1,20 +1,31 @@
 import * as React from 'react';
+
 import Box from '../box';
-import Text from '../text';
 import Icon from '../icon';
+import Text from '../text';
 
 interface CollapsibleHeaderProps {
+	/**
+	 *
+	 */
 	title: string | React.ReactNode;
+	/**
+	 *
+	 */
+	size?: import('@wcpos/themes').FontSizeTypes;
+	/**
+	 *
+	 */
 	open: boolean;
 }
 
-export const CollapsibleHeader = ({ open, ...props }: CollapsibleHeaderProps) => {
+export const CollapsibleHeader = ({ open, size = 'normal', ...props }: CollapsibleHeaderProps) => {
 	const icon = open ? 'caretUp' : 'caretDown';
 	const title =
-		typeof props.title === 'string' ? <Text size="large">{props.title}</Text> : props.title;
+		typeof props.title === 'string' ? <Text size={size}>{props.title}</Text> : props.title;
 
 	return (
-		<Box horizontal space="medium" align="center">
+		<Box horizontal space="small" align="center">
 			<Box>{title}</Box>
 			<Icon name={icon} />
 		</Box>

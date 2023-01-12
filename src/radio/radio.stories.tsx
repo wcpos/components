@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { Group, RadioGroupProps } from './group';
+import { GroupWithLabel, RadioGroupWithLabelProps } from './group-with-label';
 import { Radio, RadioProps } from './radio';
 
 export default {
@@ -68,4 +69,33 @@ export const Grouped = (props: RadioGroupProps) => {
 			]}
 		/>
 	);
+};
+Grouped.args = {
+	label: 'What is your favorite food?',
+	helpText: 'Select one',
+	options: [
+		{ label: 'Pizza', value: 'pizza' },
+		{ label: 'Hamburger', value: 'hamburger' },
+		{ label: 'Taco', value: 'taco' },
+		{ label: 'Salad', value: 'salad' },
+	],
+};
+
+/**
+ *
+ */
+export const RadiosWithLabel = (props: RadioGroupProps) => {
+	const [checked, setChecked] = useState(null);
+
+	return <GroupWithLabel {...props} value={checked} onChange={setChecked} />;
+};
+RadiosWithLabel.args = {
+	label: 'What is your favorite food?',
+	helpText: 'Select one',
+	options: [
+		{ label: 'Pizza', value: 'pizza' },
+		{ label: 'Hamburger', value: 'hamburger' },
+		{ label: 'Taco', value: 'taco' },
+		{ label: 'Salad', value: 'salad' },
+	],
 };
