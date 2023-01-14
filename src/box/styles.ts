@@ -12,6 +12,15 @@ export const Box = styled.View<BoxProps>`
 	padding-right: ${({ theme, paddingRight, paddingX, _padding }) =>
 		`${theme.spacing[paddingRight || paddingX || _padding || 'none']}px`};
 
+	margin-top: ${({ theme, marginTop, marginY, _margin }) =>
+		`${theme.spacing[marginTop || marginY || _margin || 'none']}px`};
+	margin-bottom: ${({ theme, marginBottom, marginY, _margin }) =>
+		`${theme.spacing[marginBottom || marginY || _margin || 'none']}px`};
+	margin-left: ${({ theme, marginLeft, marginX, _margin }) =>
+		`${theme.spacing[marginLeft || marginX || _margin || 'none']}px`};
+	margin-right: ${({ theme, marginRight, marginX, _margin }) =>
+		`${theme.spacing[marginRight || marginX || _margin || 'none']}px`};
+
 	flex-grow: ${({ fill }) => (fill ? 1 : 0)};
 
 	flex-direction: ${({ reverse, horizontal }) =>
@@ -54,7 +63,12 @@ export const Box = styled.View<BoxProps>`
 	border-bottom-left-radius: ${({ theme, roundingBottomLeft, rounding }) =>
 		`${theme.rounding[roundingBottomLeft || rounding || 'none']}px`};
 
-	border-width: ${({ border }) => (border ? '1px' : 0)};
-	border-color: ${({ theme }) => theme.colors.border};
+	border-top-width: ${({ borderTop, border }) => (borderTop || border ? '1px' : 0)};
+	border-right-width: ${({ borderRight, border }) => (borderRight || border ? '1px' : 0)};
+	border-bottom-width: ${({ borderBottom, border }) => (borderBottom || border ? '1px' : 0)};
+	border-left-width: ${({ borderLeft, border }) => (borderLeft || border ? '1px' : 0)};
+	border-color: ${({ theme, border, borderTop, borderRight, borderBottom, borderLeft }) =>
+		theme.colors[border || borderTop || borderRight || borderBottom || borderLeft] ||
+		theme.colors.border};
 	border-style: solid;
 `;

@@ -4,7 +4,7 @@ import isPlainObject from 'lodash/isPlainObject';
 
 import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
 
-import Dropdown, { useDropdown } from '../dropdown';
+import Dropdown from '../dropdown';
 import Text from '../text';
 import { TextInputContainer } from '../textinput';
 

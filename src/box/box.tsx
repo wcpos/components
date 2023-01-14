@@ -3,117 +3,114 @@ import { ViewStyle, StyleProp, ViewProps, View } from 'react-native';
 
 import flatMap from 'lodash/flatMap';
 
-import Space from '../space';
 import * as Styled from './styles';
+import Space from '../space';
 
 type Spacing = import('@wcpos/themes').SpacingTypes;
 type Rounding = import('@wcpos/themes').RoundingTypes;
+type Color = import('@wcpos/themes').ColorTypes;
 
 export interface BoxProps extends ViewProps {
 	/**
-	 * Children Views.
-	 */
+	 * Children Views. */
 	// children?: React.ReactNode;
-	/**
-	 * Padding applied on all sides.
-	 */
+
+	/** Padding applied on all sides. */
 	padding?: Spacing;
-	/**
-	 * Padding applied horizontally (left & right).
-	 */
+
+	/** Padding applied horizontally (left & right). */
 	paddingX?: Spacing;
-	/**
-	 * Padding applied vertically (top & bottom).
-	 */
+
+	/** Padding applied vertically (top & bottom). */
 	paddingY?: Spacing;
-	/**
-	 * Padding applied to top side.
-	 */
+
+	/** Padding applied to top side. */
 	paddingTop?: Spacing;
-	/**
-	 * Padding applied to bottom side.
-	 */
+
+	/** Padding applied to bottom side. */
 	paddingBottom?: Spacing;
-	/**
-	 * Padding applied to left side.
-	 */
+
+	/** Padding applied to left side. */
 	paddingLeft?: Spacing;
-	/**
-	 * Padding applied to right side.
-	 */
+
+	/** Padding applied to right side. */
 	paddingRight?: Spacing;
-	/**
-	 * Padding applied to right side.
-	 */
+
+	/** Margin applied on all sides. */
+	margin?: Spacing;
+
+	/** Margin applied horizontally (left & right). */
+	marginX?: Spacing;
+
+	/** Margin applied vertically (top & bottom). */
+	marginY?: Spacing;
+
+	/** Margin applied to top side. */
+	marginTop?: Spacing;
+
+	/** Margin applied to bottom side. */
+	marginBottom?: Spacing;
+
+	/** Margin applied to left side. */
+	marginLeft?: Spacing;
+
+	/** Margin applied to right side. */
+	marginRight?: Spacing;
+
+	/** Rounding applied to all corners */
 	rounding?: Rounding;
-	/**
-	 * Padding applied to top side.
-	 */
+
+	/** Rounding applied to top left corner. */
 	roundingTopLeft?: Rounding;
-	/**
-	 * Padding applied to bottom side.
-	 */
+
+	/** Rounding applied to top right corner. */
 	roundingTopRight?: Rounding;
-	/**
-	 * Padding applied to left side.
-	 */
+
+	/** Rounding applied to bottom right corner. */
 	roundingBottomRight?: Rounding;
-	/**
-	 * Padding applied to right side.
-	 */
+
+	/** Rounding applied to bottom left corner. */
 	roundingBottomLeft?: Rounding;
-	/**
-	 * Set to `true` to place 1px solid border on all sides.
-	 */
-	border?: boolean;
-	/**
-	 * Padding applied to top side.
-	 */
-	borderTop?: boolean;
-	/**
-	 * Padding applied to bottom side.
-	 */
-	borderBottom?: boolean;
-	/**
-	 * Padding applied to left side.
-	 */
-	borderLeft?: boolean;
-	/**
-	 * Padding applied to right side.
-	 */
-	borderRight?: boolean;
-	/**
-	 * Set to `true` to set underlying view `flex` property to `1` to fill parent view.
-	 */
+
+	/** Set to `true` to place 1px solid border on all sides. */
+	border?: boolean | Color;
+
+	/** Border applied to top side. */
+	borderTop?: boolean | Color;
+
+	/** Border applied to bottom side. */
+	borderBottom?: boolean | Color;
+
+	/** Border applied to left side. */
+	borderLeft?: boolean | Color;
+
+	/** Border applied to right side. */
+	borderRight?: boolean | Color;
+
+	/** Set to `true` to set underlying view `flex` property to `1` to fill parent view. */
 	fill?: boolean;
-	/**
-	 * Defines a space to use between each component.
-	 */
+
+	/** Defines a space to use between each component. */
 	space?: Spacing;
-	/**
-	 * Set to `true` to display children components horizontally.
-	 */
+
+	/** Set to `true` to display children components horizontally. */
 	horizontal?: boolean;
-	/**
-	 * Defines how children views are aligned (in opposite direction of the Box).
-	 */
+
+	/** Defines how children views are aligned (in opposite direction of the Box). */
 	align?: 'fill' | 'start' | 'end' | 'center';
-	/**
-	 * Defines how views are aligned (in same direction of the Box).
-	 */
+
+	/** Defines how views are aligned (in same direction of the Box). */
 	distribution?: 'start' | 'end' | 'center' | 'spaceBetween';
-	/**
-	 * If true, children order will be reversed.
-	 */
+
+	/** If true, children order will be reversed. */
 	reverse?: boolean;
-	/**
-	 * If true, a box shadow will be applied
-	 */
+
+	/** If true, a box shadow will be applied */
 	raised?: boolean;
-	/**
-	 * If true, children will be wraped in ScrollView.
-	 */
+
+	/** If true, children will be wraped in ScrollView. */
 	scrollable?: boolean;
+
 	style?: StyleProp<ViewStyle>;
 }
 

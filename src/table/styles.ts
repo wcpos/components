@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+
 import Box, { BoxProps } from '../box';
 
 // export const Table = styled.View`

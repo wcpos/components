@@ -1,12 +1,24 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
-import { FlashList, FlashListProps, ListRenderItemInfo, ListRenderItem } from '@shopify/flash-list';
+
+import {
+	FlashList,
+	FlashListProps,
+	ListRenderItemInfo,
+	ListRenderItem,
+	CellContainer,
+} from '@shopify/flash-list';
+import Animated from 'react-native-reanimated';
+
 import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
-import Row from './row';
-import Header from './header';
+
 import Empty from './empty';
+import Header from './header';
+import Row from './row';
 import * as Styled from './styles';
 import ErrorBoundary from '../error-boundary';
+
+const AnimatedCellContainer = Animated.createAnimatedComponent(CellContainer);
 
 /**
  *
@@ -67,6 +79,9 @@ const Table = <T extends object>({
 			<FlashList
 				keyExtractor={keyExtractor}
 				ListEmptyComponent={<Empty />}
+				// CellRendererComponent={(props) => {
+				// 	return <CellContainer {...props} />;
+				// }}
 				renderItem={renderItem || defaultRenderItem}
 				extraData={extraData}
 				// The scrollbars on windows web and desktop are ugly

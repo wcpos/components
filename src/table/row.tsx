@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
-import type { ListRenderItemInfo } from '@shopify/flash-list';
-import Box from '../box';
+
 import * as Styled from './styles';
+import Box from '../box';
+
+import type { ListRenderItemInfo } from '@shopify/flash-list';
 
 export interface TableRowProps<T> extends ListRenderItemInfo<T> {
 	rowStyle?: ViewStyle;

@@ -5,8 +5,9 @@ import isFunction from 'lodash/isFunction';
 import isString from 'lodash/isString';
 import snakeCase from 'lodash/snakeCase';
 
-import Box from '../box';
+import { Divider } from './divider';
 import { Item, ItemProps } from './item';
+import Box from '../box';
 
 /**
  * Menu option with a Label and accessories
@@ -75,6 +76,10 @@ export const Menu = React.forwardRef<View, MenuProps>(
 							const item = isString(rawItem)
 								? { label: rawItem, value: rawItem, action: null }
 								: rawItem;
+
+							if (item.label === '__') {
+								return <Divider key={`divider_${index}`} />;
+							}
 
 							return (
 								<Item
