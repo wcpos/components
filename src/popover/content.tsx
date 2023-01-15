@@ -24,7 +24,7 @@ import {
 	getPopoverPosition,
 } from './placements';
 import * as Styled from './styles';
-// import Portal from '../portal';
+import Portal from '../portal';
 
 /**
  *
@@ -47,6 +47,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		placement,
 		closeOnPressOutside,
 		close,
+		withinPortal,
 	} = React.useContext(PopoverContext);
 	const ref = React.useRef<Animated.View>(null);
 	const onMeasure = (val) => {
@@ -76,7 +77,8 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		const position = getPopoverPosition(
 			placement,
 			targetMeasurements.value,
-			contentMeasurements.value
+			contentMeasurements.value,
+			withinPortal
 		);
 		return { opacity, ...position };
 	});
@@ -84,28 +86,29 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	/**
 	 *
 	 */
+	const MaybePortal = withinPortal ? Portal : React.Fragment;
+
 	return (
-		// @TODO - add a withPortal option?
-		// <Portal keyPrefix="Popover">
-		<Styled.Container
-			ref={mergedRef}
-			as={Animated.View}
-			style={[{ opacity: 0 }, containerStyle]}
-			onLayout={onLayout}
-			entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
-		>
-			{withArrow && (isBottom(placement) || isRight(placement)) && (
-				<Arrow placement={placement} style={style} />
-			)}
+		<MaybePortal keyPrefix="Popover">
+			<Styled.Container
+				ref={mergedRef}
+				as={Animated.View}
+				style={[{ opacity: 0 }, containerStyle]}
+				onLayout={onLayout}
+				entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
+			>
+				{withArrow && (isBottom(placement) || isRight(placement)) && (
+					<Arrow placement={placement} style={style} />
+				)}
 
-			<Styled.Popover ref={focusTrapRef} style={style}>
-				{children}
-			</Styled.Popover>
+				<Styled.Popover ref={focusTrapRef} style={style}>
+					{children}
+				</Styled.Popover>
 
-			{withArrow && (isTop(placement) || isLeft(placement)) && (
-				<Arrow placement={placement} style={style} />
-			)}
-		</Styled.Container>
-		// </Portal>
+				{withArrow && (isTop(placement) || isLeft(placement)) && (
+					<Arrow placement={placement} style={style} />
+				)}
+			</Styled.Container>
+		</MaybePortal>
 	);
 };

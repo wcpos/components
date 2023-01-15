@@ -1,10 +1,13 @@
 import * as React from 'react';
+import { View } from 'react-native';
 
+import { FlashList } from '@shopify/flash-list';
 import { action } from '@storybook/addon-actions';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Table, { TableProps } from '.';
 import Button from '../button';
+import Dropdown from '../dropdown';
 import Text from '../text';
 // import { text, select, boolean } from '@storybook/addon-knobs';
 
@@ -257,4 +260,24 @@ AddOrRemoveRows.args = {
 	data,
 	estimatedItemSize: 48,
 	style: { height: 300 },
+};
+
+/**
+ *
+ */
+export const FlashListWithPopoverBug = () => {
+	return (
+		<FlashList
+			data={[{ name: 'Item 1' }, { name: 'Item 2' }, { name: 'Item 3' }]}
+			renderItem={({ item }) => (
+				<View style={{ flexDirection: 'row', padding: 10 }}>
+					<Text style={{ width: 200 }}>{item.name}</Text>
+					<Dropdown items={['Item 1', 'Item 2', 'Item 3']} placement="top">
+						<Text>trigger</Text>
+					</Dropdown>
+				</View>
+			)}
+			estimatedItemSize={200}
+		/>
+	);
 };

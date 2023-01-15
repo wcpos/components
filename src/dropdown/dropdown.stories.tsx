@@ -40,7 +40,13 @@ export const BasicUsage = (props: DropdownProps) => {
 
 	return (
 		<View style={{ padding: '100px' }}>
-			<Dropdown {...props} open={open}>
+			<Dropdown
+				{...props}
+				opened={open}
+				onClose={() => {
+					setOpen(false);
+				}}
+			>
 				<Button
 					onPress={() => {
 						setOpen(true);
@@ -65,7 +71,13 @@ export const IconActivator = (props: DropdownProps) => {
 
 	return (
 		<View style={{ padding: '100px' }}>
-			<Dropdown {...props} open={open}>
+			<Dropdown
+				{...props}
+				opened={open}
+				onClose={() => {
+					setOpen(false);
+				}}
+			>
 				<Icon
 					name="ellipsisVertical"
 					onPress={() => {

@@ -85,6 +85,8 @@ export interface PopoverProps {
 	 * Show arrow pointing to the target.
 	 */
 	withArrow?: boolean;
+	/** Determines whether Popover should be rendered within Portal, defaults to false */
+	withinPortal?: boolean;
 	/**
 	 * Show backdrop behind the Popover.
 	 */
@@ -122,6 +124,7 @@ export const Popover = ({
 	placement = 'bottom',
 	trigger = 'press',
 	withArrow = true,
+	withinPortal = false,
 	showBackdrop = false,
 	clickThrough = false,
 	matchWidth = false,
@@ -159,6 +162,7 @@ export const Popover = ({
 				withArrow,
 				closeOnPressOutside,
 				close,
+				withinPortal,
 			}}
 		>
 			<View style={{ position: 'relative' }}>

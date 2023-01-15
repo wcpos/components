@@ -17,33 +17,40 @@ export type PopoverPlacement =
 	| 'right-start'
 	| 'right-end';
 
+const PLACEMENTS = {
+	top: ['top', 'top-start', 'top-end'],
+	bottom: ['bottom', 'bottom-start', 'bottom-end'],
+	left: ['left', 'left-start', 'left-end'],
+	right: ['right', 'right-start', 'right-end'],
+	start: ['top-start', 'bottom-start', 'left-start', 'right-start'],
+	end: ['top-end', 'bottom-end', 'left-end', 'right-end'],
+};
+
 export const isTop = (placement: PopoverPlacement): placement is 'top' | 'top-start' | 'top-end' =>
-	['top', 'top-start', 'top-end'].indexOf(placement) >= 0;
+	PLACEMENTS.top.indexOf(placement) >= 0;
 
 export const isBottom = (
 	placement: PopoverPlacement
 ): placement is 'bottom' | 'bottom-start' | 'bottom-end' =>
-	['bottom', 'bottom-start', 'bottom-end'].indexOf(placement) >= 0;
+	PLACEMENTS.bottom.indexOf(placement) >= 0;
 
 export const isLeft = (
 	placement: PopoverPlacement
-): placement is 'left' | 'left-start' | 'left-end' =>
-	['left', 'left-start', 'left-end'].indexOf(placement) >= 0;
+): placement is 'left' | 'left-start' | 'left-end' => PLACEMENTS.left.indexOf(placement) >= 0;
 
 export const isRight = (
 	placement: PopoverPlacement
-): placement is 'right' | 'right-start' | 'right-end' =>
-	['right', 'right-start', 'right-end'].indexOf(placement) >= 0;
+): placement is 'right' | 'right-start' | 'right-end' => PLACEMENTS.right.indexOf(placement) >= 0;
 
 export const isStart = (
 	placement: PopoverPlacement
 ): placement is 'top-start' | 'bottom-start' | 'left-start' | 'right-start' =>
-	['top-start', 'bottom-start', 'left-start', 'right-start'].indexOf(placement) >= 0;
+	PLACEMENTS.start.indexOf(placement) >= 0;
 
 export const isEnd = (
 	placement: PopoverPlacement
 ): placement is 'top-end' | 'bottom-end' | 'left-end' | 'right-end' =>
-	['top-end', 'bottom-end', 'left-end', 'right-end'].indexOf(placement) >= 0;
+	PLACEMENTS.end.indexOf(placement) >= 0;
 
 /**
  * Map container alignment to `PopoverPlacement`, eg: center/start/end.
@@ -65,7 +72,8 @@ export const getContainerAlign = (
 export const getPopoverPosition = (
 	placement: PopoverPlacement,
 	target: { width: number; height: number; pageX: number; pageY: number },
-	content: { width: number; height: number; pageX: number; pageY: number }
+	content: { width: number; height: number; pageX: number; pageY: number },
+	withinPortal: boolean = false
 ): {
 	flexDirection?: ViewStyle['flexDirection'];
 	top?: ViewStyle['top'];
@@ -73,94 +81,229 @@ export const getPopoverPosition = (
 	right?: ViewStyle['right'];
 	bottom?: ViewStyle['bottom'];
 } => {
-	// right
-	if (isRight(placement) && isStart(placement)) {
-		return {
-			flexDirection: 'row',
-			top: 0,
-			left: target.width,
-		};
-	}
+	const position: {
+		flexDirection?: ViewStyle['flexDirection'];
+		top?: ViewStyle['top'];
+		left?: ViewStyle['left'];
+		right?: ViewStyle['right'];
+		bottom?: ViewStyle['bottom'];
+	} = {};
 
-	if (isRight(placement) && isEnd(placement)) {
-		return {
-			flexDirection: 'row',
-			top: target.height - content.height,
-			left: target.width,
-		};
-	}
+	const isHorizontal = isRight(placement) || isLeft(placement);
+	const isVertical = isTop(placement) || isBottom(placement);
+	const isStartPlacement = isStart(placement);
+	const isEndPlacement = isEnd(placement);
 
-	if (isRight(placement)) {
-		return {
-			flexDirection: 'row',
-			top: target.height / 2 - content.height / 2,
-			left: target.width,
-		};
-	}
+	if (isHorizontal) {
+		position.flexDirection = 'row';
+		position.left = isRight(placement)
+			? withinPortal
+				? target.pageX + target.width
+				: target.width
+			: withinPortal
+			? target.pageX - content.width
+			: -content.width;
 
-	// left
-	if (isLeft(placement) && isStart(placement)) {
-		return {
-			flexDirection: 'row',
-			top: 0,
-			left: content.width,
-		};
-	}
+		if (isStartPlacement) {
+			position.top = withinPortal ? target.pageY : 0;
+		} else if (isEndPlacement) {
+			position.top = withinPortal
+				? target.pageY + target.height - content.height
+				: target.height - content.height;
+		} else {
+			position.top = withinPortal
+				? target.pageY + target.height / 2 - content.height / 2
+				: target.height / 2 - content.height / 2;
+		}
+	} else if (isVertical) {
+		position.top = isTop(placement)
+			? withinPortal
+				? target.pageY - content.height
+				: -content.height
+			: withinPortal
+			? target.pageY + target.height
+			: target.height;
 
-	if (isLeft(placement) && isEnd(placement)) {
-		return {
-			flexDirection: 'row',
-			top: target.height - content.height,
-			left: content.width,
-		};
+		if (isStartPlacement) {
+			position.left = withinPortal ? target.pageX : 0;
+		} else if (isEndPlacement) {
+			position.left = withinPortal
+				? target.pageX + target.width - content.width
+				: target.width - content.width;
+		} else {
+			position.left = withinPortal
+				? target.pageX + target.width / 2 - content.width / 2
+				: target.width / 2 - content.width / 2;
+		}
 	}
-
-	if (isLeft(placement)) {
-		return {
-			flexDirection: 'row',
-			top: target.height / 2 - content.height / 2,
-			left: content.width,
-		};
-	}
-
-	// top
-	if (isTop(placement) && isStart(placement)) {
-		return {
-			top: content.height,
-			left: 0,
-		};
-	}
-	if (isTop(placement) && isEnd(placement)) {
-		return {
-			top: content.height,
-			left: target.width - content.width,
-		};
-	}
-	if (isTop(placement)) {
-		return {
-			top: content.height,
-			left: target.width / 2 - content.width / 2,
-		};
-	}
-
-	// bottom is deafult
-	if (isEnd(placement)) {
-		return {
-			top: target.height,
-			left: target.width - content.width,
-		};
-	}
-	if (isStart(placement)) {
-		return {
-			top: target.height,
-			left: 0,
-		};
-	}
-	return {
-		top: target.height,
-		left: target.width / 2 - content.width / 2,
-	};
+	return position;
 };
+
+//
+// export const getPopoverPosition = (
+// 	placement: PopoverPlacement,
+// 	target: { width: number; height: number; pageX: number; pageY: number },
+// 	content: { width: number; height: number; pageX: number; pageY: number },
+// 	withinPortal: boolean = false
+// ): {
+// 	flexDirection?: ViewStyle['flexDirection'];
+// 	top?: ViewStyle['top'];
+// 	left?: ViewStyle['left'];
+// 	right?: ViewStyle['right'];
+// 	bottom?: ViewStyle['bottom'];
+// } => {
+// 	const position: {
+// 		flexDirection?: ViewStyle['flexDirection'];
+// 		top?: ViewStyle['top'];
+// 		left?: ViewStyle['left'];
+// 		right?: ViewStyle['right'];
+// 		bottom?: ViewStyle['bottom'];
+// 	} = {};
+// 	if (isRight(placement)) {
+// 		position.flexDirection = 'row';
+// 		if (withinPortal) {
+// 			position.left = target.pageX + target.width;
+// 			if (isStart(placement)) {
+// 				position.top = target.pageY;
+// 			} else if (isEnd(placement)) {
+// 				position.top = target.pageY + target.height - content.height;
+// 			} else {
+// 				position.top = target.pageY + target.height / 2 - content.height / 2;
+// 			}
+// 		} else {
+// 			position.left = target.width;
+// 			if (isStart(placement)) {
+// 				position.top = 0;
+// 			} else if (isEnd(placement)) {
+// 				position.top = target.height - content.height;
+// 			} else {
+// 				position.top = target.height / 2 - content.height / 2;
+// 			}
+// 		}
+// 	} else if (isLeft(placement)) {
+// 		position.flexDirection = 'row';
+// 		if (withinPortal) {
+// 			position.left = target.pageX - content.width;
+// 			if (isStart(placement)) {
+// 				position.top = target.pageY;
+// 			} else if (isEnd(placement)) {
+// 				position.top = target.pageY + target.height - content.height;
+// 			} else {
+// 				position.top = target.pageY + target.height / 2 - content.height / 2;
+// 			}
+// 		} else {
+// 			position.left = -content.width;
+// 			if (isStart(placement)) {
+// 				position.top = 0;
+// 			} else if (isEnd(placement)) {
+// 				position.top = target.height - content.height;
+// 			} else {
+// 				position.top = target.height / 2 - content.height / 2;
+// 			}
+// 		}
+// 	} else if (isTop(placement)) {
+// 		if (withinPortal) {
+// 			position.top = target.pageY - content.height;
+// 			if (isStart(placement)) {
+// 				position.left = target.pageX;
+// 			} else if (isEnd(placement)) {
+// 				position.left = target.pageX + target.width - content.width;
+// 			} else {
+// 				position.left = target.pageX + target.width / 2 - content.width / 2;
+// 			}
+// 		} else {
+// 			position.top = -content.height;
+// 			if (isStart(placement)) {
+// 				position.left = 0;
+// 			} else if (isEnd(placement)) {
+// 				position.left = target.width - content.width;
+// 			} else {
+// 				position.left = target.width / 2 - content.width / 2;
+// 			}
+// 		}
+// 	} else {
+// 		if (withinPortal) {
+// 			position.top = target.pageY + target.height;
+// 			if (isStart(placement)) {
+// 				position.left = target.pageX;
+// 			} else if (isEnd(placement)) {
+// 				position.left = target.pageX + target.width - content.width;
+// 			} else {
+// 				position.left = target.pageX + target.width / 2 - content.width / 2;
+// 			}
+// 		} else {
+// 			position.top = target.height;
+// 			if (isStart(placement)) {
+// 				position.left = 0;
+// 			} else if (isEnd(placement)) {
+// 				position.left = target.width - content.width;
+// 			} else {
+// 				position.left = target.width / 2 - content.width / 2;
+// 			}
+// 		}
+// 	}
+// 	return position;
+// };
+
+// export const getPopoverPositionwithinPortal = (
+// 	placement: PopoverPlacement,
+// 	target: { width: number; height: number; pageX: number; pageY: number },
+// 	content: { width: number; height: number; pageX: number; pageY: number }
+// ): {
+// 	flexDirection?: ViewStyle['flexDirection'];
+// 	top?: ViewStyle['top'];
+// 	left?: ViewStyle['left'];
+// 	right?: ViewStyle['right'];
+// 	bottom?: ViewStyle['bottom'];
+// } => {
+// 	const position: {
+// 		flexDirection?: ViewStyle['flexDirection'];
+// 		top?: ViewStyle['top'];
+// 		left?: ViewStyle['left'];
+// 		right?: ViewStyle['right'];
+// 		bottom?: ViewStyle['bottom'];
+// 	} = {};
+// 	if (isRight(placement)) {
+// 		position.flexDirection = 'row';
+// 		position.left = target.pageX + target.width;
+// 		if (isStart(placement)) {
+// 			position.top = target.pageY;
+// 		} else if (isEnd(placement)) {
+// 			position.top = target.pageY + target.height - content.height;
+// 		} else {
+// 			position.top = target.pageY + target.height / 2 - content.height / 2;
+// 		}
+// 	} else if (isLeft(placement)) {
+// 		position.flexDirection = 'row';
+// 		position.left = target.pageX - content.width;
+// 		if (isStart(placement)) {
+// 			position.top = target.pageY;
+// 		} else if (isEnd(placement)) {
+// 			position.top = target.pageY + target.height - content.height;
+// 		} else {
+// 			position.top = target.pageY + target.height / 2 - content.height / 2;
+// 		}
+// 	} else if (isTop(placement)) {
+// 		position.top = target.pageY - content.height;
+// 		if (isStart(placement)) {
+// 			position.left = target.pageX;
+// 		} else if (isEnd(placement)) {
+// 			position.left = target.pageX + target.width - content.width;
+// 		} else {
+// 			position.left = target.pageX + target.width / 2 - content.width / 2;
+// 		}
+// 	} else {
+// 		position.top = target.pageY + target.height;
+// 		if (isStart(placement)) {
+// 			position.left = target.pageX;
+// 		} else if (isEnd(placement)) {
+// 			position.left = target.pageX + target.width - content.width;
+// 		} else {
+// 			position.left = target.pageX + target.width / 2 - content.width / 2;
+// 		}
+// 	}
+// 	return position;
+// };
 
 /**
  * Map arrow direction to `PopoverPlacement`, points towards the target.
