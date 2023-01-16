@@ -43,12 +43,11 @@ export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps)
 		<Popover
 			// ref={ref}
 			placement={placement}
-			content={content}
 			trigger="hover"
-			clickThrough
 			style={{ backgroundColor: 'black' }}
 		>
-			{children}
+			<Popover.Target>{children}</Popover.Target>
+			<Popover.Content style={{ backgroundColor: 'black' }}>{content}</Popover.Content>
 		</Popover>
 	);
 };

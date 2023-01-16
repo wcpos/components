@@ -46,7 +46,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		withArrow,
 		placement,
 		closeOnPressOutside,
-		close,
+		onClose,
 		withinPortal,
 	} = React.useContext(PopoverContext);
 	const ref = React.useRef<Animated.View>(null);
@@ -58,7 +58,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	const focusTrapRef = useFocusTrap();
 	const pressRef = usePressOutside(() => {
 		if (closeOnPressOutside) {
-			close && close();
+			onClose && onClose();
 		}
 	});
 
@@ -89,7 +89,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	const MaybePortal = withinPortal ? Portal : React.Fragment;
 
 	return (
-		<MaybePortal keyPrefix="Popover">
+		<MaybePortal {...(withinPortal ? { keyPrefix: 'Popover' } : {})}>
 			<Styled.Container
 				ref={mergedRef}
 				as={Animated.View}

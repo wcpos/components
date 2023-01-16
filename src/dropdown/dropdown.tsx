@@ -60,6 +60,7 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 		const handleSelect = (value: any) => {
 			onSelect?.(value);
 			setOpened(false);
+			props.onClose && props.onClose();
 		};
 
 		return (

@@ -68,6 +68,8 @@ export const getContainerAlign = (
 
 /**
  * Map popover to `PopoverPlacement`, top, bottom, left or right of the target
+ * if withinPortal is false, the popover will be positioned relative to the target
+ * if withinPortal is true, the popover will be positioned relative to the page
  */
 export const getPopoverPosition = (
 	placement: PopoverPlacement,
@@ -94,6 +96,7 @@ export const getPopoverPosition = (
 	const isStartPlacement = isStart(placement);
 	const isEndPlacement = isEnd(placement);
 
+	// horizontal position
 	if (isHorizontal) {
 		position.flexDirection = 'row';
 		position.left = isRight(placement)
@@ -115,7 +118,10 @@ export const getPopoverPosition = (
 				? target.pageY + target.height / 2 - content.height / 2
 				: target.height / 2 - content.height / 2;
 		}
-	} else if (isVertical) {
+	}
+
+	// vertical position
+	else if (isVertical) {
 		position.top = isTop(placement)
 			? withinPortal
 				? target.pageY - content.height
@@ -136,174 +142,9 @@ export const getPopoverPosition = (
 				: target.width / 2 - content.width / 2;
 		}
 	}
+
 	return position;
 };
-
-//
-// export const getPopoverPosition = (
-// 	placement: PopoverPlacement,
-// 	target: { width: number; height: number; pageX: number; pageY: number },
-// 	content: { width: number; height: number; pageX: number; pageY: number },
-// 	withinPortal: boolean = false
-// ): {
-// 	flexDirection?: ViewStyle['flexDirection'];
-// 	top?: ViewStyle['top'];
-// 	left?: ViewStyle['left'];
-// 	right?: ViewStyle['right'];
-// 	bottom?: ViewStyle['bottom'];
-// } => {
-// 	const position: {
-// 		flexDirection?: ViewStyle['flexDirection'];
-// 		top?: ViewStyle['top'];
-// 		left?: ViewStyle['left'];
-// 		right?: ViewStyle['right'];
-// 		bottom?: ViewStyle['bottom'];
-// 	} = {};
-// 	if (isRight(placement)) {
-// 		position.flexDirection = 'row';
-// 		if (withinPortal) {
-// 			position.left = target.pageX + target.width;
-// 			if (isStart(placement)) {
-// 				position.top = target.pageY;
-// 			} else if (isEnd(placement)) {
-// 				position.top = target.pageY + target.height - content.height;
-// 			} else {
-// 				position.top = target.pageY + target.height / 2 - content.height / 2;
-// 			}
-// 		} else {
-// 			position.left = target.width;
-// 			if (isStart(placement)) {
-// 				position.top = 0;
-// 			} else if (isEnd(placement)) {
-// 				position.top = target.height - content.height;
-// 			} else {
-// 				position.top = target.height / 2 - content.height / 2;
-// 			}
-// 		}
-// 	} else if (isLeft(placement)) {
-// 		position.flexDirection = 'row';
-// 		if (withinPortal) {
-// 			position.left = target.pageX - content.width;
-// 			if (isStart(placement)) {
-// 				position.top = target.pageY;
-// 			} else if (isEnd(placement)) {
-// 				position.top = target.pageY + target.height - content.height;
-// 			} else {
-// 				position.top = target.pageY + target.height / 2 - content.height / 2;
-// 			}
-// 		} else {
-// 			position.left = -content.width;
-// 			if (isStart(placement)) {
-// 				position.top = 0;
-// 			} else if (isEnd(placement)) {
-// 				position.top = target.height - content.height;
-// 			} else {
-// 				position.top = target.height / 2 - content.height / 2;
-// 			}
-// 		}
-// 	} else if (isTop(placement)) {
-// 		if (withinPortal) {
-// 			position.top = target.pageY - content.height;
-// 			if (isStart(placement)) {
-// 				position.left = target.pageX;
-// 			} else if (isEnd(placement)) {
-// 				position.left = target.pageX + target.width - content.width;
-// 			} else {
-// 				position.left = target.pageX + target.width / 2 - content.width / 2;
-// 			}
-// 		} else {
-// 			position.top = -content.height;
-// 			if (isStart(placement)) {
-// 				position.left = 0;
-// 			} else if (isEnd(placement)) {
-// 				position.left = target.width - content.width;
-// 			} else {
-// 				position.left = target.width / 2 - content.width / 2;
-// 			}
-// 		}
-// 	} else {
-// 		if (withinPortal) {
-// 			position.top = target.pageY + target.height;
-// 			if (isStart(placement)) {
-// 				position.left = target.pageX;
-// 			} else if (isEnd(placement)) {
-// 				position.left = target.pageX + target.width - content.width;
-// 			} else {
-// 				position.left = target.pageX + target.width / 2 - content.width / 2;
-// 			}
-// 		} else {
-// 			position.top = target.height;
-// 			if (isStart(placement)) {
-// 				position.left = 0;
-// 			} else if (isEnd(placement)) {
-// 				position.left = target.width - content.width;
-// 			} else {
-// 				position.left = target.width / 2 - content.width / 2;
-// 			}
-// 		}
-// 	}
-// 	return position;
-// };
-
-// export const getPopoverPositionwithinPortal = (
-// 	placement: PopoverPlacement,
-// 	target: { width: number; height: number; pageX: number; pageY: number },
-// 	content: { width: number; height: number; pageX: number; pageY: number }
-// ): {
-// 	flexDirection?: ViewStyle['flexDirection'];
-// 	top?: ViewStyle['top'];
-// 	left?: ViewStyle['left'];
-// 	right?: ViewStyle['right'];
-// 	bottom?: ViewStyle['bottom'];
-// } => {
-// 	const position: {
-// 		flexDirection?: ViewStyle['flexDirection'];
-// 		top?: ViewStyle['top'];
-// 		left?: ViewStyle['left'];
-// 		right?: ViewStyle['right'];
-// 		bottom?: ViewStyle['bottom'];
-// 	} = {};
-// 	if (isRight(placement)) {
-// 		position.flexDirection = 'row';
-// 		position.left = target.pageX + target.width;
-// 		if (isStart(placement)) {
-// 			position.top = target.pageY;
-// 		} else if (isEnd(placement)) {
-// 			position.top = target.pageY + target.height - content.height;
-// 		} else {
-// 			position.top = target.pageY + target.height / 2 - content.height / 2;
-// 		}
-// 	} else if (isLeft(placement)) {
-// 		position.flexDirection = 'row';
-// 		position.left = target.pageX - content.width;
-// 		if (isStart(placement)) {
-// 			position.top = target.pageY;
-// 		} else if (isEnd(placement)) {
-// 			position.top = target.pageY + target.height - content.height;
-// 		} else {
-// 			position.top = target.pageY + target.height / 2 - content.height / 2;
-// 		}
-// 	} else if (isTop(placement)) {
-// 		position.top = target.pageY - content.height;
-// 		if (isStart(placement)) {
-// 			position.left = target.pageX;
-// 		} else if (isEnd(placement)) {
-// 			position.left = target.pageX + target.width - content.width;
-// 		} else {
-// 			position.left = target.pageX + target.width / 2 - content.width / 2;
-// 		}
-// 	} else {
-// 		position.top = target.pageY + target.height;
-// 		if (isStart(placement)) {
-// 			position.left = target.pageX;
-// 		} else if (isEnd(placement)) {
-// 			position.left = target.pageX + target.width - content.width;
-// 		} else {
-// 			position.left = target.pageX + target.width / 2 - content.width / 2;
-// 		}
-// 	}
-// 	return position;
-// };
 
 /**
  * Map arrow direction to `PopoverPlacement`, points towards the target.

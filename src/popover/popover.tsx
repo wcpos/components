@@ -1,44 +1,17 @@
 import * as React from 'react';
-import { View, Dimensions, ViewStyle, StyleProp, StyleSheet } from 'react-native';
+import { View, ViewStyle, StyleProp } from 'react-native';
 
-import get from 'lodash/get';
-import Animated, {
-	useAnimatedStyle,
-	useSharedValue,
-	withTiming,
-	FadeInDown,
-} from 'react-native-reanimated';
+import { useSharedValue } from 'react-native-reanimated';
 
 // @TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
-import useMeasure from '@wcpos/hooks/src/use-measure';
-import usePressOutside from '@wcpos/hooks/src/use-press-outside';
 import useUncontrolled from '@wcpos/hooks/src/use-uncontrolled';
-import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import Platform from '@wcpos/utils/src/platform';
 
 import { Content, PopoverContentProps } from './content';
 import { PopoverContext } from './context';
-import {
-	PopoverPlacement,
-	isBottom,
-	isEnd,
-	isLeft,
-	isRight,
-	isStart,
-	isTop,
-	getArrowAlign,
-	getArrowDirection,
-	getContainerAlign,
-	getPopoverPosition,
-} from './placements';
-import * as Styled from './styles';
+import { PopoverPlacement } from './placements';
 import { Target, PopoverTargetProps } from './target';
-import Arrow from '../arrow';
-import Backdrop from '../backdrop';
-import Portal from '../portal';
-import Pressable from '../pressable';
-import { useScrollEvents } from '../scrollview';
 
 export interface PopoverProps {
 	/**
@@ -144,14 +117,6 @@ export const Popover = ({
 		onChange,
 	});
 
-	/**
-	 *
-	 */
-	const close = React.useCallback(() => {
-		setOpened(false);
-		onClose && onClose();
-	}, [onClose, setOpened]);
-
 	/** */
 	return (
 		<PopoverContext.Provider
@@ -163,26 +128,23 @@ export const Popover = ({
 				closeOnPressOutside,
 				close,
 				withinPortal,
+				onOpen: () => {
+					setOpened(true);
+					onOpen && onOpen();
+				},
+				onClose: () => {
+					setOpened(false);
+					onClose && onClose();
+				},
+				trigger,
 			}}
 		>
 			<View style={{ position: 'relative' }}>
 				{React.Children.map(children, (child) => {
-					if (child.type === Target) {
-						return (
-							<Pressable
-								onPress={() => {
-									setOpened(!_opened);
-									onOpen && onOpen();
-								}}
-							>
-								{child}
-							</Pressable>
-						);
-					}
-					if (child.type === Content && _opened) {
-						return child;
-					}
-					return null;
+					/**
+					 * Only render the Content if the Popover is opened.
+					 */
+					return child.type === Target || (child.type === Content && _opened) ? child : null;
 				})}
 			</View>
 		</PopoverContext.Provider>
