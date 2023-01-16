@@ -2,9 +2,9 @@ import * as React from 'react';
 import { TextInput as RNTextInput } from 'react-native';
 
 import { TextInput, TextInputProps } from './textinput';
-import InputContainer, { InputContainerProps } from '../form-layout';
+import { InputWithLabel, InputWithLabelProps } from '../form-layout';
 
-export type TextInputWithLabelProps = TextInputProps & InputContainerProps;
+export type TextInputWithLabelProps = TextInputProps & InputWithLabelProps;
 
 export const TextInputWithLabel = ({
 	label,
@@ -30,8 +30,8 @@ export const TextInputWithLabel = ({
 	 *
 	 */
 	return (
-		<InputContainer label={label} helpText={helpText} error={error} onLabelPress={handleLabelPress}>
+		<InputWithLabel label={label} helpText={helpText} error={error} onLabelPress={handleLabelPress}>
 			<TextInput {...props} ref={ref} />
-		</InputContainer>
+		</InputWithLabel>
 	);
 };

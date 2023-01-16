@@ -5,7 +5,7 @@ import { InputWithLabel, InputWithLabelProps } from '../form-layout';
 
 export type RadioGroupWithLabelProps = RadioGroupProps & Omit<InputWithLabelProps, 'children'>;
 
-export const GroupWithLabel = ({
+export const RadioGroupWithLabel = ({
 	label,
 	helpText,
 	error,

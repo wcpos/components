@@ -43,7 +43,7 @@ export interface Action {
 /**
  *
  */
-type TextInputProps = RNTextInputProps & {
+export type TextInputProps = RNTextInputProps & {
 	/**
 	 * Type of the TextField.
 	 *
