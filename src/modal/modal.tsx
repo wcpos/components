@@ -1,351 +1,94 @@
 import * as React from 'react';
-import {
-	Modal as RNModal,
-	KeyboardAvoidingView,
-	ScrollView,
-	StyleSheet,
-	ViewStyle,
-} from 'react-native';
+import { KeyboardAvoidingView, StyleSheet, ViewStyle } from 'react-native';
 
-import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 import Platform from '@wcpos/utils/src/platform';
 
-import Header from './header';
-import * as Styled from './styles';
+import { Container } from './container';
+import { Content } from './content';
+import { Footer, ModalFooterProps } from './footer';
+import { Header } from './header';
+import { PortalWrapper } from './portal';
 import Backdrop from '../backdrop';
-import Box from '../box';
-import Button from '../button';
-import ErrorBoundary from '../error-boundary';
-import Portal from '../portal';
 
-export type Open = 'default' | 'top';
-export type Close = 'default' | 'alwaysOpen';
-export type Position = 'initial' | 'top';
-
-export interface Action {
-	/**
-	 * Label to display.
-	 */
-	label: string;
-	/**
-	 * Action to execute on click.
-	 */
-	action?: () => void;
-	/**
-	 *
-	 */
-	type?: import('@wcpos/themes').ColorTypes;
-}
-
+/**
+ *
+ */
 export type ModalProps = {
-	/**
-	 * Using this props will show the modal all the time, and the number represents how expanded the modal has to be.
-	 */
-	alwaysOpen?: boolean | number;
-	/**
-	 * A React node that will define the content of the modal.
-	 */
-	children?: React.ReactNode;
-	/**
-	 *
-	 */
-	size?: 'small' | 'medium' | 'large' | 'full';
-	/**
-	 * Callback function when the `open` method is triggered.
-	 */
-	onOpen?(): void;
+	/** Content to be shown in the modal */
+	children: React.ReactNode;
+
+	/** Mounts modal if true */
+	opened: boolean;
+
+	/** Called when close button clicked and when escape key is pressed */
+	onClose(): void;
+
+	/** Modal title, displayed in header before close button */
+	title?: React.ReactNode;
+
+	/** Hides close button if set to false, modal still can be closed with escape key and by clicking outside */
+	withCloseButton?: boolean;
+
+	/** Modal body width */
+	size?: string | number;
 
 	/**
-	 * Callback function when the modal is opened.
-	 */
-	onOpened?(): void;
-
-	/**
-	 * Callback function when the `close` method is triggered.
-	 */
-	onClose?(): void;
-
-	/**
-	 * Callback function when the modal is closed.
-	 */
-	onClosed?(): void;
-	/**
-	 * Define if Modalize has to be wrap with the Modal component from react-native.
+	 * Define if Modal should use the react-native implementation of Modal.
+	 * Note: react-native-web uses a Portal, very similar to the one used in this component.
 	 * @default false
 	 */
 	withReactModal?: boolean;
-	/**
-	 * Define if Modalize has to be wrap with the Modal component from react-native.
-	 * @default true
-	 */
-	withPortal?: boolean;
-	/**
-	 *
-	 */
-	title?: string;
-	/**
-	 *
-	 */
+
+	/** */
+	primaryAction?: ModalFooterProps['primaryAction'];
+
+	/** */
+	secondaryActions?: ModalFooterProps['secondaryActions'];
+
+	/** */
 	style?: ViewStyle;
-	/**
-	 * A header component outside of the ScrollView, on top of the modal.
-	 */
-	HeaderComponent?: React.ReactNode;
-
-	/**
-	 * A footer component outside of the ScrollView, on top of the modal.
-	 */
-	FooterComponent?: React.ReactNode;
-} & {
-	primaryAction?: Action;
-	secondaryActions?: Action[];
-};
-
-const modalSizes = {
-	small: 300,
-	medium: 500,
-	large: 700,
-	full: undefined,
 };
 
 /**
  *
  */
-export const ModalBase = (
-	{
-		children,
-		onOpen,
-		onClose,
-		withReactModal = false,
-		withPortal = true,
-		alwaysOpen = false,
-		size = 'medium',
-		primaryAction,
-		secondaryActions,
-		HeaderComponent,
-		title,
-		style,
-	}: ModalProps,
-	ref
-) => {
-	const focusTrapRef = useFocusTrap();
-	const [isVisible, setIsVisible] = React.useState(false);
-
-	const handleAnimateOpen = (dest: Open = 'default'): void => {
-		setIsVisible(true);
-		// setShowContent(true);
-	};
-
-	// eslint-disable-next-line default-param-last
-	const handleAnimateClose = (dest: Close = 'default', callback?: () => void): void => {
-		if (callback) {
-			callback();
-		}
-
-		setIsVisible(false);
-	};
+export const Modal = ({
+	children,
+	opened,
+	title,
+	onClose,
+	withCloseButton = true,
+	withReactModal = false,
+	primaryAction,
+	secondaryActions,
+}: ModalProps) => {
+	const hasHeader = !!title || withCloseButton;
+	/**
+	 *
+	 */
+	// const handleBackdropPress = (): void => {
+	// 	// handleClose();
+	// };
 
 	/**
 	 *
 	 */
-	const handleClose = (dest?: Close, callback?: () => void): void => {
-		if (onClose) {
-			onClose();
-		}
+	return opened ? (
+		<PortalWrapper withReactModal={withReactModal}>
+			<KeyboardAvoidingView
+				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+				style={[{ flex: 1 }, StyleSheet.absoluteFill]}
+			>
+				<Backdrop onPress={onClose} />
 
-		handleAnimateClose(dest, callback);
-	};
-
-	/**
-	 *
-	 */
-	const handleBackdropPress = (): void => {
-		handleClose();
-	};
-
-	/**
-	 *
-	 */
-	React.useImperativeHandle(ref, () => ({
-		open(dest?: Open): void {
-			if (onOpen) {
-				onOpen();
-			}
-
-			handleAnimateOpen(dest);
-		},
-
-		close(dest?: Close, callback?: () => void): void {
-			handleClose(dest, callback);
-		},
-	}));
-
-	/**
-	 *
-	 */
-	React.useEffect(() => {
-		if (alwaysOpen) {
-			handleAnimateOpen();
-		}
-	}, [alwaysOpen]);
-
-	/**
-	 *
-	 */
-	const renderElement = (Element: React.ReactNode): JSX.Element =>
-		typeof Element === 'function' ? Element() : Element;
-
-	/**
-	 *
-	 */
-	const renderChildren = (): React.ReactNode => {
-		return children;
-	};
-
-	/**
-	 *
-	 */
-	const renderHeader = () => {
-		if (HeaderComponent) {
-			return renderElement(HeaderComponent);
-		}
-		if (title) {
-			return <Header title={title} handleClose={handleClose} />;
-		}
-		return null;
-	};
-
-	/**
-	 *
-	 */
-	const renderFooter = () => {
-		if (primaryAction && !secondaryActions) {
-			return (
-				<Box horizontal>
-					<Button
-						fill
-						size="large"
-						title={primaryAction.label}
-						onPress={primaryAction.action}
-						type={primaryAction.type || 'primary'}
-						style={{
-							flex: 1,
-							borderTopLeftRadius: 0,
-							borderTopRightRadius: 0,
-						}}
-					/>
-				</Box>
-			);
-		}
-
-		if (primaryAction && Array.isArray(secondaryActions))
-			return (
-				<Box horizontal>
-					{secondaryActions.map((secondaryAction, index) => (
-						<Button
-							key={secondaryAction.label}
-							fill
-							size="large"
-							title={secondaryAction.label}
-							onPress={secondaryAction.action}
-							type={secondaryAction.type || 'secondary'}
-							style={{
-								flex: 1,
-								borderTopLeftRadius: 0,
-								borderTopRightRadius: 0,
-								borderBottomRightRadius: 0,
-							}}
-						/>
-					))}
-					<Button
-						fill
-						size="large"
-						title={primaryAction.label}
-						onPress={primaryAction.action}
-						type={primaryAction.type || 'primary'}
-						style={{
-							flex: 1,
-							borderTopLeftRadius: 0,
-							borderTopRightRadius: 0,
-							borderBottomLeftRadius: 0,
-						}}
-					/>
-				</Box>
-			);
-		return null;
-	};
-
-	/**
-	 *
-	 */
-	const renderModal = () => (
-		<KeyboardAvoidingView
-			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-			style={[{ flex: 1 }, StyleSheet.absoluteFill]}
-		>
-			<Backdrop onPress={handleBackdropPress} />
-
-			<Styled.Container>
-				<Box
-					raised
-					rounding="medium"
-					style={[
-						{
-							width: modalSizes[size],
-							maxWidth: '80%',
-							backgroundColor: 'white',
-							maxHeight: '80%',
-						},
-						style,
-					]}
-				>
-					<ErrorBoundary>
-						{renderHeader()}
-						<Box
-							padding="medium"
-							// - this causes problem on iOS
-							// @TODO - test with ScrollView contentContainerStyle
-							style={Platform.isNative ? undefined : { flex: 1 }}
-						>
-							<ScrollView ref={focusTrapRef} contentContainerStyle={{ flexBasis: '100%' }}>
-								<ErrorBoundary>{renderChildren()}</ErrorBoundary>
-							</ScrollView>
-						</Box>
-						{renderFooter()}
-					</ErrorBoundary>
-				</Box>
-			</Styled.Container>
-		</KeyboardAvoidingView>
-	);
-
-	/**
-	 *
-	 */
-	const renderReactModal = (child: JSX.Element): JSX.Element => (
-		<RNModal
-			supportedOrientations={['landscape', 'portrait', 'portrait-upside-down']}
-			// onRequestClose={handleBackPress}
-			hardwareAccelerated
-			visible={isVisible}
-			transparent
-		>
-			{child}
-		</RNModal>
-	);
-
-	if (!isVisible) {
-		return null;
-	}
-
-	if (withReactModal) {
-		return renderReactModal(renderModal());
-	}
-
-	if (!withPortal) {
-		return renderModal();
-	}
-
-	return <Portal keyPrefix="Modal">{renderModal()}</Portal>;
+				<Container>
+					{hasHeader ? <Header onClose={onClose}>{title}</Header> : null}
+					<Content>{children}</Content>
+					{primaryAction ? (
+						<Footer primaryAction={primaryAction} secondaryActions={secondaryActions} />
+					) : null}
+				</Container>
+			</KeyboardAvoidingView>
+		</PortalWrapper>
+	) : null;
 };
-
-export const Modal = React.forwardRef(ModalBase);

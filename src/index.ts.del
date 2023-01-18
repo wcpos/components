@@ -1,3 +1,6 @@
+/**
+ * Why is this here?
+ */
 export { default as Accordian } from './accordion';
 export { default as Arrow } from './arrow';
 export { default as Avatar } from './avatar';

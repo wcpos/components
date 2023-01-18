@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
-import Button from '../button';
-import Text from '../text';
-import Icon from '../icon';
-import Portal from '../portal';
+
 import { Dialog, DialogProps } from './dialog';
 import { useDialog } from './use-dialog';
+import Button from '../button';
+import Icon from '../icon';
+import Portal from '../portal';
+import Text from '../text';
 
 /**
  * Modal require
@@ -25,7 +27,6 @@ export default {
 	title: 'Components/Dialog',
 	component: Dialog,
 	decorators: [AppProvider],
-	// subcomponents: { 'Dialog.Section': Dialog.Section },
 };
 
 const LOREM_IPSUM =

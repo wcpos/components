@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 
 import { PopoverPlacement, getArrowAlign, getArrowDirection } from './placements';
-import { default as _Arrow } from '../arrow';
+import _Arrow from '../arrow';
 
 export interface PopoverArrowProps {
 	placement: PopoverPlacement;
