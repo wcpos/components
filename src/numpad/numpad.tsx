@@ -1,13 +1,16 @@
 import * as React from 'react';
+
 // import useKey from '@wcpos/hooks/src/use-key';
 import useAllKeysPress from '@wcpos/hooks/src/useAllKeysPress';
-import Icon from '../icon';
-import Box from '../box';
-import Text from '../text';
-import Button from '../button';
-import { reducer, formatOperand, ACTIONS } from './reducer';
+
 import DigitButton from './digit-button';
 import OperationButton from './operation-button';
+import { reducer, formatOperand, ACTIONS } from './reducer';
+import Box from '../box';
+import Button from '../button';
+import Icon from '../icon';
+import Text from '../text';
+import TextInput from '../textinput';
 
 export interface NumpadProps {
 	initialValue?: string;
@@ -62,6 +65,7 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 					</Box>
 				</Box>
 				<Icon name="deleteLeft" onPress={handleBackspace} />
+				{/* <TextInput placeholder={formatOperand(currentOperand)} /> */}
 			</Box>
 			<Box horizontal>
 				<Box>

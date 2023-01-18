@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 // import Platform from '@wcpos/utils/src/platform';
-import Popover, { PopoverPlacement } from '../popover';
+import Popover, { PopoverProps } from '../popover';
 import Text from '../text';
 
-export interface TooltipProps {
+export type TooltipProps = Omit<PopoverProps, 'content' | 'children'> & {
 	/**
 	 * The content which will trigger the Popover. The Popover will be anchored to this component.
 	 */
@@ -13,16 +13,7 @@ export interface TooltipProps {
 	 * The content to display inside the Popover.
 	 */
 	content: React.ReactNode;
-	/**
-	 * Preferred placement of the Popover. The Popover will try to place itself according to this
-	 * property. However, if there is not enough space left there to show up, it will show itself
-	 * in opposite direction.
-	 *
-	 * For example, if we set `preferredPlacement="top"`, and there is not enough space for the Popover
-	 * to show itself above the triggering view, it will show at the bottom of it.
-	 */
-	placement?: PopoverPlacement;
-}
+};
 
 /**
  * Tooltip is a special type of Popover
@@ -45,6 +36,7 @@ export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps)
 			placement={placement}
 			trigger="hover"
 			style={{ backgroundColor: 'black' }}
+			{...props}
 		>
 			<Popover.Target>{children}</Popover.Target>
 			<Popover.Content style={{ backgroundColor: 'black' }}>{content}</Popover.Content>

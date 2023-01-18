@@ -1,12 +1,14 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { StoryWrapper } from '@storybook/addons';
+
 import { Modal, ModalProps } from './modal';
 import { useModal } from './use-modal';
-import Portal from '../portal';
-import Text from '../text';
 import Button from '../button';
 import Icon from '../icon';
+import Portal from '../portal';
+import Text from '../text';
 
 /**
  * Modal require

@@ -11,7 +11,10 @@ type MenuOption = import('../menu/menu').MenuOption;
 /**
  *
  */
-export type DropdownProps = Omit<PopoverProps, 'content'> & {
+export type DropdownProps = Omit<PopoverProps, 'content' | 'children'> & {
+	/** The content which will trigger the Popover. The Popover will be anchored to this component. */
+	children: React.ReactNode;
+
 	/** */
 	items: string[] | MenuOption[];
 

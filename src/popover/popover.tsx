@@ -23,7 +23,7 @@ export interface PopoverProps {
 	 * property. However, if there is not enough space left there to show up, it will show itself
 	 * in opposite direction.
 	 *
-	 * For example, if we set `preferredPlacement="top"`, and there is not enough space for the Popover
+	 * For example, if we set `placement="top"`, and there is not enough space for the Popover
 	 * to show itself above the triggering view, it will show at the bottom of it.
 	 */
 	placement?: PopoverPlacement;

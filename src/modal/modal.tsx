@@ -10,13 +10,13 @@ import {
 import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 import Platform from '@wcpos/utils/src/platform';
 
+import Header from './header';
+import * as Styled from './styles';
 import Backdrop from '../backdrop';
 import Box from '../box';
 import Button from '../button';
 import ErrorBoundary from '../error-boundary';
 import Portal from '../portal';
-import Header from './header';
-import * as Styled from './styles';
 
 export type Open = 'default' | 'top';
 export type Close = 'default' | 'alwaysOpen';

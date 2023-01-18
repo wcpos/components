@@ -14,6 +14,7 @@ export const Popover = styled.View`
 	background-color: #FFFFFF;
 	padding: 5px;
 	border-radius: ${({ theme }) => theme.rounding.small}px;
+	width: max-content;
 	
 	shadow-offset: { width: 0, height: 1 };
 	shadow-opacity: 0.22;
