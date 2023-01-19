@@ -36,7 +36,10 @@ export function useScrollEvents() {
 	return React.useContext(ScrollEventsContext);
 }
 
-export const ScrollView = (props: ScrollViewProps) => {
+/**
+ *
+ */
+export const ScrollView = React.forwardRef<RNScrollView, ScrollViewProps>((props, ref) => {
 	const scrollEventListenersRef = React.useRef(new Set<ScrollListener>());
 	const scrollEventHandlerRef = React.useRef<ScrollEventHandler>();
 	if (scrollEventHandlerRef.current == null) {
@@ -66,7 +69,7 @@ export const ScrollView = (props: ScrollViewProps) => {
 
 	return (
 		<ScrollEventsContext.Provider value={scrollEventHandlerRef.current}>
-			<RNScrollView scrollEventThrottle={16} {...props} onScroll={onScroll} />
+			<RNScrollView ref={ref} scrollEventThrottle={16} {...props} onScroll={onScroll} />
 		</ScrollEventsContext.Provider>
 	);
-};
+});

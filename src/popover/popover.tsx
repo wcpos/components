@@ -5,19 +5,22 @@ import { useSharedValue } from 'react-native-reanimated';
 
 // @TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
+import type { Measurements } from '@wcpos/hooks/src/use-measure';
 import useUncontrolled from '@wcpos/hooks/src/use-uncontrolled';
-import Platform from '@wcpos/utils/src/platform';
 
 import { Content, PopoverContentProps } from './content';
 import { PopoverContext } from './context';
-import { PopoverPlacement } from './placements';
 import { Target, PopoverTargetProps } from './target';
 
+import type { PopoverPlacement } from './placements';
+
+/**
+ *
+ */
 export interface PopoverProps {
-	/**
-	 * The content which will trigger the Popover. The Popover will be anchored to this component.
-	 */
+	/** Popover.Target and Popover.Content components */
 	children: React.ReactElement<PopoverTargetProps | PopoverContentProps>[];
+
 	/**
 	 * Preferred placement of the Popover. The Popover will try to place itself according to this
 	 * property. However, if there is not enough space left there to show up, it will show itself
@@ -42,45 +45,29 @@ export interface PopoverProps {
 
 	/** Called when Menu is closed */
 	onClose?(): void;
-	/**
-	 * Method for activating an uncontrolled Popover.
-	 */
+
+	/** Method for activating an uncontrolled Popover. */
 	trigger?: 'press' | 'longpress' | 'hover';
-	/**
-	 * Called when popover closes
-	 */
+
+	/** Called when popover closes */
 	onClose?(): void;
-	/**
-	 * Called when popover opens
-	 */
+
+	/** Called when popover opens */
 	onOpen?(): void;
-	/**
-	 * Show arrow pointing to the target.
-	 */
+
+	/** Show arrow pointing to the target. */
 	withArrow?: boolean;
+
 	/** Determines whether Popover should be rendered within Portal, defaults to false */
 	withinPortal?: boolean;
-	/**
-	 * Show backdrop behind the Popover.
-	 */
-	showBackdrop?: boolean;
-	/**
-	 * If true, the popover and its backdrop won't be clickable and won't receive mouse events.
-	 *
-	 * For example, this is used by the `Tooltip` component. Prefer using the `Tooltip` component instead
-	 * of this property.
-	 */
-	clickThrough?: boolean;
-	/**
-	 * Force popover to match the width of the triggering view.
-	 *
-	 * For example, this is used by the `Select` and `Combobox` components. Prefer using the `Select` and
-	 * `Combobox` components instead of this property.
-	 */
+
+	/** Determines whether dropdown should be closed on outside clicks, default to true */
+	closeOnPressOutside?: boolean;
+
+	/** Force popover to match the width of the triggering view. */
 	matchWidth?: boolean;
-	/**
-	 *
-	 */
+
+	/** */
 	style?: StyleProp<ViewStyle>;
 }
 
@@ -89,23 +76,21 @@ export interface PopoverProps {
  */
 export const Popover = ({
 	children,
+	closeOnPressOutside = true,
+	defaultOpened,
+	matchWidth = false,
+	onChange,
 	onClose,
 	onOpen,
 	opened,
-	defaultOpened,
-	onChange,
 	placement = 'bottom',
 	trigger = 'press',
 	withArrow = true,
 	withinPortal = false,
-	showBackdrop = false,
-	clickThrough = false,
-	matchWidth = false,
 	style,
-	closeOnPressOutside = true,
 }: PopoverProps) => {
-	const targetMeasurements = useSharedValue(null);
-	const contentMeasurements = useSharedValue(null);
+	const targetMeasurements = useSharedValue<Measurements>(null);
+	const contentMeasurements = useSharedValue<Measurements>(null);
 
 	/**
 	 *
@@ -121,12 +106,13 @@ export const Popover = ({
 	return (
 		<PopoverContext.Provider
 			value={{
+				closeOnPressOutside,
+				contentMeasurements,
+				matchWidth,
 				placement,
 				targetMeasurements,
-				contentMeasurements,
+				trigger,
 				withArrow,
-				closeOnPressOutside,
-				close,
 				withinPortal,
 				onOpen: () => {
 					setOpened(true);
@@ -136,7 +122,6 @@ export const Popover = ({
 					setOpened(false);
 					onClose && onClose();
 				},
-				trigger,
 			}}
 		>
 			<View style={{ position: 'relative' }}>

@@ -17,7 +17,7 @@ export interface ModalContainerProps {
 	children: (React.ReactElement<ModalHeaderProps | ModalContentProps | ModalFooterProps> | null)[];
 
 	/** Modal body width */
-	size?: string | number;
+	size?: 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge';
 
 	/** Modal body style */
 	style?: StyleProp<ViewStyle>;
@@ -26,7 +26,20 @@ export interface ModalContainerProps {
 /**
  *
  */
-export const Container = ({ children, size, style }: ModalContainerProps) => {
+const sizes = {
+	xSmall: 320,
+	small: 380,
+	medium: 440,
+	large: 620,
+	xLarge: 780,
+};
+
+/**
+ *
+ */
+export const Container = ({ children, size = 'medium', style }: ModalContainerProps) => {
+	const width = sizes[size];
+
 	return (
 		<Styled.Container>
 			<Box
@@ -34,10 +47,10 @@ export const Container = ({ children, size, style }: ModalContainerProps) => {
 				rounding="medium"
 				style={[
 					{
-						// width: '100%', size
-						// maxWidth: '80%',
+						width,
+						maxWidth: '95%',
 						backgroundColor: 'white',
-						// maxHeight: '80%',
+						maxHeight: '95%',
 					},
 					style,
 				]}

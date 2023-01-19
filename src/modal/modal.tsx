@@ -3,7 +3,7 @@ import { KeyboardAvoidingView, StyleSheet, ViewStyle } from 'react-native';
 
 import Platform from '@wcpos/utils/src/platform';
 
-import { Container } from './container';
+import { Container, ModalContainerProps } from './container';
 import { Content } from './content';
 import { Footer, ModalFooterProps } from './footer';
 import { Header } from './header';
@@ -30,7 +30,7 @@ export type ModalProps = {
 	withCloseButton?: boolean;
 
 	/** Modal body width */
-	size?: string | number;
+	size?: ModalContainerProps['size'];
 
 	/**
 	 * Define if Modal should use the react-native implementation of Modal.
@@ -54,13 +54,14 @@ export type ModalProps = {
  */
 export const Modal = ({
 	children,
-	opened,
-	title,
 	onClose,
-	withCloseButton = true,
-	withReactModal = false,
+	opened,
 	primaryAction,
 	secondaryActions,
+	size,
+	title,
+	withCloseButton = true,
+	withReactModal = false,
 }: ModalProps) => {
 	const hasHeader = !!title || withCloseButton;
 	/**
@@ -81,7 +82,7 @@ export const Modal = ({
 			>
 				<Backdrop onPress={onClose} />
 
-				<Container>
+				<Container size={size}>
 					{hasHeader ? <Header onClose={onClose}>{title}</Header> : null}
 					<Content>{children}</Content>
 					{primaryAction ? (

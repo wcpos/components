@@ -1,15 +1,10 @@
 import * as React from 'react';
-import { View, Dimensions, ViewStyle, StyleProp, StyleSheet } from 'react-native';
+import { ViewStyle, StyleProp } from 'react-native';
 
-import Animated, {
-	useAnimatedStyle,
-	useSharedValue,
-	withTiming,
-	FadeInDown,
-} from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, withTiming, FadeInDown } from 'react-native-reanimated';
 
 import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
-import useMeasure from '@wcpos/hooks/src/use-measure';
+import useMeasure, { Measurements } from '@wcpos/hooks/src/use-measure';
 import useMergedRef from '@wcpos/hooks/src/use-merged-ref';
 import usePressOutside from '@wcpos/hooks/src/use-press-outside';
 
@@ -41,21 +36,22 @@ export interface PopoverContentProps {
  */
 export const Content = ({ children, style }: PopoverContentProps) => {
 	const {
-		targetMeasurements,
-		contentMeasurements,
-		withArrow,
-		placement,
 		closeOnPressOutside,
+		contentMeasurements,
+		matchWidth,
 		onClose,
+		placement,
+		targetMeasurements,
+		withArrow,
 		withinPortal,
 	} = React.useContext(PopoverContext);
 	const ref = React.useRef<Animated.View>(null);
-	const onMeasure = (val) => {
+	const onMeasure = (val: Measurements) => {
 		contentMeasurements.value = val;
 	};
 
 	const { measurements, onLayout, forceMeasure } = useMeasure({ ref, onMeasure });
-	const focusTrapRef = useFocusTrap();
+	// const focusTrapRef = useFocusTrap();
 	const pressRef = usePressOutside(() => {
 		if (closeOnPressOutside) {
 			onClose && onClose();
@@ -93,7 +89,10 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 			<Styled.Container
 				ref={mergedRef}
 				as={Animated.View}
-				style={[{ opacity: 0 }, containerStyle]}
+				style={[
+					{ width: matchWidth ? targetMeasurements.value.width : 'auto', opacity: 0 },
+					containerStyle,
+				]}
 				onLayout={onLayout}
 				entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
 			>
@@ -101,7 +100,10 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 					<Arrow placement={placement} style={style} />
 				)}
 
-				<Styled.Popover ref={focusTrapRef} style={style}>
+				<Styled.Popover
+					// ref={focusTrapRef}
+					style={[{ width: matchWidth ? '100%' : 'max-content' }, style]}
+				>
 					{children}
 				</Styled.Popover>
 

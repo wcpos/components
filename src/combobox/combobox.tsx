@@ -92,7 +92,7 @@ export const Combobox = ({
 	// 	selectedRaw,
 	// 	onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
 	// );
-	const [open, setOpen] = React.useState(false);
+	const [opened, setOpened] = React.useState(false);
 	const [searchValue, setSearchValue] = React.useState('');
 	const options = React.useMemo(() => formatOptions(props.options), [props.options]);
 
@@ -128,18 +128,23 @@ export const Combobox = ({
 	 *
 	 */
 	return (
-		<Dropdown open={open} withArrow={false} matchWidth items={filteredOptions} onSelect={onChange}>
+		<Dropdown
+			opened={opened}
+			onClose={() => setOpened(false)}
+			withArrow={false}
+			matchWidth
+			items={filteredOptions}
+			onSelect={onChange}
+		>
 			<TextInput
-				// onFocus={showPopover}
 				value={searchValue}
 				placeholder={selected?.label ?? (selected || placeholder)}
 				onChange={onSearchChange}
-				onFocus={() => {
-					setOpen(true);
-				}}
+				onFocus={() => setOpened(true)}
 				clearable
-				// onClear={() => onSearch('')}
-				style={{ flex: 1 }} // this doesn't work, @TODO refactor TextInput and BaseInput
+				onKeyPress={(e) => {
+					console.log(e);
+				}}
 			/>
 		</Dropdown>
 	);

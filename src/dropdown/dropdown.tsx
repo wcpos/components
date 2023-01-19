@@ -69,12 +69,8 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 		return (
 			<Popover
 				opened={_opened}
-				onOpen={() => {
-					setOpened(true);
-				}}
-				onClose={() => {
-					setOpened(false);
-				}}
+				onOpen={() => setOpened(true)}
+				onClose={() => setOpened(false)}
 				{...props}
 			>
 				<Popover.Target>{children}</Popover.Target>

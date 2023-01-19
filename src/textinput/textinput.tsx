@@ -186,9 +186,10 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		}: TextInputProps,
 		ref
 	) => {
-		const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
 		const theme = useTheme();
+		const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
 		const [hasFocus, setHasFocus] = React.useState(focused);
+		const inputRef = React.useRef<RNTextInput>(null);
 
 		/**
 		 *
@@ -216,6 +217,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		 * clearable
 		 */
 		const handleClear = React.useCallback(() => {
+			inputRef.current?.focus();
 			return typeof onClear === 'function' ? onClear() : onChange('');
 		}, [onChange, onClear]);
 
@@ -290,7 +292,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 				}
 			>
 				<Styled.TextInput
-					ref={ref}
+					ref={inputRef}
 					{...getModifiers(type, autoCapitalize)}
 					placeholder={placeholder}
 					placeholderTextColor={theme.colors.textMuted}

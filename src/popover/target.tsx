@@ -9,17 +9,13 @@ import { PopoverContext } from './context';
 import Pressable from '../pressable';
 import { useScrollEvents } from '../scrollview';
 
+/**
+ *
+ */
 export interface PopoverTargetProps {
 	/** The content which will trigger the Popover. The Popover will be anchored to this component. */
 	children: React.ReactNode;
 }
-
-/**  */
-const triggerMap = {
-	press: 'onPress',
-	longPress: 'onLongPress',
-	hover: 'onHoverIn',
-};
 
 /**
  *
@@ -45,7 +41,7 @@ export const Target = ({ children }: PopoverTargetProps) => {
 			triggerProps.onPress && triggerProps.onPress();
 		},
 		onLongPress: () => {
-			if (trigger === 'longPress') {
+			if (trigger === 'longpress') {
 				forceMeasure();
 				onOpen && onOpen();
 			}
@@ -74,7 +70,7 @@ export const Target = ({ children }: PopoverTargetProps) => {
 	 */
 	const pressableChild = isPressableChild
 		? React.cloneElement(children, { ...wrappedTriggerProps })
-		: React.createElement(Pressable, { ...wrappedTriggerProps }, children);
+		: React.createElement(Pressable, { ...wrappedTriggerProps, style: { flex: 1 } }, children);
 
 	/**
 	 * Re-measure the trigger position when onScroll called

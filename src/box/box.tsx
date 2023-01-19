@@ -179,6 +179,9 @@ export const Box = React.forwardRef<View, BoxProps>(
 				distribution={distribution}
 				reverse={reverse}
 				border={border}
+				// onKeyDownCapture={() => {
+				// 	console.log('onKeyDownCapture');
+				// }}
 				{...rest} // @TODO - fix this WARN  Node of type rule not supported as an inline style
 			>
 				{children}
