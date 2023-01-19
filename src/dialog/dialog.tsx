@@ -1,49 +1,42 @@
 import React from 'react';
 
-import Modal from '../modal';
+import Modal, { ModalProps } from '../modal';
 import Text from '../text';
 
-export type DialogProps = {
-	/**
-	 * Dialog Title.
-	 */
-	title?: string;
-	/**
-	 * Function called when the dialog is closed.
-	 */
-	onClose: (accepted: boolean) => void;
-	/**
-	 * Dialog content.
-	 */
-	children: React.ReactNode;
-	/**
-	 * Set to true to hide the close modal button.
-	 */
-	hideClose?: boolean;
+export type DialogProps = ModalProps & {
+	/** */
+	onAccept?: () => void;
+	/** */
+	onDecline?: () => void;
 };
 
 /**
  * Show interactive content on top of an existing screen.
  * It should be used thoughtfully and sparingly, as it stops the user in its current flow.
  */
-export const DialogBase = ({ children, onClose }: DialogProps, ref) => {
-	const decline = React.useCallback(() => {
-		ref.current.close('default', () => onClose(false));
-	}, [onClose, ref]);
-	const accept = React.useCallback(() => {
-		ref.current.close('default', () => onClose(true));
-	}, [onClose, ref]);
+export const Dialog = ({ children, onClose, onAccept, onDecline, ...props }: DialogProps) => {
+	const accept = () => {
+		Promise.resolve(onAccept && onAccept()).then(() => {
+			onClose();
+		});
+	};
+
+	const decline = () => {
+		Promise.resolve(onDecline && onDecline()).then(() => {
+			onClose();
+		});
+	};
 
 	return (
 		<Modal
-			ref={ref}
 			size="small"
+			onClose={onClose}
+			withCloseButton={false}
 			primaryAction={{ label: 'Confirm', action: accept, type: 'primary' }}
 			secondaryActions={[{ label: 'Cancel', action: decline, type: 'secondary' }]}
+			{...props}
 		>
 			{typeof children === 'string' ? <Text>{children}</Text> : children}
 		</Modal>
 	);
 };
-
-export const Dialog = React.forwardRef(DialogBase);

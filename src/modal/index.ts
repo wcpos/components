@@ -1,1 +1,9 @@
-export { Modal as default } from './modal';
+import { Container } from './container';
+import { Content } from './content';
+import { Footer } from './footer';
+import { Header } from './header';
+import { Modal } from './modal';
+
+export type { ModalProps } from './modal';
+
+export default Object.assign(Modal, { Container, Header, Content, Footer });
