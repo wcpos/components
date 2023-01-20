@@ -1,22 +1,14 @@
 import * as React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
-import Image from '../image';
+
+import Image, { ImageProps } from '../image';
 
 /**
  * Avatar properties
  */
-export interface AvatarProps {
-	/** src description */
-	src: string;
+export type AvatarProps = ImageProps & {
 	/** size description */
 	size?: 'default' | 'small' | 'large';
-	/** placeholder description */
-	placeholder?: string | React.ReactNode;
-	/**
-	 *
-	 */
-	style?: StyleProp<ViewStyle>;
-}
+};
 
 /**
  * Size map
@@ -30,16 +22,8 @@ const map = {
 /**
  * Avatar
  */
-export const Avatar = ({ src, size = 'default', placeholder, style }: AvatarProps) => {
+export const Avatar = ({ source, size = 'default', ...props }: AvatarProps) => {
 	const { width, height } = map[size];
 
-	return (
-		<Image
-			border="circular"
-			src={src}
-			placeholder={placeholder} // style={[map[size], style]}
-			width={width}
-			height={height}
-		/>
-	);
+	return <Image border="circular" source={source} style={{ width, height }} />;
 };
