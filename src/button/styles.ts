@@ -1,5 +1,6 @@
-import styled from 'styled-components/native';
 import { StyleSheet } from 'react-native';
+
+import styled from 'styled-components/native';
 
 type ButtonProps = import('./button').Props;
 type BackgroundProps = Pick<ButtonProps, 'background' | 'type' | 'disabled' | 'size' | 'fill'>;

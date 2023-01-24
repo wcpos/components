@@ -1,14 +1,11 @@
 import * as React from 'react';
-import Button from '../button';
-import Icon from '../icon';
+
 import { ACTIONS } from './reducer';
+import * as Styled from './styles';
+import Button from '../button';
+import Icon, { IconName } from '../icon';
 
-interface OperationButtonProps {
-	dispatch: any;
-	operation: string;
-}
-
-const iconMap = {
+const iconMap: Record<string, IconName> = {
 	'+/-': 'plusMinus',
 	'%': 'percent',
 	'+': 'plus',
@@ -17,15 +14,20 @@ const iconMap = {
 	'÷': 'divide',
 };
 
+interface OperationButtonProps {
+	dispatch: any;
+	operation: keyof typeof iconMap;
+}
+
 const OperationButton = ({ dispatch, operation }: OperationButtonProps) => {
 	const handlePress = React.useCallback(() => {
 		dispatch({ type: ACTIONS.CHOOSE_OPERATION, payload: { operation } });
 	}, [operation, dispatch]);
 
 	return (
-		<Button onPress={handlePress}>
-			<Icon name={iconMap[operation]} size="xSmall" />
-		</Button>
+		<Styled.NumpadButton as={Button} onPress={handlePress}>
+			<Icon name={iconMap[operation]} size="xSmall" type="inverse" />
+		</Styled.NumpadButton>
 	);
 };
 

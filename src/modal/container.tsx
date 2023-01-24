@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
 
 import * as Styled from './styles';
+import Backdrop from '../backdrop';
 import Box from '../box';
 import ErrorBoundary from '../error-boundary';
 
@@ -18,6 +19,9 @@ export interface ModalContainerProps {
 
 	/** Modal body width */
 	size?: 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge';
+
+	/** Set false to hide the backdrop */
+	withBackdrop?: boolean;
 
 	/** Modal body style */
 	style?: StyleProp<ViewStyle>;
@@ -37,11 +41,26 @@ const sizes = {
 /**
  *
  */
-export const Container = ({ children, size = 'medium', style }: ModalContainerProps) => {
+export const Container = ({
+	children,
+	size = 'medium',
+	withBackdrop = true,
+	style,
+}: ModalContainerProps) => {
 	const width = sizes[size];
 
+	/**
+	 *
+	 */
+	const MaybeBackdrop = withBackdrop ? Backdrop : React.Fragment;
+
+	/**
+	 *
+	 */
 	return (
-		<Styled.Container>
+		<MaybeBackdrop
+		// style={{ zIndex: theme.zIndex.modal }}
+		>
 			<Box
 				raised
 				rounding="medium"
@@ -57,6 +76,6 @@ export const Container = ({ children, size = 'medium', style }: ModalContainerPr
 			>
 				<ErrorBoundary>{children}</ErrorBoundary>
 			</Box>
-		</Styled.Container>
+		</MaybeBackdrop>
 	);
 };

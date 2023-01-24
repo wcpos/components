@@ -14,6 +14,7 @@ import get from 'lodash/get';
 import { useTheme } from 'styled-components/native';
 
 import useMeasure from '@wcpos/hooks/src/use-measure';
+import useMergedRef from '@wcpos/hooks/src/use-merged-ref';
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
 
@@ -189,7 +190,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		const theme = useTheme();
 		const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
 		const [hasFocus, setHasFocus] = React.useState(focused);
-		const inputRef = React.useRef<RNTextInput>(null);
+		const _ref = React.useRef<RNTextInput>(null);
+		const inputRef = useMergedRef(ref, _ref);
 
 		/**
 		 *
@@ -309,7 +311,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 					// multiline
 					// onContentSizeChange={handleContentSizeChange}
 					// style={{ width: autosize ? measuredWidth : '100%' }}
-					style={{ width: '100%' }}
+					// style={{ width: '100%' }}
 				/>
 			</TextInputContainer>
 		);

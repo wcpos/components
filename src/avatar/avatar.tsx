@@ -22,8 +22,8 @@ const map = {
 /**
  * Avatar
  */
-export const Avatar = ({ source, size = 'default', ...props }: AvatarProps) => {
+export const Avatar = ({ size = 'default', ...props }: AvatarProps) => {
 	const { width, height } = map[size];
 
-	return <Image border="circular" source={source} style={{ width, height }} />;
+	return <Image border="circular" style={{ width, height }} {...props} />;
 };

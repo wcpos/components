@@ -67,6 +67,7 @@ export const Select = ({
 	onChange: onChangeRaw,
 	placeholder = 'Select',
 	disabled = false,
+	...props
 }: SelectProps) => {
 	const [open, setOpen] = React.useState(false);
 	const [selected, onChange] = useUncontrolledState(
@@ -111,7 +112,14 @@ export const Select = ({
 	};
 
 	return (
-		<Dropdown open={open} items={options} onSelect={handleSelect} matchWidth withArrow={false}>
+		<Dropdown
+			open={open}
+			items={options}
+			onSelect={handleSelect}
+			matchWidth
+			withArrow={false}
+			{...props}
+		>
 			<TextInputContainer onPress={() => setOpen(true)}>
 				{selected ? <Text>{selected}</Text> : <Text type="secondary">{placeholder}</Text>}
 			</TextInputContainer>

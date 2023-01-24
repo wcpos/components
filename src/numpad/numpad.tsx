@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { TextInput as RNTextInput } from 'react-native';
 
-// import useKey from '@wcpos/hooks/src/use-key';
-import useAllKeysPress from '@wcpos/hooks/src/useAllKeysPress';
+import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 
 import DigitButton from './digit-button';
 import OperationButton from './operation-button';
@@ -22,6 +22,7 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 	const [{ currentOperand, previousOperand, operation }, dispatch] = React.useReducer(reducer, {
 		currentOperand: initialValue,
 	});
+	console.log(currentOperand);
 
 	const handleBackspace = React.useCallback(() => {
 		dispatch({ type: ACTIONS.DELETE_DIGIT, payload: undefined });
@@ -35,41 +36,39 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 		dispatch({ type: ACTIONS.EVALUATE, payload: undefined });
 	}, [dispatch]);
 
-	React.useEffect(() => {
-		if (onChange) {
-			onChange(currentOperand);
-		}
-	}, [currentOperand, onChange]);
+	const focusTrapRef = useFocusTrap();
+	// const textInputRef = React.useRef<RNTextInput>(null);
 
-	// detect keyboard for web
-	const digitPress = useAllKeysPress({ userKeys: '1' });
-	React.useEffect(() => {
-		if (digitPress) {
-			dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit: '1' } });
-		}
-	}, [digitPress]);
+	// React.useEffect(() => {
+	// 	if (onChange) {
+	// 		onChange(currentOperand);
+	// 	}
+	// }, [currentOperand, onChange]);
+
+	// // detect keyboard for web
+	// const digitPress = useAllKeysPress({ userKeys: '1' });
+	// React.useEffect(() => {
+	// 	if (digitPress) {
+	// 		dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit: '1' } });
+	// 	}
+	// }, [digitPress]);
 
 	return (
-		<Box>
+		<Box space="xxSmall" style={{ width: 140 }}>
 			<Box horizontal>
-				<Box fill>
-					{calculator && previousOperand && (
-						<Box>
-							<Text>
-								{formatOperand(previousOperand)} {operation}
-							</Text>
-						</Box>
-					)}
-					<Box>
-						<Text>{formatOperand(currentOperand)}</Text>
-					</Box>
-				</Box>
-				<Icon name="deleteLeft" onPress={handleBackspace} />
-				{/* <TextInput placeholder={formatOperand(currentOperand)} /> */}
+				<TextInput
+					ref={focusTrapRef}
+					value={currentOperand}
+					selectTextOnFocus
+					readonly
+					onKeyPress={(e) => {
+						console.log(e);
+					}}
+				/>
 			</Box>
-			<Box horizontal>
-				<Box>
-					<Box horizontal padding="xxSmall" space="xxSmall">
+			<Box fill horizontal>
+				<Box fill>
+					<Box fill horizontal padding="xxSmall" space="xxSmall">
 						<DigitButton digit="1" dispatch={dispatch} />
 						<DigitButton digit="2" dispatch={dispatch} />
 						<DigitButton digit="3" dispatch={dispatch} />
@@ -100,7 +99,7 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 				)}
 			</Box>
 			{calculator && (
-				<Box horizontal padding="xxSmall" space="xSmall">
+				<Box fill horizontal padding="xxSmall" space="xSmall">
 					<Button title="Clear" onPress={handleClear} />
 					<Button onPress={handleEvaluate}>
 						<Icon name="equals" size="xSmall" />

@@ -135,6 +135,7 @@ export const Combobox = ({
 			matchWidth
 			items={filteredOptions}
 			onSelect={onChange}
+			{...props}
 		>
 			<TextInput
 				value={searchValue}

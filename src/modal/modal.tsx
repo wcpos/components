@@ -8,7 +8,6 @@ import { Content } from './content';
 import { Footer, ModalFooterProps } from './footer';
 import { Header } from './header';
 import { PortalWrapper } from './portal';
-import Backdrop from '../backdrop';
 
 /**
  *
@@ -31,6 +30,12 @@ export type ModalProps = {
 
 	/** Modal body width */
 	size?: ModalContainerProps['size'];
+
+	/** Set false to hide the backdrop */
+	withBackdrop?: boolean;
+
+	/** Set false to use modal without portal, eg: react-navigation Stack.Screen */
+	withPortal?: boolean;
 
 	/**
 	 * Define if Modal should use the react-native implementation of Modal.
@@ -62,27 +67,27 @@ export const Modal = ({
 	title,
 	withCloseButton = true,
 	withReactModal = false,
+	withBackdrop = true,
+	withPortal = true,
 }: ModalProps) => {
 	const hasHeader = !!title || withCloseButton;
+
 	/**
 	 *
 	 */
-	// const handleBackdropPress = (): void => {
-	// 	// handleClose();
-	// };
+	const MaybePortal = withPortal ? PortalWrapper : React.Fragment;
+	const portalProps = withPortal ? { withReactModal } : {};
 
 	/**
 	 *
 	 */
 	return opened ? (
-		<PortalWrapper withReactModal={withReactModal}>
+		<MaybePortal {...portalProps}>
 			<KeyboardAvoidingView
 				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 				style={[{ flex: 1 }, StyleSheet.absoluteFill]}
 			>
-				<Backdrop onPress={onClose} />
-
-				<Container size={size}>
+				<Container size={size} withBackdrop={withBackdrop}>
 					{hasHeader ? <Header onClose={onClose}>{title}</Header> : null}
 					<Content>{children}</Content>
 					{primaryAction ? (
@@ -90,6 +95,6 @@ export const Modal = ({
 					) : null}
 				</Container>
 			</KeyboardAvoidingView>
-		</PortalWrapper>
+		</MaybePortal>
 	) : null;
 };
