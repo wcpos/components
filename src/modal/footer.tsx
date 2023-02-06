@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { useModal } from './context';
 import Box from '../box';
 import Button from '../button';
 
@@ -29,12 +30,20 @@ export interface ModalFooterProps {
 
 	/** */
 	secondaryActions?: ModalFooterActionProps[];
+
+	/** */
+	onPrimaryAction?: () => void;
 }
 
 /**
  *
  */
-export const Footer = ({ children, primaryAction, secondaryActions }: ModalFooterProps) => {
+export const Footer = ({
+	children,
+	primaryAction,
+	secondaryActions,
+	onPrimaryAction,
+}: ModalFooterProps) => {
 	if (primaryAction && !secondaryActions) {
 		return (
 			<Box horizontal>
@@ -42,7 +51,12 @@ export const Footer = ({ children, primaryAction, secondaryActions }: ModalFoote
 					fill
 					size="large"
 					title={primaryAction.label}
-					onPress={primaryAction.action}
+					onPress={() => {
+						if (primaryAction && primaryAction.action) {
+							primaryAction.action();
+						}
+						onPrimaryAction && onPrimaryAction();
+					}}
 					type={primaryAction.type || 'primary'}
 					style={{
 						flex: 1,

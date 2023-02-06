@@ -1,10 +1,13 @@
 import * as React from 'react';
 import { KeyboardAvoidingView, StyleSheet, ViewStyle } from 'react-native';
 
+import wrap from 'lodash/wrap';
+
 import Platform from '@wcpos/utils/src/platform';
 
 import { Container, ModalContainerProps } from './container';
 import { Content } from './content';
+import { ModalContext } from './context';
 import { Footer, ModalFooterProps } from './footer';
 import { Header } from './header';
 import { PortalWrapper } from './portal';
@@ -64,13 +67,23 @@ export const Modal = ({
 	primaryAction,
 	secondaryActions,
 	size,
-	title,
 	withCloseButton = true,
 	withReactModal = false,
 	withBackdrop = true,
 	withPortal = true,
+	...props
 }: ModalProps) => {
+	const [title, setTitle] = React.useState(props.title);
 	const hasHeader = !!title || withCloseButton;
+	const onPrimaryAction = (func) => {
+		if (primaryAction) {
+			const orig = primaryAction.action;
+			primaryAction.action = () => {
+				func();
+				orig && orig();
+			};
+		}
+	};
 
 	/**
 	 *
@@ -82,19 +95,21 @@ export const Modal = ({
 	 *
 	 */
 	return opened ? (
-		<MaybePortal {...portalProps}>
-			<KeyboardAvoidingView
-				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				style={[{ flex: 1 }, StyleSheet.absoluteFill]}
-			>
-				<Container size={size} withBackdrop={withBackdrop}>
-					{hasHeader ? <Header onClose={onClose}>{title}</Header> : null}
-					<Content>{children}</Content>
-					{primaryAction ? (
-						<Footer primaryAction={primaryAction} secondaryActions={secondaryActions} />
-					) : null}
-				</Container>
-			</KeyboardAvoidingView>
-		</MaybePortal>
+		<ModalContext.Provider value={{ setTitle, onPrimaryAction }}>
+			<MaybePortal {...portalProps}>
+				<KeyboardAvoidingView
+					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+					style={[{ flex: 1 }, StyleSheet.absoluteFill]}
+				>
+					<Container size={size} withBackdrop={withBackdrop}>
+						{hasHeader ? <Header onClose={onClose}>{title}</Header> : null}
+						<Content>{children}</Content>
+						{primaryAction ? (
+							<Footer primaryAction={primaryAction} secondaryActions={secondaryActions} />
+						) : null}
+					</Container>
+				</KeyboardAvoidingView>
+			</MaybePortal>
+		</ModalContext.Provider>
 	) : null;
 };
