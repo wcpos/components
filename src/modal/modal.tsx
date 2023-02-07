@@ -71,19 +71,39 @@ export const Modal = ({
 	withReactModal = false,
 	withBackdrop = true,
 	withPortal = true,
+	style,
 	...props
 }: ModalProps) => {
 	const [title, setTitle] = React.useState(props.title);
 	const hasHeader = !!title || withCloseButton;
-	const onPrimaryAction = (func) => {
-		if (primaryAction) {
-			const orig = primaryAction.action;
-			primaryAction.action = () => {
-				func();
+	const primaryActionRef = React.useRef();
+	const secondaryActionRef = React.useRef();
+
+	/**
+	 *
+	 */
+	if (primaryAction) {
+		const orig = primaryAction.action;
+		primaryAction.action = () => {
+			const func = primaryActionRef.current;
+			func && func();
+			orig && orig();
+		};
+	}
+
+	/**
+	 *
+	 */
+	if (secondaryActions) {
+		secondaryActions.forEach((action) => {
+			const orig = action.action;
+			action.action = () => {
+				const func = secondaryActionRef.current;
+				func && func(action);
 				orig && orig();
 			};
-		}
-	};
+		});
+	}
 
 	/**
 	 *
@@ -95,13 +115,23 @@ export const Modal = ({
 	 *
 	 */
 	return opened ? (
-		<ModalContext.Provider value={{ setTitle, onPrimaryAction }}>
+		<ModalContext.Provider
+			value={{
+				setTitle,
+				onPrimaryAction: (func) => {
+					primaryActionRef.current = func;
+				},
+				onSecondaryAction: (func) => {
+					secondaryActionRef.current = func;
+				},
+			}}
+		>
 			<MaybePortal {...portalProps}>
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 					style={[{ flex: 1 }, StyleSheet.absoluteFill]}
 				>
-					<Container size={size} withBackdrop={withBackdrop}>
+					<Container size={size} withBackdrop={withBackdrop} style={style}>
 						{hasHeader ? <Header onClose={onClose}>{title}</Header> : null}
 						<Content>{children}</Content>
 						{primaryAction ? (

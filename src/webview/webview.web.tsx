@@ -86,7 +86,6 @@ const WebViewBase = (
 
 	return (
 		<iframe
-			title="test"
 			ref={iframeRef}
 			src={source?.uri || src}
 			srcDoc={srcDoc}

@@ -1,6 +1,6 @@
 {
 	"name": "@wcpos/components",
-	"version": "1.0.85",
+	"version": "1.0.86",
 	"description": "Shared components for WooCommerce POS",
 	"author": "kilbot <paul@kilbot.com>",
 	"homepage": "https://github.com/wcpos/components#readme",
@@ -26,7 +26,7 @@
 		"@wcpos/utils": "*",
 		"date-fns": "2.29.3",
 		"expo-haptics": "~12.0.1",
-		"expo-image": "^1.0.0-beta.5",
+		"expo-image": "^1.0.0-beta.6",
 		"html-entities": "^2.3.3",
 		"lodash": "4.17.21",
 		"react": "18.1.0",

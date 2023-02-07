@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ScrollView, LayoutChangeEvent, View } from 'react-native';
+import { ScrollView, LayoutChangeEvent, View, StyleProp, ViewStyle } from 'react-native';
 
 import {
 	scrollTo,
@@ -12,16 +12,17 @@ import {
 
 import Platform from '@wcpos/utils/src/platform';
 
+import { TabItem } from './tab-item';
 import Box from '../box';
 import Button from '../button';
 import Icon from '../icon';
-import { TabItem } from './tab-item';
 
 export interface TabBarProps {
 	routes: import('./tabs').Route[];
 	onIndexChange: (index: number) => void;
 	direction?: 'horizontal' | 'vertical';
 	focusedIndex: number;
+	style?: StyleProp<ViewStyle>;
 }
 
 export const TabBar = ({
@@ -29,6 +30,7 @@ export const TabBar = ({
 	onIndexChange,
 	direction = 'horizontal',
 	focusedIndex,
+	style,
 }: TabBarProps) => {
 	const scrollViewRef = useAnimatedRef<ScrollView>();
 	const scroll = useSharedValue(0);
@@ -108,7 +110,7 @@ export const TabBar = ({
 					horizontal={direction === 'horizontal'}
 					space="xSmall"
 					padding="xSmall"
-					style={{ width: '100%' }}
+					style={[{ width: '100%' }, style]}
 				>
 					{routes.map((route, i) => {
 						const focused = i === focusedIndex;
@@ -121,7 +123,7 @@ export const TabBar = ({
 				</Box>
 			</ScrollView>
 			{scrollable && (
-				<Box horizontal space="xSmall" padding="xSmall">
+				<Box horizontal space="xSmall" padding="xSmall" style={style}>
 					<Button
 						onPress={() => {
 							if (focusedIndex > 0) {
