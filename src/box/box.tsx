@@ -1,10 +1,7 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp, ViewProps, View } from 'react-native';
 
-import flatMap from 'lodash/flatMap';
-
 import * as Styled from './styles';
-import Space from '../space';
 
 type Spacing = import('@wcpos/themes').SpacingTypes;
 type Rounding = import('@wcpos/themes').RoundingTypes;
@@ -136,33 +133,8 @@ export const Box = React.forwardRef<View, BoxProps>(
 		},
 		ref
 	) => {
-		// const BoxBase = (
-		// 	{
-		// 		padding = 'none',
-		// 		fill = false,
-		// 		space = 'none',
-		// 		horizontal = false,
-		// 		align = 'fill',
-		// 		distribution = 'start',
-		// 		reverse = false,
-		// 		border = false,
-		// 		...rest
-		// 	}: BoxProps,
-		// 	ref
-		// ) => {
-		let children = React.Children.toArray(rest.children).filter(Boolean);
+		const children = React.Children.toArray(rest.children).filter(Boolean);
 		const childrenLength = React.Children.count(children);
-
-		/**
-		 *
-		 */
-		if (space !== 'none' && childrenLength > 1) {
-			children = flatMap(children, (value, index, array) =>
-				array.length - 1 !== index // check for the last item
-					? [value, <Space key={`space-${index}`} value={space} />]
-					: value
-			);
-		}
 
 		/**
 		 * @TODO - something weird happens in native when I use padding prop

@@ -26,6 +26,8 @@ export const Box = styled.View<BoxProps>`
 	flex-direction: ${({ reverse, horizontal }) =>
 		reverse ? (horizontal ? 'row-reverse' : 'column-reverse') : horizontal ? 'row' : 'column'};
 
+	gap: ${({ theme, space }) => `${theme.spacing[space]}px`};
+
 	justify-content: ${({ distribution }) =>
 		distribution === 'start'
 			? 'flex-start'
