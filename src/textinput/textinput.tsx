@@ -1,13 +1,11 @@
 import * as React from 'react';
 import {
-	View,
 	TextInputProps as RNTextInputProps,
 	TextInput as RNTextInput,
 	NativeSyntheticEvent,
 	TextInputContentSizeChangeEventData,
-	Text as RNText,
 	StyleProp,
-	ViewStyle,
+	TextStyle,
 } from 'react-native';
 
 import get from 'lodash/get';
@@ -16,30 +14,10 @@ import { useTheme } from 'styled-components/native';
 import useMeasure from '@wcpos/hooks/src/use-measure';
 import useMergedRef from '@wcpos/hooks/src/use-merged-ref';
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
-import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
 
 import { TextInputContainer } from './container';
 import { getModifiers } from './modifiers';
 import * as Styled from './styles';
-import Button from '../button';
-
-/**
- *
- */
-export interface Action {
-	/**
-	 * Label to display.
-	 */
-	label: string;
-	/**
-	 * Action to execute on click.
-	 */
-	action?: (value: string) => void;
-	/**
-	 *
-	 */
-	type?: import('@wcpos/themes').ColorTypes;
-}
 
 /**
  *
@@ -123,37 +101,14 @@ export type TextInputProps = RNTextInputProps & {
 	 */
 	leftAccessory?: React.ReactNode;
 	/**
-	 * Primary action to perform in the TextInput.
+	 * Adds functionality to the TextInput, eg: action buttons
 	 */
-	action?: Action;
+	rightAccessory?: React.ReactNode;
+	/**
+	 *
+	 */
+	style: StyleProp<TextStyle>;
 };
-
-// /**
-//  * Measure Text
-//  */
-// const MeasureText = ({
-// 	value,
-// 	onMeasure,
-// }: {
-// 	value: string;
-// 	onMeasure: ({ width }: { width: number }) => void;
-// }) => {
-// 	const ref = React.useRef<RNText>(null);
-// 	const { onLayout } = useMeasure({ onMeasure, ref });
-
-// 	/**
-// 	 * Place text in hidden portal
-// 	 */
-// 	return (
-// 		<Portal keyPrefix="TextInputSize">
-// 			<View style={{ position: 'absolute', top: '100%', height: 0, alignItems: 'flex-start' }}>
-// 				<RNText onLayout={onLayout} ref={ref}>
-// 					{value}
-// 				</RNText>
-// 			</View>
-// 		</Portal>
-// 	);
-// };
 
 /**
  * Input field that users can type into.
@@ -176,14 +131,14 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 			autoCapitalize,
 			prefix,
 			leftAccessory,
+			rightAccessory,
 			onKeyPress,
 			onFocus: onFocusProp,
 			onBlur: onBlurProp,
-			action,
-			// autosize = false,
 			clearable = false,
 			style,
 			loading,
+			...props
 		}: TextInputProps,
 		ref
 	) => {
@@ -221,52 +176,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		const handleClear = React.useCallback(() => {
 			inputRef.current?.focus();
 			return typeof onClear === 'function' ? onClear() : onChange('');
-		}, [onChange, onClear]);
-
-		/**
-		 * autosize
-		 */
-		// const [measuredWidth, setMeasuredWidth] = React.useState(0);
-		// const [measuredHeight, setMeasureHeight] = React.useState(0);
-		// const handleContentSizeChange = (
-		// 	event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
-		// ) => {
-		// 	const contentSize = get(event, 'nativeEvent.contentSize');
-		// 	console.log(contentSize.width);
-		// 	// setWidth(contentSize.width);
-		// 	setMeasureHeight(contentSize.height);
-		// };
-		// const handleMeasure = ({ width }: { width: number }) => {
-		// 	setMeasuredWidth(width + 3);
-		// };
-
-		/**
-		 * action
-		 */
-		const handleSubmitText = () => {
-			if (typeof action?.action === 'function') {
-				action?.action(value);
-			}
-		};
-
-		/**
-		 * Handle focus changes
-		 */
-		// React.useEffect(() => {
-		// 	const input = ref.current;
-
-		// 	if (!input) {
-		// 		return;
-		// 	}
-
-		// 	if (focused) {
-		// 		input.focus();
-		// 	} else {
-		// 		input.blur();
-		// 	}
-		// }, [focused, ref]);
-
-		// useWhyDidYouUpdate('TextInput', []);
+		}, [inputRef, onChange, onClear]);
 
 		/**
 		 *
@@ -275,23 +185,9 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 			<TextInputContainer
 				showClear={clearable && value !== ''}
 				onClear={handleClear}
-				leftAccessory={leftAccessory}
 				prefix={prefix}
-				rightAccessory={
-					action && (
-						<Button
-							title={action.label}
-							onPress={handleSubmitText}
-							style={{
-								borderTopLeftRadius: 0,
-								borderBottomLeftRadius: 0,
-								borderTopRightRadius: theme.rounding.small,
-								borderBottomRightRadius: theme.rounding.small,
-							}}
-							loading={loading}
-						/>
-					)
-				}
+				leftAccessory={leftAccessory}
+				rightAccessory={rightAccessory}
 			>
 				<Styled.TextInput
 					ref={inputRef}
@@ -308,10 +204,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 					onSubmitEditing={onSubmit}
 					selectTextOnFocus={selectTextOnFocus}
 					onKeyPress={onKeyPress}
-					// multiline
-					// onContentSizeChange={handleContentSizeChange}
-					// style={{ width: autosize ? measuredWidth : '100%' }}
-					// style={{ width: '100%' }}
+					style={style}
+					{...props}
 				/>
 			</TextInputContainer>
 		);

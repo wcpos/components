@@ -1,17 +1,35 @@
+type Action = {
+	type: string;
+	payload: {
+		[key: string]: any;
+	};
+};
+
 export const ACTIONS = {
 	ADD_DIGIT: 'add-digit',
 	CHOOSE_OPERATION: 'choose-operation',
 	CLEAR: 'clear',
 	DELETE_DIGIT: 'delete-digit',
 	EVALUATE: 'evaluate',
+	SWITCH_SIGN: 'switch-sign',
 };
 
-function evaluate({ currentOperand, previousOperand, operation }) {
-	const prev = parseFloat(previousOperand);
-	const current = parseFloat(currentOperand);
+type CalculatorState = {
+	currentOperand: string | null;
+	operation: string | null;
+	overwrite?: boolean;
+	previousOperand: string | null;
+};
+
+/**
+ *
+ */
+function evaluate(state: CalculatorState): string {
+	const prev = parseFloat(state.previousOperand || '');
+	const current = parseFloat(state.currentOperand || '');
 	if (Number.isNaN(prev) || Number.isNaN(current)) return '';
 	let computation = 0;
-	switch (operation) {
+	switch (state.operation) {
 		case '+':
 			computation = prev + current;
 			break;
@@ -31,7 +49,10 @@ function evaluate({ currentOperand, previousOperand, operation }) {
 	return computation.toString();
 }
 
-export function reducer(state, { type, payload }) {
+/**
+ *
+ */
+export function reducer(state: CalculatorState, { type, payload }: Action): CalculatorState {
 	switch (type) {
 		case ACTIONS.ADD_DIGIT:
 			if (state.overwrite) {
@@ -44,8 +65,20 @@ export function reducer(state, { type, payload }) {
 			if (payload.digit === '0' && state.currentOperand === '0') {
 				return state;
 			}
-			if (payload.digit === '.' && state.currentOperand.includes('.')) {
+			if (payload.digit === '.' && state.currentOperand && state.currentOperand.includes('.')) {
 				return state;
+			}
+			if (payload.digit === '.' && state.currentOperand == null) {
+				return {
+					...state,
+					currentOperand: '0.',
+				};
+			}
+			if (state.currentOperand === '0') {
+				return {
+					...state,
+					currentOperand: payload.digit,
+				};
 			}
 
 			return {
@@ -80,7 +113,12 @@ export function reducer(state, { type, payload }) {
 				currentOperand: null,
 			};
 		case ACTIONS.CLEAR:
-			return {};
+			return {
+				currentOperand: null,
+				operation: null,
+				overwrite: false,
+				previousOperand: null,
+			};
 		case ACTIONS.DELETE_DIGIT:
 			if (state.overwrite) {
 				return {
@@ -113,6 +151,18 @@ export function reducer(state, { type, payload }) {
 				previousOperand: null,
 				operation: null,
 				currentOperand: evaluate(state),
+			};
+		case ACTIONS.SWITCH_SIGN:
+			if (!state.currentOperand || state.currentOperand === '0') return state;
+			if (state.currentOperand.startsWith('-')) {
+				return {
+					...state,
+					currentOperand: state.currentOperand.slice(1),
+				};
+			}
+			return {
+				...state,
+				currentOperand: `-${state.currentOperand}`,
 			};
 		default:
 			return state;

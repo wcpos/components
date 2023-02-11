@@ -6,7 +6,10 @@ import getTheme from '@wcpos/themes';
 export default function (renderStory) {
 	return (
 		<React.Suspense fallback={<ActivityIndicator />}>
-			<ThemeProvider theme={getTheme()}>
+			<ThemeProvider theme={getTheme({
+				name: 'default',
+				mode: 'light',
+			})}>
 				<View
 					style={{
 						// padding: '3em', 

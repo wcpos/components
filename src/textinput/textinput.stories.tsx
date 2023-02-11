@@ -1,9 +1,11 @@
 import * as React from 'react';
 
 import { action } from '@storybook/addon-actions';
+import { useTheme } from 'styled-components/native';
 
 import { TextInput, TextInputProps } from './textinput';
 import { TextInputWithLabel, TextInputWithLabelProps } from './with-label';
+import Button from '../button';
 import Portal from '../portal';
 
 export default {
@@ -51,9 +53,29 @@ WithInputContainer.args = {
 /**
  *
  */
-export const WithAction = (props: TextInputProps) => (
-	<TextInput {...props} label="Label" action={{ label: 'Action', action: action('submit') }} />
-);
+export const WithAction = (props: TextInputProps) => {
+	const [loading, setLoading] = React.useState(false);
+	const theme = useTheme(); // FIXME: useTheme doesn't work here?
+
+	return (
+		<TextInput
+			{...props}
+			rightAccessory={
+				<Button
+					title="Submit"
+					onPress={() => setLoading(true)}
+					style={{
+						borderTopLeftRadius: 0,
+						borderBottomLeftRadius: 0,
+						borderTopRightRadius: 3,
+						borderBottomRightRadius: 3,
+					}}
+					loading={loading}
+				/>
+			}
+		/>
+	);
+};
 
 /**
  *

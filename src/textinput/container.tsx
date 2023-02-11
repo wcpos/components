@@ -82,15 +82,16 @@ export const TextInputContainer = ({
 			onLongPress={onLongPress}
 			onHoverIn={onHoverIn}
 			onHoverOut={onHoverOut}
+			// style={{ width: '100%' }}
 		>
 			<Box
-				fill
+				// fill
 				horizontal
 				border
 				rounding="small"
 				align="center"
 				// focused={hasFocus}
-				style={[{ backgroundColor: theme.colors.inputBackground }, style]}
+				style={[{ flex: 1, backgroundColor: theme.colors.inputBackground }, style]}
 			>
 				{leftAccessory}
 				{prefix && (

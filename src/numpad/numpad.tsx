@@ -4,6 +4,7 @@ import { TextInput as RNTextInput } from 'react-native';
 import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 
 import DigitButton from './digit-button';
+import NumpadDisplay from './display';
 import OperationButton from './operation-button';
 import { reducer, formatOperand, ACTIONS } from './reducer';
 import Box from '../box';
@@ -24,10 +25,6 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 	});
 	console.log(currentOperand);
 
-	const handleBackspace = React.useCallback(() => {
-		dispatch({ type: ACTIONS.DELETE_DIGIT, payload: undefined });
-	}, [dispatch]);
-
 	const handleClear = React.useCallback(() => {
 		dispatch({ type: ACTIONS.CLEAR, payload: undefined });
 	}, [dispatch]);
@@ -36,7 +33,6 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 		dispatch({ type: ACTIONS.EVALUATE, payload: undefined });
 	}, [dispatch]);
 
-	const focusTrapRef = useFocusTrap();
 	// const textInputRef = React.useRef<RNTextInput>(null);
 
 	// React.useEffect(() => {
@@ -55,17 +51,7 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 
 	return (
 		<Box space="xxSmall" style={{ width: 140 }}>
-			<Box horizontal>
-				<TextInput
-					ref={focusTrapRef}
-					value={currentOperand}
-					selectTextOnFocus
-					readonly
-					onKeyPress={(e) => {
-						console.log(e);
-					}}
-				/>
-			</Box>
+			<NumpadDisplay value={currentOperand || ''} dispatch={dispatch} />
 			<Box fill horizontal>
 				<Box fill>
 					<Box fill horizontal padding="xxSmall" space="xxSmall">
@@ -84,7 +70,9 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 						<DigitButton digit="9" dispatch={dispatch} />
 					</Box>
 					<Box horizontal padding="xxSmall" space="xxSmall">
-						<OperationButton operation="+/-" dispatch={dispatch} />
+						<Button onPress={() => dispatch({ type: ACTIONS.SWITCH_SIGN })} style={{ flex: 1 }}>
+							<Icon name="plusMinus" size="xSmall" type="inverse" />
+						</Button>
 						<DigitButton digit="0" dispatch={dispatch} />
 						<DigitButton digit="." dispatch={dispatch} />
 					</Box>

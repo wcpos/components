@@ -1,6 +1,6 @@
 {
 	"name": "@wcpos/components",
-	"version": "1.0.88",
+	"version": "1.0.89",
 	"description": "Shared components for WooCommerce POS",
 	"author": "kilbot <paul@kilbot.com>",
 	"homepage": "https://github.com/wcpos/components#readme",
@@ -14,7 +14,7 @@
 		"src/**"
 	],
 	"scripts": {
-		"test": "eslint --ext ts,tsx ./src",
+		"test": "jest",
 		"storybook": "BABEL_SHOW_CONFIG_FOR=.storybook/preview.js start-storybook -p 9009 --debug-webpack",
 		"build-storybook": "build-storybook -o docs-build",
 		"svg": "svgr --config-file ./svgr.config.js src/icon/svg/fontawesome/solid --out-dir src/icon/components/fontawesome/solid"
@@ -34,15 +34,12 @@
 		"react-error-boundary": "3.1.4",
 		"react-native": "0.71.2",
 		"react-native-gesture-handler": "~2.9.0",
-		"react-native-linear-gradient": "2.6.2",
 		"react-native-reanimated": "2.14.4",
 		"react-native-safe-area-context": "4.5.0",
 		"react-native-screens": "~3.19.0",
 		"react-native-svg": "13.4.0",
 		"react-native-web": "~0.18.12",
-		"react-native-web-linear-gradient": "1.1.2",
 		"react-native-webview": "11.26.1",
-		"react-virtual": "2.10.4",
 		"styled-components": "5.3.6"
 	},
 	"devDependencies": {
