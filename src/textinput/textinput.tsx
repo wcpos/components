@@ -107,7 +107,7 @@ export type TextInputProps = RNTextInputProps & {
 	/**
 	 *
 	 */
-	style: StyleProp<TextStyle>;
+	style?: StyleProp<TextStyle>;
 };
 
 /**
@@ -145,8 +145,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		const theme = useTheme();
 		const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
 		const [hasFocus, setHasFocus] = React.useState(focused);
-		const _ref = React.useRef<RNTextInput>(null);
-		const inputRef = useMergedRef(ref, _ref);
+		const inputRef = React.useRef<RNTextInput>(null);
+		const mergedRef = useMergedRef(ref, inputRef);
 
 		/**
 		 *
@@ -179,6 +179,13 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		}, [inputRef, onChange, onClear]);
 
 		/**
+		 * pass container focus to input
+		 */
+		const onContainerFocus = React.useCallback(() => {
+			inputRef.current?.focus();
+		}, [inputRef]);
+
+		/**
 		 *
 		 */
 		return (
@@ -188,9 +195,11 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 				prefix={prefix}
 				leftAccessory={leftAccessory}
 				rightAccessory={rightAccessory}
+				onFocus={onContainerFocus}
+				hasFocus={hasFocus}
 			>
 				<Styled.TextInput
-					ref={inputRef}
+					ref={mergedRef}
 					{...getModifiers(type, autoCapitalize)}
 					placeholder={placeholder}
 					placeholderTextColor={theme.colors.textMuted}

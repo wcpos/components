@@ -11,7 +11,7 @@ import Text from '../text';
 /**
  *
  */
-export interface TextInputContainerProps {
+export type TextInputContainerProps = {
 	/**
 	 * Usually this will be the TextInput component, but can be plain text, eg: for Select component
 	 */
@@ -40,23 +40,10 @@ export interface TextInputContainerProps {
 	 * Called when the clear icon is pressed
 	 */
 	onClear?: () => void;
-	/**
-	 *
-	 */
-	onPress?: PressableProps['onPress'];
-	/**
-	 *
-	 */
-	onLongPress?: PressableProps['onLongPress'];
-	/**
-	 *
-	 */
-	onHoverIn?: PressableProps['onHoverIn'];
-	/**
-	 *
-	 */
-	onHoverOut?: PressableProps['onHoverOut'];
-}
+
+	/**  */
+	hasFocus?: boolean;
+} & Pick<PressableProps, 'onPress' | 'onLongPress' | 'onHoverIn' | 'onHoverOut' | 'onFocus'>;
 
 /**
  *
@@ -73,6 +60,8 @@ export const TextInputContainer = ({
 	onLongPress,
 	onHoverIn,
 	onHoverOut,
+	onFocus,
+	hasFocus,
 }: TextInputContainerProps) => {
 	const theme = useTheme();
 
@@ -82,16 +71,23 @@ export const TextInputContainer = ({
 			onLongPress={onLongPress}
 			onHoverIn={onHoverIn}
 			onHoverOut={onHoverOut}
-			// style={{ width: '100%' }}
+			onFocus={onFocus}
 		>
 			<Box
-				// fill
+				fill
 				horizontal
 				border
 				rounding="small"
 				align="center"
 				// focused={hasFocus}
-				style={[{ flex: 1, backgroundColor: theme.colors.inputBackground }, style]}
+				style={[
+					{
+						flex: 1,
+						backgroundColor: theme.colors.inputBackground,
+						borderColor: hasFocus ? theme.colors.primary : theme.colors.border,
+					},
+					style,
+				]}
 			>
 				{leftAccessory}
 				{prefix && (
@@ -99,8 +95,8 @@ export const TextInputContainer = ({
 						<Text>{prefix}</Text>
 					</Box>
 				)}
-				<Box fill padding="small">
-					{children}
+				<Box padding="small" style={{ flex: 1 }}>
+					{/** The actual input goes here */ children}
 				</Box>
 				{showClear && (
 					<Box padding="small">

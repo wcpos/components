@@ -1,6 +1,6 @@
-type Action = {
+export type Action = {
 	type: string;
-	payload: {
+	payload?: {
 		[key: string]: any;
 	};
 };
@@ -14,7 +14,7 @@ export const ACTIONS = {
 	SWITCH_SIGN: 'switch-sign',
 };
 
-type CalculatorState = {
+export type CalculatorState = {
 	currentOperand: string | null;
 	operation: string | null;
 	overwrite?: boolean;
@@ -55,7 +55,7 @@ function evaluate(state: CalculatorState): string {
 export function reducer(state: CalculatorState, { type, payload }: Action): CalculatorState {
 	switch (type) {
 		case ACTIONS.ADD_DIGIT:
-			if (state.overwrite) {
+			if (state.overwrite || payload.overwrite) {
 				return {
 					...state,
 					currentOperand: payload.digit,
