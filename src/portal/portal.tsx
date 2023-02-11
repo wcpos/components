@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import uniqueId from 'lodash/uniqueId';
+
 import { PortalContext } from './provider';
 
 interface PortalProps {

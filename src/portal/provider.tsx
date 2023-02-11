@@ -1,12 +1,12 @@
 import * as React from 'react';
 // import PortalManager from './manager';
 
-interface PortalContext {
+interface PortalContextProps {
 	components: { [key: string]: React.ReactNode };
 	setComponent: (key: string, component: null | React.ReactNode) => void;
 }
 
-export const PortalContext = React.createContext<PortalContext>({
+export const PortalContext = React.createContext<PortalContextProps>({
 	components: {},
 	setComponent: () => {},
 });

@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import { ACTIONS } from './reducer';
-import * as Styled from './styles';
 import Button from '../button';
 
 interface DigitButtonProps {
@@ -14,7 +13,7 @@ const DigitButton = ({ dispatch, digit }: DigitButtonProps) => {
 		dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit } });
 	}, [digit, dispatch]);
 
-	return <Styled.NumpadButton as={Button} title={digit} onPress={handlePress} />;
+	return <Button title={digit} onPress={handlePress} style={{ flex: 1 }} />;
 };
 
 export default DigitButton;

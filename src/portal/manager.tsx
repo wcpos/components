@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import values from 'lodash/values';
+
 import { PortalContext } from './provider';
 
 const Manager = () => {
