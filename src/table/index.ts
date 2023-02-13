@@ -1,6 +1,7 @@
 import { NativeSyntheticEvent, NativeTouchEvent, ViewStyle, StyleProp } from 'react-native';
-import Table from './table';
+
 import Row from './row';
+import Table from './table';
 
 export type { TableProps } from './table';
 

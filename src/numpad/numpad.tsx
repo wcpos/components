@@ -41,6 +41,13 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 	/**
 	 *
 	 */
+	React.useEffect(() => {
+		onChange && onChange(currentOperand || '');
+	}, [currentOperand, onChange]);
+
+	/**
+	 *
+	 */
 	const addDigit = React.useCallback(
 		(digit: string) => {
 			dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit, overwrite: textSelected } });
@@ -96,40 +103,44 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 			<Box fill horizontal>
 				<Box fill>
 					<Box fill horizontal padding="xxSmall" space="xxSmall">
-						<Button title="1" onPress={() => addDigit('1')} style={{ flex: 1 }} />
-						<Button title="2" onPress={() => addDigit('2')} style={{ flex: 1 }} />
-						<Button title="3" onPress={() => addDigit('3')} style={{ flex: 1 }} />
+						<Button title="1" onPress={() => addDigit('1')} style={{ flex: 1 }} type="secondary" />
+						<Button title="2" onPress={() => addDigit('2')} style={{ flex: 1 }} type="secondary" />
+						<Button title="3" onPress={() => addDigit('3')} style={{ flex: 1 }} type="secondary" />
 					</Box>
 					<Box horizontal padding="xxSmall" space="xxSmall">
-						<Button title="4" onPress={() => addDigit('4')} style={{ flex: 1 }} />
-						<Button title="5" onPress={() => addDigit('5')} style={{ flex: 1 }} />
-						<Button title="6" onPress={() => addDigit('6')} style={{ flex: 1 }} />
+						<Button title="4" onPress={() => addDigit('4')} style={{ flex: 1 }} type="secondary" />
+						<Button title="5" onPress={() => addDigit('5')} style={{ flex: 1 }} type="secondary" />
+						<Button title="6" onPress={() => addDigit('6')} style={{ flex: 1 }} type="secondary" />
 					</Box>
 					<Box horizontal padding="xxSmall" space="xxSmall">
-						<Button title="7" onPress={() => addDigit('7')} style={{ flex: 1 }} />
-						<Button title="8" onPress={() => addDigit('8')} style={{ flex: 1 }} />
-						<Button title="9" onPress={() => addDigit('9')} style={{ flex: 1 }} />
+						<Button title="7" onPress={() => addDigit('7')} style={{ flex: 1 }} type="secondary" />
+						<Button title="8" onPress={() => addDigit('8')} style={{ flex: 1 }} type="secondary" />
+						<Button title="9" onPress={() => addDigit('9')} style={{ flex: 1 }} type="secondary" />
 					</Box>
 					<Box horizontal padding="xxSmall" space="xxSmall">
-						<Button onPress={() => dispatch({ type: ACTIONS.SWITCH_SIGN })} style={{ flex: 1 }}>
+						<Button
+							onPress={() => dispatch({ type: ACTIONS.SWITCH_SIGN })}
+							style={{ flex: 1 }}
+							type="secondary"
+						>
 							<Icon name="plusMinus" size="xSmall" type="inverse" />
 						</Button>
-						<Button title="0" onPress={() => addDigit('0')} style={{ flex: 1 }} />
-						<Button title="." onPress={() => addDigit('.')} style={{ flex: 1 }} />
+						<Button title="0" onPress={() => addDigit('0')} style={{ flex: 1 }} type="secondary" />
+						<Button title="." onPress={() => addDigit('.')} style={{ flex: 1 }} type="secondary" />
 					</Box>
 				</Box>
 				{calculator && (
 					<Box padding="xxSmall" space="xSmall">
-						<Button onPress={() => chooseOperation('÷')} style={{ flex: 1 }}>
+						<Button onPress={() => chooseOperation('÷')} style={{ flex: 1 }} type="secondary">
 							<Icon name="divide" size="xSmall" type="inverse" />
 						</Button>
-						<Button onPress={() => chooseOperation('*')} style={{ flex: 1 }}>
+						<Button onPress={() => chooseOperation('*')} style={{ flex: 1 }} type="secondary">
 							<Icon name="xmark" size="xSmall" type="inverse" />
 						</Button>
-						<Button onPress={() => chooseOperation('+')} style={{ flex: 1 }}>
+						<Button onPress={() => chooseOperation('+')} style={{ flex: 1 }} type="secondary">
 							<Icon name="plus" size="xSmall" type="inverse" />
 						</Button>
-						<Button onPress={() => chooseOperation('-')} style={{ flex: 1 }}>
+						<Button onPress={() => chooseOperation('-')} style={{ flex: 1 }} type="secondary">
 							<Icon name="minus" size="xSmall" type="inverse" />
 						</Button>
 					</Box>
@@ -137,8 +148,12 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 			</Box>
 			{calculator && (
 				<Box fill horizontal padding="xxSmall" space="xSmall">
-					<Button title="Clear" onPress={() => dispatch({ type: ACTIONS.CLEAR })} />
-					<Button onPress={() => dispatch({ type: ACTIONS.EVALUATE })}>
+					<Button
+						title="Clear"
+						onPress={() => dispatch({ type: ACTIONS.CLEAR })}
+						type="secondary"
+					/>
+					<Button onPress={() => dispatch({ type: ACTIONS.EVALUATE })} type="secondary">
 						<Icon name="equals" size="xSmall" />
 					</Button>
 				</Box>

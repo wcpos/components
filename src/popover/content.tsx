@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ViewStyle, StyleProp } from 'react-native';
+import { View, ViewStyle, StyleProp } from 'react-native';
 
 import Animated, { useAnimatedStyle, withTiming, FadeInDown } from 'react-native-reanimated';
 
@@ -9,7 +9,8 @@ import useMergedRef from '@wcpos/hooks/src/use-merged-ref';
 import usePressOutside from '@wcpos/hooks/src/use-press-outside';
 
 import { Arrow } from './arrow';
-import { PopoverContext } from './context';
+import { usePopover } from './context';
+import Footer from './footer';
 import {
 	PopoverPlacement,
 	isBottom,
@@ -19,7 +20,7 @@ import {
 	getPopoverPosition,
 } from './placements';
 import * as Styled from './styles';
-import Portal from '../portal';
+import ErrorBoundary from '../error-boundary';
 
 /**
  *
@@ -44,7 +45,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		targetMeasurements,
 		withArrow,
 		withinPortal,
-	} = React.useContext(PopoverContext);
+	} = usePopover();
 	const ref = React.useRef<Animated.View>(null);
 	const onMeasure = (val: Measurements) => {
 		contentMeasurements.value = val;
@@ -79,38 +80,34 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		return { opacity, ...position };
 	});
 
-	/**
-	 *
-	 */
-	const MaybePortal = withinPortal ? Portal : React.Fragment;
-
 	return (
-		<MaybePortal {...(withinPortal ? { keyPrefix: 'Popover' } : {})}>
-			<Styled.Container
-				ref={mergedRef}
-				as={Animated.View}
-				style={[
-					{ width: matchWidth ? targetMeasurements.value.width : 'auto', opacity: 0 },
-					containerStyle,
-				]}
-				onLayout={onLayout}
-				entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
-			>
-				{withArrow && (isBottom(placement) || isRight(placement)) && (
-					<Arrow placement={placement} style={style} />
-				)}
+		<Styled.Container
+			ref={mergedRef}
+			as={Animated.View}
+			style={[
+				{ width: matchWidth ? targetMeasurements.value.width : 'auto', opacity: 0 },
+				containerStyle,
+			]}
+			onLayout={onLayout}
+			entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
+		>
+			{withArrow && (isBottom(placement) || isRight(placement)) && (
+				<Arrow placement={placement} style={style} />
+			)}
 
+			<Styled.RaisedBox>
 				<Styled.Popover
 					// ref={focusTrapRef}
-					style={[{ width: matchWidth ? '100%' : 'max-content' }, style]}
+					style={[{ width: matchWidth ? '100%' : 'auto' }, style]}
 				>
-					{children}
+					<ErrorBoundary>{children}</ErrorBoundary>
 				</Styled.Popover>
+				<Footer />
+			</Styled.RaisedBox>
 
-				{withArrow && (isTop(placement) || isLeft(placement)) && (
-					<Arrow placement={placement} style={style} />
-				)}
-			</Styled.Container>
-		</MaybePortal>
+			{withArrow && (isTop(placement) || isLeft(placement)) && (
+				<Arrow placement={placement} style={style} />
+			)}
+		</Styled.Container>
 	);
 };

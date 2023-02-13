@@ -19,6 +19,21 @@ type PopoverContextProps = {
 	| 'matchWidth'
 	| 'onOpen'
 	| 'onClose'
+	| 'primaryAction'
+	| 'secondaryActions'
 >;
 
 export const PopoverContext = React.createContext<PopoverContextProps>(null);
+export const PortalContext = React.createContext(null);
+
+export const usePopover = () => {
+	const popoverContext = React.useContext(PopoverContext);
+	const portalContext = React.useContext(PortalContext);
+	const context = popoverContext || portalContext;
+
+	if (!context) {
+		throw new Error(`usePopover must be called within the right context`);
+	}
+
+	return context;
+};

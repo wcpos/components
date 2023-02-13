@@ -5,7 +5,7 @@ import pick from 'lodash/pick';
 
 import useMeasure from '@wcpos/hooks/src/use-measure';
 
-import { PopoverContext } from './context';
+import { usePopover } from './context';
 import Pressable from '../pressable';
 import { useScrollEvents } from '../scrollview';
 
@@ -21,7 +21,7 @@ export interface PopoverTargetProps {
  *
  */
 export const Target = ({ children }: PopoverTargetProps) => {
-	const { targetMeasurements, onOpen, onClose, trigger } = React.useContext(PopoverContext);
+	const { targetMeasurements, onOpen, onClose, trigger } = usePopover();
 	const ref = React.useRef<View>(null);
 	const onMeasure = (val) => {
 		targetMeasurements.value = val;

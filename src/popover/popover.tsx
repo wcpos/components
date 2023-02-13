@@ -9,9 +9,11 @@ import type { Measurements } from '@wcpos/hooks/src/use-measure';
 import useUncontrolled from '@wcpos/hooks/src/use-uncontrolled';
 
 import { Content, PopoverContentProps } from './content';
-import { PopoverContext } from './context';
+import { PopoverContext, PortalContext } from './context';
 import { Target, PopoverTargetProps } from './target';
+import Portal from '../portal';
 
+import type { PopoverFooterProps } from './footer';
 import type { PopoverPlacement } from './placements';
 
 /**
@@ -68,6 +70,12 @@ export interface PopoverProps {
 	matchWidth?: boolean;
 
 	/** */
+	primaryAction?: PopoverFooterProps['primaryAction'];
+
+	/** */
+	secondaryActions?: PopoverFooterProps['secondaryActions'];
+
+	/** */
 	style?: StyleProp<ViewStyle>;
 }
 
@@ -87,6 +95,8 @@ export const Popover = ({
 	trigger = 'press',
 	withArrow = true,
 	withinPortal = false,
+	primaryAction,
+	secondaryActions,
 	style,
 }: PopoverProps) => {
 	const targetMeasurements = useSharedValue<Measurements>(null);
@@ -102,34 +112,69 @@ export const Popover = ({
 		onChange,
 	});
 
+	/**
+	 *
+	 */
+	const context = React.useMemo(
+		() => ({
+			closeOnPressOutside,
+			contentMeasurements,
+			matchWidth,
+			placement,
+			targetMeasurements,
+			trigger,
+			withArrow,
+			withinPortal,
+			primaryAction,
+			secondaryActions,
+			onOpen: () => {
+				setOpened(true);
+				onOpen && onOpen();
+			},
+			onClose: () => {
+				setOpened(false);
+				onClose && onClose();
+			},
+		}),
+		[
+			closeOnPressOutside,
+			contentMeasurements,
+			matchWidth,
+			onClose,
+			onOpen,
+			placement,
+			primaryAction,
+			secondaryActions,
+			setOpened,
+			targetMeasurements,
+			trigger,
+			withArrow,
+			withinPortal,
+		]
+	);
+
 	/** */
 	return (
-		<PopoverContext.Provider
-			value={{
-				closeOnPressOutside,
-				contentMeasurements,
-				matchWidth,
-				placement,
-				targetMeasurements,
-				trigger,
-				withArrow,
-				withinPortal,
-				onOpen: () => {
-					setOpened(true);
-					onOpen && onOpen();
-				},
-				onClose: () => {
-					setOpened(false);
-					onClose && onClose();
-				},
-			}}
-		>
+		<PopoverContext.Provider value={context}>
 			<View style={{ position: 'relative' }}>
 				{React.Children.map(children, (child) => {
+					if (child.type === Target) {
+						return child;
+					}
 					/**
 					 * Only render the Content if the Popover is opened.
+					 * Wrap the Content in a Provider so we can pass props to the portal
+					 * TODO: There must be a better way to do this
 					 */
-					return child.type === Target || (child.type === Content && _opened) ? child : null;
+					if (child.type === Content && _opened) {
+						return withinPortal ? (
+							<Portal keyPrefix="Popover">
+								<PortalContext.Provider value={context}>{child}</PortalContext.Provider>
+							</Portal>
+						) : (
+							child
+						);
+					}
 				})}
 			</View>
 		</PopoverContext.Provider>

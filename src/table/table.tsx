@@ -96,3 +96,4 @@ const Table = <T extends object>({
 };
 
 export default Table;
+// export default React.memo(Table);
