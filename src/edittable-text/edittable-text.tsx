@@ -1,8 +1,10 @@
 import * as React from 'react';
+
 import { useTheme } from 'styled-components/native';
-import Text from '../text';
-import TextInput from '../textinput';
+
 import * as Styled from './styles';
+import Text from '../text';
+import TextInput, { TextInputContainer } from '../textinput';
 
 export interface EdittableTextProps {
 	children?: string;
@@ -18,6 +20,9 @@ export interface EdittableTextProps {
 	onChange?: (value: string) => void;
 }
 
+/**
+ *
+ */
 export const EdittableText = ({ onChange, ...props }: EdittableTextProps) => {
 	const text = props.children || props.value;
 	const [isEditting, setIsEditting] = React.useState(false);
@@ -32,18 +37,10 @@ export const EdittableText = ({ onChange, ...props }: EdittableTextProps) => {
 	}, []);
 
 	return isEditting ? (
-		<TextInput focused label="" value={text} onBlur={endEditting} onChange={onChange} />
+		<TextInput autoFocus value={text} onBlur={() => setIsEditting(false)} onChange={onChange} />
 	) : (
-		<Styled.BorderedPressable
-			onPress={startEditting}
-			style={({ hovered }) => {
-				if (hovered) {
-					return { borderColor: theme.colors.lightestGrey };
-				}
-				return {};
-			}}
-		>
+		<TextInputContainer onPress={() => setIsEditting(true)} style={{ width: '100%' }}>
 			<Text>{text}</Text>
-		</Styled.BorderedPressable>
+		</TextInputContainer>
 	);
 };
