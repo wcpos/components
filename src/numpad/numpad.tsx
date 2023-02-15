@@ -51,6 +51,8 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 	const addDigit = React.useCallback(
 		(digit: string) => {
 			dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit, overwrite: textSelected } });
+			// @FIXME - this is a hack to make sure overwrite is not left on
+			setTextSelected(false);
 		},
 		[textSelected]
 	);
@@ -88,9 +90,9 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 				ref={focusTrapRef}
 				value={currentOperand || ''}
 				selectTextOnFocus
-				onSelectionChange={(e) =>
-					setTextSelected(e.nativeEvent.selection.start !== e.nativeEvent.selection.end)
-				}
+				onSelectionChange={(e) => {
+					setTextSelected(e.nativeEvent.selection.start !== e.nativeEvent.selection.end);
+				}}
 				readonly
 				onKeyPress={handleKeyPress}
 				onChange={() => {}} // NOTE: needs onChange to become controlled

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ViewStyle, StyleProp } from 'react-native';
+import { View, ViewStyle, StyleProp } from 'react-native';
 
 import {
 	FlashList,
@@ -76,6 +76,9 @@ const Table = <T extends object>({
 			<ErrorBoundary>
 				<Header extraData={extraData} />
 			</ErrorBoundary>
+			{/* 
+			FIXME: FlashList complains about rendered size being not usable, but explicitly setting doesn't fix?
+			<View style={{ flex: 1, width: 800, height: 700 }}> */}
 			<FlashList
 				keyExtractor={keyExtractor}
 				ListEmptyComponent={<Empty />}
@@ -90,6 +93,7 @@ const Table = <T extends object>({
 				showsVerticalScrollIndicator={false}
 				{...props}
 			/>
+			{/* </View> */}
 			<ErrorBoundary>{footer}</ErrorBoundary>
 		</Styled.Table>
 	);

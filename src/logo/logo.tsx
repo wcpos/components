@@ -1,14 +1,13 @@
 import * as React from 'react';
 import { StyleProp, ViewProps } from 'react-native';
 
-import Svg, { Path, G, Defs, Use, Symbol } from 'react-native-svg';
+import Svg, { Path, G, Defs, Use, Symbol, SvgProps } from 'react-native-svg';
 
-interface Props {
+interface Props extends SvgProps {
 	animate?: boolean;
-	style?: StyleProp<ViewProps>;
 }
 
-const Logo: React.FC<Props> = ({ animate, style }) => {
+const Logo: React.FC<Props> = ({ animate, width = 100, height = 100, ...props }) => {
 	// const scaleY = React.useRef(new Animated.Value(1));
 
 	// const pulse = () => {
@@ -29,7 +28,7 @@ const Logo: React.FC<Props> = ({ animate, style }) => {
 	// }, [animate]);
 
 	return (
-		<Svg viewBox="0 0 1260 1260" width={100} height={100} style={style}>
+		<Svg viewBox="0 0 1260 1260" width={width} height={height} {...props}>
 			<Path
 				fill="#323A46"
 				d="M0,90 q0,-90 90,-90 l1080,0 q90,0 90,90 l0,810 q0,90 -90,90 l-810,0 L0,1260 Z"
