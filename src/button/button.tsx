@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { StyleProp, ViewStyle, GestureResponderEvent } from 'react-native';
 
+import * as Styled from './styles';
 import Box from '../box';
 import Icon from '../icon';
 import Loader from '../loader';
 import Pressable from '../pressable';
 import Text from '../text';
-import * as Styled from './styles';
 
 export type Props = {
 	/**
@@ -103,7 +103,16 @@ const Button = ({
 
 	const renderTitle = () => {
 		if (loading) {
-			return <Loader type={type === 'inverse' ? 'primary' : 'inverse'} />;
+			return (
+				<Loader
+					size="small"
+					type={
+						type === 'inverse' || background === 'outline' || background === 'clear'
+							? 'primary'
+							: 'inverse'
+					}
+				/>
+			);
 		}
 
 		if (typeof title === 'string') {
