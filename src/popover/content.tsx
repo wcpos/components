@@ -66,10 +66,10 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	 */
 	const containerStyle = useAnimatedStyle(() => {
 		if (!targetMeasurements.value || !contentMeasurements.value) {
-			return {}; // @TODO why is measurements.value undefined in react-native.
+			return {}; // TODO why is measurements.value undefined in react-native.
 		}
 
-		// @TODO - use `entering` when reanimated is stable
+		// TODO - use `entering` when reanimated is stable
 		const opacity = withTiming(1, { duration: 200 });
 		const position = getPopoverPosition(
 			placement,

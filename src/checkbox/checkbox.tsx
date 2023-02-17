@@ -36,7 +36,7 @@ export interface CheckboxProps {
 }
 
 /**
- * @TODO - hover, focus states
+ * TODO - hover, focus states
  */
 export const Checkbox = ({
 	label,

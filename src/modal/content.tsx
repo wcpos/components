@@ -25,7 +25,7 @@ export const Content = ({ children }: ModalContentProps) => {
 		<Box
 			padding="medium"
 			// - this causes problem on iOS
-			// @TODO - test with ScrollView contentContainerStyle
+			// TODO - test with ScrollView contentContainerStyle
 			style={Platform.isNative ? undefined : { flex: 1 }}
 		>
 			<ScrollView ref={focusTrapRef} contentContainerStyle={{ flexBasis: '100%' }}>

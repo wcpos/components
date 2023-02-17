@@ -137,7 +137,7 @@ export const Box = React.forwardRef<View, BoxProps>(
 		const childrenLength = React.Children.count(children);
 
 		/**
-		 * @TODO - something weird happens in native when I use padding prop
+		 * TODO - something weird happens in native when I use padding prop
 		 * I need to investigate more
 		 */
 		return (
@@ -154,7 +154,7 @@ export const Box = React.forwardRef<View, BoxProps>(
 				// onKeyDownCapture={() => {
 				// 	console.log('onKeyDownCapture');
 				// }}
-				{...rest} // @TODO - fix this WARN  Node of type rule not supported as an inline style
+				{...rest} // TODO - fix this WARN  Node of type rule not supported as an inline style
 			>
 				{children}
 			</Styled.Box>

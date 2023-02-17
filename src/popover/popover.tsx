@@ -3,7 +3,7 @@ import { View, ViewStyle, StyleProp } from 'react-native';
 
 import { useSharedValue } from 'react-native-reanimated';
 
-// @TODO - haptics is breaking Storybook
+// TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 import type { Measurements } from '@wcpos/hooks/src/use-measure';
 import useUncontrolled from '@wcpos/hooks/src/use-uncontrolled';

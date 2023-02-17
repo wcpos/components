@@ -219,7 +219,7 @@ export const AddOrRemoveRows: ComponentStory<typeof Table> = (props: TableProps<
 			// renderContext: TableRowRenderContext<T>,
 			{
 				// subscribe to item, special case to trigger render for data changes
-				// @TODO: find a better way to do this
+				// TODO: find a better way to do this
 				// @ts-ignore
 				// const forceRender = useObservableState(item.$);
 

@@ -6,4 +6,4 @@ export const PressableIcon = styled(Pressable)`
 	border-radius: ${({ theme }) => `${theme.rounding.small}px`};
 `;
 
-// @TODO -  transition: background-color 0.3s ease-in-out;
+// TODO -  transition: background-color 0.3s ease-in-out;

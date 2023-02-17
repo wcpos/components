@@ -22,7 +22,7 @@ module.exports = {
     }
   }],
   framework: '@storybook/react',
-  typescript: {// @TODO remove this https://github.com/styleguidist/react-docgen-typescript/issues/356
+  typescript: {// TODO remove this https://github.com/styleguidist/react-docgen-typescript/issues/356
     // reactDocgen: false,
   },
 

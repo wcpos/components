@@ -40,7 +40,7 @@ export interface ImageProps {
 }
 
 /**
- * @TODO - error: Can't perform a React state update on an unmounted component
+ * TODO - error: Can't perform a React state update on an unmounted component
  * Need to add pre-fetch and caching
  */
 export const Image = ({

@@ -60,7 +60,7 @@ export const TabBar = ({
 	});
 
 	/**
-	 * @TODO - react-native throws an error with this
+	 * TODO - react-native throws an error with this
 	 * tried to sychronously call function setScrollable
 	 * cannot set state in useAnimatedReaction
 	 */

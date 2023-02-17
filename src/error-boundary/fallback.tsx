@@ -13,7 +13,7 @@ import Text from '../text';
 import type { FallbackProps } from 'react-error-boundary';
 
 /**
- * @TODO - convert this to a general removable message component
+ * TODO - convert this to a general removable message component
  */
 const Fallback = ({ error, resetErrorBoundary }: FallbackProps) => {
 	const theme = useTheme();

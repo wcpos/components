@@ -76,7 +76,7 @@ export type Props = {
 };
 
 /**
- * @TODO - button size, should there be a PressableBox component?
+ * TODO - button size, should there be a PressableBox component?
  */
 const Button = ({
 	accessoryLeft,

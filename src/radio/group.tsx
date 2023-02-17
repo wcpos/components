@@ -48,7 +48,7 @@ export interface RadioGroupProps {
 export const Group = ({ options: optionsRaw, value, onChange, label }: RadioGroupProps) => {
 	/**
 	 * Options can be passed as an array of strings or an array of objects.
-	 * @Note - this mirrors select
+	 * NOTE - this mirrors select
 	 */
 	const options = React.useMemo(() => {
 		let _options = optionsRaw;

@@ -49,7 +49,7 @@ export const Skeleton = ({ width, height, border = 'rounded', style }: SkeletonP
 		backgroundColor: pulseColor.value,
 	}));
 
-	// @TODO - need to optimize this
+	// TODO - need to optimize this
 	// React.useEffect(() => {
 	// 	pulseColor.value = withRepeat(
 	// 		withSequence(withTiming('#edf2f5', timingConfig), withTiming('#e1e9ee', timingConfig)),

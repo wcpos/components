@@ -88,7 +88,7 @@ const Table = <T extends object>({
 				renderItem={renderItem || defaultRenderItem}
 				extraData={extraData}
 				// The scrollbars on windows web and desktop are ugly
-				// @TODO - perhaps have a standard scrollbar for web and desktop
+				// TODO - perhaps have a standard scrollbar for web and desktop
 				// See: https://css-tricks.com/the-current-state-of-styling-scrollbars-in-css/#aa-a-cross-browser-demo-of-custom-scrollbars
 				showsVerticalScrollIndicator={false}
 				{...props}

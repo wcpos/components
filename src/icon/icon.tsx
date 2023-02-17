@@ -86,7 +86,7 @@ export const Icon = ({
 	type,
 }: IconProps) => {
 	const theme = useTheme();
-	// @TODO: I shouldn't have two ways to set color
+	// TODO: I shouldn't have two ways to set color
 	// const iconColor = color || get(theme, ['colors', type], theme.colors.text);
 	const iconColor = get(theme, ['colors', type], theme.colors.text);
 	const SvgIcon = get(Svgs, name, Svgs.circleExclamation);
