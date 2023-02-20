@@ -1,27 +1,24 @@
 import * as React from 'react';
-import { ActivityIndicator, StyleProp, ViewStyle } from 'react-native';
+import { ActivityIndicator, ActivityIndicatorProps } from 'react-native';
+
 import { useTheme } from 'styled-components/native';
 
-export interface LoaderProps {
-	/**
-	 *
-	 */
-	size?: 'small' | 'large';
-	/**
-	 *
-	 */
+type LoaderProps = {
+	/** */
 	type?: import('@wcpos/themes').ColorTypes;
-	/**
-	 *
-	 */
-	style?: StyleProp<ViewStyle>;
-}
 
-const Loader = ({ size, type, style, ...props }: LoaderProps) => {
+	/** Make ActivityIndicator size compatible with Icon component */
+	size?: import('@wcpos/themes').IconSizesTypes;
+} & Omit<ActivityIndicatorProps, 'size'>;
+
+/**
+ *
+ */
+const Loader = ({ type, size = 'normal', ...props }: LoaderProps) => {
 	const theme = useTheme();
 	const color = theme.colors[type || 'primary'];
 
-	return <ActivityIndicator size={size} color={color} style={style} {...props} />;
+	return <ActivityIndicator color={color} size={theme.iconSizes[size]} {...props} />;
 };
 
 export default Loader;

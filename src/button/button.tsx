@@ -117,7 +117,7 @@ const Button = ({
 
 		if (typeof title === 'string') {
 			return (
-				<Text type={textType} size={size}>
+				<Text numberOfLines={1} type={textType} size={size}>
 					{title}
 				</Text>
 			);
@@ -143,7 +143,15 @@ const Button = ({
 			onLongPress={onLongPress}
 			{...props}
 		>
-			<Box horizontal space="small" align="center" paddingX="small" paddingY="xSmall">
+			<Box
+				horizontal
+				space="small"
+				align="center"
+				paddingX="small"
+				paddingY="xSmall"
+				style={{ width: '100%' }}
+				distribution="center"
+			>
 				{accessoryLeft}
 				{renderTitle()}
 				{accessoryRight}
