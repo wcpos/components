@@ -17,7 +17,7 @@ export const Background = styled.View<BackgroundProps>`
 		return type ? theme.colors[type] : theme.colors.primary;
 	}};
 
-	opacity: ${({ disabled }) => (disabled ? 0.5 : 1)}
+	opacity: ${({ disabled }) => (disabled ? 0.75 : 1)}
 	border-radius: ${({ theme }) => `${theme.rounding.medium}px`};
 	border-width: ${({ background }) =>
 		background === 'outline' ? `${StyleSheet.hairlineWidth}px` : 0};

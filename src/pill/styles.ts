@@ -12,7 +12,7 @@ export const Pill = styled.View<Pick<PillProps, 'disabled' | 'size' | 'color'>>`
 		switch (size) {
 			case 'xSmall':
 			case 'small':
-				return `${theme.spacing.xxSmall}px ${theme.spacing.small}px`;
+				return `${theme.spacing.xSmall}px ${theme.spacing.small}px`;
 			case 'large':
 			case 'xLarge':
 				return `${theme.spacing.small}px ${theme.spacing.medium}px`;

@@ -105,7 +105,7 @@ const Button = ({
 		if (loading) {
 			return (
 				<Loader
-					size="small"
+					size={size}
 					type={
 						type === 'inverse' || background === 'outline' || background === 'clear'
 							? 'primary'

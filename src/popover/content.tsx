@@ -7,6 +7,7 @@ import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 import useMeasure, { Measurements } from '@wcpos/hooks/src/use-measure';
 import useMergedRef from '@wcpos/hooks/src/use-merged-ref';
 import usePressOutside from '@wcpos/hooks/src/use-press-outside';
+import Platform from '@wcpos/utils/src/platform';
 
 import { Arrow } from './arrow';
 import { usePopover } from './context';
@@ -98,7 +99,13 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 			<Styled.RaisedBox>
 				<Styled.Popover
 					// ref={focusTrapRef}
-					style={[{ width: matchWidth ? '100%' : 'auto' }, style]}
+					/**
+					 * FIXME: `max-content` is not supported in react-native
+					 */
+					style={[
+						{ width: matchWidth ? '100%' : Platform.isNative ? 'auto' : 'max-content' },
+						style,
+					]}
 				>
 					<ErrorBoundary>{children}</ErrorBoundary>
 				</Styled.Popover>

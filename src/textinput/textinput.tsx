@@ -65,10 +65,6 @@ export type TextInputProps = RNTextInputProps & {
 	 */
 	error?: boolean;
 	/**
-	 * Type of the return key for the software keyboard.
-	 */
-	returnKeyType?: 'done' | 'go' | 'next' | 'search' | 'send';
-	/**
 	 * Set to `true` to focus the field and to `false` to blur it.
 	 *
 	 * To initially focus this field when arriving on this screen, simply use
@@ -78,16 +74,6 @@ export type TextInputProps = RNTextInputProps & {
 	 * ```
 	 */
 	focused?: boolean;
-	/**
-	 * Called when the input value changes. `value` property should be changed to reflect this new value.
-	 *
-	 * If not set, component will be an uncontrolled component. @see https://reactjs.org/docs/uncontrolled-components.html
-	 */
-	onChange?: (value: string) => void;
-	/**
-	 * Called when the keyboard submit to this field.
-	 */
-	onSubmit?: () => void;
 	/**
 	 * Called when the clear icon is pressed
 	 */
@@ -117,22 +103,22 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 	(
 		{
 			value: valueRaw = '',
-			onChange: onChangeRaw,
+			onChangeText: onChangeTextRaw,
 			type = 'text',
 			placeholder,
 			disabled = false,
 			readonly = false,
 			error = false,
-			returnKeyType = 'next',
+			// returnKeyType = 'next',
 			focused = false,
-			onSubmit,
+			// onSubmit,
 			onClear,
-			selectTextOnFocus = false,
+			// selectTextOnFocus = false,
 			autoCapitalize,
 			prefix,
 			leftAccessory,
 			rightAccessory,
-			onKeyPress,
+			// onKeyPress,
 			onFocus: onFocusProp,
 			onBlur: onBlurProp,
 			clearable = false,
@@ -143,7 +129,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		ref
 	) => {
 		const theme = useTheme();
-		const [value, onChange] = useUncontrolledState(valueRaw, onChangeRaw);
+		const [value, onChangeText] = useUncontrolledState(valueRaw, onChangeTextRaw);
 		const [hasFocus, setHasFocus] = React.useState(focused);
 		const inputRef = React.useRef<RNTextInput>(null);
 		const mergedRef = useMergedRef(ref, inputRef);
@@ -175,8 +161,8 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		 */
 		const handleClear = React.useCallback(() => {
 			inputRef.current?.focus();
-			return typeof onClear === 'function' ? onClear() : onChange('');
-		}, [inputRef, onChange, onClear]);
+			return typeof onClear === 'function' ? onClear() : onChangeText('');
+		}, [inputRef, onChangeText, onClear]);
 
 		/**
 		 * pass container focus to input
@@ -205,14 +191,14 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 					placeholderTextColor={theme.colors.textMuted}
 					editable={!disabled && !readonly}
 					value={value}
-					onChangeText={onChange}
-					returnKeyType={returnKeyType}
-					blurOnSubmit={returnKeyType !== 'next'} // Prevent keyboard flicker when going from one field to another
+					onChangeText={onChangeText}
+					// returnKeyType={returnKeyType}
+					// blurOnSubmit={returnKeyType !== 'next'} // Prevent keyboard flicker when going from one field to another
 					onFocus={onFocus}
 					onBlur={onBlur}
-					onSubmitEditing={onSubmit}
-					selectTextOnFocus={selectTextOnFocus}
-					onKeyPress={onKeyPress}
+					// onSubmitEditing={onSubmit}
+					// selectTextOnFocus={selectTextOnFocus}
+					// onKeyPress={onKeyPress}
 					style={style}
 					{...props}
 				/>

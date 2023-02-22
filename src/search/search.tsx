@@ -5,7 +5,7 @@ import SearchFilter, { SearchFilterProps } from './filters';
 import * as Styled from './styles';
 import Icon from '../icon';
 import Pill from '../pill';
-import TextInput from '../textinput';
+import TextInput, { TextInputProps } from '../textinput';
 
 /**
  *
@@ -27,11 +27,10 @@ export type SearchProps = {
 
 	/** Pills displayed in the search field */
 	filters?: SearchFilterProps[];
+
+	/**  */
 	style?: ViewStyle;
-} & Pick<
-	import('../textinput/textinput').TextInputProps,
-	'label' | 'value' | 'onClear' | 'placeholder'
->; // pass-through props
+} & Pick<TextInputProps, 'value' | 'onClear' | 'placeholder'>; // pass-through props
 
 /**
  *
@@ -44,9 +43,8 @@ export const Search = ({ actions, onSearch, filters, style, ...rest }: SearchPro
 		<Styled.Container style={style}>
 			<Styled.Input>
 				<TextInput
-					hideLabel
 					clearable
-					onChange={onSearch}
+					onChangeText={onSearch}
 					leftAccessory={
 						Array.isArray(filters) && filters.length > 0 ? (
 							<SearchFilter filters={filters} />

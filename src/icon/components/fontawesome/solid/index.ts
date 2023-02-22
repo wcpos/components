@@ -44,6 +44,7 @@ export { default as commentsQuestion } from "./commentsQuestion";
 export { default as creditCard } from "./creditCard";
 export { default as deleteLeft } from "./deleteLeft";
 export { default as divide } from "./divide";
+export { default as download } from "./download";
 export { default as ellipsisVertical } from "./ellipsisVertical";
 export { default as equals } from "./equals";
 export { default as eyeSlash } from "./eyeSlash";
