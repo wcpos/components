@@ -21,10 +21,14 @@ export const Box = styled.View<BoxProps>`
 	margin-right: ${({ theme, marginRight, marginX, _margin }) =>
 		`${theme.spacing[marginRight || marginX || _margin || 'none']}px`};
 
-	flex-grow: ${({ fill }) => (fill ? 1 : 0)};
-
 	flex-direction: ${({ reverse, horizontal }) =>
 		reverse ? (horizontal ? 'row-reverse' : 'column-reverse') : horizontal ? 'row' : 'column'};
+
+	${({ fill }) =>
+		fill &&
+		css`
+			flex: 1;
+		`};
 
 	gap: ${({ theme, space }) => `${theme.spacing[space]}px`};
 

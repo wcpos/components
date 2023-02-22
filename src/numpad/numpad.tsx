@@ -95,16 +95,16 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 				}}
 				readonly
 				onKeyPress={handleKeyPress}
-				onChange={() => {}} // NOTE: needs onChange to become controlled
+				onChangeText={() => {}} // NOTE: needs onChangeText to become controlled
 				rightAccessory={
 					<Box paddingRight="small">
 						<Icon name="deleteLeft" onPress={() => dispatch({ type: ACTIONS.DELETE_DIGIT })} />
 					</Box>
 				}
 			/>
-			<Box fill horizontal>
+			<Box horizontal>
 				<Box fill>
-					<Box fill horizontal padding="xxSmall" space="xxSmall">
+					<Box horizontal padding="xxSmall" space="xxSmall">
 						<Button title="1" onPress={() => addDigit('1')} style={{ flex: 1 }} type="secondary" />
 						<Button title="2" onPress={() => addDigit('2')} style={{ flex: 1 }} type="secondary" />
 						<Button title="3" onPress={() => addDigit('3')} style={{ flex: 1 }} type="secondary" />
@@ -149,7 +149,7 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 				)}
 			</Box>
 			{calculator && (
-				<Box fill horizontal padding="xxSmall" space="xSmall">
+				<Box horizontal padding="xxSmall" space="xSmall">
 					<Button
 						title="Clear"
 						onPress={() => dispatch({ type: ACTIONS.CLEAR })}
