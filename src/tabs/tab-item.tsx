@@ -1,7 +1,9 @@
 import * as React from 'react';
+
 import isFunction from 'lodash/isFunction';
-import Text from '../text';
+
 import Button from '../button';
+import Text from '../text';
 // import * as Styled from './styles';
 
 export interface TabItemProps {

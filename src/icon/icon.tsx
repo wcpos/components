@@ -96,6 +96,7 @@ export const Icon = ({
 		<SvgIcon
 			width={width || theme.iconSizes[size]}
 			height={height || theme.iconSizes[size]}
+			style={{ lineHeight: 1.2 }}
 			fill={iconColor}
 		/>
 	);

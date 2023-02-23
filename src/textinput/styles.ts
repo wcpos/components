@@ -7,8 +7,10 @@ import Platform from '@wcpos/utils/src/platform';
  */
 export const TextInput = styled.TextInput`
 	font-size: ${({ theme }) => theme.font.size.normal};
-	line-height: ${({ theme }) => theme.font.size.normal};
+	line-height: ${({ theme }) => theme.font.lineHeight};
+	height: ${({ theme }) => theme.font.lineHeight};
 	padding: 0;
+	margin: 0;
 
 	${
 		Platform.OS !== 'ios' &&

@@ -85,6 +85,7 @@ export const TextInputContainer = ({
 						flex: 1,
 						backgroundColor: theme.colors.inputBackground,
 						borderColor: hasFocus ? theme.colors.primary : theme.colors.border,
+						// alignItems: 'stretch',
 					},
 					style,
 				]}
