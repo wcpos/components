@@ -94,6 +94,9 @@ export type TextInputProps = RNTextInputProps & {
 	 *
 	 */
 	style?: StyleProp<TextStyle>;
+
+	/** */
+	containerStyle?: StyleProp<TextStyle>;
 };
 
 /**
@@ -124,6 +127,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 			clearable = false,
 			style,
 			loading,
+			containerStyle,
 			...props
 		}: TextInputProps,
 		ref
@@ -183,6 +187,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 				rightAccessory={rightAccessory}
 				onFocus={onContainerFocus}
 				hasFocus={hasFocus}
+				style={containerStyle}
 			>
 				<Styled.TextInput
 					ref={mergedRef}

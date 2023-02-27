@@ -72,6 +72,7 @@ export const TextInputContainer = ({
 			onHoverIn={onHoverIn}
 			onHoverOut={onHoverOut}
 			onFocus={onFocus}
+			style={style}
 		>
 			<Box
 				fill
@@ -87,7 +88,6 @@ export const TextInputContainer = ({
 						borderColor: hasFocus ? theme.colors.primary : theme.colors.border,
 						// alignItems: 'stretch',
 					},
-					style,
 				]}
 			>
 				{leftAccessory}
