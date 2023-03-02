@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 
+import { Box } from '../box/box';
 import { Skeleton } from '../skeleton/skeleton';
 import { Text } from '../text/text';
 
@@ -35,6 +36,7 @@ export const Pill = styled.View<Pick<PillProps, 'disabled' | 'size' | 'color'>>`
 	}}
 	background-color: ${({ theme, disabled, color }) =>
 		disabled ? theme.colors.disabled : theme.colors[color]};
+	gap: ${({ theme, size }) => `${theme.spacing.xSmall}px`};
 `;
 
 export const Label = styled(Text)`

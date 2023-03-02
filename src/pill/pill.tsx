@@ -2,41 +2,37 @@ import * as React from 'react';
 
 import { useTheme } from 'styled-components/native';
 
-import Icon from '../icon';
-import Pressable from '../pressable';
 import * as Styled from './styles';
+import Icon, { IconName } from '../icon';
+import Pressable from '../pressable';
+import Text from '../text';
 
 type ColorTypes = import('@wcpos/themes/src/index').ColorTypes;
 
 export interface PillProps {
-	/**
-	 * Pill label
-	 */
-	children: string;
-	/**
-	 * Set to `true` add remove icon.
-	 */
+	/** Pill label */
+	children: React.ReactNode;
+
+	/** Set to `true` add remove icon. */
 	removable?: boolean;
-	/**
-	 * Set to `true` to disable.
-	 */
+
+	/** Set to `true` to disable. */
 	disabled?: boolean;
-	/**
-	 * Called if remove icon is pressed
-	 */
+
+	/** Called if remove icon is pressed */
 	onRemove?: () => void;
-	/**
-	 * Called if pill is pressed
-	 */
+
+	/** Called if pill is pressed */
 	onPress?: () => void;
-	/**
-	 * Called if pill is pressed
-	 */
+
+	/** Called if pill is pressed */
 	size?: import('@wcpos/themes').FontSizeTypes;
-	/**
-	 * Background color of the pill
-	 */
+
+	/** Background color of the pill */
 	color?: ColorTypes;
+
+	/** Add an icon next to the label */
+	icon?: IconName;
 }
 
 // can't have negative in react-native
@@ -61,8 +57,21 @@ export const Pill = ({
 	onPress,
 	size = 'normal',
 	color = 'primary',
+	icon,
 }: PillProps) => {
 	const theme = useTheme();
+
+	/**
+	 * If children is a string we need to wrap in a Text component
+	 */
+	const label =
+		typeof children === 'string' ? (
+			<Text size={size} type="inverse">
+				{children}
+			</Text>
+		) : (
+			children
+		);
 
 	/**
 	 *
@@ -83,7 +92,8 @@ export const Pill = ({
 	return (
 		<Pressable onPress={disabled ? undefined : onPress}>
 			<Styled.Pill disabled={disabled} size={size} color={color}>
-				<Styled.Label size={size}>{children}</Styled.Label>
+				{icon && <Icon name={icon} size={size} type="inverse" />}
+				{label}
 				{removable && (
 					<Icon
 						name="xmark"
@@ -92,8 +102,8 @@ export const Pill = ({
 						onPress={onRemove}
 						backgroundStyle={{
 							backgroundColor: 'transparent',
-							paddingLeft: removeIconPadding[size],
-							marginRight: marginMap[size],
+							// paddingLeft: removeIconPadding[size],
+							// marginRight: marginMap[size],
 						}}
 						type="inverse"
 					/>
