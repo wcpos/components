@@ -64,6 +64,7 @@ export const TextInputContainer = ({
 	hasFocus,
 }: TextInputContainerProps) => {
 	const theme = useTheme();
+	const input = typeof children === 'string' ? <Text>{children}</Text> : children;
 
 	return (
 		<Pressable
@@ -97,7 +98,7 @@ export const TextInputContainer = ({
 					</Box>
 				)}
 				<Box padding="small" style={{ flex: 1 }}>
-					{/** The actual input goes here */ children}
+					{/** The actual input goes here */ input}
 				</Box>
 				{showClear && (
 					<Box padding="small">

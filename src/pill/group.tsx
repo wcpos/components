@@ -1,7 +1,8 @@
 import * as React from 'react';
+
 import { Pill } from './pill';
-import Box from '../box';
 import * as Styled from './styles';
+import Box from '../box';
 
 type ColorTypes = import('@wcpos/themes/src/index').ColorTypes;
 
@@ -52,7 +53,7 @@ const spacingMap = {
  */
 export const PillGroup = ({ pills, size = 'medium', color }: PillGroupProps) => {
 	return (
-		<Box horizontal space={spacingMap[size]}>
+		<Box horizontal space={spacingMap[size]} style={{ flexWrap: 'wrap' }}>
 			{pills.map((pill, i) =>
 				typeof pill === 'string' ? (
 					<Pill key={i} size={size} color={color}>
