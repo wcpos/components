@@ -37,6 +37,7 @@ export const Pill = styled.View<Pick<PillProps, 'disabled' | 'size' | 'color'>>`
 	background-color: ${({ theme, disabled, color }) =>
 		disabled ? theme.colors.disabled : theme.colors[color]};
 	gap: ${({ theme, size }) => `${theme.spacing.xSmall}px`};
+	max-width: 100%;
 `;
 
 export const Label = styled(Text)`

@@ -66,7 +66,7 @@ export const Pill = ({
 	 */
 	const label =
 		typeof children === 'string' ? (
-			<Text size={size} type="inverse">
+			<Text size={size} type="inverse" numberOfLines={1}>
 				{children}
 			</Text>
 		) : (
@@ -90,7 +90,7 @@ export const Pill = ({
 	);
 
 	return (
-		<Pressable onPress={disabled ? undefined : onPress}>
+		<Pressable onPress={disabled ? undefined : onPress} style={{ maxWidth: '100%' }}>
 			<Styled.Pill disabled={disabled} size={size} color={color}>
 				{icon && <Icon name={icon} size={size} type="inverse" />}
 				{label}

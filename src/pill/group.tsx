@@ -53,7 +53,7 @@ const spacingMap = {
  */
 export const PillGroup = ({ pills, size = 'medium', color }: PillGroupProps) => {
 	return (
-		<Box horizontal space={spacingMap[size]} style={{ flexWrap: 'wrap' }}>
+		<Box horizontal space={spacingMap[size]} style={{ flexWrap: 'wrap', maxWidth: '100%' }}>
 			{pills.map((pill, i) =>
 				typeof pill === 'string' ? (
 					<Pill key={i} size={size} color={color}>
