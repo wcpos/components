@@ -51,7 +51,7 @@ const spacingMap = {
 /**
  *
  */
-export const PillGroup = ({ pills, size = 'medium', color }: PillGroupProps) => {
+export const PillGroup = ({ pills, size = 'normal', color }: PillGroupProps) => {
 	return (
 		<Box horizontal space={spacingMap[size]} style={{ flexWrap: 'wrap', maxWidth: '100%' }}>
 			{pills.map((pill, i) =>

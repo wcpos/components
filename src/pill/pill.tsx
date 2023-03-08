@@ -35,17 +35,6 @@ export interface PillProps {
 	icon?: IconName;
 }
 
-// can't have negative in react-native
-const marginMap = {
-	xSmall: 0,
-	small: 0,
-	normal: 0,
-	medium: 3,
-	large: 6,
-	xLarge: 6,
-	xxLarge: 6,
-};
-
 /**
  *
  */
@@ -73,46 +62,22 @@ export const Pill = ({
 			children
 		);
 
-	/**
-	 *
-	 */
-	const removeIconPadding = React.useMemo(
-		() => ({
-			xSmall: theme.spacing.xxSmall,
-			small: theme.spacing.xxSmall,
-			normal: theme.spacing.xSmall,
-			medium: theme.spacing.xSmall,
-			large: theme.spacing.small,
-			xLarge: theme.spacing.small,
-			xxLarge: theme.spacing.small,
-		}),
-		[theme.spacing.small, theme.spacing.xSmall, theme.spacing.xxSmall]
-	);
-
 	return (
 		<Pressable onPress={disabled ? undefined : onPress} style={{ maxWidth: '100%' }}>
 			<Styled.Pill disabled={disabled} size={size} color={color}>
 				{icon && <Icon name={icon} size={size} type="inverse" />}
 				{label}
 				{removable && (
-					<Icon
-						name="xmark"
-						size={size}
-						disabled={disabled}
-						onPress={onRemove}
-						backgroundStyle={{
-							backgroundColor: 'transparent',
-							// paddingLeft: removeIconPadding[size],
-							// marginRight: marginMap[size],
-						}}
-						type="inverse"
-					/>
+					<Icon name="xmark" size={size} disabled={disabled} onPress={onRemove} type="inverse" />
 				)}
 			</Styled.Pill>
 		</Pressable>
 	);
 };
 
+/**
+ *
+ */
 const skeletonSizeMap = {
 	xSmall: {
 		width: 30,

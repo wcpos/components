@@ -1,8 +1,10 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import Pill from '.';
-import { PillProps, PillSkeletonProps } from './pill';
 import { PillGroupProps, PillGroupSkeletonProps } from './group';
+import { PillProps, PillSkeletonProps } from './pill';
 
 export default {
 	title: 'Components/Pill',
