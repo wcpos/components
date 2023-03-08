@@ -10,17 +10,13 @@ type ColorTypes = import('@wcpos/themes/src/index').ColorTypes;
  * Action with a Label.
  */
 export interface TextAction {
-	/**
-	 * Unique key identifier
-	 */
+	/** */
 	key?: string | number;
-	/**
-	 * Label to display.
-	 */
+
+	/** */
 	label: string;
-	/**
-	 * Action to execute on click.
-	 */
+
+	/** */
 	action?: () => void;
 }
 
@@ -28,43 +24,48 @@ export interface TextAction {
  *
  */
 export interface PillGroupProps {
-	/**
-	 *
-	 */
-	pills: (TextAction | string)[];
-	/**
-	 *
-	 */
-	size?: 'small' | 'medium' | 'large';
-	/**
-	 * Background color of the pill
-	 */
+	/** */
+	children?: React.ReactElement[];
+
+	/** */
+	pills?: (TextAction | string)[];
+
+	/** */
+	size?: import('@wcpos/themes').FontSizeTypes;
+
+	/**  Background color of the pill */
 	color?: ColorTypes;
 }
 
 const spacingMap = {
+	xSmall: 'xxSmall',
 	small: 'xxSmall',
 	medium: 'xSmall',
+	normal: 'xSmall',
 	large: 'small',
+	xLarge: 'small',
+	xxLarge: 'medium',
 };
 
 /**
  *
  */
-export const PillGroup = ({ pills, size = 'normal', color }: PillGroupProps) => {
+export const PillGroup = ({ children, pills, size = 'normal', color }: PillGroupProps) => {
 	return (
 		<Box horizontal space={spacingMap[size]} style={{ flexWrap: 'wrap', maxWidth: '100%' }}>
-			{pills.map((pill, i) =>
-				typeof pill === 'string' ? (
-					<Pill key={i} size={size} color={color}>
-						pill
-					</Pill>
-				) : (
-					<Pill key={pill.key || i} size={size} onPress={pill.action} color={color}>
-						{pill.label}
-					</Pill>
-				)
-			)}
+			{pills
+				? pills.map((pill, i) =>
+						typeof pill === 'string' ? (
+							<Pill key={i} size={size} color={color}>
+								pill
+							</Pill>
+						) : (
+							<Pill key={pill.key || i} size={size} onPress={pill.action} color={color}>
+								{pill.label}
+							</Pill>
+						)
+				  )
+				: children}
 		</Box>
 	);
 };

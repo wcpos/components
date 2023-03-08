@@ -25,7 +25,7 @@ export interface PillProps {
 	/** Called if pill is pressed */
 	onPress?: () => void;
 
-	/** Called if pill is pressed */
+	/** Pill text size, also scales spacing */
 	size?: import('@wcpos/themes').FontSizeTypes;
 
 	/** Background color of the pill */

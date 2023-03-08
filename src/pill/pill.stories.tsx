@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 
 import { action } from '@storybook/addon-actions';
 
@@ -36,6 +37,43 @@ Group.args = {
 		{ label: 'Pill 3', action: action('Pill 3 pressed') },
 	],
 };
+
+export const GroupWithWrap = (props: PillGroupProps) => (
+	<View style={{ width: 200 }}>
+		<Pill.Group {...props} />
+	</View>
+);
+GroupWithWrap.args = {
+	pills: [
+		{ label: 'Pill 1', action: action('Pill 1 pressed') },
+		{ label: 'Pill 2', action: action('Pill 2 pressed') },
+		{ label: 'Pill 3', action: action('Pill 3 pressed') },
+		{ label: 'Pill 4', action: action('Pill 4 pressed') },
+		{ label: 'Pill 5', action: action('Pill 5 pressed') },
+		{ label: 'Pill 6', action: action('Pill 6 pressed') },
+	],
+};
+
+export const GroupWithTruncated = (props: PillGroupProps) => (
+	<View style={{ width: 60 }}>
+		<Pill.Group {...props} />
+	</View>
+);
+GroupWithTruncated.args = {
+	pills: [
+		{ label: 'Lorem ipsum dolor sit amet', action: action('Pill 1 pressed') },
+		{ label: 'Consectetur adipiscing elit', action: action('Pill 2 pressed') },
+		{ label: 'Donec auctor, nisl eget', action: action('Pill 3 pressed') },
+	],
+};
+
+export const GroupWithComponentChildren = (props: PillGroupProps) => (
+	<Pill.Group>
+		<Pill>Pill 1</Pill>
+		<Pill>Pill 2</Pill>
+		<Pill>Pill 3</Pill>
+	</Pill.Group>
+);
 
 export const GroupSkeleton = (props: PillGroupSkeletonProps) => <Pill.Group.Skeleton {...props} />;
 GroupSkeleton.args = {
