@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import Animated, { useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
+
 import * as Styled from './styles';
 
 export interface RippleProps {

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View } from 'react-native';
 
+import delay from 'lodash/delay';
 import pick from 'lodash/pick';
 
 import useMeasure from '@wcpos/hooks/src/use-measure';
@@ -47,16 +48,19 @@ export const Target = ({ children }: PopoverTargetProps) => {
 			}
 			triggerProps.onLongPress && triggerProps.onLongPress();
 		},
+		/**
+		 * NOTE: The tooltips were causing flickering so I added a delay
+		 */
 		onHoverIn: () => {
 			if (trigger === 'hover') {
 				forceMeasure();
-				onOpen && onOpen();
+				onOpen && delay(onOpen, 20);
 			}
 			triggerProps.onHoverIn && triggerProps.onHoverIn();
 		},
 		onHoverOut: () => {
 			if (trigger === 'hover') {
-				onClose && onClose();
+				onClose && delay(onClose, 20);
 			}
 			triggerProps.onHoverOut && triggerProps.onHoverOut();
 		},
