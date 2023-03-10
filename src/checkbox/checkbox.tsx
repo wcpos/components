@@ -4,8 +4,7 @@ import { ViewStyle } from 'react-native';
 import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 
 import Icon from './icon';
-import Label from './label';
-import * as Styled from './styles';
+import Label, { CheckboxLabelProps } from './label';
 import Box from '../box';
 import Pressable from '../pressable';
 
@@ -30,7 +29,10 @@ export interface CheckboxProps {
 	onChange?: (checked: boolean) => void;
 
 	/** Size of the Checkbox. Matches font sizes. */
-	size?: import('@wcpos/themes').FontSizeTypes;
+	size?: CheckboxLabelProps['size'];
+
+	/** */
+	type?: CheckboxLabelProps['type'];
 
 	/** Style passed to surrounding box. */
 	style?: ViewStyle;
@@ -59,6 +61,7 @@ export const Checkbox = ({
 	value: checkedRaw = false,
 	onChange: onChangeRaw,
 	size = 'normal',
+	type,
 	style,
 }: CheckboxProps) => {
 	const [checked, onChange] = useUncontrolledState(checkedRaw, onChangeRaw);
@@ -68,7 +71,7 @@ export const Checkbox = ({
 		<Pressable disabled={disabled} onPress={onPress}>
 			<Box horizontal space={spaceMap[size]} style={style}>
 				<Icon checked={checked} disabled={disabled} size={size} />
-				<Label checked={checked} info={helpText} size={size}>
+				<Label checked={checked} info={helpText} size={size} type={type}>
 					{label}
 				</Label>
 			</Box>

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 import { Pill } from './pill';
 import * as Styled from './styles';
@@ -35,6 +36,9 @@ export interface PillGroupProps {
 
 	/**  Background color of the pill */
 	color?: ColorTypes;
+
+	/** Style passed to Box container */
+	style?: StyleProp<ViewStyle>;
 }
 
 const spacingMap = {
@@ -50,9 +54,13 @@ const spacingMap = {
 /**
  *
  */
-export const PillGroup = ({ children, pills, size = 'normal', color }: PillGroupProps) => {
+export const PillGroup = ({ children, pills, size = 'normal', color, style }: PillGroupProps) => {
 	return (
-		<Box horizontal space={spacingMap[size]} style={{ flexWrap: 'wrap', maxWidth: '100%' }}>
+		<Box
+			horizontal
+			space={spacingMap[size]}
+			style={[{ flexWrap: 'wrap', maxWidth: '100%' }, style]}
+		>
 			{pills
 				? pills.map((pill, i) =>
 						typeof pill === 'string' ? (

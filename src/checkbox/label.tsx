@@ -3,7 +3,7 @@ import * as React from 'react';
 import Box from '../box';
 import Text from '../text';
 
-type Props = {
+export interface CheckboxLabelProps {
 	/**  */
 	children?: React.ReactNode;
 
@@ -15,10 +15,20 @@ type Props = {
 
 	/**  */
 	size: import('@wcpos/themes').FontSizeTypes;
-};
 
-const Label = ({ children, checked, info, size }: Props) => {
-	const label = typeof children === 'string' ? <Text size={size}>{children}</Text> : children;
+	/**  */
+	type: import('@wcpos/themes').ColorTypes;
+}
+
+const Label = ({ children, checked, info, size, type }: CheckboxLabelProps) => {
+	const label =
+		typeof children === 'string' ? (
+			<Text size={size} type={type}>
+				{children}
+			</Text>
+		) : (
+			children
+		);
 
 	return (
 		<Box space="small">

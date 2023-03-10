@@ -50,6 +50,7 @@ export const Target = ({ children }: PopoverTargetProps) => {
 		},
 		/**
 		 * NOTE: The tooltips were causing flickering so I added a delay
+		 * It seemed to be a conflict with the ripple animation
 		 */
 		onHoverIn: () => {
 			if (trigger === 'hover') {
@@ -74,7 +75,11 @@ export const Target = ({ children }: PopoverTargetProps) => {
 	 */
 	const pressableChild = isPressableChild
 		? React.cloneElement(children, { ...wrappedTriggerProps })
-		: React.createElement(Pressable, { ...wrappedTriggerProps, style: { flex: 1 } }, children);
+		: React.createElement(
+				Pressable,
+				{ ...wrappedTriggerProps, style: { flex: 1, flexDirection: 'row' } },
+				children
+		  );
 
 	/**
 	 * Re-measure the trigger position when onScroll called

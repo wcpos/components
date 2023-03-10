@@ -36,6 +36,7 @@ export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps)
 			placement={placement}
 			trigger="hover"
 			style={{ backgroundColor: 'black' }}
+			withinPortal
 			{...props}
 		>
 			<Popover.Target>{children}</Popover.Target>
