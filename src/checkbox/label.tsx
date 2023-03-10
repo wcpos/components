@@ -1,19 +1,30 @@
 import * as React from 'react';
+
+import Box from '../box';
 import Text from '../text';
-import { LabelWrapper } from './styles';
 
 type Props = {
-	label?: React.ReactNode;
+	/**  */
+	children?: React.ReactNode;
+
+	/**  */
 	checked?: boolean;
+
+	/**  */
 	info?: React.ReactNode;
+
+	/**  */
+	size: import('@wcpos/themes').FontSizeTypes;
 };
 
-const Label = ({ label, checked, info }: Props) => {
+const Label = ({ children, checked, info, size }: Props) => {
+	const label = typeof children === 'string' ? <Text size={size}>{children}</Text> : children;
+
 	return (
-		<LabelWrapper>
-			<Text>{label}</Text>
+		<Box space="small">
+			{label}
 			{info && <Text>{info}</Text>}
-		</LabelWrapper>
+		</Box>
 	);
 };
 

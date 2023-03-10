@@ -6,24 +6,22 @@ import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 import Icon from './icon';
 import Label from './label';
 import * as Styled from './styles';
+import Box from '../box';
+import Pressable from '../pressable';
 
 export interface CheckboxProps {
-	/**
-	 * True if selected.
-	 */
+	/** True if selected. */
 	value?: boolean;
-	/**
-	 * Label to display next to the Checkbox.
-	 */
+
+	/** Label to display next to the Checkbox. */
 	label: React.ReactNode;
-	/**
-	 * Additional text to aid in use.
-	 */
+
+	/** Additional text to aid in use. */
 	helpText?: React.ReactNode;
-	/**
-	 * Disables the input.
-	 */
+
+	/** Disables the input. */
 	disabled?: boolean;
+
 	/**
 	 * Called when selection state changes. Should propagate change to `checked` prop.
 	 *
@@ -31,9 +29,25 @@ export interface CheckboxProps {
 	 */
 	onChange?: (checked: boolean) => void;
 
-	// helpText?: React.ReactNode;
+	/** Size of the Checkbox. Matches font sizes. */
+	size?: import('@wcpos/themes').FontSizeTypes;
+
+	/** Style passed to surrounding box. */
 	style?: ViewStyle;
 }
+
+/**
+ * FIXME - it would be good if space was in correcr proportion to size
+ */
+const spaceMap = {
+	xSmall: 'xSmall',
+	small: 'xSmall',
+	normal: 'small',
+	medium: 'small',
+	large: 'normal',
+	xLarge: 'normal',
+	xxLarge: 'medium',
+};
 
 /**
  * TODO - hover, focus states
@@ -44,26 +58,20 @@ export const Checkbox = ({
 	helpText,
 	value: checkedRaw = false,
 	onChange: onChangeRaw,
+	size = 'normal',
 	style,
 }: CheckboxProps) => {
 	const [checked, onChange] = useUncontrolledState(checkedRaw, onChangeRaw);
 	const onPress = React.useCallback(() => onChange?.(!checked), [checked, onChange]);
 
-	// const onPress = () => {
-	// 	if (disabled) {
-	// 		return;
-	// 	}
-	// 	const _checked = !checked;
-	// 	setChecked(_checked);
-	// 	if (typeof onChange === 'function') {
-	// 		onChange(_checked, { target: { name, checked: _checked } });
-	// 	}
-	// };
-
 	return (
-		<Styled.PressableContainer disabled={disabled} onPress={onPress} style={style}>
-			<Icon checked={checked} disabled={disabled} />
-			<Label label={label} checked={checked} info={helpText} />
-		</Styled.PressableContainer>
+		<Pressable disabled={disabled} onPress={onPress}>
+			<Box horizontal space={spaceMap[size]} style={style}>
+				<Icon checked={checked} disabled={disabled} size={size} />
+				<Label checked={checked} info={helpText} size={size}>
+					{label}
+				</Label>
+			</Box>
+		</Pressable>
 	);
 };

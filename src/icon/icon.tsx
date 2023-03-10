@@ -10,6 +10,8 @@ import Pressable from '../pressable';
 import Ripple from '../ripple';
 import Skeleton from '../skeleton';
 import Tooltip from '../tooltip';
+
+import type { SvgProps } from 'react-native-svg';
 // import * as Styled from './styles';
 
 export type IconName = Extract<keyof typeof Svgs, string>;
@@ -29,7 +31,11 @@ export interface IconProps {
 	/**
 	 * Set icon height.
 	 */
-	height?: number;
+	height?: SvgProps['height'];
+	/**
+	 * Set icon width.
+	 */
+	width?: SvgProps['width'];
 	/**
 	 * Icon key.
 	 */
@@ -38,10 +44,6 @@ export interface IconProps {
 	 * Set icon size.
 	 */
 	size?: import('@wcpos/themes').IconSizesTypes;
-	/**
-	 * Set icon width.
-	 */
-	width?: number;
 	/**
 	 * Turns icon into a button. Called when icon is pressed.
 	 */
@@ -89,7 +91,7 @@ export const Icon = ({
 	// TODO: I shouldn't have two ways to set color
 	// const iconColor = color || get(theme, ['colors', type], theme.colors.text);
 	const iconColor = get(theme, ['colors', type], theme.colors.text);
-	const SvgIcon = get(Svgs, name, Svgs.circleExclamation);
+	const SvgIcon = get(Svgs, name, Svgs.circleExclamation) as React.FC<SvgProps>;
 	const showRipple = useSharedValue(false);
 
 	let IconComponent = (
