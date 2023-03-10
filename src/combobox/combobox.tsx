@@ -140,12 +140,13 @@ export const Combobox = ({
 			<TextInput
 				value={searchValue}
 				placeholder={selected?.label ?? (selected || placeholder)}
-				onChange={onSearchChange}
+				onChangeText={onSearchChange}
 				onFocus={() => setOpened(true)}
 				clearable
 				onKeyPress={(e) => {
 					console.log(e);
 				}}
+				containerStyle={{ flex: 1 }}
 			/>
 		</Dropdown>
 	);

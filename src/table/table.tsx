@@ -10,8 +10,6 @@ import {
 } from '@shopify/flash-list';
 import Animated from 'react-native-reanimated';
 
-import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
-
 import Empty from './empty';
 import Header from './header';
 import Row from './row';
@@ -58,15 +56,6 @@ const Table = <T extends object>({
 		),
 		[]
 	);
-
-	useWhyDidYouUpdate('Table', {
-		style,
-		footer,
-		renderItem,
-		extraData,
-		keyExtractor,
-		defaultRenderItem,
-	});
 
 	/**
 	 *
