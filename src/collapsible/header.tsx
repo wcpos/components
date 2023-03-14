@@ -25,9 +25,11 @@ export const CollapsibleHeader = ({ open, size = 'normal', ...props }: Collapsib
 		typeof props.title === 'string' ? <Text size={size}>{props.title}</Text> : props.title;
 
 	return (
-		<Box horizontal space="small" align="center">
-			<Box>{title}</Box>
-			<Icon name={icon} />
+		<Box fill marginBottom="normal" borderBottom="border">
+			<Box horizontal space="small" paddingBottom="small" align="center">
+				<Box>{title}</Box>
+				<Icon name={icon} />
+			</Box>
 		</Box>
 	);
 };

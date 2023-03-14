@@ -48,7 +48,9 @@ export const InputWithLabel = ({
 			{label && (
 				<TouchableWithoutFeedback onPress={onLabelPress} disabled={disabled}>
 					<Box>
-						<Text weight="medium">{label}</Text>
+						<Text uppercase size="small" numberOfLines={1} type="textMuted">
+							{label}
+						</Text>
 					</Box>
 				</TouchableWithoutFeedback>
 			)}
