@@ -18,7 +18,14 @@ const Loader = ({ type, size = 'normal', ...props }: LoaderProps) => {
 	const theme = useTheme();
 	const color = theme.colors[type || 'primary'];
 
-	return <ActivityIndicator color={color} size={theme.iconSizes[size]} {...props} />;
+	return (
+		<ActivityIndicator
+			color={color}
+			// FIXME: I don't know if this will work in native, I think I need a better spinner
+			size={parseFloat(theme.iconSizes[size])}
+			{...props}
+		/>
+	);
 };
 
 export default Loader;

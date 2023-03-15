@@ -8,7 +8,7 @@ export const Text = styled.Text<TextProps>`
 	font-style: ${({ italic }) => (italic ? 'italic' : 'normal')};
 	font-weight: ${({ weight, theme }) => theme.font.weight[weight || 'normal']}};
 	font-size: ${({ size, theme }) => theme.font.size[size || 'normal']};
-	line-height: ${({ size, theme }) => theme.font.size[size || 'normal']};
+	line-height: ${({ size, theme }) => theme.font.lineHeight[size || 'normal']};
 	text-align: ${({ align }) => align || 'left'};
 	text-transform: ${({ uppercase }) => (uppercase ? 'uppercase' : 'none')};
 `;
