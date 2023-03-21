@@ -20,54 +20,44 @@ export type IconName = Extract<keyof typeof Svgs, string>;
  *
  */
 export interface IconProps {
-	/**
-	 * Icon colour
-	 */
+	/** Icon colour */
 	color?: string;
-	/**
-	 * Set to `true` to disable.
-	 */
+
+	/** Set to `true` to disable. */
 	disabled?: boolean;
-	/**
-	 * Set icon height.
-	 */
+
+	/** Set icon height. */
 	height?: SvgProps['height'];
-	/**
-	 * Set icon width.
-	 */
+
+	/** Set icon width. */
 	width?: SvgProps['width'];
-	/**
-	 * Icon key.
-	 */
+
+	/** Icon key. */
 	name: IconName;
-	/**
-	 * Set icon size.
-	 */
+
+	/** Set icon size. */
 	size?: import('@wcpos/themes').IconSizesTypes;
-	/**
-	 * Turns icon into a button. Called when icon is pressed.
-	 */
+
+	/** Turns icon into a button. Called when icon is pressed. */
 	onPress?: null | ((event: import('react-native').GestureResponderEvent) => void);
-	/**
-	 * Turns icon into a button. Called when icon is long pressed.
-	 */
+
+	/** Turns icon into a button. Called when icon is long pressed. */
 	onLongPress?: null | ((event: import('react-native').GestureResponderEvent) => void);
-	/**
-	 * Wraps the icon in a Tooltip component
-	 */
+
+	/** Wraps the icon in a Tooltip component */
 	tooltip?: string;
-	/**
-	 *
-	 */
+
+	/** Tooltip placement */
 	tooltipPlacement?: import('../tooltip').TooltipProps['placement'];
-	/**
-	 * Styling for Pressable icons
-	 */
+
+	/** Styling for Pressable icons */
 	backgroundStyle?: 'ripple' | 'none' | ViewStyle;
-	/**
-	 * Icon colour
-	 */
+
+	/** Icon colour **/
 	type?: import('@wcpos/themes').ColorTypes;
+
+	/** Animate the icon into a 'loading' state */
+	spin?: boolean;
 }
 
 /**
@@ -86,6 +76,7 @@ export const Icon = ({
 	tooltipPlacement = 'top',
 	backgroundStyle = 'ripple',
 	type,
+	spin = false,
 }: IconProps) => {
 	const theme = useTheme();
 	// TODO: I shouldn't have two ways to set color

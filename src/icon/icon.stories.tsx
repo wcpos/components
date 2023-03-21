@@ -78,4 +78,10 @@ PressableIconWithTooltip.args = {
 	onPress: action('Pressed'),
 };
 
+export const IconWithSpin = (props: IconProps) => <Icon {...props} />;
+IconWithSpin.args = {
+	name: getRandomIconName(),
+	spin: true,
+};
+
 export const Skeleton = (props: IconSkeletonProps) => <Icon.Skeleton {...props} />;
