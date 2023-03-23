@@ -30,6 +30,7 @@ export { default as cashRegister } from "./cashRegister";
 export { default as check } from "./check";
 export { default as circleCheck } from "./circleCheck";
 export { default as circleChevronRight } from "./circleChevronRight";
+export { default as circleDollar } from "./circleDollar";
 export { default as circleEllipsis } from "./circleEllipsis";
 export { default as circleExclamation } from "./circleExclamation";
 export { default as circleInfo } from "./circleInfo";
