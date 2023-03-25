@@ -21,7 +21,7 @@ module.exports = {
 				name: 'preset-default',
 				params: {
 					overrides: {
-						cleanupIDs: false,
+						// cleanupIDs: false,
 						removeUselessDefs: false,
 					},
 				},
