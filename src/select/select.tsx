@@ -4,7 +4,7 @@ import isPlainObject from 'lodash/isPlainObject';
 
 import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
 
-import Dropdown from '../dropdown';
+import Dropdown, { DropdownProps } from '../dropdown';
 import Text from '../text';
 import { TextInputContainer } from '../textinput';
 
@@ -29,7 +29,7 @@ export interface SelectOption {
 /**
  *
  */
-export interface SelectProps {
+export type SelectProps = Omit<DropdownProps, 'items' | 'children'> & {
 	/**
 	 * Options available in the Select.
 	 */
@@ -41,7 +41,7 @@ export interface SelectProps {
 	/**
 	 * Callback called when selection is changed.
 	 */
-	onChange?: (selected: string) => void;
+	onChange?: (selected: SelectOption) => void;
 	/**
 	 * Text to display as a placeholder.
 	 */
@@ -54,7 +54,7 @@ export interface SelectProps {
 	 * Disable the input and choice selection.
 	 */
 	disabled?: boolean;
-}
+};
 
 const maxHeight = 300;
 
@@ -63,17 +63,14 @@ const maxHeight = 300;
  */
 export const Select = ({
 	options: optionsRaw,
-	value: selectedRaw = null,
+	value: valueRaw,
 	onChange: onChangeRaw,
 	placeholder = 'Select',
 	disabled = false,
 	...props
 }: SelectProps) => {
 	const [open, setOpen] = React.useState(false);
-	const [selected, onChange] = useUncontrolledState(
-		selectedRaw,
-		onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
-	);
+	const [value, onChange] = useUncontrolledState<typeof valueRaw>(valueRaw, onChangeRaw);
 
 	/**
 	 *
@@ -99,9 +96,12 @@ export const Select = ({
 	/**
 	 *
 	 */
-	const selectedChoice = React.useMemo(() => {
-		return options.find((x) => x.value === selected);
-	}, [options, selected]);
+	const selected = React.useMemo(() => {
+		if (typeof value === 'string') {
+			return options.find((option) => option.value === value);
+		}
+		return value;
+	}, [options, value]);
 
 	/**
 	 *
@@ -113,7 +113,7 @@ export const Select = ({
 
 	return (
 		<Dropdown
-			open={open}
+			opened={open}
 			items={options}
 			onSelect={handleSelect}
 			matchWidth
@@ -121,7 +121,7 @@ export const Select = ({
 			{...props}
 		>
 			<TextInputContainer onPress={() => setOpen(true)}>
-				{selected ? <Text>{selected}</Text> : <Text type="secondary">{placeholder}</Text>}
+				{selected ? <Text>{selected.label}</Text> : <Text type="secondary">{placeholder}</Text>}
 			</TextInputContainer>
 		</Dropdown>
 	);

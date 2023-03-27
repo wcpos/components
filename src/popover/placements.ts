@@ -75,7 +75,7 @@ export const getPopoverPosition = (
 	placement: PopoverPlacement,
 	target: { width: number; height: number; pageX: number; pageY: number },
 	content: { width: number; height: number; pageX: number; pageY: number },
-	withinPortal: boolean = false
+	withinPortal: boolean = true
 ): {
 	flexDirection?: ViewStyle['flexDirection'];
 	top?: ViewStyle['top'];

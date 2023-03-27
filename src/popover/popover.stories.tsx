@@ -58,7 +58,7 @@ export const BasicUsage = (props: PopoverProps) => {
 	);
 };
 
-export const WithinPortal = (props: PopoverProps) => {
+export const WithoutPortal = (props: PopoverProps) => {
 	const [open, setOpen] = React.useState(false);
 
 	return (
@@ -69,7 +69,7 @@ export const WithinPortal = (props: PopoverProps) => {
 				onClose={() => {
 					setOpen(false);
 				}}
-				withinPortal={true}
+				withinPortal={false}
 			>
 				<Popover.Target>
 					<Button

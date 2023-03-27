@@ -60,7 +60,7 @@ export interface PopoverProps {
 	/** Show arrow pointing to the target. */
 	withArrow?: boolean;
 
-	/** Determines whether Popover should be rendered within Portal, defaults to false */
+	/** Determines whether Popover should be rendered within Portal, defaults to true */
 	withinPortal?: boolean;
 
 	/** Determines whether dropdown should be closed on outside clicks, default to true */
@@ -94,7 +94,7 @@ export const Popover = ({
 	placement = 'bottom',
 	trigger = 'press',
 	withArrow = true,
-	withinPortal = false,
+	withinPortal = true,
 	primaryAction,
 	secondaryActions,
 	style,
