@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleProp, ViewStyle, TextProps as RNTextProps } from 'react-native';
+import { StyleProp, TextStyle, TextProps as RNTextProps } from 'react-native';
 
 import { decode } from 'html-entities';
 
@@ -29,7 +29,7 @@ export interface TextProps extends RNTextProps {
 	/**
 	 *
 	 */
-	style?: StyleProp<ViewStyle>;
+	style?: StyleProp<TextStyle>;
 	/**
 	 *
 	 */
@@ -50,7 +50,6 @@ export const Text = ({
 	italic,
 	onPress,
 	size = 'normal',
-	style = {},
 	type,
 	uppercase,
 	weight = 'normal',
@@ -62,7 +61,6 @@ export const Text = ({
 			italic={italic}
 			onPress={onPress}
 			size={size}
-			style={style}
 			type={type}
 			uppercase={uppercase}
 			weight={weight}

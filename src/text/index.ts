@@ -1,5 +1,5 @@
-import { Text, TextProps } from './text';
 import { TextSkeleton } from './skeleton';
+import { Text, TextProps } from './text';
 
 export type { TextProps };
 
