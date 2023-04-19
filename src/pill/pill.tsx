@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { View } from 'react-native';
 
 import { useTheme } from 'styled-components/native';
 
@@ -63,15 +64,45 @@ export const Pill = ({
 		);
 
 	return (
-		<Pressable onPress={disabled ? undefined : onPress} style={{ maxWidth: '100%' }}>
-			<Styled.Pill disabled={disabled} size={size} color={color}>
-				{icon && <Icon name={icon} size={size} type="inverse" />}
-				{label}
-				{removable && (
-					<Icon name="xmark" size={size} disabled={disabled} onPress={onRemove} type="inverse" />
+		<View style={{ maxWidth: '100%', flexDirection: 'row' }}>
+			<Pressable onPress={disabled ? undefined : onPress}>
+				{icon && (
+					<Styled.Pill
+						disabled={disabled}
+						size={size}
+						color={color}
+						style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, paddingRight: 0 }}
+					>
+						<Icon name={icon} size={size} type="inverse" />
+					</Styled.Pill>
 				)}
-			</Styled.Pill>
-		</Pressable>
+				<Styled.Pill
+					disabled={disabled}
+					size={size}
+					color={color}
+					style={{
+						borderTopLeftRadius: icon ? 0 : undefined,
+						borderBottomLeftRadius: icon ? 0 : undefined,
+						borderTopRightRadius: removable ? 0 : undefined,
+						borderBottomRightRadius: removable ? 0 : undefined,
+					}}
+				>
+					{label}
+				</Styled.Pill>
+			</Pressable>
+			{removable && (
+				<Pressable onPress={onRemove}>
+					<Styled.Pill
+						disabled={disabled}
+						size={size}
+						color={color}
+						style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, paddingLeft: 0 }}
+					>
+						<Icon name="xmark" size={size} disabled={disabled} type="inverse" />
+					</Styled.Pill>
+				</Pressable>
+			)}
+		</View>
 	);
 };
 
