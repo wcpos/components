@@ -3,7 +3,6 @@ import { View } from 'react-native';
 
 import { FlashList } from '@shopify/flash-list';
 import { action } from '@storybook/addon-actions';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import Table, { TableProps } from '.';
 import Button from '../button';
@@ -11,10 +10,12 @@ import Dropdown from '../dropdown';
 import Text from '../text';
 // import { text, select, boolean } from '@storybook/addon-knobs';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Table> = {
 	title: 'Components/Table',
 	component: Table,
-} as ComponentMeta<typeof Table>;
+};
 
 const size = ['Small', 'Medium', 'Large', 'Massive'];
 const colour = ['Red', 'Blue', 'Green', 'Yellow'];
@@ -42,9 +43,7 @@ const data = new Array(1000)
 /**
  *
  */
-export const BasicUsage: ComponentStory<typeof Table> = (props: TableProps<Data>) => (
-	<Table<Data> {...props} />
-);
+export const BasicUsage = (props: TableProps<Data>) => <Table<Data> {...props} />;
 BasicUsage.args = {
 	columns: [
 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
@@ -59,9 +58,7 @@ BasicUsage.args = {
 	// sortDirection: 'asc',
 };
 
-export const Empty: ComponentStory<typeof Table> = (props: TableProps<Data>) => (
-	<Table<Data> {...props} />
-);
+export const Empty = (props: TableProps<Data>) => <Table<Data> {...props} />;
 Empty.args = {
 	columns: [
 		{ key: 'quantity', label: 'Qty', flexGrow: 0, flexShrink: 1, width: '20%' },
@@ -106,7 +103,7 @@ Empty.args = {
 // 	// sortDirection: 'asc',
 // };
 
-export const CustomTableCell: ComponentStory<typeof Table> = (props: TableProps<Data>) => {
+export const CustomTableCell = (props: TableProps<Data>) => {
 	return <Table<Data> {...props} />;
 };
 CustomTableCell.args = {
@@ -169,7 +166,7 @@ CustomTableCell.args = {
 // 	sortDirection: 'asc',
 // };
 
-export const TableFooter: ComponentStory<typeof Table> = (props: TableProps<Data>) => {
+export const TableFooter = (props: TableProps<Data>) => {
 	return <Table<Data> {...props} />;
 };
 TableFooter.args = {
@@ -189,7 +186,7 @@ TableFooter.args = {
 /**
  *
  */
-export const AddOrRemoveRows: ComponentStory<typeof Table> = (props: TableProps<Data>) => {
+export const AddOrRemoveRows = (props: TableProps<Data>) => {
 	const [d, setData] = React.useState(props.data);
 
 	const cellRenderer = React.useCallback(
@@ -281,3 +278,5 @@ export const FlashListWithPopoverBug = () => {
 		/>
 	);
 };
+
+export default meta;

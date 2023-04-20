@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import Text from '../text';
 
 import Measure from '.';
+import Text from '../text';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Measure> = {
 	title: 'Components/Measure',
 };
 
@@ -44,3 +46,5 @@ export const basicUsage = () => {
 		</View>
 	);
 };
+
+export default meta;

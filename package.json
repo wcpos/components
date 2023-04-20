@@ -1,6 +1,6 @@
 {
   "name": "@wcpos/components",
-  "version": "1.0.117",
+  "version": "1.0.118",
   "description": "Shared components for WooCommerce POS",
   "author": "kilbot <paul@kilbot.com>",
   "homepage": "https://github.com/wcpos/components#readme",
@@ -15,8 +15,8 @@
   ],
   "scripts": {
     "test": "jest",
-    "storybook": "BABEL_SHOW_CONFIG_FOR=.storybook/preview.js start-storybook -p 9009 --debug-webpack",
-    "build-storybook": "build-storybook -o docs-build",
+    "storybook": "storybook dev -p 9009 --debug-webpack",
+    "build-storybook": "storybook build -o docs-build",
     "svg": "svgr --config-file ./svgr.config.js src/icon/svg/fontawesome/solid --out-dir src/icon/components/fontawesome/solid"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "date-fns": "2.29.3",
     "expo-haptics": "~12.2.1",
     "expo-image": "^1.2.1",
+    "expo-modules-core": "^1.2.6",
     "html-entities": "^2.3.3",
     "lodash": "4.17.21",
     "react": "18.2.0",
@@ -48,10 +49,9 @@
     "@storybook/addon-controls": "7.0.6",
     "@storybook/addon-essentials": "7.0.6",
     "@storybook/addon-react-native-web": "0.0.20",
-    "@storybook/builder-webpack5": "7.0.6",
-    "@storybook/manager-webpack5": "6.5.16",
     "@storybook/preset-create-react-app": "7.0.6",
     "@storybook/react": "7.0.6",
+    "@storybook/react-webpack5": "7.0.6",
     "@svgr/cli": "^7.0.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "^14.0.0",
@@ -72,9 +72,10 @@
     "postinstall-postinstall": "^2.1.0",
     "react-scripts": "5.0.1",
     "react-test-renderer": "18.2.0",
+    "storybook": "7.0.6",
     "ts-jest": "^29.1.0",
-    "typescript": "^4.6.3",
-    "webpack": "5.79.0"
+    "typescript": "^5.0.4",
+    "webpack": "5.80.0"
   },
   "eslintConfig": {
     "extends": "@wcpos/eslint-config"

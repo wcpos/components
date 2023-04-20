@@ -2,17 +2,19 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import { action } from '@storybook/addon-actions';
-import { StoryWrapper } from '@storybook/addons';
 
-import Button from '../button';
 import { SnackbarProvider } from './provider';
+import { Snackbar } from './snackbar';
 import { useSnackbar } from './use-snackbar';
+import Button from '../button';
+
+import type { Meta } from '@storybook/react';
 
 /**
  * Snackbar require
  * - Portals
  */
-const AppProvider: StoryWrapper = (Story, context) => {
+const AppProvider = (Story, context) => {
 	return (
 		<SnackbarProvider>
 			<Story {...context} />
@@ -20,7 +22,7 @@ const AppProvider: StoryWrapper = (Story, context) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Snackbar> = {
 	title: 'Components/Snackbar',
 	decorators: [AppProvider],
 };
@@ -73,3 +75,5 @@ export const WithAction = () => {
 /**
  * multiple
  */
+
+export default meta;

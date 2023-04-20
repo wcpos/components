@@ -1,9 +1,13 @@
 import * as React from 'react';
-import { action } from '@storybook/addon-actions';
-import Text from '../text';
-import { Pressable, PressableProps } from './pressable';
 
-export default {
+import { action } from '@storybook/addon-actions';
+
+import { Pressable, PressableProps } from './pressable';
+import Text from '../text';
+
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Pressable> = {
 	title: 'Components/Pressable',
 	component: Pressable,
 };
@@ -19,3 +23,5 @@ basicUsage.args = {
 	onHoverIn: action('Mouse In'),
 	onHoverOut: action('Mouse Out'),
 };
+
+export default meta;

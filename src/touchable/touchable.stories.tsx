@@ -1,23 +1,27 @@
 import * as React from 'react';
 import { Text, View } from 'react-native';
-import { action } from '@storybook/addon-actions';
-import Touchable, { ITouchableProps} from './touchable';
 
-export default {
+import { action } from '@storybook/addon-actions';
+
+import Touchable, { ITouchableProps } from './touchable';
+
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Touchable> = {
 	title: 'Components/Touchable',
-	component: Touchable
+	component: Touchable,
 };
 
-export const basicUsage = ({disabled, text}: ITouchableProps & { text: string }) => (
+export const basicUsage = ({ disabled, text }: ITouchableProps & { text: string }) => (
 	<Touchable disabled={disabled} onPress={action('Pressed')}>
 		<Text>{text}</Text>
 	</Touchable>
 );
 basicUsage.args = {
-	text: 'Touch Me!'
-}
+	text: 'Touch Me!',
+};
 
-export const hover = ({disabled, text}: ITouchableProps & { text: string }) => (
+export const hover = ({ disabled, text }: ITouchableProps & { text: string }) => (
 	<Touchable
 		disabled={disabled}
 		onMouseEnter={action('Mouse Enter')}
@@ -27,5 +31,7 @@ export const hover = ({disabled, text}: ITouchableProps & { text: string }) => (
 	</Touchable>
 );
 basicUsage.args = {
-	text: 'Hover over me!'
-}
+	text: 'Hover over me!',
+};
+
+export default meta;

@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { Image, ImageProps } from './image';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Image> = {
 	title: 'Components/Image',
 	component: Image,
 	argTypes: {
@@ -52,3 +55,5 @@ export const LocalAssets = (props: ImageProps) => {
 LocalAssets.args = {
 	// source: { require('@wcpos/core/src/assets/placeholder.png') },
 };
+
+export default meta;

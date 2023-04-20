@@ -4,7 +4,9 @@ import { Group, RadioGroupProps } from './group';
 import { GroupWithLabel, RadioGroupWithLabelProps } from './group-with-label';
 import { Radio, RadioProps } from './radio';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Radio> = {
 	title: 'Components/Radio',
 	component: Radio,
 	subcomponents: { Group },
@@ -99,3 +101,5 @@ RadiosWithLabel.args = {
 		{ label: 'Salad', value: 'salad' },
 	],
 };
+
+export default meta;

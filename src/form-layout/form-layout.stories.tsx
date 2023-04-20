@@ -4,7 +4,9 @@ import { action } from '@storybook/addon-actions';
 
 import { InputWithLabel, InputWithLabelProps } from './input-with-label';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof InputWithLabel> = {
 	title: 'Components/InputContainer',
 	component: InputWithLabel,
 };
@@ -17,3 +19,5 @@ BasicUsage.args = {
 	helpText: 'Help text',
 	error: 'Error text',
 };
+
+export default meta;

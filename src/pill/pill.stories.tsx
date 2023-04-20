@@ -7,7 +7,9 @@ import Pill from '.';
 import { PillGroupProps, PillGroupSkeletonProps } from './group';
 import { PillProps, PillSkeletonProps } from './pill';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Pill> = {
 	title: 'Components/Pill',
 	component: Pill,
 	subcomponents: { Skeleton: Pill.Skeleton },
@@ -79,3 +81,5 @@ export const GroupSkeleton = (props: PillGroupSkeletonProps) => <Pill.Group.Skel
 GroupSkeleton.args = {
 	number: 2,
 };
+
+export default meta;

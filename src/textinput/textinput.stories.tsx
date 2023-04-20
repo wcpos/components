@@ -8,7 +8,9 @@ import { TextInputWithLabel, TextInputWithLabelProps } from './with-label';
 import Button from '../button';
 import Portal from '../portal';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof TextInput> = {
 	title: 'Components/TextInput',
 	component: TextInput,
 	subcomponents: { TextInputWithLabel },
@@ -113,3 +115,5 @@ export const autosize = (props: TextInputProps) => (
  *
  */
 export const Uncontrolled = (props: TextInputProps) => <TextInput {...props} />;
+
+export default meta;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import Box, { BoxProps } from '@wcpos/components/src/box';
-import Button from '@wcpos/components/src/button';
+import Box, { BoxProps } from '../box';
+import Button from '../button';
 
 interface TabBarSkeletonProps extends BoxProps {
 	numberOfTabs: number;

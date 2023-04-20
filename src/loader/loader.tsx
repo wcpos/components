@@ -3,7 +3,7 @@ import { ActivityIndicator, ActivityIndicatorProps } from 'react-native';
 
 import { useTheme } from 'styled-components/native';
 
-type LoaderProps = {
+export type LoaderProps = {
 	/** */
 	type?: import('@wcpos/themes').ColorTypes;
 

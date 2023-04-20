@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { Tabs, TabsProps } from './tabs';
 import Text from '../text';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Tabs> = {
 	title: 'Components/Tabs',
 	component: Tabs,
 };
@@ -30,11 +33,11 @@ const routes = [
 	{ key: 'second', title: 'Second' },
 ];
 
-export const BasicUsage = (props: TabsProps<typeof routes[number]>) => {
+export const BasicUsage = (props: TabsProps<(typeof routes)[number]>) => {
 	const [index, setIndex] = React.useState(0);
 
 	return (
-		<Tabs<typeof routes[number]>
+		<Tabs<(typeof routes)[number]>
 			navigationState={{ index, routes }}
 			renderScene={renderScene}
 			onIndexChange={setIndex}
@@ -48,7 +51,7 @@ export const Scrollable = (props: TabsProps) => {
 
 	return (
 		<View style={{ width: '100%', overflow: 'hidden' }}>
-			<Tabs<typeof routes[number]>
+			<Tabs<(typeof routes)[number]>
 				navigationState={{ index, routes: props.routes }}
 				renderScene={({ route }) => (
 					<View style={{ backgroundColor: '#000000', width: '100%', height: 100 }}>
@@ -75,3 +78,5 @@ Scrollable.args = {
 		{ key: 'tenth', title: 'Tenth' },
 	],
 };
+
+export default meta;

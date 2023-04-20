@@ -49,11 +49,13 @@ type MenuProps = {
 	onSelect?: (value: any) => void;
 } & (
 	| {
-			items?: never;
 			children: React.ReactNode;
+			items?: never;
+			renderItem?: never;
 	  }
 	| {
 			items: (MenuOption | string)[];
+			renderItem?: (item: MenuOption, index: number) => React.ReactNode;
 			children?: never;
 	  }
 );
@@ -62,7 +64,7 @@ type MenuProps = {
  *
  */
 export const Menu = React.forwardRef<View, MenuProps>(
-	({ children, items = [], onSelect = () => {} }, ref) => {
+	({ children, items = [], onSelect = () => {}, renderItem }, ref) => {
 		/**
 		 * If any item has an icon, we need to add a spacer to keep the menu item aligned
 		 */
@@ -76,6 +78,10 @@ export const Menu = React.forwardRef<View, MenuProps>(
 							const item = isString(rawItem)
 								? { label: rawItem, value: rawItem, action: null }
 								: rawItem;
+
+							if (isFunction(renderItem)) {
+								return renderItem(item, index);
+							}
 
 							if (item.label === '__') {
 								return <Divider key={`divider_${index}`} />;

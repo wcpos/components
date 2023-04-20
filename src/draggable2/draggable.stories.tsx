@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { action } from '@storybook/addon-actions';
-import Icon from '../icon';
-import { Draggable, DraggableProps } from './draggable';
 
-export default {
+import { action } from '@storybook/addon-actions';
+
+import { Draggable, DraggableProps } from './draggable';
+import Icon from '../icon';
+
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Draggable> = {
 	title: 'Components/Draggable2',
 	component: Draggable,
 };
@@ -25,3 +29,5 @@ BasicUsage.args = {
 	onPressOut: action('Press Out'),
 	onRelease: action('Release'),
 };
+
+export default meta;

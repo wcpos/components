@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import { Skeleton, SkeletonProps } from './skeleton';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Skeleton> = {
 	title: 'Components/Skeleton',
 	component: Skeleton,
 };
@@ -14,3 +17,5 @@ BasicUsage.args = {
 	width: 100,
 	height: 100,
 };
+
+export default meta;

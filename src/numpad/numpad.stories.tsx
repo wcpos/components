@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { action } from '@storybook/addon-actions';
+
 import { Numpad, NumpadProps } from './numpad';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Numpad> = {
 	title: 'Components/Numpad',
 	component: Numpad,
 };
@@ -17,3 +19,5 @@ export const calculator = (props: NumpadProps) => {
 calculator.args = {
 	calculator: true,
 };
+
+export default meta;

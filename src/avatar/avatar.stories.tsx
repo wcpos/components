@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import { Avatar, AvatarProps } from './avatar';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Avatar> = {
 	title: 'Components/Avatar',
 	component: Avatar,
 	argTypes: {
@@ -32,3 +35,5 @@ withPlaceholder.args = {
 	size: 'default',
 	placeholder: 'PK',
 };
+
+export default meta;

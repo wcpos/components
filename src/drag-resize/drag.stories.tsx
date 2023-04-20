@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
+
 import { Drag, DragProps } from './drag';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Drag> = {
 	title: 'Components/DragResize',
 	component: Drag,
 };
@@ -181,3 +185,5 @@ export const Resize = (props: DragProps) => {
 		</View>
 	);
 };
+
+export default meta;

@@ -10,6 +10,8 @@ import Icon from '../icon';
 import Portal from '../portal';
 import Text from '../text';
 
+import type { Meta } from '@storybook/react';
+
 /**
  * Modal require
  * - Portals
@@ -23,7 +25,7 @@ const AppProvider = (Story, context) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Dialog> = {
 	title: 'Components/Dialog',
 	component: Dialog,
 	decorators: [AppProvider],
@@ -51,3 +53,5 @@ BasicUsage.args = {
 	onAccept: action('onAccept'),
 	onDecline: action('onDecline'),
 };
+
+export default meta;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { StyleProp, ViewStyle, View, Text, Pressable } from 'react-native';
 
-import Box from '../box';
 import { TabBar } from './tab-bar';
+import Box from '../box';
 
 export type Route = {
 	key: string;

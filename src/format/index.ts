@@ -1,9 +1,11 @@
+import { FormatAddress, FormatAddressProps } from './address';
+import FormatCurrency, { FormatCurrencyProps } from './currency';
+import FormatDate, { FormatDateProps } from './date';
+import { FormatList, FormatListProps } from './list';
 import { FormatName, FormatNameProps } from './name';
 import { FormatNumber, FormatNumberProps } from './number';
-import { FormatList, FormatListProps } from './list';
-import { FormatAddress, FormatAddressProps } from './address';
-import FormatDate, { FormatDateProps } from './date';
-import FormatCurrency, { FormatCurrencyProps } from './currency';
+
+import type { Meta } from '@storybook/react';
 
 export type {
 	FormatNameProps,
@@ -13,7 +15,8 @@ export type {
 	FormatDateProps,
 	FormatCurrencyProps,
 };
-export default {
+
+const meta: Meta<typeof Arrow> = {
 	Name: FormatName,
 	Number: FormatNumber,
 	List: FormatList,

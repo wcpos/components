@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import Text from '../text';
-import Portal from '../portal';
 
 import { Tooltip, TooltipProps } from './tooltip';
+import Portal from '../portal';
+import Text from '../text';
+
+import type { Meta } from '@storybook/react';
 
 /**
  * Tooltips require
@@ -18,7 +20,7 @@ const AppProvider = ({ children }) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Tooltip> = {
 	title: 'Components/Tooltip',
 	component: Tooltip,
 };
@@ -35,3 +37,5 @@ export const BasicUsage = (props: TooltipProps) => (
 BasicUsage.args = {
 	content: 'Here is some very important clarification!',
 };
+
+export default meta;

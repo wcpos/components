@@ -1,8 +1,11 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import Text from '.';
-import { TextProps } from './text';
 import AutoSize from './auto-size';
+import { TextProps } from './text';
+
 import type {
 	MaxLinesProps,
 	MinFontSizeProps,
@@ -11,8 +14,9 @@ import type {
 	PresetFontSizesProps,
 	OverflowReplacementProps,
 } from './auto-size';
+import type { Meta } from '@storybook/react';
 
-export default {
+const meta: Meta<typeof Text> = {
 	title: 'Components/Text',
 	component: Text,
 	subcomponents: { Skeleton: Text.Skeleton },
@@ -120,3 +124,5 @@ OverflowReplacement.args = {
 export const Skeleton = () => {
 	return <Text.Skeleton />;
 };
+
+export default meta;

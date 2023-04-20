@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import { action } from '@storybook/addon-actions';
-import { StoryWrapper } from '@storybook/addons';
 
 import { Dropdown, DropdownProps } from './dropdown';
 import Button from '../button';
@@ -10,13 +9,15 @@ import Icon from '../icon';
 import Portal from '../portal';
 import Text from '../text';
 
+import type { Meta } from '@storybook/react';
+
 /**
  * Dropdowns require (same as popover)
  * - SafeAreaProvider
  * - Portals
  * - AppProviderSizeProvider
  */
-const AppProvider: StoryWrapper = (Story, context) => {
+const AppProvider = (Story, context) => {
 	return (
 		<Portal.Provider>
 			<Story {...context} />
@@ -25,7 +26,7 @@ const AppProvider: StoryWrapper = (Story, context) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Dropdown> = {
 	title: 'Components/Dropdown',
 	component: Dropdown,
 	// subcomponents: { 'Dropdown.Item': Dropdown.Item },
@@ -97,3 +98,5 @@ IconActivator.args = {
 	],
 	onSelect: action('Select'),
 };
+
+export default meta;

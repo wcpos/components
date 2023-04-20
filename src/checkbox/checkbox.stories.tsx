@@ -1,8 +1,12 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import { Checkbox, CheckboxProps } from './checkbox';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Checkbox> = {
 	title: 'Components/Checkbox',
 	component: Checkbox,
 };
@@ -30,3 +34,5 @@ WithInfo.args = {
 };
 
 export const Uncontrolled: React.FC = () => <Checkbox label="Label" />;
+
+export default meta;

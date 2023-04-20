@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
+import Portal from '.';
 import Button from '../button';
 import Text from '../text';
 
 // import { select } from '@storybook/addon-knobs';
 
-import Portal from '.';
+import type { Meta } from '@storybook/react';
 
-export default {
+const meta: Meta<typeof Portal> = {
 	title: 'Components/Portal',
 };
 
@@ -34,3 +36,5 @@ export const BasicUsage = () => {
 		</AppProvider>
 	);
 };
+
+export default meta;

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View } from 'react-native';
 
 import { action } from '@storybook/addon-actions';
-import { StoryWrapper } from '@storybook/addons';
 
 import { Container } from './container';
 import { Content } from './content';
@@ -14,11 +13,13 @@ import Icon from '../icon';
 import Portal from '../portal';
 import Text from '../text';
 
+import type { Meta } from '@storybook/react';
+
 /**
  * Modal require
  * - Portals
  */
-const AppProvider: StoryWrapper = (Story, context) => {
+const AppProvider = (Story, context) => {
 	return (
 		<Portal.Provider>
 			<View style={{ width: '100%', minHeight: 600 }}>
@@ -29,7 +30,7 @@ const AppProvider: StoryWrapper = (Story, context) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Modal> = {
 	title: 'Components/Modal',
 	component: Modal,
 	decorators: [AppProvider],
@@ -121,3 +122,5 @@ export const ModalSubComponents = () => {
 		</View>
 	);
 };
+
+export default meta;

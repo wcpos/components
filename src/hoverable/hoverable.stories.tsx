@@ -1,11 +1,15 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import { Hoverable, HoverableProps } from './hoverable.web';
+import Button from '../button';
 import Pressable from '../pressable';
 import Text from '../text';
-import Button from '../button';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Hoverable> = {
 	title: 'Components/Hoverable',
 	component: Hoverable,
 };
@@ -28,3 +32,5 @@ BasicUsage.args = {
 	onPressIn: action('PressIn'),
 	onPressOut: action('PressOut'),
 };
+
+export default meta;

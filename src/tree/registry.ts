@@ -3,7 +3,9 @@ import { JSONNode } from './json/node';
 import { JSONObject } from './json/object';
 import { JSONValue } from './json/value';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Arrow> = {
 	node: JSONNode,
 	string: JSONValue,
 	object: JSONObject,

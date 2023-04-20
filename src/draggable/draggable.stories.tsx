@@ -1,15 +1,19 @@
 import * as React from 'react';
+
+import { action } from '@storybook/addon-actions';
 import Animated, {
 	useAnimatedGestureHandler,
 	useSharedValue,
 	useAnimatedStyle,
 	withSpring,
 } from 'react-native-reanimated';
-import { action } from '@storybook/addon-actions';
-import Icon from '../icon';
-import { Draggable, DraggableProps } from './draggable';
 
-export default {
+import { Draggable, DraggableProps } from './draggable';
+import Icon from '../icon';
+
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Draggable> = {
 	title: 'Components/Draggable',
 	component: Draggable,
 };
@@ -86,3 +90,5 @@ ColumnResize.args = {
 	onActive: action('Active'),
 	onEnd: action('End'),
 };
+
+export default meta;

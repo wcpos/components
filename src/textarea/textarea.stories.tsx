@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { action } from '@storybook/addon-actions';
+
 import { TextArea, TextAreaProps } from './textarea';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof TextArea> = {
 	title: 'Components/TextArea',
 	component: TextArea,
 };
@@ -10,3 +12,5 @@ export default {
 export const BasicUsage = (props: TextAreaProps) => {
 	return <TextArea {...props} />;
 };
+
+export default meta;

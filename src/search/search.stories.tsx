@@ -1,8 +1,12 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import { Search, SearchProps } from './search';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Search> = {
 	title: 'Components/Search',
 	component: Search,
 };
@@ -31,3 +35,5 @@ BasicUsage.args = {
 		{ label: 'Single', onRemove: action('Remove Single') },
 	],
 };
+
+export default meta;

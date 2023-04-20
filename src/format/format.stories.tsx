@@ -8,7 +8,9 @@ import Format, {
 	FormatDateProps,
 } from '.';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Format> = {
 	title: 'Components/Format',
 	component: Format,
 	subcomponents: [Format.Name, Format.Number, Format.List, Format.Address, Format.Date],
@@ -49,3 +51,5 @@ export const _Date = (props: FormatDateProps) => <Format.Date {...props} />;
 _Date.args = {
 	value: '2017-03-23T20:01:14',
 };
+
+export default meta;

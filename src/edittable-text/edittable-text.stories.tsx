@@ -1,8 +1,12 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import { EdittableText, EdittableTextProps } from './edittable-text';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof EdittableText> = {
 	title: 'Components/EdittableText',
 	component: EdittableText,
 };
@@ -32,3 +36,5 @@ BasicUsage.args = {
 	children: lorem,
 	onChange: action('onChange'),
 };
+
+export default meta;

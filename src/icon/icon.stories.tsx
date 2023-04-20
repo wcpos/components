@@ -8,7 +8,9 @@ import * as Svgs from './components/fontawesome/solid';
 import { Icon, IconProps, IconSkeletonProps } from './icon';
 import Portal from '../portal';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Icon> = {
 	title: 'Components/Icon',
 	component: Icon,
 	// argTypes: {
@@ -85,3 +87,5 @@ IconWithSpin.args = {
 };
 
 export const Skeleton = (props: IconSkeletonProps) => <Icon.Skeleton {...props} />;
+
+export default meta;

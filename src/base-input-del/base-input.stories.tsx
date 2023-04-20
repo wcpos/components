@@ -6,7 +6,9 @@ import { BaseInput, BaseInputProps } from './base-input';
 import { BaseInputContainer, BaseInputContainerProps } from './base-input-container';
 import TextInput from '../textinput';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof BaseInput> = {
 	title: 'Components/BaseInput',
 	component: BaseInput,
 	subcomponents: { BaseInputContainer },
@@ -43,3 +45,5 @@ WithContainer.args = {
 export const TextInputWithContainer = () => {
 	return <TextInput label="Label" />;
 };
+
+export default meta;

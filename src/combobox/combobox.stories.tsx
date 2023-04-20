@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { View } from 'react-native';
 
-import { StoryWrapper } from '@storybook/addons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Combobox, ComboboxProps } from './combobox';
 import { ComboboxWithLabel, ComboboxWithLabelProps } from './with-label';
 import Portal from '../portal';
+
+import type { Meta } from '@storybook/react';
 
 /**
  * Combobox require (uses Popover)
@@ -14,7 +15,7 @@ import Portal from '../portal';
  * - Portals
  * - AppProviderSizeProvider
  */
-const AppProvider: StoryWrapper = (Story, context) => {
+const AppProvider = (Story, context) => {
 	return (
 		<SafeAreaProvider>
 			<Portal.Provider>
@@ -25,7 +26,7 @@ const AppProvider: StoryWrapper = (Story, context) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Combobox> = {
 	title: 'Components/Combobox',
 	component: Combobox,
 	decorators: [AppProvider],
@@ -65,3 +66,5 @@ WithLabel.args = {
 		{ label: 'Yellow', value: 'yellow' },
 	],
 };
+
+export default meta;

@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { View } from 'react-native';
 
-import { StoryWrapper } from '@storybook/addons';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Select, SelectProps } from './select';
 import { SelectWithLabel, SelectWithLabelProps } from './with-label';
 import Portal from '../portal';
+
+import type { Meta } from '@storybook/react';
 
 /**
  * Select require (uses Popover)
@@ -14,7 +15,7 @@ import Portal from '../portal';
  * - Portals
  * - AppProviderSizeProvider
  */
-const AppProvider: StoryWrapper = (Story, context) => {
+const AppProvider = (Story, context) => {
 	return (
 		<SafeAreaProvider>
 			<Portal.Provider>
@@ -27,7 +28,7 @@ const AppProvider: StoryWrapper = (Story, context) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Select> = {
 	title: 'Components/Select',
 	component: Select,
 	decorators: [AppProvider],
@@ -140,3 +141,5 @@ export const WithError: React.FC = () => {
 		/>
 	);
 };
+
+export default meta;

@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components/native';
+
 import { Interactive, InteractiveProps } from './interactive';
 import Text from '../text';
 
@@ -12,7 +14,9 @@ import Text from '../text';
 // 	height: '50px',
 // `;
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Interactive> = {
 	title: 'Components/Interactive',
 	component: Interactive,
 };
@@ -21,3 +25,5 @@ export const BasicUsage = (props: InteractiveProps) => <Interactive {...props} /
 BasicUsage.args = {
 	onMove: action('Move'),
 };
+
+export default meta;

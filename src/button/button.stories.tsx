@@ -3,11 +3,13 @@ import { View } from 'react-native';
 
 import { action } from '@storybook/addon-actions';
 
-import Icon from '../icon';
 import Button from './button';
 import { Group } from './group';
+import Icon from '../icon';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Button> = {
 	title: 'Components/Button',
 	component: Button,
 	subcomponents: { Group },
@@ -208,3 +210,5 @@ export const LoadingState = () => (
 		</View>
 	</>
 );
+
+export default meta;

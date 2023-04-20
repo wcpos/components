@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { View, LayoutChangeEvent } from 'react-native';
-import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
-import { action } from '@storybook/addon-actions';
-import Icon from '../icon';
-import { Draggable, DraggableProps } from './draggable';
 
-export default {
+import { action } from '@storybook/addon-actions';
+import Animated, { useSharedValue, useAnimatedStyle } from 'react-native-reanimated';
+
+import { Draggable, DraggableProps } from './draggable';
+import Icon from '../icon';
+
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Draggable> = {
 	title: 'Components/Draggable3',
 	component: Draggable,
 };
@@ -103,3 +107,5 @@ export const ColumnResize = (props: DraggableProps) => {
 		</View>
 	);
 };
+
+export default meta;

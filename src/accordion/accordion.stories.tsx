@@ -1,9 +1,12 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { Accordion, AccordionProps } from './accordion';
 import Text from '../text';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Accordion> = {
 	title: 'Components/Accordion',
 	component: Accordion,
 };
@@ -32,3 +35,5 @@ BasicUsage.args = {
 		},
 	],
 };
+
+export default meta;

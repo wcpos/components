@@ -1,8 +1,12 @@
 import * as React from 'react';
+
 import { action } from '@storybook/addon-actions';
+
 import { Tree, TreeProps } from './tree';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Tree> = {
 	title: 'Components/Tree',
 	component: Tree,
 };
@@ -30,3 +34,5 @@ BasicUsage.args = {
 	},
 	onExpand: action('Expand'),
 };
+
+export default meta;

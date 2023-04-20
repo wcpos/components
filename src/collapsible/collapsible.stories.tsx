@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
+
 import { Collapsible, CollapsibleProps } from './collapsible';
 import Text from '../text';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Collapsible> = {
 	title: 'Components/Collapsible',
 	component: Collapsible,
 };
@@ -27,3 +31,5 @@ BasicUsage.args = {
 	title: 'Trigger',
 	onChangeState: action('onChangeState'),
 };
+
+export default meta;

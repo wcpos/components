@@ -2,11 +2,13 @@ import * as React from 'react';
 
 import { action } from '@storybook/addon-actions';
 
+import Menu, { MenuProps } from './';
 import Logo from '../logo';
 import Text from '../text';
-import Menu, { MenuProps } from './';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Menu> = {
 	title: 'Components/Menu',
 	component: Menu,
 	subcomponents: {
@@ -69,3 +71,13 @@ export const WithHeadersAndDividers = (props: MenuProps) => (
 		<Menu.Item type="critical">Delete my account</Menu.Item>
 	</Menu>
 );
+
+export const WithCustomRenderItem = (props: MenuProps) => (
+	<Menu {...props} renderItem={() => <Text>hi</Text>} />
+);
+WithCustomRenderItem.args = {
+	items: ['Item 1', 'Item 2', { label: 'Item 3', value: 3 }, { label: 'Item 4', type: 'critical' }],
+	onSelect: action('Select'),
+};
+
+export default meta;

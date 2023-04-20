@@ -1,17 +1,20 @@
 import * as React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
 import { View } from 'react-native';
-import Text from '../text';
-import Button from '../button';
-import { Box, BoxProps } from './box';
 
-export default {
+import { action } from '@storybook/addon-actions';
+
+import { Box, BoxProps } from './box';
+import Button from '../button';
+import Text from '../text';
+
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Box> = {
 	title: 'Components/Box',
 	component: Box,
-} as ComponentMeta<typeof Box>;
+};
 
-export const Basic: ComponentStory<typeof Box> = (props: BoxProps) => (
+export const Basic = (props: BoxProps) => (
 	<Box {...props}>
 		<Text>A</Text>
 		<Text>B</Text>
@@ -60,3 +63,5 @@ export const Distribution = (props: BoxProps) => (
 		</Box>
 	</View>
 );
+
+export default meta;

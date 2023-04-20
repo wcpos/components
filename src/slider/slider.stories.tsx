@@ -1,7 +1,10 @@
 import * as React from 'react';
+
 import { Slider, SliderProps } from './Slider';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof Slider> = {
 	title: 'Components/Slider',
 	component: Slider,
 };
@@ -16,3 +19,5 @@ BasicUsage.args = {
 	max: 3000,
 	step: 15,
 };
+
+export default meta;

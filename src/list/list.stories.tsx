@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { action } from '@storybook/addon-actions';
-import { text, select, boolean } from '@storybook/addon-knobs';
 
 import List from '.';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof List> = {
 	title: 'Components/List',
 };
 
@@ -45,3 +45,5 @@ export const selectable = () => (
 		keyExtractor={() => 'name'}
 	/>
 );
+
+export default meta;

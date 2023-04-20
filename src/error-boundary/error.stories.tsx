@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { View, Text, Button } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
+
 import ErrorBoundary from '.';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof ErrorBoundary> = {
 	title: 'Components/Error',
 };
 
@@ -35,3 +39,5 @@ export const WithFallback = (props) => (
 		<BuggyComponent />
 	</ErrorBoundary>
 );
+
+export default meta;

@@ -1,13 +1,18 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import { action } from '@storybook/addon-actions';
-import { WebView, WebViewProps } from './webview.web';
-import Button from '../button';
+
 import onMessageHTML from './onMessage.html';
 import postMessageHTML from './postMessage.html';
+import { WebView, WebViewProps } from './webview.web';
+import Button from '../button';
 
-export default {
+import type { Meta } from '@storybook/react';
+
+const meta: Meta<typeof WebView> = {
 	title: 'Components/WebView',
+	component: WebView,
 };
 
 /**
@@ -72,3 +77,5 @@ export const injectedJavascript = (props: WebViewProps) => {
 injectedJavascript.args = {
 	src: 'https://example.com',
 };
+
+export default meta;

@@ -1,19 +1,18 @@
 import * as React from 'react';
 import { View, Text } from 'react-native';
 
-import { action } from '@storybook/addon-actions';
-import { StoryWrapper } from '@storybook/addons';
-
 import Popover, { PopoverProps } from './';
 import Button from '../button';
 import Menu from '../menu';
 import Portal from '../portal';
 
+import type { Meta } from '@storybook/react';
+
 /**
  * Popovers require
  * - Portals
  */
-const AppProvider: StoryWrapper = (Story, context) => {
+const AppProvider = (Story, context) => {
 	return (
 		<Portal.Provider>
 			<Story {...context} />
@@ -22,7 +21,7 @@ const AppProvider: StoryWrapper = (Story, context) => {
 	);
 };
 
-export default {
+const meta: Meta<typeof Popover> = {
 	title: 'Components/Popover',
 	component: Popover,
 	decorators: [AppProvider],
@@ -88,3 +87,5 @@ export const WithoutPortal = (props: PopoverProps) => {
 		</View>
 	);
 };
+
+export default meta;
