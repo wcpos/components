@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[44222],{"./src/icon/svg/fontawesome/solid/life-ring.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"4ed9ead16ac3cc26292c.svg"}}]);

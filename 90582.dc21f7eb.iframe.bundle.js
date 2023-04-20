@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[90582],{"./src/icon/components/README.md":module=>{module.exports="React Native components are generated during development from raw SVG files using `@svgr/cli`. \nThis is done in preference to transpiling using a babel plugin or similar (which causes more headaches)."}}]);

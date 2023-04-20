@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[51019],{"./src/icon/svg/fontawesome/solid/caret-down.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"fb6c01256795721ab2a2.svg"}}]);

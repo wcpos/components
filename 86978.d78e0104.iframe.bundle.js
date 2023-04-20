@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[86978],{"./src/icon/svg/fontawesome/solid/caret-up.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"aa94fe9a3bb8c14c3c70.svg"}}]);

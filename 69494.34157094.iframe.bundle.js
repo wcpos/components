@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[69494],{"./src/icon/svg/fontawesome/solid/grid-2-plus.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"56411de1eb4d88108430.svg"}}]);

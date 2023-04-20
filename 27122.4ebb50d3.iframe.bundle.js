@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[27122],{"./src/box/README.md":module=>{module.exports="inspired by https://github.com/Trampoline-CX/cubes"}}]);

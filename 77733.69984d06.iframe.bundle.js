@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[77733],{"./src/error-boundary/README.md":module=>{module.exports="https://github.com/bvaughn/react-error-boundary"}}]);

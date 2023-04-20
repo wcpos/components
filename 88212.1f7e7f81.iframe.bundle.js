@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[88212],{"./src/icon/svg/fontawesome/solid/credit-card.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"6d7cf79b67b2cea76c74.svg"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[29667],{"./src/icon/svg/fontawesome/solid/file-invoice-dollar.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"eba921a3d0b7e3a619a2.svg"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[25138],{"./src/format-number/README.md":module=>{module.exports="Based on https://github.com/s-yadav/react-number-format"}}]);

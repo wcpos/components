@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[74747],{"./src/icon/svg/fontawesome/solid/grip-lines-vertical.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"a251ae38d45bf0ef56ed.svg"}}]);

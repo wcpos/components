@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[97425],{"./src/icon/svg/fontawesome/solid/circle-dollar.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"672e1cc4593b4c826d6e.svg"}}]);

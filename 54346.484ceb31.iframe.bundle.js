@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[54346],{"./src/modal/README.md":module=>{module.exports="Inspired by https://github.com/jeremybarbet/react-native-modalize"}}]);

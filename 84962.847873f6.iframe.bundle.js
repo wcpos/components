@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[84962],{"./src/index.ts.del":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"b815476aec1fa85be101.del"}}]);

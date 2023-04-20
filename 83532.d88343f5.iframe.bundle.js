@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[83532],{"./src/icon/svg/fontawesome/solid/circle-ellipsis.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"8a32b82ea4b590467b4c.svg"}}]);

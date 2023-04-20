@@ -1,0 +1,1 @@
+(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[84837],{"./src/interactive/rect.ts":()=>{}}]);

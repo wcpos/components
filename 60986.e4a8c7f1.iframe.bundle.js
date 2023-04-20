@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[60986],{"./src/icon/svg/fontawesome/solid/address-card.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"78db1298e7b16a360b25.svg"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[829],{"./src/draggable2/README.md":module=>{module.exports="https://github.com/tongyy/react-native-draggable"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[32580],{"./src/icon/svg/fontawesome/solid/divide.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"4dfb4fb4c6099a55ad0f.svg"}}]);

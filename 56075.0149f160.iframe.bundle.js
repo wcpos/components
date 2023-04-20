@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[56075],{"./src/icon/svg/fontawesome/solid/cash-register.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"6d5c9671cfd50b0a65f2.svg"}}]);

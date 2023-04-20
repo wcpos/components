@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[61109],{"./src/drag-resize/README.md":module=>{module.exports="Based on https://github.com/fateh999/reanimated-drag-resize"}}]);

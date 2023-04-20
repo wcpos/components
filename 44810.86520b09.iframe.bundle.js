@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[44810],{"./src/icon/svg/fontawesome/solid/star-of-life.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"b7a33a7d8a67a9edde19.svg"}}]);

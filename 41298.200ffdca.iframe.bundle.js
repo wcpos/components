@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[41298],{"./src/icon/svg/fontawesome/solid/tag.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"016f5844e032e284d0ce.svg"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[43090],{"./src/icon/svg/fontawesome/solid/calendar.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"aeccd799d048af2ef808.svg"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[93830],{"./src/icon/svg/fontawesome/solid/delete-left.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"4cbb270c19680ff7eff5.svg"}}]);

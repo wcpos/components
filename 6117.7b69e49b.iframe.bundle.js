@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[6117],{"./src/icon/svg/fontawesome/solid/pen-to-square.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"57b2f9f80d607212be1c.svg"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[22369],{"./src/icon/svg/fontawesome/solid/box-open-full.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"696e2a2ce5a4fa2f76c6.svg"}}]);

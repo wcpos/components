@@ -1,0 +1,1 @@
+(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[9582],{"./src/slider/constants.ts":(__unused_webpack_module,exports)=>{Object.defineProperty(exports,"__esModule",{value:!0}),exports.CURSOR_WIDTH=exports.CURSOR_HALF_WIDTH=void 0;exports.CURSOR_WIDTH=20;exports.CURSOR_HALF_WIDTH=10}}]);

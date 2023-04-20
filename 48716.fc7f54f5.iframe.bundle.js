@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[48716],{"./src/icon/svg/fontawesome/solid/arrow-right-from-bracket.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"fe3938f9b2eaff9ad9c6.svg"}}]);

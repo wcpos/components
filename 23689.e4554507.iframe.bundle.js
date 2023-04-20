@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[23689],{"./src/icon/README.md":module=>{module.exports="## TODO - Future Optimisations\n\nReact Native does not have web SVG support so they are transpiled into React components. It may be worth using native SVG for web and only transpile for native builds.\n"}}]);

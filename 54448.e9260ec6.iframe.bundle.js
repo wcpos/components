@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[54448],{"./src/icon/svg/fontawesome/solid/boxes-stacked.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"aa2ec6eb049a9d684a1d.svg"}}]);

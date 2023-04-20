@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[15714],{"./src/icon/svg/fontawesome/solid/badge-dollar.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"d54b5e43f15fa7590fe7.svg"}}]);

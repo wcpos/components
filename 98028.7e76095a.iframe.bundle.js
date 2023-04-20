@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[98028],{"./src/icon/svg/fontawesome/solid/rectangle-barcode.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"1d3376f2ea56d71281d5.svg"}}]);

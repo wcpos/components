@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[98597],{"./src/icon/svg/fontawesome/solid/calculator.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"f44a2764ebe6bfad84b1.svg"}}]);

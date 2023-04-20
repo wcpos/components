@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[5929],{"./src/icon/svg/fontawesome/solid/badge-percent.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"1795afd90db0a69180ba.svg"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[14372],{"./src/icon/svg/fontawesome/solid/basket-shopping.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"84259ad003237ab006ff.svg"}}]);

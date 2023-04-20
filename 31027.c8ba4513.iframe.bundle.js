@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[31027],{"./src/icon/svg/fontawesome/solid/arrow-down.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"c633f8601ab405b234cd.svg"}}]);

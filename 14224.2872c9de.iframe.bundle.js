@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[14224],{"./src/numpad/README.md":module=>{module.exports="# Examples\nhttps://gpietro.github.io/react-numpad-demo/\nhttps://demo.mobiscroll.com/react/numpad"}}]);

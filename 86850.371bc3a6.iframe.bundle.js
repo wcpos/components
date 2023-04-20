@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[86850],{"./src/icon/svg/fontawesome/solid/clock.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"8b2eb05bdfb19e000515.svg"}}]);

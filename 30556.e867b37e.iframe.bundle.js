@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[30556],{"./src/portal/README.md":module=>{module.exports="https://github.com/Trampoline-CX/cubes/tree/develop/src/components/dev/portal-factory"}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[32660],{"./src/icon/svg/fontawesome/solid/magnifying-glass.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"ba7914904159c3c097bd.svg"}}]);
