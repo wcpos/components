@@ -8,6 +8,8 @@ import Dropdown from '../dropdown';
 import TextInput from '../textinput';
 // import Search from '../search';
 
+type TextInput = import('react-native').TextInput;
+
 /**
  *
  */
@@ -54,6 +56,12 @@ export interface ComboboxProps {
 	 * Text to display as a placeholder.
 	 */
 	placeholder?: string;
+
+	/** Customise option display */
+	renderOption?: (option: ComboboxOption) => React.ReactNode;
+
+	/**  */
+	textInputRef?: React.RefObject<TextInput>;
 }
 
 /**
@@ -86,6 +94,8 @@ export const Combobox = ({
 	placeholder,
 	// searchValue,
 	onSearch,
+	renderOption,
+	textInputRef,
 	...props
 }: ComboboxProps) => {
 	// const [selected, onChange] = useUncontrolledState(
@@ -135,6 +145,7 @@ export const Combobox = ({
 			matchWidth
 			items={filteredOptions}
 			onSelect={onChange}
+			renderItem={renderOption}
 			{...props}
 		>
 			<TextInput
@@ -143,10 +154,11 @@ export const Combobox = ({
 				onChangeText={onSearchChange}
 				onFocus={() => setOpened(true)}
 				clearable
-				onKeyPress={(e) => {
-					console.log(e);
-				}}
+				// onKeyPress={(e) => {
+				// 	console.log(e);
+				// }}
 				containerStyle={{ flex: 1 }}
+				ref={textInputRef}
 			/>
 		</Dropdown>
 	);

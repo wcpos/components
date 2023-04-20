@@ -42,7 +42,7 @@ export interface MenuOption {
 /**
  * Menu
  */
-type MenuProps = {
+export type MenuProps = {
 	/**
 	 * Callback called when selection is changed. Returns the value of the selected itemm. If no value is set, returns the label.
 	 */
@@ -79,8 +79,14 @@ export const Menu = React.forwardRef<View, MenuProps>(
 								? { label: rawItem, value: rawItem, action: null }
 								: rawItem;
 
+							// special case for customer select
+							// TODO - need a more generic way to handle this
 							if (isFunction(renderItem)) {
-								return renderItem(item, index);
+								return (
+									<Item key={item.key} onPress={() => isFunction(onSelect) && onSelect(item.value)}>
+										{renderItem(item.value, index)}
+									</Item>
+								);
 							}
 
 							if (item.label === '__') {

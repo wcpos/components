@@ -5,8 +5,6 @@ import { FormatList, FormatListProps } from './list';
 import { FormatName, FormatNameProps } from './name';
 import { FormatNumber, FormatNumberProps } from './number';
 
-import type { Meta } from '@storybook/react';
-
 export type {
 	FormatNameProps,
 	FormatNumberProps,
@@ -16,7 +14,7 @@ export type {
 	FormatCurrencyProps,
 };
 
-const meta: Meta<typeof Arrow> = {
+export default {
 	Name: FormatName,
 	Number: FormatNumber,
 	List: FormatList,

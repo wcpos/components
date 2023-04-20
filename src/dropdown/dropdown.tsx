@@ -2,47 +2,38 @@ import * as React from 'react';
 
 import useUncontrolled from '@wcpos/hooks/src/use-uncontrolled';
 
-import Menu from '../menu';
+import Menu, { MenuProps } from '../menu';
 import Popover, { PopoverProps } from '../popover';
 import ScrollView from '../scrollview';
-
-type MenuOption = import('../menu/menu').MenuOption;
 
 /**
  *
  */
-export type DropdownProps = Omit<PopoverProps, 'content' | 'children'> & {
-	/** The content which will trigger the Popover. The Popover will be anchored to this component. */
-	children: React.ReactNode;
+export type DropdownProps = Omit<PopoverProps, 'content' | 'children'> &
+	Pick<MenuProps, 'renderItem' | 'onSelect'> & {
+		/** The content which will trigger the Popover. The Popover will be anchored to this component. */
+		children: React.ReactNode;
 
-	/** */
-	items: string[] | MenuOption[];
-
-	/** */
-	onSelect?: (value: any) => void;
-
-	/** Controlled menu opened state */
-	opened?: boolean;
-
-	/** Uncontrolled menu initial opened state */
-	defaultOpened?: boolean;
-
-	/** Called when menu opened state changes */
-	onChange?(opened: boolean): void;
-
-	/** Called when Menu is opened */
-	onOpen?(): void;
-
-	/** Called when Menu is closed */
-	onClose?(): void;
-};
+		/** Menu items are required here */
+		items: NonNullable<MenuProps['items']>;
+	};
 
 /**
  *
  */
 export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 	(
-		{ children, opened, items, onSelect, style, defaultOpened = false, onChange, ...props },
+		{
+			children,
+			opened,
+			items,
+			onSelect,
+			style,
+			defaultOpened = false,
+			onChange,
+			renderItem,
+			...props
+		},
 		ref
 	) => {
 		/**
@@ -76,7 +67,7 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 				<Popover.Target>{children}</Popover.Target>
 				<Popover.Content style={{ paddingLeft: 0, paddingRight: 0 }}>
 					<ScrollView contentContainerStyle={{ maxHeight: 200 }}>
-						<Menu items={items} onSelect={handleSelect} />
+						<Menu items={items} renderItem={renderItem} onSelect={handleSelect} />
 					</ScrollView>
 				</Popover.Content>
 			</Popover>

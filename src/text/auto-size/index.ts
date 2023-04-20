@@ -5,9 +5,7 @@ import { OverflowReplacement, OverflowReplacementProps } from './overflow-replac
 import { PresetFontSizes, PresetFontSizesProps } from './present-font-sizes';
 import { StepGranularity, StepGranularityProps } from './step-granularity';
 
-import type { Meta } from '@storybook/react';
-
-const meta: Meta<typeof Arrow> = {
+export default {
 	Group,
 	MaxLines,
 	MinFontSize,
@@ -16,7 +14,7 @@ const meta: Meta<typeof Arrow> = {
 	StepGranularity,
 };
 
-export {
+export type {
 	GroupProps,
 	MaxLinesProps,
 	MinFontSizeProps,
