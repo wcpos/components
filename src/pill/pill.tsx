@@ -65,7 +65,7 @@ export const Pill = ({
 
 	return (
 		<View style={{ maxWidth: '100%', flexDirection: 'row' }}>
-			<Pressable onPress={disabled ? undefined : onPress} style={{ maxWidth: '100%' }}>
+			<Pressable onPress={disabled ? undefined : onPress} style={{ flex: 1, flexDirection: 'row' }}>
 				{icon && (
 					<Styled.Pill
 						disabled={disabled}
