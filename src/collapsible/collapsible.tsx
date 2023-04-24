@@ -58,6 +58,7 @@ export const Collapsible = ({
 	const style = useAnimatedStyle<Animated.AnimateStyle<ViewStyle>>(() => ({
 		height: layout.height * progress.value + 1,
 		opacity: progress.value === 0 ? 0 : 1,
+		overflow: progress.value === 1 ? 'visible' : 'hidden',
 	}));
 
 	/**
@@ -82,7 +83,12 @@ export const Collapsible = ({
 			<Pressable onPress={toggleAccordion}>
 				<CollapsibleHeader title={title} open={open} />
 			</Pressable>
-			<Animated.View style={[style, { overflow: 'hidden' }]}>
+			<Animated.View
+				style={[
+					style,
+					// { overflow: 'hidden' }
+				]}
+			>
 				<View onLayout={onLayout}>{children}</View>
 			</Animated.View>
 		</Box>

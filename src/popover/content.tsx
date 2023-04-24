@@ -81,6 +81,9 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		return { opacity, ...position };
 	});
 
+	/**
+	 *
+	 */
 	return (
 		<Styled.Container
 			ref={mergedRef}
@@ -104,6 +107,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 					 */
 					style={[
 						{ width: matchWidth ? '100%' : Platform.isNative ? 'auto' : 'max-content' },
+						{ zIndex: 2 }, // NOTE: This is to make sure the popover is above the footer
 						style,
 					]}
 				>

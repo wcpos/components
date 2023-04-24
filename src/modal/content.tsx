@@ -26,7 +26,10 @@ export const Content = ({ children }: ModalContentProps) => {
 			padding="medium"
 			// - this causes problem on iOS
 			// TODO - test with ScrollView contentContainerStyle
-			style={Platform.isNative ? undefined : { flex: 1 }}
+			style={[
+				Platform.isNative ? undefined : { flex: 1 },
+				{ zIndex: 2 }, // same as Popover, make sure content is above the footer
+			]}
 		>
 			<ScrollView ref={focusTrapRef} contentContainerStyle={{ flexBasis: '100%' }}>
 				<ErrorBoundary>{children}</ErrorBoundary>

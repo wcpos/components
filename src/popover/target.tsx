@@ -90,6 +90,20 @@ export const Target = ({ children }: PopoverTargetProps) => {
 		forceMeasure();
 	});
 
+	/**
+	 * BUG FIX: On the Customer Edit modal, the target was being measured offscreen
+	 * This is a hack to force a re-measure after the modal has been opened
+	 * NOTE: this doesn't happen for Settings, where the modal is a separate screen
+	 */
+	React.useEffect(() => {
+		delay(() => {
+			forceMeasure();
+		}, 100);
+	}, [forceMeasure]);
+
+	/**
+	 *
+	 */
 	return (
 		<View ref={ref} onLayout={onLayout}>
 			{pressableChild}

@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import delay from 'lodash/delay';
+import isEmpty from 'lodash/isEmpty';
 import isPlainObject from 'lodash/isPlainObject';
 
 import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
@@ -8,7 +10,7 @@ import Dropdown from '../dropdown';
 import TextInput from '../textinput';
 // import Search from '../search';
 
-type TextInput = import('react-native').TextInput;
+type TextInputType = import('react-native').TextInput;
 
 /**
  *
@@ -60,8 +62,11 @@ export interface ComboboxProps {
 	/** Customise option display */
 	renderOption?: (option: ComboboxOption) => React.ReactNode;
 
+	/** Autofocus so the dropdown is open and textinput is in focus */
+	autofocus?: boolean;
+
 	/**  */
-	textInputRef?: React.RefObject<TextInput>;
+	// textInputRef?: React.RefObject<TextInput>;
 }
 
 /**
@@ -89,13 +94,13 @@ const formatOptions = (options: ComboboxOption[] | string[]) => {
  * Let the user search and choose one option from multiple ones.
  */
 export const Combobox = ({
-	value: selected = null,
+	value,
 	onChange,
 	placeholder,
 	// searchValue,
 	onSearch,
 	renderOption,
-	textInputRef,
+	autofocus,
 	...props
 }: ComboboxProps) => {
 	// const [selected, onChange] = useUncontrolledState(
@@ -105,18 +110,20 @@ export const Combobox = ({
 	const [opened, setOpened] = React.useState(false);
 	const [searchValue, setSearchValue] = React.useState('');
 	const options = React.useMemo(() => formatOptions(props.options), [props.options]);
+	const textInputRef = React.useRef<TextInputType>(null);
 
 	/**
 	 * Handle search change.
 	 */
 	const onSearchChange = React.useCallback(
 		(value: string) => {
+			!opened && setOpened(true);
 			setSearchValue(value);
 			if (onSearch) {
 				onSearch(value);
 			}
 		},
-		[onSearch]
+		[onSearch, opened]
 	);
 
 	/**
@@ -137,6 +144,38 @@ export const Combobox = ({
 	/**
 	 *
 	 */
+	const selected = React.useMemo(() => {
+		if (typeof value === 'string') {
+			return options.find((option) => option.value === value);
+		}
+		return value;
+	}, [options, value]);
+
+	/**
+	 * FIXME: this is a hack, useEffect is being called before onLayout for the Popover.Target
+	 * which means the width is not set correctly.
+	 */
+	React.useEffect(() => {
+		if (autofocus && textInputRef?.current) {
+			delay(() => {
+				textInputRef.current.focus();
+			}, 100);
+		}
+	}, [autofocus]);
+
+	/**
+	 * HACK: clear search value when the value is set from outside
+	 */
+	React.useEffect(() => {
+		!isEmpty(searchValue) && setSearchValue('');
+	}, [
+		// leave as dependency, otherwise it will not update when the value is set
+		value,
+	]);
+
+	/**
+	 *
+	 */
 	return (
 		<Dropdown
 			opened={opened}
@@ -150,7 +189,7 @@ export const Combobox = ({
 		>
 			<TextInput
 				value={searchValue}
-				placeholder={selected?.label ?? (selected || placeholder)}
+				placeholder={selected?.label || selected || placeholder}
 				onChangeText={onSearchChange}
 				onFocus={() => setOpened(true)}
 				clearable
