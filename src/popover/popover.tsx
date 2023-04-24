@@ -94,7 +94,7 @@ export const Popover = ({
 	placement = 'bottom',
 	trigger = 'press',
 	withArrow = true,
-	withinPortal = true,
+	withinPortal = false,
 	primaryAction,
 	secondaryActions,
 	style,

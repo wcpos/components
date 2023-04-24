@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
+import delay from 'lodash/delay';
 import Animated, { useAnimatedStyle, withTiming, FadeInDown } from 'react-native-reanimated';
 
 import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';

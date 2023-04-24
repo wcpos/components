@@ -69,7 +69,7 @@ export const Container = ({
 						width,
 						maxWidth: '95%',
 						backgroundColor: 'white',
-						maxHeight: '95%',
+						maxHeight: '90%',
 					},
 					style,
 				]}

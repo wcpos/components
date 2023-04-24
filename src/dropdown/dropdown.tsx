@@ -25,7 +25,7 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 	(
 		{
 			children,
-			opened,
+			// opened,
 			items,
 			onSelect,
 			style,
@@ -39,12 +39,13 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 		/**
 		 *
 		 */
-		const [_opened, setOpened] = useUncontrolled({
-			value: opened,
-			defaultValue: defaultOpened,
-			finalValue: false,
-			onChange,
-		});
+		// const [_opened, setOpened] = useUncontrolled({
+		// 	value: opened,
+		// 	defaultValue: defaultOpened,
+		// 	finalValue: false,
+		// 	onChange,
+		// });
+		const [opened, setOpened] = React.useState(props.opened || defaultOpened);
 
 		/**
 		 * when to close the popover?
@@ -59,14 +60,14 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 
 		return (
 			<Popover
-				opened={_opened}
+				opened={opened}
 				onOpen={() => setOpened(true)}
 				onClose={() => setOpened(false)}
 				{...props}
 			>
 				<Popover.Target>{children}</Popover.Target>
 				<Popover.Content style={{ paddingLeft: 0, paddingRight: 0 }}>
-					<ScrollView contentContainerStyle={{ maxHeight: 200 }}>
+					<ScrollView contentContainerStyle={{ maxHeight: 300 }}>
 						<Menu items={items} renderItem={renderItem} onSelect={handleSelect} />
 					</ScrollView>
 				</Popover.Content>

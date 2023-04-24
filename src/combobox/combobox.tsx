@@ -185,6 +185,7 @@ export const Combobox = ({
 			items={filteredOptions}
 			onSelect={onChange}
 			renderItem={renderOption}
+			withinPortal
 			{...props}
 		>
 			<TextInput

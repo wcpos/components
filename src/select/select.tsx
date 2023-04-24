@@ -118,6 +118,7 @@ export const Select = ({
 			onSelect={handleSelect}
 			matchWidth
 			withArrow={false}
+			onClose={() => setOpen(false)}
 			{...props}
 		>
 			<TextInputContainer onPress={() => setOpen(true)}>
