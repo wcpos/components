@@ -29,7 +29,7 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 			items,
 			onSelect,
 			style,
-			defaultOpened = false,
+			// defaultOpened = false,
 			onChange,
 			renderItem,
 			...props
@@ -45,7 +45,7 @@ export const Dropdown = React.forwardRef<typeof Popover, DropdownProps>(
 		// 	finalValue: false,
 		// 	onChange,
 		// });
-		const [opened, setOpened] = React.useState(props.opened || defaultOpened);
+		const [opened, setOpened] = React.useState(props.opened);
 
 		/**
 		 * when to close the popover?

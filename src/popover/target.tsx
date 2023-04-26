@@ -1,14 +1,14 @@
 import * as React from 'react';
-import { View } from 'react-native';
 
 import delay from 'lodash/delay';
+import isFunction from 'lodash/isFunction';
 import pick from 'lodash/pick';
 
 import useMeasure from '@wcpos/hooks/src/use-measure';
 
 import { usePopover } from './context';
 import Pressable from '../pressable';
-import { useScrollEvents } from '../scrollview';
+// import { useScrollEvents } from '../scrollview';
 
 /**
  *
@@ -23,28 +23,42 @@ export interface PopoverTargetProps {
  */
 export const Target = ({ children }: PopoverTargetProps) => {
 	const { targetMeasurements, onOpen, onClose, trigger } = usePopover();
-	const ref = React.useRef<View>(null);
-	const onMeasure = (val) => {
-		targetMeasurements.value = val;
-	};
-	const { measurements, onLayout, forceMeasure } = useMeasure({ ref, onMeasure });
+	const { MeasureWrapper, forceMeasure } = useMeasure({
+		onMeasure: (val) => {
+			targetMeasurements.value = val;
+		},
+	});
+
+	/**
+	 *
+	 */
+	const handleOpen = React.useCallback(
+		(delayTime = 0) => {
+			forceMeasure();
+			if (isFunction(onOpen)) {
+				delay(onOpen, delayTime);
+			}
+		},
+		[forceMeasure, onOpen]
+	);
+
+	/**
+	 *
+	 */
 	const triggerProps = React.isValidElement(children)
 		? pick(children.props, ['onPress', 'onLongPress', 'onHoverIn', 'onHoverOut'])
 		: {};
 
-	/**  */
 	const wrappedTriggerProps = {
 		onPress: () => {
 			if (trigger === 'press') {
-				forceMeasure();
-				onOpen && onOpen();
+				handleOpen();
 			}
 			triggerProps.onPress && triggerProps.onPress();
 		},
 		onLongPress: () => {
 			if (trigger === 'longpress') {
-				forceMeasure();
-				onOpen && onOpen();
+				handleOpen();
 			}
 			triggerProps.onLongPress && triggerProps.onLongPress();
 		},
@@ -54,14 +68,13 @@ export const Target = ({ children }: PopoverTargetProps) => {
 		 */
 		onHoverIn: () => {
 			if (trigger === 'hover') {
-				forceMeasure();
-				onOpen && delay(onOpen, 20);
+				handleOpen(20);
 			}
 			triggerProps.onHoverIn && triggerProps.onHoverIn();
 		},
 		onHoverOut: () => {
 			if (trigger === 'hover') {
-				onClose && delay(onClose, 20);
+				onClose && delay(onClose, 25);
 			}
 			triggerProps.onHoverOut && triggerProps.onHoverOut();
 		},
@@ -85,28 +98,13 @@ export const Target = ({ children }: PopoverTargetProps) => {
 	 * Re-measure the trigger position when onScroll called
 	 * Flashlist doesn't use our ScrollView, so this doesn't work
 	 */
-	const scrollEvents = useScrollEvents();
-	scrollEvents.subscribe(() => {
-		forceMeasure();
-	});
-
-	/**
-	 * BUG FIX: On the Customer Edit modal, the target was being measured offscreen
-	 * This is a hack to force a re-measure after the modal has been opened
-	 * NOTE: this doesn't happen for Settings, where the modal is a separate screen
-	 */
-	React.useEffect(() => {
-		delay(() => {
-			forceMeasure();
-		}, 100);
-	}, [forceMeasure]);
+	// const scrollEvents = useScrollEvents();
+	// scrollEvents.subscribe(() => {
+	// 	forceMeasure();
+	// });
 
 	/**
 	 *
 	 */
-	return (
-		<View ref={ref} onLayout={onLayout}>
-			{pressableChild}
-		</View>
-	);
+	return <MeasureWrapper>{pressableChild}</MeasureWrapper>;
 };

@@ -4,7 +4,7 @@ import delay from 'lodash/delay';
 import isEmpty from 'lodash/isEmpty';
 import isPlainObject from 'lodash/isPlainObject';
 
-import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
+import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
 
 import Dropdown from '../dropdown';
 import TextInput from '../textinput';
@@ -103,12 +103,8 @@ export const Combobox = ({
 	autofocus,
 	...props
 }: ComboboxProps) => {
-	// const [selected, onChange] = useUncontrolledState(
-	// 	selectedRaw,
-	// 	onChangeRaw as ((value: string | null) => string) | undefined // This will never be called with a null parameter
-	// );
 	const [opened, setOpened] = React.useState(false);
-	const [searchValue, setSearchValue] = React.useState('');
+	const searchValue = React.useRef('');
 	const options = React.useMemo(() => formatOptions(props.options), [props.options]);
 	const textInputRef = React.useRef<TextInputType>(null);
 
@@ -116,14 +112,13 @@ export const Combobox = ({
 	 * Handle search change.
 	 */
 	const onSearchChange = React.useCallback(
-		(value: string) => {
-			!opened && setOpened(true);
-			setSearchValue(value);
+		(val: string) => {
+			searchValue.current = val;
 			if (onSearch) {
-				onSearch(value);
+				onSearch(val);
 			}
 		},
-		[onSearch, opened]
+		[onSearch]
 	);
 
 	/**
@@ -131,13 +126,13 @@ export const Combobox = ({
 	 */
 	const filteredOptions = React.useMemo(() => {
 		// early exit if the parent is controlling the search
-		if (onSearch || !searchValue || searchValue === '') {
+		if (onSearch || !searchValue.current || searchValue.current === '') {
 			return options;
 		}
 
 		// filter option.label on the search term
 		return options.filter((option) =>
-			option.label.toLowerCase().includes(searchValue.toLowerCase())
+			option.label.toLowerCase().includes(searchValue.current.toLowerCase())
 		);
 	}, [options, searchValue, onSearch]);
 
@@ -151,27 +146,8 @@ export const Combobox = ({
 		return value;
 	}, [options, value]);
 
-	/**
-	 * FIXME: this is a hack, useEffect is being called before onLayout for the Popover.Target
-	 * which means the width is not set correctly.
-	 */
-	React.useEffect(() => {
-		if (autofocus && textInputRef?.current) {
-			delay(() => {
-				textInputRef.current.focus();
-			}, 100);
-		}
-	}, [autofocus]);
-
-	/**
-	 * HACK: clear search value when the value is set from outside
-	 */
-	React.useEffect(() => {
-		!isEmpty(searchValue) && setSearchValue('');
-	}, [
-		// leave as dependency, otherwise it will not update when the value is set
-		value,
-	]);
+	//
+	useWhyDidYouUpdate('Combobox', { value, onChange, placeholder, searchValue, onSearch });
 
 	/**
 	 *
@@ -189,16 +165,21 @@ export const Combobox = ({
 			{...props}
 		>
 			<TextInput
-				value={searchValue}
+				value={searchValue.current}
 				placeholder={selected?.label || selected || placeholder}
 				onChangeText={onSearchChange}
-				onFocus={() => setOpened(true)}
 				clearable
 				// onKeyPress={(e) => {
 				// 	console.log(e);
 				// }}
 				containerStyle={{ flex: 1 }}
 				ref={textInputRef}
+				/**
+				 * FIXME: this is a hack, useEffect is being called before onLayout for the Popover.Target
+				 * which means the width is not set correctly.
+				 */
+				onFocus={() => delay(() => setOpened(true), 100)}
+				autoFocus={autofocus}
 			/>
 		</Dropdown>
 	);

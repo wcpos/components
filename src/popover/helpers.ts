@@ -1,4 +1,6 @@
-import { ViewStyle } from 'react-native';
+import { ViewStyle, Dimensions } from 'react-native';
+
+import { MeasuredDimensions } from 'react-native-reanimated';
 
 /**
  * Determines placement of the `Popover`.
@@ -181,4 +183,80 @@ export const getArrowAlign = (
 			paddingRight: isTop(placement) || isBottom(placement) ? 10 : 0,
 		};
 	return { alignSelf: 'center' };
+};
+
+interface EventData {
+	absoluteX: number;
+	absoluteY: number;
+	x: number;
+	y: number;
+}
+
+/**
+ *
+ */
+export function isPressInsideElement(event: EventData, element: MeasuredDimensions): boolean {
+	const leftBound = element.pageX;
+	const rightBound = element.pageX + element.width;
+	const topBound = element.pageY;
+	const bottomBound = element.pageY + element.height;
+
+	return (
+		event.absoluteX >= leftBound &&
+		event.absoluteX <= rightBound &&
+		event.absoluteY >= topBound &&
+		event.absoluteY <= bottomBound
+	);
+}
+
+/**
+ * Check if the calculated position is off-screen and adjust the placement accordingly
+ */
+export const adjustPlacement = (
+	placement: PopoverPlacement,
+	position: ReturnType<typeof getPopoverPosition>,
+	targetMeasurements: MeasuredDimensions,
+	contentMeasurements: MeasuredDimensions,
+	withinPortal: boolean,
+	depth: number = 0
+): PopoverPlacement => {
+	if (depth > 3) {
+		// Maximum depth reached, stop adjusting the placement to avoid infinite recursion
+		return placement;
+	}
+
+	const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
+	const { top, left } = position;
+
+	let adjustedPlacement = placement;
+
+	if (isTop(placement) && top < 0) {
+		adjustedPlacement = 'bottom' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+	} else if (isBottom(placement) && top + contentMeasurements.height > windowHeight) {
+		adjustedPlacement = 'top' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+	} else if (isLeft(placement) && left < 0) {
+		adjustedPlacement = 'right' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+	} else if (isRight(placement) && left + contentMeasurements.width > windowWidth) {
+		adjustedPlacement = 'left' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+	}
+
+	if (adjustedPlacement !== placement) {
+		const newPosition = getPopoverPosition(
+			adjustedPlacement,
+			targetMeasurements,
+			contentMeasurements,
+			withinPortal
+		);
+
+		return adjustPlacement(
+			adjustedPlacement,
+			newPosition,
+			contentMeasurements,
+			targetMeasurements,
+			withinPortal,
+			depth + 1
+		);
+	}
+
+	return placement;
 };

@@ -41,7 +41,7 @@ export type SelectProps = Omit<DropdownProps, 'items' | 'children'> & {
 	/**
 	 * Callback called when selection is changed.
 	 */
-	onChange?: (selected: SelectOption) => void;
+	onChange: (selected: SelectOption) => void;
 	/**
 	 * Text to display as a placeholder.
 	 */
@@ -63,14 +63,14 @@ const maxHeight = 300;
  */
 export const Select = ({
 	options: optionsRaw,
-	value: valueRaw,
-	onChange: onChangeRaw,
+	value,
+	onChange,
 	placeholder = 'Select',
 	disabled = false,
 	...props
 }: SelectProps) => {
 	const [open, setOpen] = React.useState(false);
-	const [value, onChange] = useUncontrolledState<typeof valueRaw>(valueRaw, onChangeRaw);
+	// const [value, onChange] = useUncontrolledState<typeof valueRaw>(valueRaw, onChangeRaw);
 
 	/**
 	 *

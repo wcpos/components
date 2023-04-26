@@ -1,20 +1,22 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
-import { useSharedValue } from 'react-native-reanimated';
+import { useSubscription } from 'observable-hooks';
+import { useSharedValue, MeasuredDimensions } from 'react-native-reanimated';
 
 // TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
-import type { Measurements } from '@wcpos/hooks/src/use-measure';
 import useUncontrolled from '@wcpos/hooks/src/use-uncontrolled';
 
 import { Content, PopoverContentProps } from './content';
 import { PopoverContext, PortalContext } from './context';
+import { isPressInsideElement } from './helpers';
 import { Target, PopoverTargetProps } from './target';
+import useGesture from '../gesture-detector';
 import Portal from '../portal';
 
 import type { PopoverFooterProps } from './footer';
-import type { PopoverPlacement } from './placements';
+import type { PopoverPlacement } from './helpers';
 
 /**
  *
@@ -90,7 +92,7 @@ export const Popover = ({
 	onChange,
 	onClose,
 	onOpen,
-	opened,
+	opened = false,
 	placement = 'bottom',
 	trigger = 'press',
 	withArrow = true,
@@ -98,18 +100,41 @@ export const Popover = ({
 	primaryAction,
 	secondaryActions,
 	style,
+	...props
 }: PopoverProps) => {
-	const targetMeasurements = useSharedValue<Measurements>(null);
-	const contentMeasurements = useSharedValue<Measurements>(null);
+	const targetMeasurements = useSharedValue<MeasuredDimensions>(null);
+	const contentMeasurements = useSharedValue<MeasuredDimensions>(null);
+	const { tapEvent$ } = useGesture();
 
 	/**
 	 *
 	 */
-	const [_opened, setOpened] = useUncontrolled({
-		value: opened,
-		defaultValue: defaultOpened,
-		finalValue: false,
-		onChange,
+	// const [_opened, setOpened] = useUncontrolled({
+	// 	value: opened,
+	// 	defaultValue: defaultOpened,
+	// 	finalValue: false,
+	// 	onChange,
+	// });
+	const [_opened, setOpened] = React.useState(opened);
+
+	/**
+	 * This seems like a hack, shouldn't the change in props trigger a re-render?
+	 */
+	React.useEffect(() => {
+		setOpened(opened);
+	}, [opened]);
+
+	/**
+	 *
+	 */
+	useSubscription(tapEvent$, (event) => {
+		if (opened && closeOnPressOutside && targetMeasurements.value && contentMeasurements.value) {
+			const targetPress = isPressInsideElement(event, targetMeasurements.value);
+			const contentPress = isPressInsideElement(event, contentMeasurements.value);
+			if (!targetPress && !contentPress) {
+				setOpened(false);
+			}
+		}
 	});
 
 	/**

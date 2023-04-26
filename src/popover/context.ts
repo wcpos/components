@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import type { Measurements } from '@wcpos/hooks/src/use-measure';
 
-import type { PopoverPlacement } from './placements';
+import type { PopoverPlacement } from './helpers';
 import type { SharedValue } from 'react-native-reanimated';
 
 type PopoverProps = import('./popover').PopoverProps;

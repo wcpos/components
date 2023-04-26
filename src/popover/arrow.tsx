@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
 
-import { PopoverPlacement, getArrowAlign, getArrowDirection } from './placements';
+import { PopoverPlacement, getArrowAlign, getArrowDirection } from './helpers';
 import _Arrow from '../arrow';
 
 export interface PopoverArrowProps {

@@ -1,28 +1,26 @@
 import * as React from 'react';
-import { View, ViewStyle, StyleProp } from 'react-native';
+import { ViewStyle, StyleProp } from 'react-native';
 
-import delay from 'lodash/delay';
-import Animated, { useAnimatedStyle, withTiming, FadeInDown } from 'react-native-reanimated';
+import { useAnimatedStyle, withTiming, FadeInDown, runOnJS } from 'react-native-reanimated';
+import { useTheme } from 'styled-components/native';
 
-import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
-import useMeasure, { Measurements } from '@wcpos/hooks/src/use-measure';
-import useMergedRef from '@wcpos/hooks/src/use-merged-ref';
-import usePressOutside from '@wcpos/hooks/src/use-press-outside';
+import useMeasure from '@wcpos/hooks/src/use-measure';
 import Platform from '@wcpos/utils/src/platform';
 
 import { Arrow } from './arrow';
 import { usePopover } from './context';
 import Footer from './footer';
-import {
-	PopoverPlacement,
-	isBottom,
-	isLeft,
-	isRight,
-	isTop,
-	getPopoverPosition,
-} from './placements';
+import { isBottom, isLeft, isRight, isTop, getPopoverPosition, adjustPlacement } from './helpers';
 import * as Styled from './styles';
 import ErrorBoundary from '../error-boundary';
+
+/**
+ *
+ */
+const onAnimationEnd = (forceMeasure: () => void) => {
+	'worklet';
+	runOnJS(forceMeasure)();
+};
 
 /**
  *
@@ -38,8 +36,8 @@ export interface PopoverContentProps {
  *
  */
 export const Content = ({ children, style }: PopoverContentProps) => {
+	const theme = useTheme();
 	const {
-		closeOnPressOutside,
 		contentMeasurements,
 		matchWidth,
 		onClose,
@@ -48,20 +46,13 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		withArrow,
 		withinPortal,
 	} = usePopover();
-	const ref = React.useRef<Animated.View>(null);
-	const onMeasure = (val: Measurements) => {
-		contentMeasurements.value = val;
-	};
-
-	const { measurements, onLayout, forceMeasure } = useMeasure({ ref, onMeasure });
-	// const focusTrapRef = useFocusTrap();
-	const pressRef = usePressOutside(() => {
-		if (closeOnPressOutside) {
-			onClose && onClose();
-		}
+	const { MeasureWrapper, forceMeasure } = useMeasure({
+		onMeasure: (val) => {
+			contentMeasurements.value = val;
+		},
 	});
 
-	const mergedRef = useMergedRef(ref, pressRef);
+	const [adjustedPlacement, setAdjustedPlacement] = React.useState(placement);
 
 	/**
 	 *
@@ -71,10 +62,30 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 			return {}; // TODO why is measurements.value undefined in react-native.
 		}
 
-		// TODO - use `entering` when reanimated is stable
-		const opacity = withTiming(1, { duration: 200 });
-		const position = getPopoverPosition(
+		const adjusted = adjustPlacement(
 			placement,
+			getPopoverPosition(
+				placement,
+				targetMeasurements.value,
+				contentMeasurements.value,
+				withinPortal
+			),
+			targetMeasurements.value,
+			contentMeasurements.value,
+			withinPortal
+		);
+
+		runOnJS(setAdjustedPlacement)(adjusted);
+
+		// TODO - use `entering` when reanimated is stable
+		const opacity = withTiming(1, { duration: 200 }, (isFinished) => {
+			if (isFinished) {
+				onAnimationEnd(forceMeasure);
+			}
+		});
+
+		const position = getPopoverPosition(
+			adjusted,
 			targetMeasurements.value,
 			contentMeasurements.value,
 			withinPortal
@@ -86,18 +97,16 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	 *
 	 */
 	return (
-		<Styled.Container
-			ref={mergedRef}
-			as={Animated.View}
+		<MeasureWrapper
 			style={[
-				{ width: matchWidth ? targetMeasurements.value.width : 'auto', opacity: 0 },
+				{ position: 'absolute', zIndex: theme.zIndex.popover },
+				{ width: matchWidth ? targetMeasurements.value.width || 100 : 'auto', opacity: 0 },
 				containerStyle,
 			]}
-			onLayout={onLayout}
 			entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
 		>
-			{withArrow && (isBottom(placement) || isRight(placement)) && (
-				<Arrow placement={placement} style={style} />
+			{withArrow && (isBottom(adjustedPlacement) || isRight(adjustedPlacement)) && (
+				<Arrow placement={adjustedPlacement} style={style} />
 			)}
 
 			<Styled.RaisedBox>
@@ -117,9 +126,9 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 				<Footer />
 			</Styled.RaisedBox>
 
-			{withArrow && (isTop(placement) || isLeft(placement)) && (
-				<Arrow placement={placement} style={style} />
+			{withArrow && (isTop(adjustedPlacement) || isLeft(adjustedPlacement)) && (
+				<Arrow placement={adjustedPlacement} style={style} />
 			)}
-		</Styled.Container>
+		</MeasureWrapper>
 	);
 };
