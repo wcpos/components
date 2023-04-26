@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[52577],{"./src/popover/README.md":module=>{module.exports="TODO: Loook at react-native-popover-view for inspiration\n"}}]);
