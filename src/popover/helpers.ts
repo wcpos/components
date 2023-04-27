@@ -230,14 +230,33 @@ export const adjustPlacement = (
 
 	let adjustedPlacement = placement;
 
-	if (isTop(placement) && top < 0) {
-		adjustedPlacement = 'bottom' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
-	} else if (isBottom(placement) && top + contentMeasurements.height > windowHeight) {
-		adjustedPlacement = 'top' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
-	} else if (isLeft(placement) && left < 0) {
-		adjustedPlacement = 'right' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
-	} else if (isRight(placement) && left + contentMeasurements.width > windowWidth) {
-		adjustedPlacement = 'left' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+	if (withinPortal) {
+		if (isTop(placement) && top < 0) {
+			adjustedPlacement =
+				'bottom' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		} else if (isBottom(placement) && top + contentMeasurements.height > windowHeight) {
+			adjustedPlacement = 'top' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		} else if (isLeft(placement) && left < 0) {
+			adjustedPlacement =
+				'right' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		} else if (isRight(placement) && left + contentMeasurements.width > windowWidth) {
+			adjustedPlacement = 'left' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		}
+	} else {
+		if (isTop(placement) && top < -targetMeasurements.height) {
+			adjustedPlacement =
+				'bottom' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		} else if (
+			isBottom(placement) &&
+			top + contentMeasurements.height > targetMeasurements.height
+		) {
+			adjustedPlacement = 'top' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		} else if (isLeft(placement) && left < -targetMeasurements.width) {
+			adjustedPlacement =
+				'right' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		} else if (isRight(placement) && left + contentMeasurements.width > targetMeasurements.width) {
+			adjustedPlacement = 'left' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
+		}
 	}
 
 	if (adjustedPlacement !== placement) {
@@ -251,8 +270,8 @@ export const adjustPlacement = (
 		return adjustPlacement(
 			adjustedPlacement,
 			newPosition,
-			contentMeasurements,
 			targetMeasurements,
+			contentMeasurements,
 			withinPortal,
 			depth + 1
 		);

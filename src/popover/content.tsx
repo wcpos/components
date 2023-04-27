@@ -17,14 +17,6 @@ import ErrorBoundary from '../error-boundary';
 /**
  *
  */
-const onAnimationEnd = (forceMeasure: () => void) => {
-	'worklet';
-	runOnJS(forceMeasure)();
-};
-
-/**
- *
- */
 export interface PopoverContentProps {
 	/** The content of the Popover. */
 	children: React.ReactNode;
@@ -52,6 +44,9 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		},
 	});
 
+	/**
+	 *
+	 */
 	const [adjustedPlacement, setAdjustedPlacement] = React.useState(placement);
 
 	/**
@@ -80,7 +75,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		// TODO - use `entering` when reanimated is stable
 		const opacity = withTiming(1, { duration: 200 }, (isFinished) => {
 			if (isFinished) {
-				onAnimationEnd(forceMeasure);
+				// animation finished
 			}
 		});
 
