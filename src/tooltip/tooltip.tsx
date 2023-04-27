@@ -20,12 +20,7 @@ export type TooltipProps = Omit<PopoverProps, 'content' | 'children'> & {
  * TODO - set timeout for native tooltips, need onOpen or similar
  */
 export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps) => {
-	// const ref = React.useRef<typeof Popover>(null);
-	// useTimeout(() => {
-	// 	if (Platform.isNative) {
-	// 		ref.current?.close();
-	// 	}
-	// }, 2500);
+	const [opened, setOpened] = React.useState(false);
 
 	const content =
 		typeof props.content === 'string' ? <Text type="inverse">{props.content}</Text> : props.content;
@@ -33,11 +28,13 @@ export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps)
 	return (
 		<Popover
 			// ref={ref}
+			opened={opened}
 			placement={placement}
 			trigger="hover"
 			style={{ backgroundColor: 'black' }}
 			withinPortal
-			closeOnPressOutside={false}
+			onClose={() => setOpened(false)}
+			onOpen={() => setOpened(true)}
 			{...props}
 		>
 			<Popover.Target>{children}</Popover.Target>

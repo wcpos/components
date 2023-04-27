@@ -4,8 +4,6 @@ import delay from 'lodash/delay';
 import isEmpty from 'lodash/isEmpty';
 import isPlainObject from 'lodash/isPlainObject';
 
-import useWhyDidYouUpdate from '@wcpos/hooks/src/use-why-did-you-update';
-
 import Dropdown from '../dropdown';
 import TextInput from '../textinput';
 // import Search from '../search';
@@ -106,7 +104,7 @@ export const Combobox = ({
 	const [opened, setOpened] = React.useState(false);
 	const searchValue = React.useRef('');
 	const options = React.useMemo(() => formatOptions(props.options), [props.options]);
-	const textInputRef = React.useRef<TextInputType>(null);
+	// const textInputRef = React.useRef<TextInputType>(null);
 
 	/**
 	 * Handle search change.
@@ -146,9 +144,6 @@ export const Combobox = ({
 		return value;
 	}, [options, value]);
 
-	//
-	useWhyDidYouUpdate('Combobox', { value, onChange, placeholder, searchValue, onSearch });
-
 	/**
 	 *
 	 */
@@ -156,6 +151,7 @@ export const Combobox = ({
 		<Dropdown
 			opened={opened}
 			onClose={() => setOpened(false)}
+			onOpen={() => setOpened(true)}
 			withArrow={false}
 			matchWidth
 			items={filteredOptions}
@@ -169,11 +165,11 @@ export const Combobox = ({
 				placeholder={selected?.label || selected || placeholder}
 				onChangeText={onSearchChange}
 				clearable
-				// onKeyPress={(e) => {
-				// 	console.log(e);
-				// }}
+				onKeyPress={(e) => {
+					// console.log(e);
+				}}
 				containerStyle={{ flex: 1 }}
-				ref={textInputRef}
+				// ref={textInputRef}
 				/**
 				 * FIXME: this is a hack, useEffect is being called before onLayout for the Popover.Target
 				 * which means the width is not set correctly.

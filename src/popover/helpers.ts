@@ -76,15 +76,10 @@ export const getContainerAlign = (
 export const getPopoverPosition = (
 	placement: PopoverPlacement,
 	target: { width: number; height: number; pageX: number; pageY: number },
-	content: { width: number; height: number; pageX: number; pageY: number },
+	contentWidth: number,
+	contentHeight: number,
 	withinPortal: boolean = true
-): {
-	flexDirection?: ViewStyle['flexDirection'];
-	top?: ViewStyle['top'];
-	left?: ViewStyle['left'];
-	right?: ViewStyle['right'];
-	bottom?: ViewStyle['bottom'];
-} => {
+) => {
 	const position: {
 		flexDirection?: ViewStyle['flexDirection'];
 		top?: ViewStyle['top'];
@@ -106,19 +101,19 @@ export const getPopoverPosition = (
 				? target.pageX + target.width
 				: target.width
 			: withinPortal
-			? target.pageX - content.width
-			: -content.width;
+			? target.pageX - contentWidth
+			: -contentWidth;
 
 		if (isStartPlacement) {
 			position.top = withinPortal ? target.pageY : 0;
 		} else if (isEndPlacement) {
 			position.top = withinPortal
-				? target.pageY + target.height - content.height
-				: target.height - content.height;
+				? target.pageY + target.height - contentHeight
+				: target.height - contentHeight;
 		} else {
 			position.top = withinPortal
-				? target.pageY + target.height / 2 - content.height / 2
-				: target.height / 2 - content.height / 2;
+				? target.pageY + target.height / 2 - contentHeight / 2
+				: target.height / 2 - contentHeight / 2;
 		}
 	}
 
@@ -126,8 +121,8 @@ export const getPopoverPosition = (
 	else if (isVertical) {
 		position.top = isTop(placement)
 			? withinPortal
-				? target.pageY - content.height
-				: -content.height
+				? target.pageY - contentHeight
+				: -contentHeight
 			: withinPortal
 			? target.pageY + target.height
 			: target.height;
@@ -136,12 +131,12 @@ export const getPopoverPosition = (
 			position.left = withinPortal ? target.pageX : 0;
 		} else if (isEndPlacement) {
 			position.left = withinPortal
-				? target.pageX + target.width - content.width
-				: target.width - content.width;
+				? target.pageX + target.width - contentWidth
+				: target.width - contentWidth;
 		} else {
 			position.left = withinPortal
-				? target.pageX + target.width / 2 - content.width / 2
-				: target.width / 2 - content.width / 2;
+				? target.pageX + target.width / 2 - contentWidth / 2
+				: target.width / 2 - contentWidth / 2;
 		}
 	}
 
@@ -216,7 +211,8 @@ export const adjustPlacement = (
 	placement: PopoverPlacement,
 	position: ReturnType<typeof getPopoverPosition>,
 	targetMeasurements: MeasuredDimensions,
-	contentMeasurements: MeasuredDimensions,
+	contentWidth: number,
+	contentHeight: number,
 	withinPortal: boolean,
 	depth: number = 0
 ): PopoverPlacement => {
@@ -234,27 +230,24 @@ export const adjustPlacement = (
 		if (isTop(placement) && top < 0) {
 			adjustedPlacement =
 				'bottom' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
-		} else if (isBottom(placement) && top + contentMeasurements.height > windowHeight) {
+		} else if (isBottom(placement) && top + contentHeight > windowHeight) {
 			adjustedPlacement = 'top' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
 		} else if (isLeft(placement) && left < 0) {
 			adjustedPlacement =
 				'right' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
-		} else if (isRight(placement) && left + contentMeasurements.width > windowWidth) {
+		} else if (isRight(placement) && left + contentWidth > windowWidth) {
 			adjustedPlacement = 'left' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
 		}
 	} else {
 		if (isTop(placement) && top < -targetMeasurements.height) {
 			adjustedPlacement =
 				'bottom' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
-		} else if (
-			isBottom(placement) &&
-			top + contentMeasurements.height > targetMeasurements.height
-		) {
+		} else if (isBottom(placement) && top + contentHeight > targetMeasurements.height) {
 			adjustedPlacement = 'top' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
 		} else if (isLeft(placement) && left < -targetMeasurements.width) {
 			adjustedPlacement =
 				'right' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
-		} else if (isRight(placement) && left + contentMeasurements.width > targetMeasurements.width) {
+		} else if (isRight(placement) && left + contentWidth > targetMeasurements.width) {
 			adjustedPlacement = 'left' + (isStart(placement) ? '-start' : isEnd(placement) ? '-end' : '');
 		}
 	}
@@ -263,7 +256,8 @@ export const adjustPlacement = (
 		const newPosition = getPopoverPosition(
 			adjustedPlacement,
 			targetMeasurements,
-			contentMeasurements,
+			contentWidth,
+			contentHeight,
 			withinPortal
 		);
 
@@ -271,7 +265,8 @@ export const adjustPlacement = (
 			adjustedPlacement,
 			newPosition,
 			targetMeasurements,
-			contentMeasurements,
+			contentWidth,
+			contentHeight,
 			withinPortal,
 			depth + 1
 		);

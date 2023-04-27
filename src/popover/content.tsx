@@ -1,7 +1,13 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
 
-import { useAnimatedStyle, withTiming, FadeInDown, runOnJS } from 'react-native-reanimated';
+import {
+	useAnimatedStyle,
+	withDelay,
+	withTiming,
+	Easing,
+	useSharedValue,
+} from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
 
 import useMeasure from '@wcpos/hooks/src/use-measure';
@@ -52,40 +58,67 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	/**
 	 *
 	 */
-	const containerStyle = useAnimatedStyle(() => {
-		if (!targetMeasurements.value || !contentMeasurements.value) {
-			return {}; // TODO why is measurements.value undefined in react-native.
-		}
-
+	React.useEffect(() => {
 		const adjusted = adjustPlacement(
 			placement,
 			getPopoverPosition(
 				placement,
 				targetMeasurements.value,
-				contentMeasurements.value,
+				contentMeasurements.value.width,
+				contentMeasurements.value.height,
 				withinPortal
 			),
 			targetMeasurements.value,
-			contentMeasurements.value,
+			contentMeasurements.value.width,
+			contentMeasurements.value.height,
 			withinPortal
 		);
 
-		runOnJS(setAdjustedPlacement)(adjusted);
+		setAdjustedPlacement(adjusted);
+	}, [
+		contentMeasurements.value.height,
+		contentMeasurements.value.width,
+		placement,
+		targetMeasurements.value,
+		withinPortal,
+	]);
 
-		// TODO - use `entering` when reanimated is stable
-		const opacity = withTiming(1, { duration: 200 }, (isFinished) => {
-			if (isFinished) {
-				// animation finished
-			}
-		});
+	/**
+	 * Positioning
+	 */
+	const positionStyle = useAnimatedStyle(() => {
+		if (!targetMeasurements.value || !contentMeasurements.value) {
+			return { left: 0, top: 0 }; // default initial position
+		}
 
-		const position = getPopoverPosition(
-			adjusted,
+		const newPosition = getPopoverPosition(
+			adjustedPlacement,
 			targetMeasurements.value,
-			contentMeasurements.value,
+			contentMeasurements.value.width,
+			contentMeasurements.value.height,
 			withinPortal
 		);
-		return { opacity, ...position };
+
+		// Update contentMeasurements.value with new position values
+		contentMeasurements.value.pageX = newPosition.left;
+		contentMeasurements.value.pageY = newPosition.top;
+
+		return newPosition;
+	});
+
+	/**
+	 * Fade in animation
+	 */
+	const opacity = useSharedValue(0);
+
+	React.useEffect(() => {
+		opacity.value = withTiming(1, { duration: 200, easing: Easing.inOut(Easing.ease) });
+	}, [opacity]);
+
+	const fadeInStyle = useAnimatedStyle(() => {
+		return {
+			opacity: opacity.value,
+		};
 	});
 
 	/**
@@ -95,10 +128,11 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		<MeasureWrapper
 			style={[
 				{ position: 'absolute', zIndex: theme.zIndex.popover },
-				{ width: matchWidth ? targetMeasurements.value.width || 100 : 'auto', opacity: 0 },
-				containerStyle,
+				{ width: matchWidth ? targetMeasurements.value.width || 100 : 'auto' },
+				positionStyle,
+				fadeInStyle,
 			]}
-			entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
+			// entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
 		>
 			{withArrow && (isBottom(adjustedPlacement) || isRight(adjustedPlacement)) && (
 				<Arrow placement={adjustedPlacement} style={style} />

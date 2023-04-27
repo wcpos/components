@@ -6,7 +6,6 @@ import { useSharedValue, MeasuredDimensions } from 'react-native-reanimated';
 
 // TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
-import useUncontrolled from '@wcpos/hooks/src/use-uncontrolled';
 
 import { Content, PopoverContentProps } from './content';
 import { PopoverContext, PortalContext } from './context';
@@ -96,33 +95,41 @@ export const Popover = ({
 	placement = 'bottom',
 	trigger = 'press',
 	withArrow = true,
-	withinPortal = false,
+	// withinPortal = false,
 	primaryAction,
 	secondaryActions,
 	style,
 	...props
 }: PopoverProps) => {
-	const targetMeasurements = useSharedValue<MeasuredDimensions>(null);
-	const contentMeasurements = useSharedValue<MeasuredDimensions>(null);
+	const targetMeasurements = useSharedValue<MeasuredDimensions>({
+		x: 0,
+		y: 0,
+		width: 0,
+		height: 0,
+		pageX: 0,
+		pageY: 0,
+	});
+	const contentMeasurements = useSharedValue<MeasuredDimensions>({
+		x: 0,
+		y: 0,
+		width: 0,
+		height: 0,
+		pageX: 0,
+		pageY: 0,
+	});
 	const { tapEvent$ } = useGesture();
 
 	/**
-	 *
+	 * BUG FIX: for some reason the user dropdown menu was giving the wrong measurements
+	 * Is there any reason not to use the portal for all popovers?
 	 */
-	// const [_opened, setOpened] = useUncontrolled({
-	// 	value: opened,
-	// 	defaultValue: defaultOpened,
-	// 	finalValue: false,
-	// 	onChange,
-	// });
-	const [_opened, setOpened] = React.useState(opened);
+	const withinPortal = true;
 
 	/**
-	 * This seems like a hack, shouldn't the change in props trigger a re-render?
+	 * TODO: Uncontrolled state
+	 * Generally a component should decide when to open/close the popover, but if there is no
+	 * onOpen or onClose handlers, perhaps we should manage the open state internally?
 	 */
-	React.useEffect(() => {
-		setOpened(opened);
-	}, [opened]);
 
 	/**
 	 *
@@ -132,7 +139,7 @@ export const Popover = ({
 			const targetPress = isPressInsideElement(event, targetMeasurements.value);
 			const contentPress = isPressInsideElement(event, contentMeasurements.value);
 			if (!targetPress && !contentPress) {
-				setOpened(false);
+				onClose && onClose();
 			}
 		}
 	});
@@ -153,11 +160,11 @@ export const Popover = ({
 			primaryAction,
 			secondaryActions,
 			onOpen: () => {
-				setOpened(true);
+				// setOpened(true);
 				onOpen && onOpen();
 			},
 			onClose: () => {
-				setOpened(false);
+				// setOpened(false);
 				onClose && onClose();
 			},
 		}),
@@ -170,7 +177,7 @@ export const Popover = ({
 			placement,
 			primaryAction,
 			secondaryActions,
-			setOpened,
+			// setOpened,
 			targetMeasurements,
 			trigger,
 			withArrow,
@@ -191,7 +198,7 @@ export const Popover = ({
 					 * Wrap the Content in a Provider so we can pass props to the portal
 					 * TODO: There must be a better way to do this
 					 */
-					if (child.type === Content && _opened) {
+					if (child.type === Content && opened) {
 						return withinPortal ? (
 							<Portal keyPrefix="Popover">
 								<PortalContext.Provider value={context}>{child}</PortalContext.Provider>

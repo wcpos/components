@@ -8,12 +8,10 @@ import {
 	TextStyle,
 } from 'react-native';
 
-import get from 'lodash/get';
+import isFunction from 'lodash/isFunction';
 import { useTheme } from 'styled-components/native';
 
-import useMeasure from '@wcpos/hooks/src/use-measure';
 import useMergedRef from '@wcpos/hooks/src/use-merged-ref';
-import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
 
 import { TextInputContainer } from './container';
 import { getModifiers } from './modifiers';
@@ -105,8 +103,8 @@ export type TextInputProps = RNTextInputProps & {
 export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 	(
 		{
-			value: valueRaw = '',
-			onChangeText: onChangeTextRaw,
+			value = '',
+			onChangeText,
 			type = 'text',
 			placeholder,
 			disabled = false,
@@ -133,7 +131,6 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		ref
 	) => {
 		const theme = useTheme();
-		const [value, onChangeText] = useUncontrolledState(valueRaw, onChangeTextRaw);
 		const [hasFocus, setHasFocus] = React.useState(focused);
 		const inputRef = React.useRef<RNTextInput>(null);
 		const mergedRef = useMergedRef(ref, inputRef);
@@ -165,7 +162,11 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		 */
 		const handleClear = React.useCallback(() => {
 			inputRef.current?.focus();
-			return typeof onClear === 'function' ? onClear() : onChangeText('');
+			if (isFunction(onClear)) {
+				onClear();
+			} else if (isFunction(onChangeText)) {
+				onChangeText('');
+			}
 		}, [inputRef, onChangeText, onClear]);
 
 		/**

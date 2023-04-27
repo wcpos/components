@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import isPlainObject from 'lodash/isPlainObject';
 
-import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
-
 import Dropdown, { DropdownProps } from '../dropdown';
 import Text from '../text';
 import { TextInputContainer } from '../textinput';
@@ -70,7 +68,6 @@ export const Select = ({
 	...props
 }: SelectProps) => {
 	const [open, setOpen] = React.useState(false);
-	// const [value, onChange] = useUncontrolledState<typeof valueRaw>(valueRaw, onChangeRaw);
 
 	/**
 	 *

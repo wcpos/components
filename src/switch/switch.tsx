@@ -1,19 +1,15 @@
 import * as React from 'react';
 import { Switch as RNSwitch } from 'react-native';
-import Platform from '@wcpos/utils/src/platform';
-import { useUncontrolledState } from '@wcpos/hooks/src/use-uncontrolled-state';
+
 import { useTheme } from 'styled-components/native';
 
+import Platform from '@wcpos/utils/src/platform';
+
 export interface SwitchProps {
-	/**
-	 * Set to true if options is enabled.
-	 */
+	/** Set to true if options is enabled. */
 	checked?: boolean;
-	/**
-	 * Called when `checked` property is changed. `checked` property should reflect change.
-	 *
-	 * If not set, component will be an uncontrolled component. @see https://reactjs.org/docs/uncontrolled-components.html
-	 */
+
+	/** Called when `checked` property is changed. `checked` property should reflect change. */
 	onChecked?: (checked: boolean) => void;
 }
 
@@ -22,12 +18,8 @@ export interface SwitchProps {
  *
  * >**Note:** The look of this component is very different depending if you are on Web, Android or iOS.
  */
-export const Switch: React.FC<SwitchProps> = ({
-	checked: checkedRaw = false,
-	onChecked: onCheckedRaw,
-}) => {
+export const Switch: React.FC<SwitchProps> = ({ value, onChange }) => {
 	const theme = useTheme();
-	const [checked, onChecked] = useUncontrolledState(checkedRaw, onCheckedRaw);
 
 	return (
 		<RNSwitch
@@ -44,8 +36,8 @@ export const Switch: React.FC<SwitchProps> = ({
 			}
 			// @ts-ignore
 			thumbColor={Platform.OS === 'ios' ? undefined : checked ? 'blue' : 'green'}
-			onValueChange={onChecked}
-			value={checked}
+			onValueChange={onChange}
+			value={value}
 		/>
 	);
 };

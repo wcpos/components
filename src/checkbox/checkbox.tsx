@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
 
-import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
+import isFunction from 'lodash/isFunction';
 
 import Icon from './icon';
 import Label, { CheckboxLabelProps } from './label';
@@ -21,11 +21,7 @@ export interface CheckboxProps {
 	/** Disables the input. */
 	disabled?: boolean;
 
-	/**
-	 * Called when selection state changes. Should propagate change to `checked` prop.
-	 *
-	 * If not set, component will be an uncontrolled component. @see https://reactjs.org/docs/uncontrolled-components.html
-	 */
+	/** Called when selection state changes. Should propagate change to `checked` prop. */
 	onChange?: (checked: boolean) => void;
 
 	/** Size of the Checkbox. Matches font sizes. */
@@ -58,20 +54,23 @@ export const Checkbox = ({
 	label,
 	disabled,
 	helpText,
-	value: checkedRaw = false,
-	onChange: onChangeRaw,
+	value = false,
+	onChange,
 	size = 'normal',
 	type,
 	style,
 }: CheckboxProps) => {
-	const [checked, onChange] = useUncontrolledState(checkedRaw, onChangeRaw);
-	const onPress = React.useCallback(() => onChange?.(!checked), [checked, onChange]);
+	const onPress = React.useCallback(() => {
+		if (isFunction(onChange)) {
+			onChange(!value);
+		}
+	}, [value, onChange]);
 
 	return (
 		<Pressable disabled={disabled} onPress={onPress}>
 			<Box horizontal space={spaceMap[size]} style={style}>
-				<Icon checked={checked} disabled={disabled} size={size} />
-				<Label checked={checked} info={helpText} size={size} type={type}>
+				<Icon checked={value} disabled={disabled} size={size} />
+				<Label checked={value} info={helpText} size={size} type={type}>
 					{label}
 				</Label>
 			</Box>

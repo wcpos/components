@@ -86,7 +86,7 @@ export const Group = ({ options: optionsRaw, value, onChange, label }: RadioGrou
 				<Radio
 					key={option.value}
 					label={option.label}
-					checked={option.value === value}
+					value={option.value === value}
 					onChange={() => {
 						handleChange(option);
 					}}

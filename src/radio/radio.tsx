@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TouchableWithoutFeedback } from 'react-native';
 
-import useUncontrolledState from '@wcpos/hooks/src/use-uncontrolled-state';
+import isFunction from 'lodash/isFunction';
 
 import { BackgroundCircle, CheckMark } from './styles';
 import Box from '../box';
@@ -12,7 +12,7 @@ export interface RadioProps {
 	/**
 	 * True if selected.
 	 */
-	checked?: boolean;
+	value?: boolean;
 	/**
 	 * Label to display next to the Radio Button.
 	 */
@@ -31,34 +31,29 @@ export interface RadioProps {
 	disabled?: boolean;
 	/**
 	 * Called when selection state changes. Should propagate change to `checked` prop.
-	 *
-	 * If not set, component will be an uncontrolled component. @see https://reactjs.org/docs/uncontrolled-components.html
 	 */
 	onChange?: (checked: boolean) => void;
 }
 
 export const Radio = ({
-	checked: checkedRaw = false,
+	value = false,
 	label,
 	error,
 	helpText,
 	disabled = false,
-	onChange: onChangeRaw,
+	onChange,
 }: RadioProps) => {
-	const [checked, onChange] = useUncontrolledState(checkedRaw, onChangeRaw);
-
-	const onClick = React.useCallback(() => {
-		// Only check if selected, unchecking should be performed by selecting a different option.
-		if (!checked) {
-			onChange(true);
+	const onPress = React.useCallback(() => {
+		if (isFunction(onChange)) {
+			onChange(!value);
 		}
-	}, [checked, onChange]);
+	}, [value, onChange]);
 
 	return (
-		<TouchableWithoutFeedback onPress={onClick} disabled={disabled}>
+		<TouchableWithoutFeedback onPress={onPress} disabled={disabled}>
 			<Box horizontal space="small">
 				<BackgroundCircle>
-					<CheckMark checked={checked} />
+					<CheckMark checked={value} />
 				</BackgroundCircle>
 				<Box>
 					<Text>{label}</Text>
