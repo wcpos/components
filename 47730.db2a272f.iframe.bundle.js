@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[47730],{"./src/icon/svg/fontawesome/solid/comment-question.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"8ac4ba5428080926d68f.svg"}}]);
