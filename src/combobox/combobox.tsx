@@ -102,16 +102,16 @@ export const Combobox = ({
 	...props
 }: ComboboxProps) => {
 	const [opened, setOpened] = React.useState(false);
-	const searchValue = React.useRef('');
+	const [searchValue, setSearchValue] = React.useState('');
 	const options = React.useMemo(() => formatOptions(props.options), [props.options]);
-	// const textInputRef = React.useRef<TextInputType>(null);
+	const textInputRef = React.useRef<TextInputType>(null);
 
 	/**
 	 * Handle search change.
 	 */
 	const onSearchChange = React.useCallback(
 		(val: string) => {
-			searchValue.current = val;
+			setSearchValue(val);
 			if (onSearch) {
 				onSearch(val);
 			}
@@ -124,13 +124,13 @@ export const Combobox = ({
 	 */
 	const filteredOptions = React.useMemo(() => {
 		// early exit if the parent is controlling the search
-		if (onSearch || !searchValue.current || searchValue.current === '') {
+		if (onSearch || !searchValue || searchValue === '') {
 			return options;
 		}
 
 		// filter option.label on the search term
 		return options.filter((option) =>
-			option.label.toLowerCase().includes(searchValue.current.toLowerCase())
+			option.label.toLowerCase().includes(searchValue.toLowerCase())
 		);
 	}, [options, searchValue, onSearch]);
 
@@ -143,6 +143,23 @@ export const Combobox = ({
 		}
 		return value;
 	}, [options, value]);
+
+	/**
+	 * HACK: textinput loses focus when the dropdown opens, so we need to refocus it.
+	 */
+	React.useEffect(() => {
+		if (opened) {
+			textInputRef.current?.focus();
+			delay(() => textInputRef.current?.focus(), 200);
+		}
+	}, [opened, searchValue, options]);
+
+	/**
+	 * HACK: it the value changes, clear the searchValue so that the placeholder shows.
+	 */
+	React.useEffect(() => {
+		setSearchValue('');
+	}, [value]);
 
 	/**
 	 *
@@ -161,7 +178,8 @@ export const Combobox = ({
 			{...props}
 		>
 			<TextInput
-				value={searchValue.current}
+				ref={textInputRef}
+				value={searchValue}
 				placeholder={selected?.label || selected || placeholder}
 				onChangeText={onSearchChange}
 				clearable
@@ -169,7 +187,6 @@ export const Combobox = ({
 					// console.log(e);
 				}}
 				containerStyle={{ flex: 1 }}
-				// ref={textInputRef}
 				/**
 				 * FIXME: this is a hack, useEffect is being called before onLayout for the Popover.Target
 				 * which means the width is not set correctly.

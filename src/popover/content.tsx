@@ -44,44 +44,41 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		withArrow,
 		withinPortal,
 	} = usePopover();
-	const { MeasureWrapper, forceMeasure } = useMeasure({
-		onMeasure: (val) => {
-			contentMeasurements.value = val;
-		},
-	});
-
-	/**
-	 *
-	 */
 	const [adjustedPlacement, setAdjustedPlacement] = React.useState(placement);
 
 	/**
 	 *
 	 */
-	React.useEffect(() => {
-		const adjusted = adjustPlacement(
-			placement,
-			getPopoverPosition(
-				placement,
+	const onMeasure = React.useCallback(
+		(val) => {
+			contentMeasurements.value = val;
+
+			const adjusted = adjustPlacement(
+				adjustedPlacement,
+				getPopoverPosition(
+					adjustedPlacement,
+					targetMeasurements.value,
+					contentMeasurements.value.width,
+					contentMeasurements.value.height,
+					withinPortal
+				),
 				targetMeasurements.value,
 				contentMeasurements.value.width,
 				contentMeasurements.value.height,
 				withinPortal
-			),
-			targetMeasurements.value,
-			contentMeasurements.value.width,
-			contentMeasurements.value.height,
-			withinPortal
-		);
+			);
 
-		setAdjustedPlacement(adjusted);
-	}, [
-		contentMeasurements.value.height,
-		contentMeasurements.value.width,
-		placement,
-		targetMeasurements.value,
-		withinPortal,
-	]);
+			if (adjusted !== adjustedPlacement) {
+				setAdjustedPlacement(adjusted);
+			}
+		},
+		[adjustedPlacement, contentMeasurements, targetMeasurements.value, withinPortal]
+	);
+
+	/**
+	 *
+	 */
+	const { MeasureWrapper, forceMeasure } = useMeasure({ onMeasure });
 
 	/**
 	 * Positioning
