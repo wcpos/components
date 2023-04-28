@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
 
+import { useSubscription } from 'observable-hooks';
+import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import {
 	useAnimatedStyle,
 	withDelay,
@@ -16,9 +18,18 @@ import Platform from '@wcpos/utils/src/platform';
 import { Arrow } from './arrow';
 import { usePopover } from './context';
 import Footer from './footer';
-import { isBottom, isLeft, isRight, isTop, getPopoverPosition, adjustPlacement } from './helpers';
+import {
+	isPressInsideElement,
+	isBottom,
+	isLeft,
+	isRight,
+	isTop,
+	getPopoverPosition,
+	adjustPlacement,
+} from './helpers';
 import * as Styled from './styles';
 import ErrorBoundary from '../error-boundary';
+import useGesture from '../gesture-detector';
 
 /**
  *
@@ -43,6 +54,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		targetMeasurements,
 		withArrow,
 		withinPortal,
+		closeOnPressOutside,
 	} = usePopover();
 	const [adjustedPlacement, setAdjustedPlacement] = React.useState(placement);
 
@@ -119,42 +131,61 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	});
 
 	/**
+	 * HACK: bit of a hack to detect clicks outside of the popover
+	 * This could be improved
+	 */
+	const { tapEvent$ } = useGesture();
+
+	useSubscription(tapEvent$, (event) => {
+		const contentPress = isPressInsideElement(event, contentMeasurements.value);
+		if (closeOnPressOutside && !contentPress) {
+			onClose && onClose();
+		}
+	});
+
+	const tap = Gesture.Tap().onStart(() => {
+		// console.log('tap'); // this prevents the tap event from being fired inside the popover
+	});
+
+	/**
 	 *
 	 */
 	return (
-		<MeasureWrapper
-			style={[
-				{ position: 'absolute', zIndex: theme.zIndex.popover },
-				{ width: matchWidth ? targetMeasurements.value.width || 100 : 'auto' },
-				positionStyle,
-				fadeInStyle,
-			]}
-			// entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
-		>
-			{withArrow && (isBottom(adjustedPlacement) || isRight(adjustedPlacement)) && (
-				<Arrow placement={adjustedPlacement} style={style} />
-			)}
+		<GestureDetector gesture={tap}>
+			<MeasureWrapper
+				style={[
+					{ position: 'absolute', zIndex: theme.zIndex.popover },
+					{ width: matchWidth ? targetMeasurements.value.width || 100 : 'auto' },
+					positionStyle,
+					fadeInStyle,
+				]}
+				// entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
+			>
+				{withArrow && (isBottom(adjustedPlacement) || isRight(adjustedPlacement)) && (
+					<Arrow placement={adjustedPlacement} style={style} />
+				)}
 
-			<Styled.RaisedBox>
-				<Styled.Popover
-					// ref={focusTrapRef}
-					/**
-					 * FIXME: `max-content` is not supported in react-native
-					 */
-					style={[
-						{ width: matchWidth ? '100%' : Platform.isNative ? 'auto' : 'max-content' },
-						{ zIndex: 2 }, // NOTE: This is to make sure the popover is above the footer
-						style,
-					]}
-				>
-					<ErrorBoundary>{children}</ErrorBoundary>
-				</Styled.Popover>
-				<Footer />
-			</Styled.RaisedBox>
+				<Styled.RaisedBox>
+					<Styled.Popover
+						// ref={focusTrapRef}
+						/**
+						 * FIXME: `max-content` is not supported in react-native
+						 */
+						style={[
+							{ width: matchWidth ? '100%' : Platform.isNative ? 'auto' : 'max-content' },
+							{ zIndex: 2 }, // NOTE: This is to make sure the popover is above the footer
+							style,
+						]}
+					>
+						<ErrorBoundary>{children}</ErrorBoundary>
+					</Styled.Popover>
+					<Footer />
+				</Styled.RaisedBox>
 
-			{withArrow && (isTop(adjustedPlacement) || isLeft(adjustedPlacement)) && (
-				<Arrow placement={adjustedPlacement} style={style} />
-			)}
-		</MeasureWrapper>
+				{withArrow && (isTop(adjustedPlacement) || isLeft(adjustedPlacement)) && (
+					<Arrow placement={adjustedPlacement} style={style} />
+				)}
+			</MeasureWrapper>
+		</GestureDetector>
 	);
 };

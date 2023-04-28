@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
-import { useSubscription } from 'observable-hooks';
 import { useSharedValue, MeasuredDimensions } from 'react-native-reanimated';
 
 // TODO - haptics is breaking Storybook
@@ -9,9 +8,7 @@ import { useSharedValue, MeasuredDimensions } from 'react-native-reanimated';
 
 import { Content, PopoverContentProps } from './content';
 import { PopoverContext, PortalContext } from './context';
-import { isPressInsideElement } from './helpers';
 import { Target, PopoverTargetProps } from './target';
-import useGesture from '../gesture-detector';
 import Portal from '../portal';
 
 import type { PopoverFooterProps } from './footer';
@@ -118,7 +115,6 @@ export const Popover = ({
 		pageX: 0,
 		pageY: 0,
 	});
-	const { tapEvent$ } = useGesture();
 
 	/**
 	 * BUG FIX: for some reason the user dropdown menu was giving the wrong measurements
@@ -133,17 +129,14 @@ export const Popover = ({
 	 */
 
 	/**
-	 *
+	 * Sync local state with prop changes
 	 */
-	useSubscription(tapEvent$, (event) => {
-		if (opened && closeOnPressOutside && targetMeasurements.value && contentMeasurements.value) {
-			const targetPress = isPressInsideElement(event, targetMeasurements.value);
-			const contentPress = isPressInsideElement(event, contentMeasurements.value);
-			if (!targetPress && !contentPress) {
-				onClose && onClose();
-			}
-		}
-	});
+	React.useEffect(() => {
+		setPrimaryAction(props.primaryAction);
+	}, [props.primaryAction]);
+	React.useEffect(() => {
+		setSecondaryActions(props.secondaryActions);
+	}, [props.secondaryActions]);
 
 	/**
 	 *
