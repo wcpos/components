@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { KeyboardAvoidingView, StyleSheet, ViewStyle } from 'react-native';
 
-import wrap from 'lodash/wrap';
+// import wrap from 'lodash/wrap';
 
 import Platform from '@wcpos/utils/src/platform';
 
@@ -55,6 +55,9 @@ export type ModalProps = {
 
 	/** */
 	style?: ViewStyle;
+
+	/** Anything you want to pass to useModal */
+	context?: any;
 };
 
 /**
@@ -64,68 +67,55 @@ export const Modal = ({
 	children,
 	onClose,
 	opened,
-	primaryAction,
-	secondaryActions,
 	size,
 	withCloseButton = true,
 	withReactModal = false,
 	withBackdrop = true,
 	withPortal = true,
 	style,
+	context,
 	...props
 }: ModalProps) => {
 	const [title, setTitle] = React.useState(props.title);
+	const [primaryAction, setPrimaryAction] = React.useState(props.primaryAction);
+	const [secondaryActions, setSecondaryActions] = React.useState(props.secondaryActions);
 	const hasHeader = !!title || withCloseButton;
-	const primaryActionRef = React.useRef();
-	const secondaryActionRef = React.useRef();
+
+	/**
+	 * Sync local state with prop changes
+	 */
+	React.useEffect(() => {
+		setPrimaryAction(props.primaryAction);
+	}, [props.primaryAction]);
+	React.useEffect(() => {
+		setSecondaryActions(props.secondaryActions);
+	}, [props.secondaryActions]);
+
+	/**
+	 * FIXME: I'm just using portal by default, is there a case to use React Native Modal?
+	 */
 
 	/**
 	 *
 	 */
-	if (primaryAction) {
-		const orig = primaryAction.action;
-		primaryAction.action = () => {
-			const func = primaryActionRef.current;
-			func && func();
-			orig && orig();
-		};
-	}
+	const _context = React.useMemo(
+		() => ({
+			setTitle,
+			setPrimaryAction,
+			setSecondaryActions,
+			context,
+		}),
+		[context]
+	);
 
-	/**
-	 *
-	 */
-	if (secondaryActions) {
-		secondaryActions.forEach((action) => {
-			const orig = action.action;
-			action.action = () => {
-				const func = secondaryActionRef.current;
-				func && func(action);
-				orig && orig();
-			};
-		});
-	}
-
-	/**
-	 *
-	 */
 	const MaybePortal = withPortal ? PortalWrapper : React.Fragment;
-	const portalProps = withPortal ? { withReactModal } : {};
+	const portalProps = withPortal ? { withReactModal, context: _context } : {};
 
 	/**
 	 *
 	 */
 	return opened ? (
-		<ModalContext.Provider
-			value={{
-				setTitle,
-				onPrimaryAction: (func) => {
-					primaryActionRef.current = func;
-				},
-				onSecondaryAction: (func) => {
-					secondaryActionRef.current = func;
-				},
-			}}
-		>
+		<ModalContext.Provider value={_context}>
 			<MaybePortal {...portalProps}>
 				<KeyboardAvoidingView
 					behavior={Platform.OS === 'ios' ? 'padding' : 'height'}

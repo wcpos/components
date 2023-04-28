@@ -41,6 +41,7 @@ export { default as circleQuestion } from "./circleQuestion";
 export { default as circleXmark } from "./circleXmark";
 export { default as circle } from "./circle";
 export { default as clock } from "./clock";
+export { default as commentQuestion } from "./commentQuestion";
 export { default as commentsQuestion } from "./commentsQuestion";
 export { default as creditCard } from "./creditCard";
 export { default as deleteLeft } from "./deleteLeft";

@@ -16,6 +16,12 @@ export interface ModalFooterActionProps {
 
 	/** */
 	type?: import('@wcpos/themes').ColorTypes;
+
+	/** */
+	loading?: boolean;
+
+	/** */
+	disabled?: boolean;
 }
 
 /**
@@ -63,6 +69,8 @@ export const Footer = ({
 						borderTopLeftRadius: 0,
 						borderTopRightRadius: 0,
 					}}
+					loading={primaryAction.loading}
+					disabled={primaryAction.disabled}
 				/>
 			</Box>
 		);
@@ -85,6 +93,8 @@ export const Footer = ({
 							borderTopRightRadius: 0,
 							borderBottomRightRadius: 0,
 						}}
+						loading={secondaryAction.loading}
+						disabled={secondaryAction.disabled}
 					/>
 				))}
 				<Button
@@ -99,6 +109,8 @@ export const Footer = ({
 						borderTopRightRadius: 0,
 						borderBottomLeftRadius: 0,
 					}}
+					loading={primaryAction.loading}
+					disabled={primaryAction.disabled}
 				/>
 			</Box>
 		);

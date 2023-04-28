@@ -96,11 +96,12 @@ export const Popover = ({
 	trigger = 'press',
 	withArrow = true,
 	// withinPortal = false,
-	primaryAction,
-	secondaryActions,
 	style,
 	...props
 }: PopoverProps) => {
+	const [primaryAction, setPrimaryAction] = React.useState(props.primaryAction);
+	const [secondaryActions, setSecondaryActions] = React.useState(props.secondaryActions);
+
 	const targetMeasurements = useSharedValue<MeasuredDimensions>({
 		x: 0,
 		y: 0,
@@ -158,15 +159,11 @@ export const Popover = ({
 			withArrow,
 			withinPortal,
 			primaryAction,
+			setPrimaryAction,
 			secondaryActions,
-			onOpen: () => {
-				// setOpened(true);
-				onOpen && onOpen();
-			},
-			onClose: () => {
-				// setOpened(false);
-				onClose && onClose();
-			},
+			setSecondaryActions,
+			onOpen,
+			onClose,
 		}),
 		[
 			closeOnPressOutside,
@@ -177,7 +174,6 @@ export const Popover = ({
 			placement,
 			primaryAction,
 			secondaryActions,
-			// setOpened,
 			targetMeasurements,
 			trigger,
 			withArrow,

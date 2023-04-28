@@ -1,14 +1,12 @@
 import * as React from 'react';
 
-import type { Measurements } from '@wcpos/hooks/src/use-measure';
-
 import type { PopoverPlacement } from './helpers';
-import type { SharedValue } from 'react-native-reanimated';
+import type { MeasuredDimensions, SharedValue } from 'react-native-reanimated';
 
 type PopoverProps = import('./popover').PopoverProps;
 type PopoverContextProps = {
-	targetMeasurements: SharedValue<Measurements>;
-	contentMeasurements: SharedValue<Measurements>;
+	targetMeasurements: SharedValue<MeasuredDimensions>;
+	contentMeasurements: SharedValue<MeasuredDimensions>;
 	placement: PopoverPlacement;
 } & Pick<
 	PopoverProps,
