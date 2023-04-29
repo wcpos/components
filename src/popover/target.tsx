@@ -69,12 +69,14 @@ export const Target = ({ children }: PopoverTargetProps) => {
 		onHoverIn: () => {
 			if (trigger === 'hover') {
 				handleOpen(20);
+				// HACK: tooltips can get 'stuck' open, close after 5 seconds
+				onClose && delay(onClose, 5000);
 			}
 			triggerProps.onHoverIn && triggerProps.onHoverIn();
 		},
 		onHoverOut: () => {
 			if (trigger === 'hover') {
-				onClose && delay(onClose, 25);
+				onClose && delay(onClose, 50);
 			}
 			triggerProps.onHoverOut && triggerProps.onHoverOut();
 		},

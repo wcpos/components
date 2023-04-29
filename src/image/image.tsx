@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { StyleSheet } from 'react-native';
 
 import { Image as ExpoImage, ImageProps as ExpoImageProps } from 'expo-image';
 
@@ -28,10 +29,10 @@ export const Image = ({ source, border = 'square', style, ...props }: ImageProps
 							? theme.rounding.circle
 							: 0,
 				},
-				style,
+				StyleSheet.flatten(style),
 			]}
 			contentFit="cover"
-			transition={500}
+			transition={250}
 			{...props}
 		/>
 	);

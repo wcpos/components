@@ -1,6 +1,6 @@
 {
   "name": "@wcpos/components",
-  "version": "1.0.129",
+  "version": "1.0.130",
   "description": "Shared components for WooCommerce POS",
   "author": "kilbot <paul@kilbot.com>",
   "homepage": "https://github.com/wcpos/components#readme",
@@ -44,7 +44,7 @@
     "styled-components": "5.3.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
+    "@babel/core": "^7.21.5",
     "@storybook/addon-actions": "7.0.7",
     "@storybook/addon-controls": "7.0.7",
     "@storybook/addon-essentials": "7.0.7",

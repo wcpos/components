@@ -18,6 +18,7 @@ export type TooltipProps = Omit<PopoverProps, 'content' | 'children'> & {
 /**
  * Tooltip is a special type of Popover
  * TODO - set timeout for native tooltips, need onOpen or similar
+ * FIME - tooltips can get stuck sometimes
  */
 export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps) => {
 	const [opened, setOpened] = React.useState(false);
@@ -35,6 +36,7 @@ export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps)
 			withinPortal
 			onClose={() => setOpened(false)}
 			onOpen={() => setOpened(true)}
+			closeOnPressOutside={false}
 			{...props}
 		>
 			<Popover.Target>{children}</Popover.Target>
