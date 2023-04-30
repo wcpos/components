@@ -70,7 +70,7 @@ const Table = <T extends object>({
 			<View style={{ flex: 1, width: 800, height: 700 }}> */}
 			<FlashList
 				keyExtractor={keyExtractor}
-				ListEmptyComponent={<Empty />}
+				ListEmptyComponent={props.ListEmptyComponent || <Empty />}
 				// CellRendererComponent={(props) => {
 				// 	return <CellContainer {...props} />;
 				// }}

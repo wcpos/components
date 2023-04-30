@@ -4,8 +4,8 @@ import delay from 'lodash/delay';
 import isEmpty from 'lodash/isEmpty';
 import isPlainObject from 'lodash/isPlainObject';
 
-import Dropdown from '../dropdown';
-import TextInput from '../textinput';
+import Dropdown, { DropdownProps } from '../dropdown';
+import TextInput, { TextInputProps } from '../textinput';
 // import Search from '../search';
 
 type TextInputType = import('react-native').TextInput;
@@ -31,7 +31,7 @@ export interface ComboboxOption {
 /**
  *
  */
-export interface ComboboxProps {
+type ComboboxProps = {
 	/**
 	 * Options available in the Select.
 	 */
@@ -60,12 +60,9 @@ export interface ComboboxProps {
 	/** Customise option display */
 	renderOption?: (option: ComboboxOption) => React.ReactNode;
 
-	/** Autofocus so the dropdown is open and textinput is in focus */
-	autofocus?: boolean;
-
 	/**  */
 	// textInputRef?: React.RefObject<TextInput>;
-}
+} & Pick<TextInputProps, 'autoFocus' | 'onBlur' | 'onClear'>;
 
 /**
  * Format options to be used in the Dropdown.
@@ -98,7 +95,8 @@ export const Combobox = ({
 	// searchValue,
 	onSearch,
 	renderOption,
-	autofocus,
+	autoFocus,
+	onClear,
 	...props
 }: ComboboxProps) => {
 	const [opened, setOpened] = React.useState(false);
@@ -183,6 +181,7 @@ export const Combobox = ({
 				placeholder={selected?.label || selected || placeholder}
 				onChangeText={onSearchChange}
 				clearable
+				onClear={onClear}
 				onKeyPress={(e) => {
 					// console.log(e);
 				}}
@@ -192,7 +191,7 @@ export const Combobox = ({
 				 * which means the width is not set correctly.
 				 */
 				onFocus={() => delay(() => setOpened(true), 100)}
-				autoFocus={autofocus}
+				autoFocus={autoFocus}
 			/>
 		</Dropdown>
 	);

@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Text from '../text';
 
 // interface EmptyRowProps {
