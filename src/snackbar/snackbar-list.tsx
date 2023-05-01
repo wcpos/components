@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import uniqueId from 'lodash/uniqueId';
 import wrap from 'lodash/wrap';
-import Animated, { Easing, FadeInDown, Layout, SlideOutLeft } from 'react-native-reanimated';
 
 import { SnackbarProps, Snackbar } from './snackbar';
 import Box from '../box';
@@ -31,17 +30,15 @@ const SnackbarListBase = (_, ref) => {
 		return null;
 	}
 
+	/**
+	 * Simple fade in/out animation
+	 */
+
 	return (
-		<Box space="small">
+		<Box space="small" style={{ width: '100%' }}>
 			{snackbarOptions.map((opts, index) => (
 				<ErrorBoundary key={opts.id}>
-					<Animated.View
-						entering={FadeInDown}
-						layout={Layout.easing(Easing.bounce).delay(index * 100)}
-						exiting={SlideOutLeft}
-					>
-						<Snackbar {...opts} />
-					</Animated.View>
+					<Snackbar {...opts} />
 				</ErrorBoundary>
 			))}
 		</Box>
