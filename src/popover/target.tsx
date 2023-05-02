@@ -92,7 +92,13 @@ export const Target = ({ children }: PopoverTargetProps) => {
 		? React.cloneElement(children, { ...wrappedTriggerProps })
 		: React.createElement(
 				Pressable,
-				{ ...wrappedTriggerProps, style: { flex: 1, flexDirection: 'row' } },
+				{
+					...wrappedTriggerProps,
+					style: {
+						// flex: 1,
+						flexDirection: 'row',
+					},
+				},
 				children
 		  );
 
