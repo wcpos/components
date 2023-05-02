@@ -82,13 +82,38 @@ export const Modal = ({
 	const hasHeader = !!title || withCloseButton;
 
 	/**
-	 * Sync local state with prop changes
+	 * FIXME: this feels like a hack, but it works
+	 * The React.useEffect was overwriting the setPrimaryAction and setSecondaryActions
+	 * eg: on the product edit page
 	 */
+	const primaryActionUpdatedRef = React.useRef(false);
+	const secondaryActionsUpdatedRef = React.useRef(false);
+
+	const updatePrimaryAction = (newPrimaryAction) => {
+		primaryActionUpdatedRef.current = true;
+		setPrimaryAction(newPrimaryAction);
+	};
+
+	const updateSecondaryActions = (newSecondaryActions) => {
+		secondaryActionsUpdatedRef.current = true;
+		setSecondaryActions(newSecondaryActions);
+	};
+
+	// Update primaryAction and secondaryActions state when their respective props change
 	React.useEffect(() => {
-		setPrimaryAction(props.primaryAction);
+		if (!primaryActionUpdatedRef.current) {
+			setPrimaryAction(props.primaryAction);
+		} else {
+			primaryActionUpdatedRef.current = false;
+		}
 	}, [props.primaryAction]);
+
 	React.useEffect(() => {
-		setSecondaryActions(props.secondaryActions);
+		if (!secondaryActionsUpdatedRef.current) {
+			setSecondaryActions(props.secondaryActions);
+		} else {
+			secondaryActionsUpdatedRef.current = false;
+		}
 	}, [props.secondaryActions]);
 
 	/**
@@ -101,8 +126,8 @@ export const Modal = ({
 	const _context = React.useMemo(
 		() => ({
 			setTitle,
-			setPrimaryAction,
-			setSecondaryActions,
+			setPrimaryAction: updatePrimaryAction,
+			setSecondaryActions: updateSecondaryActions,
 			context,
 		}),
 		[context]
