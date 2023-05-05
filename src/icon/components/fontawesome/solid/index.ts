@@ -67,6 +67,7 @@ export { default as listTree } from "./listTree";
 export { default as list } from "./list";
 export { default as magnifyingGlass } from "./magnifyingGlass";
 export { default as minus } from "./minus";
+export { default as noteSticky } from "./noteSticky";
 export { default as penToSquare } from "./penToSquare";
 export { default as percent } from "./percent";
 export { default as plusMinus } from "./plusMinus";
