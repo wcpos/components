@@ -13,7 +13,7 @@ export interface CheckboxProps {
 	value?: boolean;
 
 	/** Label to display next to the Checkbox. */
-	label: React.ReactNode;
+	label?: React.ReactNode;
 
 	/** Additional text to aid in use. */
 	helpText?: React.ReactNode;
@@ -70,9 +70,11 @@ export const Checkbox = ({
 		<Pressable disabled={disabled} onPress={onPress}>
 			<Box horizontal space={spaceMap[size]} style={style}>
 				<Icon checked={value} disabled={disabled} size={size} />
-				<Label checked={value} info={helpText} size={size} type={type}>
-					{label}
-				</Label>
+				{label && (
+					<Label checked={value} info={helpText} size={size} type={type}>
+						{label}
+					</Label>
+				)}
 			</Box>
 		</Pressable>
 	);
