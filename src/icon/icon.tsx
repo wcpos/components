@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ViewStyle } from 'react-native';
 
 import get from 'lodash/get';
-import { useSharedValue } from 'react-native-reanimated';
+import Animated, { useSharedValue } from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
 
 import * as Svgs from './components/fontawesome/solid';
@@ -58,10 +58,16 @@ export interface IconProps {
 
 	/** Animate the icon into a 'loading' state */
 	spin?: boolean;
+
+	/**  */
+	loading?: boolean;
 }
 
 /**
  * Icon component
+ *
+ * TODO: how to animate svgs?
+ * https://medium.com/tribalscale/intro-to-svg-animations-with-react-native-reanimated-2-78bd87438129
  */
 export const Icon = ({
 	color,
@@ -77,6 +83,7 @@ export const Icon = ({
 	backgroundStyle = 'ripple',
 	type,
 	spin = false,
+	loading = false,
 }: IconProps) => {
 	const theme = useTheme();
 	// TODO: I shouldn't have two ways to set color

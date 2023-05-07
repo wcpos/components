@@ -1,4 +1,5 @@
 import * as React from 'react';
+
 import Skeleton from '../skeleton';
 
 export interface TextSkeletonProps {

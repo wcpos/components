@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View<{ border: import('./skeleton').Borders }>`
-	background-color: #e1e9ee;
 	overflow: hidden;
+	background-color: ${({ theme }) => theme.colors.darkGrey};
 
 	${({ border, theme }) => {
 		switch (border) {

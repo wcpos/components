@@ -1,12 +1,14 @@
 import * as React from 'react';
+import { ViewStyle } from 'react-native';
+
 import Animated, {
 	useSharedValue,
 	useAnimatedStyle,
 	withRepeat,
 	withTiming,
-	withSequence,
+	Easing,
 } from 'react-native-reanimated';
-import { ViewStyle } from 'react-native';
+
 import * as Styled from './styles';
 
 /**
@@ -36,31 +38,30 @@ export interface SkeletonProps {
 	style?: ViewStyle;
 }
 
-const timingConfig = {
-	duration: 1600,
-};
-
 /**
  *
  */
 export const Skeleton = ({ width, height, border = 'rounded', style }: SkeletonProps) => {
-	const pulseColor = useSharedValue('#e1e9ee');
-	const animatedBackground = useAnimatedStyle(() => ({
-		backgroundColor: pulseColor.value,
-	}));
+	const opacity = useSharedValue(0.6);
 
-	// TODO - need to optimize this
-	// React.useEffect(() => {
-	// 	pulseColor.value = withRepeat(
-	// 		withSequence(withTiming('#edf2f5', timingConfig), withTiming('#e1e9ee', timingConfig)),
-	// 		-1
-	// 	) as unknown as string; // typings are wrong for withTiming
-	// }, []);
+	/**
+	 *
+	 */
+	React.useEffect(() => {
+		opacity.value = withRepeat(withTiming(1, { duration: 1000, easing: Easing.ease }), -1, true);
+	}, [opacity]);
+
+	/**
+	 *
+	 */
+	const animatedStyle = useAnimatedStyle(() => ({
+		opacity: opacity.value,
+	}));
 
 	return (
 		<Styled.Container
 			as={Animated.View}
-			style={[{ width, height }, style, animatedBackground]}
+			style={[{ width, height }, style, animatedStyle]}
 			border={border}
 		/>
 	);

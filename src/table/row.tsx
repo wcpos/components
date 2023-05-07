@@ -7,9 +7,17 @@ import Box from '../box';
 import type { ListRenderItemInfo } from '@shopify/flash-list';
 
 export interface TableRowProps<T> extends ListRenderItemInfo<T> {
+	/**  */
 	rowStyle?: ViewStyle;
+
+	/**  */
 	cellStyle?: ViewStyle;
+
+	/**  */
 	extraData: import('./').TableExtraDataProps<T>;
+
+	/**  */
+	cellRenderer?: import('./').CellRenderer<T>;
 }
 
 /**
@@ -30,8 +38,10 @@ const TableRow = <T extends object>({
 	cellStyle,
 	index,
 	extraData,
+	...props
 }: TableRowProps<T>) => {
-	const { columns, cellRenderer } = extraData;
+	const { columns } = extraData;
+	const cellRenderer = props.cellRenderer || extraData.cellRenderer;
 
 	/**
 	 *
