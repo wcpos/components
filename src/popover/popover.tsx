@@ -1,14 +1,18 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
+import { useSubscription, useObservable } from 'observable-hooks';
 import { useSharedValue, MeasuredDimensions } from 'react-native-reanimated';
+import { switchMap, tap, filter } from 'rxjs/operators';
 
 // TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 
 import { Content, PopoverContentProps } from './content';
 import { PopoverContext, PortalContext } from './context';
+import { isPressInsideElement } from './helpers';
 import { Target, PopoverTargetProps } from './target';
+import useGesture from '../gesture-detector';
 import Portal from '../portal';
 
 import type { PopoverFooterProps } from './footer';
@@ -75,6 +79,9 @@ export interface PopoverProps {
 
 	/** */
 	style?: StyleProp<ViewStyle>;
+
+	/** contexted passed  down to the portal */
+	context?: Record<string, unknown>;
 }
 
 /**
@@ -139,6 +146,27 @@ export const Popover = ({
 	}, [props.secondaryActions]);
 
 	/**
+	 * HACK: bit of a hack to detect clicks outside of the popover
+	 * This could probably be improved
+	 */
+	const { tapEvent$ } = useGesture();
+	const tapsWhenOpened$ = useObservable(
+		(inputs$) =>
+			inputs$.pipe(
+				filter(([isOpen]) => isOpen),
+				switchMap(() => tapEvent$)
+			),
+		[opened]
+	);
+	useSubscription(tapsWhenOpened$, (event) => {
+		const contentPress = isPressInsideElement(event, contentMeasurements.value);
+		const targetPress = isPressInsideElement(event, targetMeasurements.value);
+		if (closeOnPressOutside && !contentPress && !targetPress) {
+			onClose && onClose();
+		}
+	});
+
+	/**
 	 *
 	 */
 	const context = React.useMemo(
@@ -173,6 +201,10 @@ export const Popover = ({
 			withinPortal,
 		]
 	);
+
+	if (props.context) {
+		Object.assign(context, props.context);
+	}
 
 	/** */
 	return (

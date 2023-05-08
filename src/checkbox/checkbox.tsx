@@ -59,6 +59,7 @@ export const Checkbox = ({
 	size = 'normal',
 	type,
 	style,
+	...props
 }: CheckboxProps) => {
 	const onPress = React.useCallback(() => {
 		if (isFunction(onChange)) {
@@ -67,7 +68,7 @@ export const Checkbox = ({
 	}, [value, onChange]);
 
 	return (
-		<Pressable disabled={disabled} onPress={onPress}>
+		<Pressable disabled={disabled} onPress={onPress} {...props}>
 			<Box horizontal space={spaceMap[size]} style={style}>
 				<Icon checked={value} disabled={disabled} size={size} />
 				{label && (

@@ -54,7 +54,6 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		targetMeasurements,
 		withArrow,
 		withinPortal,
-		closeOnPressOutside,
 	} = usePopover();
 	const [adjustedPlacement, setAdjustedPlacement] = React.useState(placement);
 
@@ -131,17 +130,8 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	});
 
 	/**
-	 * HACK: bit of a hack to detect clicks outside of the popover
-	 * This could be improved
+	 * HACK:
 	 */
-	const { tapEvent$ } = useGesture();
-
-	useSubscription(tapEvent$, (event) => {
-		const contentPress = isPressInsideElement(event, contentMeasurements.value);
-		if (closeOnPressOutside && !contentPress) {
-			onClose && onClose();
-		}
-	});
 
 	const tap = Gesture.Tap().onStart(() => {
 		// console.log('tap'); // this prevents the tap event from being fired inside the popover

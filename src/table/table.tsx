@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
-import {
-	FlashList,
-	FlashListProps,
-	ListRenderItemInfo,
-	ListRenderItem,
-	CellContainer,
-} from '@shopify/flash-list';
 import Animated from 'react-native-reanimated';
 
 import Empty from './empty';
@@ -15,8 +8,15 @@ import Header from './header';
 import Row from './row';
 import * as Styled from './styles';
 import ErrorBoundary from '../error-boundary';
+import {
+	FlashList,
+	FlashListProps,
+	ListRenderItemInfo,
+	ListRenderItem,
+	CellContainer,
+} from '../flash-list';
 
-const AnimatedCellContainer = Animated.createAnimatedComponent(CellContainer);
+// const AnimatedCellContainer = Animated.createAnimatedComponent(CellContainer);
 
 /**
  *
