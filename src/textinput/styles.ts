@@ -2,13 +2,15 @@ import styled, { css } from 'styled-components/native';
 
 import Platform from '@wcpos/utils/src/platform';
 
+type TextInputProps = import('./textinput').TextInputProps;
+
 /**
- * FIXME: TextInput doesn't seem to respect font-size and line-height on web
+ *
  */
-export const TextInput = styled.TextInput`
+export const TextInput = styled.TextInput<TextInputProps>`
 	font-family: ${({ theme }) => theme.font.family};
-	font-size: ${({ theme }) => theme.font.size.normal};
-	line-height: ${({ theme }) => theme.font.lineHeight.normal};
+	font-size: ${({ theme, size }) => theme.font.size[size]};
+	line-height: ${({ theme, size }) => theme.font.lineHeight[size]};
 	padding: 0;
 	margin: 0;
 

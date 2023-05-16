@@ -56,7 +56,7 @@ export const Pill = ({
 	 */
 	const label =
 		typeof children === 'string' ? (
-			<Text size={size} type="inverse" numberOfLines={1}>
+			<Text size={size} type="inverse" backgroundType={color} numberOfLines={1}>
 				{children}
 			</Text>
 		) : (
@@ -73,7 +73,7 @@ export const Pill = ({
 						color={color}
 						style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, paddingRight: 0 }}
 					>
-						<Icon name={icon} size={size} type="inverse" />
+						<Icon name={icon} size={size} type="inverse" backgroundType={color} />
 					</Styled.Pill>
 				)}
 				<Styled.Pill
@@ -85,6 +85,7 @@ export const Pill = ({
 						borderBottomLeftRadius: icon ? 0 : undefined,
 						borderTopRightRadius: removable ? 0 : undefined,
 						borderBottomRightRadius: removable ? 0 : undefined,
+						paddingRight: removable ? 0 : undefined,
 					}}
 				>
 					{label}
@@ -96,9 +97,15 @@ export const Pill = ({
 						disabled={disabled}
 						size={size}
 						color={color}
-						style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, paddingLeft: 0 }}
+						style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
 					>
-						<Icon name="xmark" size={size} disabled={disabled} type="inverse" />
+						<Icon
+							name="xmark"
+							size={size}
+							disabled={disabled}
+							type="inverse"
+							backgroundType={color}
+						/>
 					</Styled.Pill>
 				</Pressable>
 			)}

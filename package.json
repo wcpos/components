@@ -1,6 +1,6 @@
 {
   "name": "@wcpos/components",
-  "version": "1.0.139",
+  "version": "1.0.140",
   "description": "Shared components for WooCommerce POS",
   "author": "kilbot <paul@kilbot.com>",
   "homepage": "https://github.com/wcpos/components#readme",
@@ -45,13 +45,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.8",
-    "@storybook/addon-actions": "7.0.9",
-    "@storybook/addon-controls": "7.0.9",
-    "@storybook/addon-essentials": "7.0.9",
+    "@storybook/addon-actions": "7.0.12",
+    "@storybook/addon-controls": "7.0.12",
+    "@storybook/addon-essentials": "7.0.12",
     "@storybook/addon-react-native-web": "0.0.20",
-    "@storybook/preset-create-react-app": "7.0.9",
-    "@storybook/react": "7.0.9",
-    "@storybook/react-webpack5": "7.0.9",
+    "@storybook/preset-create-react-app": "7.0.12",
+    "@storybook/react": "7.0.12",
+    "@storybook/react-webpack5": "7.0.12",
     "@svgr/cli": "^7.0.0",
     "@testing-library/jest-dom": "5.16.5",
     "@testing-library/react": "^14.0.0",
@@ -72,10 +72,10 @@
     "postinstall-postinstall": "^2.1.0",
     "react-scripts": "5.0.1",
     "react-test-renderer": "18.2.0",
-    "storybook": "7.0.9",
+    "storybook": "7.0.12",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.4",
-    "webpack": "5.82.0"
+    "webpack": "5.82.1"
   },
   "eslintConfig": {
     "extends": "@wcpos/eslint-config"

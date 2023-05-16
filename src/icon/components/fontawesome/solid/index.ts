@@ -52,6 +52,7 @@ export { default as equals } from "./equals";
 export { default as eyeSlash } from "./eyeSlash";
 export { default as eye } from "./eye";
 export { default as fileInvoiceDollar } from "./fileInvoiceDollar";
+export { default as folder } from "./folder";
 export { default as folders } from "./folders";
 export { default as gear } from "./gear";
 export { default as giftCard } from "./giftCard";

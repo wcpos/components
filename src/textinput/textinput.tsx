@@ -95,6 +95,9 @@ export type TextInputProps = RNTextInputProps & {
 
 	/** */
 	containerStyle?: StyleProp<TextStyle>;
+
+	/** */
+	size?: import('@wcpos/themes').FontSizeTypes;
 };
 
 /**
@@ -126,6 +129,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 			style,
 			loading,
 			containerStyle,
+			size = 'normal',
 			...props
 		}: TextInputProps,
 		ref
@@ -189,6 +193,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 				onFocus={onContainerFocus}
 				hasFocus={hasFocus}
 				style={containerStyle}
+				size={size}
 			>
 				<Styled.TextInput
 					ref={mergedRef}
@@ -206,6 +211,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 					// selectTextOnFocus={selectTextOnFocus}
 					// onKeyPress={onKeyPress}
 					style={style}
+					size={size}
 					{...props}
 				/>
 			</TextInputContainer>

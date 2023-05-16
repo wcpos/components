@@ -30,7 +30,7 @@ const alignItemsMap = {
 };
 
 /**
- *
+ * TODO - Use a TableContext to pass down data, it's more flexible to add new props
  */
 const TableRow = <T extends object>({
 	item,
@@ -42,41 +42,48 @@ const TableRow = <T extends object>({
 }: TableRowProps<T>) => {
 	const { columns } = extraData;
 	const cellRenderer = props.cellRenderer || extraData.cellRenderer;
+	const [cellWidths, setCellWidths] = React.useState({});
 
 	/**
 	 *
 	 */
-	// const renderCell = React.useCallback(
-	// 	(column, index) => {
-	// 		if (typeof cellRenderer === 'function') {
-	// 			return cellRenderer({ item, column, index });
-	// 		}
-	// 		return <Text>{String(item[column.key] ?? '')}</Text>;
-	// 	},
-	// 	[cellRenderer, item]
-	// );
+	const onLayout = React.useCallback((event, columnKey) => {
+		const { width } = event.nativeEvent.layout;
+		setCellWidths((prevWidths) => {
+			return { ...prevWidths, [columnKey]: width };
+		});
+	}, []);
+
+	/**
+	 *
+	 */
+	const renderCell = React.useCallback(
+		(column, idx) => {
+			const { flex = 1, align = 'left', width } = column;
+
+			return (
+				<Styled.Cell
+					key={column.key}
+					padding="small"
+					flex={flex}
+					width={width}
+					align={alignItemsMap[align]}
+					style={[cellStyle]}
+					onLayout={(event) => onLayout(event, column.key)}
+				>
+					{cellRenderer({ item, column, index: idx, cellWidth: cellWidths[column.key] })}
+				</Styled.Cell>
+			);
+		},
+		[cellRenderer, cellStyle, cellWidths, item, onLayout]
+	);
 
 	/**
 	 *
 	 */
 	return (
 		<Styled.Row horizontal align="center" style={rowStyle} alt={index % 2 !== 0}>
-			{columns.map((column, idx) => {
-				const { flex = 1, align = 'left', width } = column;
-
-				return (
-					<Styled.Cell
-						key={column.key}
-						padding="small"
-						flex={flex}
-						width={width}
-						align={alignItemsMap[align]}
-						style={[cellStyle]}
-					>
-						{cellRenderer({ item, column, index: idx })}
-					</Styled.Cell>
-				);
-			})}
+			{columns.map(renderCell)}
 		</Styled.Row>
 	);
 };

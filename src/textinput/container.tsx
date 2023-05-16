@@ -43,7 +43,15 @@ export type TextInputContainerProps = {
 
 	/**  */
 	hasFocus?: boolean;
+
+	/** */
+	size?: import('@wcpos/themes').FontSizeTypes;
 } & Pick<PressableProps, 'onPress' | 'onLongPress' | 'onHoverIn' | 'onHoverOut' | 'onFocus'>;
+
+const paddingMap = {
+	small: 'xSmall',
+	normal: 'small',
+};
 
 /**
  *
@@ -62,6 +70,7 @@ export const TextInputContainer = ({
 	onHoverOut,
 	onFocus,
 	hasFocus,
+	size = 'normal',
 }: TextInputContainerProps) => {
 	const theme = useTheme();
 	const input = typeof children === 'string' ? <Text>{children}</Text> : children;
@@ -93,15 +102,15 @@ export const TextInputContainer = ({
 			>
 				{leftAccessory}
 				{prefix && (
-					<Box padding="small" paddingRight="none">
+					<Box padding={paddingMap[size] || 'small'} paddingRight="none">
 						<Text>{prefix}</Text>
 					</Box>
 				)}
-				<Box padding="small" style={{ flex: 1 }}>
+				<Box padding={paddingMap[size] || 'small'} style={{ flex: 1 }}>
 					{/** The actual input goes here */ input}
 				</Box>
 				{showClear && (
-					<Box padding="small">
+					<Box padding={paddingMap[size] || 'small'}>
 						<Icon
 							name="xmark"
 							size="small"

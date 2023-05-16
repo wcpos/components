@@ -56,6 +56,9 @@ export interface IconProps {
 	/** Icon colour **/
 	type?: import('@wcpos/themes').ColorTypes;
 
+	/** */
+	backgroundType?: import('@wcpos/themes').ColorTypes;
+
 	/** Animate the icon into a 'loading' state */
 	spin?: boolean;
 
@@ -82,13 +85,16 @@ export const Icon = ({
 	tooltipPlacement = 'top',
 	backgroundStyle = 'ripple',
 	type,
+	backgroundType,
 	spin = false,
 	loading = false,
 }: IconProps) => {
 	const theme = useTheme();
 	// TODO: I shouldn't have two ways to set color
 	// const iconColor = color || get(theme, ['colors', type], theme.colors.text);
-	const iconColor = get(theme, ['colors', type], theme.colors.text);
+	const adjustedType =
+		type === 'inverse' && backgroundType ? theme.inverseColors[backgroundType] : type;
+	const iconColor = get(theme, ['colors', adjustedType], theme.colors.text);
 	const SvgIcon = get(Svgs, name, Svgs.circleExclamation) as React.FC<SvgProps>;
 	const showRipple = useSharedValue(false);
 
