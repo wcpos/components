@@ -136,13 +136,37 @@ export const Popover = ({
 	 */
 
 	/**
-	 * Sync local state with prop changes
+	 * FIXME: this feels like a hack, but it works
+	 * SEE ALSO: modal
 	 */
+	const primaryActionUpdatedRef = React.useRef(false);
+	const secondaryActionsUpdatedRef = React.useRef(false);
+
+	const updatePrimaryAction = (newPrimaryAction) => {
+		primaryActionUpdatedRef.current = true;
+		setPrimaryAction(newPrimaryAction);
+	};
+
+	const updateSecondaryActions = (newSecondaryActions) => {
+		secondaryActionsUpdatedRef.current = true;
+		setSecondaryActions(newSecondaryActions);
+	};
+
+	// Update primaryAction and secondaryActions state when their respective props change
 	React.useEffect(() => {
-		setPrimaryAction(props.primaryAction);
+		if (!primaryActionUpdatedRef.current) {
+			setPrimaryAction(props.primaryAction);
+		} else {
+			primaryActionUpdatedRef.current = false;
+		}
 	}, [props.primaryAction]);
+
 	React.useEffect(() => {
-		setSecondaryActions(props.secondaryActions);
+		if (!secondaryActionsUpdatedRef.current) {
+			setSecondaryActions(props.secondaryActions);
+		} else {
+			secondaryActionsUpdatedRef.current = false;
+		}
 	}, [props.secondaryActions]);
 
 	/**
@@ -180,9 +204,11 @@ export const Popover = ({
 			withArrow,
 			withinPortal,
 			primaryAction,
-			setPrimaryAction,
+			// setPrimaryAction,
 			secondaryActions,
-			setSecondaryActions,
+			// setSecondaryActions,
+			setPrimaryAction: updatePrimaryAction,
+			setSecondaryActions: updateSecondaryActions,
 			onOpen,
 			onClose,
 		}),

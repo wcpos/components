@@ -1,5 +1,7 @@
 import * as React from 'react';
+import { ViewStyle, StyleProp } from 'react-native';
 
+import { isFunction } from 'lodash';
 import isPlainObject from 'lodash/isPlainObject';
 
 import Dropdown, { DropdownProps } from '../dropdown';
@@ -10,17 +12,13 @@ import { TextInputContainer } from '../textinput';
  *
  */
 export interface SelectOption {
-	/**
-	 * Label for the Option.
-	 */
+	/** Label for the Option. */
 	label: string;
-	/**
-	 * Value for the option.
-	 */
+
+	/** Value for the option. */
 	value: any;
-	/**
-	 * Disable this option.
-	 */
+
+	/** Disable this option. */
 	disabled?: boolean;
 }
 
@@ -28,46 +26,60 @@ export interface SelectOption {
  *
  */
 export type SelectProps = Omit<DropdownProps, 'items' | 'children'> & {
-	/**
-	 * Options available in the Select.
-	 */
+	/** Options available in the Select. */
 	options: SelectOption[] | string[];
-	/**
-	 * Currently selected value. If null, no value is selected.
-	 */
-	value?: SelectOption | string | null;
-	/**
-	 * Callback called when selection is changed.
-	 */
-	onChange: (selected: SelectOption) => void;
-	/**
-	 * Text to display as a placeholder.
-	 */
-	placeholder?: string;
-	/**
-	 * Display an error state.
-	 */
-	error?: boolean | string;
-	/**
-	 * Disable the input and choice selection.
-	 */
-	disabled?: boolean;
-};
 
-const maxHeight = 300;
+	/** Currently selected value. If null, no value is selected. */
+	value?: SelectOption | string | null;
+
+	/** Callback called when selection is changed. */
+	onChange: (selected: SelectOption) => void;
+
+	/** Text to display as a placeholder. */
+	placeholder?: string;
+
+	/** Display an error state. */
+	error?: boolean | string;
+
+	/** Disable the input and choice selection. */
+	disabled?: boolean;
+
+	/** */
+	size?: import('@wcpos/themes').FontSizeTypes;
+
+	/** Pass style prop to the select container */
+	style?: StyleProp<ViewStyle>;
+
+	/** */
+	onBlur?: () => void;
+
+	/** */
+	autoFocus?: boolean;
+};
 
 /**
  * Let the user choose one option from multiple ones.
  */
 export const Select = ({
+	opened: _opened,
 	options: optionsRaw,
 	value,
 	onChange,
 	placeholder = 'Select',
 	disabled = false,
+	size = 'normal',
+	onBlur,
+	style,
 	...props
 }: SelectProps) => {
-	const [open, setOpen] = React.useState(false);
+	const [opened, setOpened] = React.useState(_opened);
+
+	/**
+	 * Sync opened state with prop.
+	 */
+	React.useEffect(() => {
+		setOpened(_opened);
+	}, [_opened]);
 
 	/**
 	 *
@@ -105,21 +117,47 @@ export const Select = ({
 	 */
 	const handleSelect = (selected: any) => {
 		onChange(selected);
-		setOpen(false);
+		setOpened(false);
 	};
 
+	/**
+	 *
+	 */
+	const handleBlur = React.useCallback(() => {
+		if (isFunction(onBlur)) {
+			onBlur();
+		} else {
+			setOpened(false);
+		}
+	}, [onBlur]);
+
+	/**
+	 *
+	 */
 	return (
 		<Dropdown
-			opened={open}
+			opened={opened}
 			items={options}
 			onSelect={handleSelect}
 			matchWidth
 			withArrow={false}
-			onClose={() => setOpen(false)}
+			onClose={() => setOpened(false)}
 			{...props}
 		>
-			<TextInputContainer onPress={() => setOpen(true)}>
-				{selected ? <Text>{selected.label}</Text> : <Text type="secondary">{placeholder}</Text>}
+			<TextInputContainer
+				size={size}
+				onPress={() => setOpened(true)}
+				onFocus={() => setOpened(true)}
+				onBlur={handleBlur}
+				style={style}
+			>
+				{selected ? (
+					<Text size={size}>{selected.label}</Text>
+				) : (
+					<Text size={size} type="secondary">
+						{placeholder}
+					</Text>
+				)}
 			</TextInputContainer>
 		</Dropdown>
 	);

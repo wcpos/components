@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
+import delay from 'lodash/delay';
 import { useTheme } from 'styled-components/native';
 
 import Box from '../box';
@@ -44,9 +45,15 @@ export type TextInputContainerProps = {
 	/**  */
 	hasFocus?: boolean;
 
+	/**  */
+	autoFocus?: boolean;
+
 	/** */
 	size?: import('@wcpos/themes').FontSizeTypes;
-} & Pick<PressableProps, 'onPress' | 'onLongPress' | 'onHoverIn' | 'onHoverOut' | 'onFocus'>;
+} & Pick<
+	PressableProps,
+	'onPress' | 'onLongPress' | 'onHoverIn' | 'onHoverOut' | 'onFocus' | 'onBlur'
+>;
 
 const paddingMap = {
 	small: 'xSmall',
@@ -69,12 +76,16 @@ export const TextInputContainer = ({
 	onHoverIn,
 	onHoverOut,
 	onFocus,
+	onBlur,
 	hasFocus,
 	size = 'normal',
 }: TextInputContainerProps) => {
 	const theme = useTheme();
 	const input = typeof children === 'string' ? <Text>{children}</Text> : children;
 
+	/**
+	 *
+	 */
 	return (
 		<Pressable
 			onPress={onPress}
@@ -82,6 +93,7 @@ export const TextInputContainer = ({
 			onHoverIn={onHoverIn}
 			onHoverOut={onHoverOut}
 			onFocus={onFocus}
+			onBlur={onBlur}
 			style={style}
 		>
 			<Box

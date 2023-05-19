@@ -6,6 +6,8 @@ export { default as arrowRight } from "./arrowRight";
 export { default as arrowRotateLeft } from "./arrowRotateLeft";
 export { default as arrowRotateRight } from "./arrowRotateRight";
 export { default as arrowUp } from "./arrowUp";
+export { default as arrowsFromLine } from "./arrowsFromLine";
+export { default as arrowsToLine } from "./arrowsToLine";
 export { default as badgeDollar } from "./badgeDollar";
 export { default as badgePercent } from "./badgePercent";
 export { default as ban } from "./ban";

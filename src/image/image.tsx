@@ -13,14 +13,14 @@ export type ImageProps = ExpoImageProps & {
 /**
  *
  */
-export const Image = ({ source, border = 'square', style, ...props }: ImageProps) => {
+const Image = ({ source, border = 'square', style, ...props }: ImageProps) => {
 	const theme = useTheme();
 
 	return (
 		<ExpoImage
 			source={source}
 			style={[
-				{ backgroundColor: '#e1e9ee' },
+				{ backgroundColor: theme.colors.bodyBackground },
 				{
 					borderRadius:
 						border === 'rounded'
@@ -37,3 +37,9 @@ export const Image = ({ source, border = 'square', style, ...props }: ImageProps
 		/>
 	);
 };
+
+/**
+ * memoizing does not fix flashing transition
+ */
+// export default React.memo(Image);
+export default Image;

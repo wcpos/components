@@ -63,7 +63,7 @@ const TableHeader = ({ extraData }) => {
 					align={alignItemsMap[align]}
 				>
 					{sortable ? (
-						<Pressable onPress={handlePress} style={{ width: '100%' }}>
+						<Pressable onPress={handlePress} style={{ width: '100%', flexDirection: 'column' }}>
 							{({ hovered }: any) => (
 								<Box horizontal space="xxSmall" align="center" distribution={alignItemsMap[align]}>
 									<Text uppercase size="small" numberOfLines={1} type="textMuted">
