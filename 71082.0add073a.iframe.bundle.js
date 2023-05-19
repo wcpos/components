@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[71082],{"./src/icon/svg/fontawesome/solid/arrows-from-line.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"b2864b477e66226f0d8d.svg"}}]);
