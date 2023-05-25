@@ -24,9 +24,9 @@ export type CalculatorState = {
 /**
  *
  */
-function evaluate(state: CalculatorState): string {
-	const prev = parseFloat(state.previousOperand || '');
-	const current = parseFloat(state.currentOperand || '');
+function evaluate(state: CalculatorState, decimalSeparator: string): string {
+	const prev = parseFloat(state.previousOperand?.replace(decimalSeparator, '.') || '');
+	const current = parseFloat(state.currentOperand?.replace(decimalSeparator, '.') || '');
 	if (Number.isNaN(prev) || Number.isNaN(current)) return '';
 	let computation = 0;
 	switch (state.operation) {
@@ -46,7 +46,8 @@ function evaluate(state: CalculatorState): string {
 			break;
 	}
 
-	return computation.toString();
+	// replace the decimal point with the specified decimal separator before returning the result
+	return computation.toString().replace('.', decimalSeparator);
 }
 
 /**
@@ -65,13 +66,17 @@ export function reducer(state: CalculatorState, { type, payload }: Action): Calc
 			if (payload.digit === '0' && state.currentOperand === '0') {
 				return state;
 			}
-			if (payload.digit === '.' && state.currentOperand && state.currentOperand.includes('.')) {
+			if (
+				payload.digit === payload.decimalSeparator &&
+				state.currentOperand &&
+				state.currentOperand.includes(payload.decimalSeparator)
+			) {
 				return state;
 			}
-			if (payload.digit === '.' && state.currentOperand == null) {
+			if (payload.digit === payload.decimalSeparator && state.currentOperand == null) {
 				return {
 					...state,
-					currentOperand: '0.',
+					currentOperand: `0${payload.decimalSeparator}`,
 				};
 			}
 			if (state.currentOperand === '0') {
@@ -108,7 +113,7 @@ export function reducer(state: CalculatorState, { type, payload }: Action): Calc
 
 			return {
 				...state,
-				previousOperand: evaluate(state),
+				previousOperand: evaluate(state, payload.decimalSeparator),
 				operation: payload.operation,
 				currentOperand: null,
 			};
@@ -150,7 +155,7 @@ export function reducer(state: CalculatorState, { type, payload }: Action): Calc
 				overwrite: true,
 				previousOperand: null,
 				operation: null,
-				currentOperand: evaluate(state),
+				currentOperand: evaluate(state, payload.decimalSeparator),
 			};
 		case ACTIONS.SWITCH_SIGN:
 			if (!state.currentOperand || state.currentOperand === '0') return state;

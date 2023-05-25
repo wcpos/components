@@ -1,4 +1,7 @@
 import * as React from 'react';
+import { NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+
+import get from 'lodash/get';
 
 import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 
@@ -9,9 +12,20 @@ import Icon, { IconName } from '../icon';
 import TextInput from '../textinput';
 
 export interface NumpadProps {
+	/**  */
 	initialValue?: string;
+
+	/**  */
 	calculator?: boolean;
+
+	/** Emits on every change */
 	onChange?: (value: string) => void;
+
+	/** Triggers with the return key (returnKeyType) has been pressed */
+	onSubmitEditing?: (value: string) => void;
+
+	/** Decimal or comma */
+	decimalSeparator?: string;
 }
 
 const iconMap: Record<string, IconName> = {
@@ -25,7 +39,13 @@ const iconMap: Record<string, IconName> = {
 /**
  * TODO: handle partial selected text?
  */
-export const Numpad = ({ initialValue = '0', calculator = false, onChange }: NumpadProps) => {
+export const Numpad = ({
+	initialValue = '0',
+	calculator = false,
+	onChange,
+	decimalSeparator = '.',
+	onSubmitEditing,
+}: NumpadProps) => {
 	const [textSelected, setTextSelected] = React.useState(false);
 	const focusTrapRef = useFocusTrap();
 
@@ -50,11 +70,14 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 	 */
 	const addDigit = React.useCallback(
 		(digit: string) => {
-			dispatch({ type: ACTIONS.ADD_DIGIT, payload: { digit, overwrite: textSelected } });
+			dispatch({
+				type: ACTIONS.ADD_DIGIT,
+				payload: { digit, overwrite: textSelected, decimalSeparator },
+			});
 			// @FIXME - this is a hack to make sure overwrite is not left on
 			setTextSelected(false);
 		},
-		[textSelected]
+		[decimalSeparator, textSelected]
 	);
 
 	/**
@@ -65,21 +88,39 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 	}, []);
 
 	/**
-	 * dispatch intergers to reducer
+	 * dispatch integers to reducer
 	 * also handle backspace
 	 */
-	const handleKeyPress = (e: React.KeyboardEvent) => {
-		if (e.nativeEvent.key === 'Backspace') {
-			dispatch({ type: ACTIONS.DELETE_DIGIT });
-		} else if (e.nativeEvent.key === 'Enter') {
-			onChange?.(currentOperand || '');
-		} else if (!isNaN(e.nativeEvent.key)) {
-			dispatch({
-				type: ACTIONS.ADD_DIGIT,
-				payload: { digit: e.nativeEvent.key, overwrite: textSelected },
-			});
-		}
-	};
+	const handleKeyPress = React.useCallback(
+		(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+			const key = get(e, 'nativeEvent.key');
+
+			switch (key) {
+				case 'Backspace':
+					dispatch({ type: ACTIONS.DELETE_DIGIT });
+					break;
+				case 'Enter':
+					onSubmitEditing?.(currentOperand || '');
+					break;
+				case decimalSeparator:
+					if (!currentOperand.includes(decimalSeparator)) {
+						dispatch({
+							type: ACTIONS.ADD_DIGIT,
+							payload: { digit: key, overwrite: textSelected },
+						});
+					}
+					break;
+				default:
+					if (/^[0-9]$/.test(key)) {
+						dispatch({
+							type: ACTIONS.ADD_DIGIT,
+							payload: { digit: key, overwrite: textSelected },
+						});
+					}
+			}
+		},
+		[currentOperand, decimalSeparator, onSubmitEditing, textSelected]
+	);
 
 	/**
 	 *
@@ -128,7 +169,12 @@ export const Numpad = ({ initialValue = '0', calculator = false, onChange }: Num
 							<Icon name="plusMinus" size="xSmall" type="inverse" />
 						</Button>
 						<Button title="0" onPress={() => addDigit('0')} style={{ flex: 1 }} type="secondary" />
-						<Button title="." onPress={() => addDigit('.')} style={{ flex: 1 }} type="secondary" />
+						<Button
+							title={decimalSeparator}
+							onPress={() => addDigit(decimalSeparator)}
+							style={{ flex: 1 }}
+							type="secondary"
+						/>
 					</Box>
 				</Box>
 				{calculator && (
