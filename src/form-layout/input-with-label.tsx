@@ -60,7 +60,7 @@ export const InputWithLabel = ({
 
 			{error && (
 				<Box>
-					<InlineError message={typeof error === 'string' ? error : ''} />
+					<InlineError size="small" message={typeof error === 'string' ? error : ''} />
 				</Box>
 			)}
 

@@ -18,7 +18,7 @@ export interface ModalContainerProps {
 	children: (React.ReactElement<ModalHeaderProps | ModalContentProps | ModalFooterProps> | null)[];
 
 	/** Modal body width */
-	size?: 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge';
+	size?: 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' | 'xxLarge';
 
 	/** Set false to hide the backdrop */
 	withBackdrop?: boolean;
@@ -36,6 +36,7 @@ const sizes = {
 	medium: 440,
 	large: 620,
 	xLarge: 780,
+	xxLarge: 900,
 };
 
 /**
