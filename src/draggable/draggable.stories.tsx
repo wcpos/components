@@ -41,7 +41,7 @@ export const BasicUsage = (props: DraggableProps) => {
 	};
 
 	const positionStyle = useAnimatedStyle(() => ({
-		transform: [{ translateX: posX.value }, { translateY: posY.value }],
+		transform: `translateX(${posX.value}px) translateY(${posY.value}px)`,
 	}));
 
 	return (
@@ -74,7 +74,7 @@ export const ColumnResize = (props: DraggableProps) => {
 	};
 
 	const positionStyle = useAnimatedStyle(() => ({
-		transform: [{ translateX: posX.value }],
+		transform: `translateX(${posX.value}px)`,
 	}));
 
 	return (

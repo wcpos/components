@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
+
 import LowPassFilter from './low-pass-filter';
 import { getDistanceTo, maybeSnapLeft, maybeSnapTop, SNAP_SIZE } from './snap';
-import type { Rect } from './rect';
 import * as Styled from './styles';
+
+import type { Rect } from './rect';
 
 const WINDOW_CURSOR_BOUNDARY = 5;
 
@@ -92,7 +94,7 @@ export class Interactive extends React.Component<InteractiveProps, InteractiveSt
 		minWidth: 0,
 	};
 
-	constructor(props: InteractiveProps, context: Object) {
+	constructor(props: InteractiveProps, context: object) {
 		super(props, context);
 
 		this.state = {

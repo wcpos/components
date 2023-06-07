@@ -10,14 +10,10 @@ export interface RippleProps {
 
 export const Ripple = ({ showRipple }: RippleProps) => {
 	const rippleScale = useAnimatedStyle(() => ({
-		transform: [
-			{
-				scale: withTiming(showRipple.value ? 1.5 : 0, {
-					duration: 200,
-					easing: Easing.out(Easing.quad),
-				}),
-			},
-		],
+		transform: `scale(${withTiming(showRipple.value ? 1.5 : 0, {
+			duration: 200,
+			easing: Easing.out(Easing.quad),
+		})})`,
 	}));
 
 	return <Styled.RippleEffect as={Animated.View} style={rippleScale} pointerEvents="none" />;

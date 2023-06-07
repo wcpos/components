@@ -21,13 +21,13 @@ export const Pressable = React.forwardRef<View, PressableProps>((props, ref) => 
 
 	const resolvedStyle = React.useCallback(
 		(state: PressableStateCallbackType) => {
-			let finalStyle: StyleProp<ViewStyle> = {};
+			let finalStyle: StyleProp<ViewStyle> = [];
 
 			if (typeof style === 'function') {
 				const dynamicStyle = style(state);
-				finalStyle = StyleSheet.compose(dynamicStyle, { flexDirection: 'row' });
+				finalStyle = [dynamicStyle, { flexDirection: 'row' }];
 			} else {
-				finalStyle = StyleSheet.compose({ flexDirection: 'row' }, style);
+				finalStyle = [{ flexDirection: 'row' }, style];
 			}
 
 			return finalStyle;

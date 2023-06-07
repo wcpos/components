@@ -108,11 +108,7 @@ export const Snackbar = ({
 	 */
 	const animatedStyle = useAnimatedStyle(() => {
 		return {
-			transform: [
-				{
-					translateX: interpolate(progress.value, [0, 1], [-100, 0]),
-				},
-			],
+			transform: `translateX(${interpolate(progress.value, [0, 1], [-100, 0])}px)`,
 			opacity: progress.value,
 		};
 	});

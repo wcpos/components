@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Image, ImageSourcePropType, StyleSheet } from 'react-native';
+
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
 	runOnJS,
@@ -8,6 +9,7 @@ import Animated, {
 	useSharedValue,
 	withTiming,
 } from 'react-native-reanimated';
+
 import Icon from '../icon';
 
 const clamp = (value: number, lowerBound: number, upperBound: number) => {
@@ -133,16 +135,9 @@ export function Drag(props: DragProps) {
 	});
 
 	const animatedStyle = useAnimatedStyle(() => ({
-		transform: [
-			{
-				translateX: boxX.value,
-			},
-			{
-				translateY: boxY.value,
-			},
-		],
-		height: boxHeight.value,
-		width: boxWidth.value,
+		transform: `translateX(${boxX.value}px) translateY(${boxY.value}px)`,
+		height: `${boxHeight.value}px`,
+		width: `${boxWidth.value}px`,
 		position: 'absolute',
 	}));
 
