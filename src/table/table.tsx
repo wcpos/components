@@ -1,10 +1,14 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
+import intersectionBy from 'lodash/intersectionBy';
+import isEmpty from 'lodash/isEmpty';
+import isFunction from 'lodash/isFunction';
 import Animated from 'react-native-reanimated';
 
 import Empty from './empty';
 import Header from './header';
+import LoadingRow from './loading';
 import Row from './row';
 import * as Styled from './styles';
 import ErrorBoundary from '../error-boundary';
@@ -22,10 +26,23 @@ import {
  *
  */
 export type TableProps<T> = {
+	/**  */
 	style?: StyleProp<ViewStyle>;
+
+	/**  */
 	footer?: React.ReactNode;
+
+	/**  */
 	extraData: import('./').TableExtraDataProps<T>;
+
+	/**  */
 	renderItem?: ListRenderItem<T>;
+
+	/**  */
+	pageSize?: number;
+
+	/**  */
+	loading?: boolean;
 } & Omit<FlashListProps<T>, 'extraData' | 'renderItem'>;
 
 /**
@@ -36,6 +53,8 @@ const Table = <T extends object>({
 	footer,
 	renderItem,
 	extraData,
+	pageSize = 10,
+	loading,
 	...props
 }: TableProps<T>) => {
 	/**
@@ -80,6 +99,8 @@ const Table = <T extends object>({
 				// TODO - perhaps have a standard scrollbar for web and desktop
 				// See: https://css-tricks.com/the-current-state-of-styling-scrollbars-in-css/#aa-a-cross-browser-demo-of-custom-scrollbars
 				showsVerticalScrollIndicator={false}
+				onEndReachedThreshold={0.5}
+				ListFooterComponent={loading ? LoadingRow : null}
 				{...props}
 			/>
 			{/* </View> */}
@@ -88,5 +109,5 @@ const Table = <T extends object>({
 	);
 };
 
-export default Table;
-// export default React.memo(Table);
+// export default Table;
+export default React.memo(Table);
