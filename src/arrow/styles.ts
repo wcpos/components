@@ -17,7 +17,7 @@ export const Container = styled.View<Pick<ArrowProps, 'direction' | 'size'>>`
 		direction === 'up' &&
 		css`
 			flex-direction: row;
-		`}}
+		`}
 `;
 
 export const Left = styled.View<Pick<ArrowProps, 'size' | 'color'>>`

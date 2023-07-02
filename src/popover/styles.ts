@@ -17,7 +17,10 @@ export const Popover = styled.View`
 `;
 
 export const RaisedBox = styled.View`
-	shadow-offset: { width: 0, height: 1 };
+	shadow-offset: {
+		width: 0;
+		height: 1;
+	}
 	shadow-opacity: 0.22;
 	shadow-radius: 7.5px;
 	shadow-color: #000;

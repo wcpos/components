@@ -28,7 +28,7 @@ export const Box = styled.View<BoxProps>`
 		fill &&
 		css`
 			flex: 1;
-		`};
+		`}
 
 	gap: ${({ theme, space }) => `${theme.spacing[space]}px`};
 
@@ -53,12 +53,15 @@ export const Box = styled.View<BoxProps>`
 	${({ raised }) =>
 		raised &&
 		css`
-			shadow-offset: { width: 0, height: 1 };
+			shadow-offset: {
+				width: 0;
+				height: 1;
+			}
 			shadow-opacity: 0.22;
 			shadow-radius: 7.5px;
 			shadow-color: #000;
 			elevation: 5;
-		`};
+		`}
 
 	border-top-left-radius: ${({ theme, roundingTopLeft, rounding }) =>
 		`${theme.rounding[roundingTopLeft || rounding || 'none']}px`};

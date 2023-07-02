@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/native';
+
 import Platform from '@wcpos/utils/src/platform';
 
 export const View = styled.View<{ hovered: boolean }>`
@@ -8,11 +9,9 @@ export const View = styled.View<{ hovered: boolean }>`
 	background-color: ${({ hovered }) => (hovered ? 'rgba(0,0,0,0.05)' : 'transparent')};
 	width: 10px;
 
-	${
-		Platform.OS !== 'ios' &&
-		Platform.OS !== 'android' &&
-		css`
-			cursor: col-resize;
-		`
-	}}
+	${Platform.OS !== 'ios' &&
+	Platform.OS !== 'android' &&
+	css`
+		cursor: col-resize;
+	`}
 `;

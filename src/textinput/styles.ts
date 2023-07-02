@@ -14,11 +14,9 @@ export const TextInput = styled.TextInput<TextInputProps>`
 	padding: 0;
 	margin: 0;
 
-	${
-		Platform.OS !== 'ios' &&
-		Platform.OS !== 'android' &&
-		css`
-			outline-width: 0;
-		`
-	}}
+	${Platform.OS !== 'ios' &&
+	Platform.OS !== 'android' &&
+	css`
+		outline-width: 0;
+	`}
 `;

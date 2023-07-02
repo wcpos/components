@@ -21,7 +21,7 @@ export const Pill = styled.View<Pick<PillProps, 'disabled' | 'size' | 'color'>>`
 			default:
 				return `${theme.spacing.xSmall}px ${theme.spacing.small}px`;
 		}
-	}}
+	}};
 	border-radius: ${({ theme, size }) => {
 		switch (size) {
 			case 'xSmall':
@@ -33,7 +33,7 @@ export const Pill = styled.View<Pick<PillProps, 'disabled' | 'size' | 'color'>>`
 			default:
 				return `${theme.rounding.xLarge}px`;
 		}
-	}}
+	}};
 	background-color: ${({ theme, disabled, color }) =>
 		disabled ? theme.colors.disabled : theme.colors[color]};
 	gap: ${({ theme, size }) => `${theme.spacing.xSmall}px`};

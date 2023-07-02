@@ -11,17 +11,17 @@ export const Background = styled.View<BackgroundProps>`
 			return 'transparent';
 		}
 		return type ? theme.colors[type] : theme.colors.primary;
-	}}};
+	}};
 
 	border-color: ${({ type, theme }) => {
 		return type ? theme.colors[type] : theme.colors.primary;
 	}};
 
-	opacity: ${({ disabled }) => (disabled ? 0.75 : 1)}
+	opacity: ${({ disabled }) => (disabled ? 0.75 : 1)};
 	border-radius: ${({ theme }) => `${theme.rounding.medium}px`};
 	border-width: ${({ background }) =>
 		background === 'outline' ? `${StyleSheet.hairlineWidth}px` : 0};
-	
+
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
