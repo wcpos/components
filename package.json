@@ -1,6 +1,6 @@
 {
   "name": "@wcpos/components",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Shared components for WooCommerce POS",
   "author": "kilbot <paul@kilbot.com>",
   "homepage": "https://github.com/wcpos/components#readme",
@@ -40,8 +40,8 @@
     "react-native-screens": "~3.22.0",
     "react-native-svg": "13.9.0",
     "react-native-web": "~0.19.6",
-    "react-native-webview": "12.4.0",
-    "styled-components": "6.0.1",
+    "react-native-webview": "13.2.2",
+    "styled-components": "6.0.2",
     "stylis": "^4.3.0"
   },
   "devDependencies": {
