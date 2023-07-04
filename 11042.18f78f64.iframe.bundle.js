@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[11042],{"./src/logo/s.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"16b27c512db2e889c6f2.svg"}}]);
