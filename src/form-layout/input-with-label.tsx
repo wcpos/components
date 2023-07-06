@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
 
 import Box from '../box';
 import InlineError from '../inline-error';
+import Pressable from '../pressable';
 import Text from '../text';
 
 export interface InputWithLabelProps {
@@ -46,13 +46,13 @@ export const InputWithLabel = ({
 	return (
 		<Box space="xSmall">
 			{label && (
-				<TouchableWithoutFeedback onPress={onLabelPress} disabled={disabled}>
+				<Pressable onPress={onLabelPress} disabled={disabled}>
 					<Box>
 						<Text uppercase size="small" numberOfLines={1} type="textMuted">
 							{label}
 						</Text>
 					</Box>
-				</TouchableWithoutFeedback>
+				</Pressable>
 			)}
 
 			{/* Actual form element goes here */}

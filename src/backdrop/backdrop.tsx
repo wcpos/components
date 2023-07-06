@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableWithoutFeedback, NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
+import { NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
 
 import isFunction from 'lodash/isFunction';
 import Animated, {
@@ -11,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import * as Styled from './styles';
+import Pressable from '../pressable';
 
 export interface BackdropProps {
 	/**
@@ -57,16 +58,14 @@ export const Backdrop = ({
 			as={Animated.View}
 			entering={FadeIn}
 			exiting={FadeOut}
-			style={[invisible && { backgroundColor: 'transparent' }]}
-			pointerEvents={!clickThrough ? 'auto' : 'none'}
+			style={[
+				invisible && { backgroundColor: 'transparent' },
+				{ pointerEvents: !clickThrough ? 'auto' : 'none' },
+			]}
 		>
 			{children}
 		</Styled.Backdrop>
 	);
 
-	return clickThrough ? (
-		contentView
-	) : (
-		<TouchableWithoutFeedback onPress={handlePress}>{contentView}</TouchableWithoutFeedback>
-	);
+	return clickThrough ? contentView : <Pressable onPress={handlePress}>{contentView}</Pressable>;
 };

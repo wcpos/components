@@ -1,8 +1,8 @@
 import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
 
 import Box from '../box';
 import InlineError from '../inline-error';
+import Pressable from '../pressable';
 import Text from '../text';
 
 export interface BaseInputContainerProps {
@@ -50,11 +50,11 @@ export const BaseInputContainer = ({
 }: BaseInputContainerProps) => (
 	<Box space="xSmall">
 		{!hideLabel && (
-			<TouchableWithoutFeedback onPress={onLabelClick} disabled={disabled}>
+			<Pressable onPress={onLabelClick} disabled={disabled}>
 				<Box>
 					<Text>{label}</Text>
 				</Box>
-			</TouchableWithoutFeedback>
+			</Pressable>
 		)}
 
 		{/* Actual Input goes here */}

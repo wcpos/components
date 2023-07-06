@@ -269,18 +269,17 @@ export const Draggable = ({
 		const top = minY || -far;
 		const bottom = maxY ? height - maxY : -far;
 		return (
-			<View pointerEvents="box-none" style={{ left, right, top, bottom, ...styles.debugView }} />
+			<View style={{ left, right, top, bottom, pointerEvents: 'box-none', ...styles.debugView }} />
 		);
 	}, [maxX, maxY, minX, minY]);
 
 	return (
-		<View pointerEvents="box-none" style={positionCss}>
+		<View style={[{ pointerEvents: 'box-none' }, positionCss]}>
 			{debug && getDebugView()}
 			<Animated.View
-				pointerEvents="box-none"
 				{...animatedViewProps}
 				{...panResponder.panHandlers}
-				style={pan.current.getLayout()}
+				style={[{ pointerEvents: 'box-none' }, pan.current.getLayout()]}
 			>
 				<TouchableOpacity
 					{...touchableOpacityProps}

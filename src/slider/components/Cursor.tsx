@@ -37,7 +37,7 @@ export const Cursor: React.FC<IProps> = ({
 			<PanGestureHandler onGestureEvent={panGestureHandler}>
 				<Styled.CursorContainer style={cursorLeft}>
 					<Styled.CursorElement />
-					<Styled.RippleEffect style={rippleScale} pointerEvents="none" />
+					<Styled.RippleEffect style={[{ pointerEvents: 'none' }, rippleScale]} />
 				</Styled.CursorContainer>
 			</PanGestureHandler>
 			<Tooltip

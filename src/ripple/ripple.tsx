@@ -16,5 +16,7 @@ export const Ripple = ({ showRipple }: RippleProps) => {
 		})})`,
 	}));
 
-	return <Styled.RippleEffect as={Animated.View} style={rippleScale} pointerEvents="none" />;
+	return (
+		<Styled.RippleEffect as={Animated.View} style={[{ pointerEvents: 'none' }, rippleScale]} />
+	);
 };

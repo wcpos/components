@@ -126,10 +126,10 @@ export const Snackbar = ({
 				style={{
 					backgroundColor: type ? theme.colors[type] : theme.colors.headerBackground,
 					maxWidth: 'fit-content',
+					pointerEvents: 'auto',
 				}}
 				horizontal
 				align="center"
-				pointerEvents="auto"
 			>
 				<Text type="inverse" style={{ flexWrap: 'wrap', display: 'flex', wordBreak: 'break-all' }}>
 					{message}

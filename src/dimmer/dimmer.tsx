@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+
 import * as Styled from './styles';
+import Pressable from '../pressable';
 
 type IDimmerProps = {
 	children?: React.ReactNode;
@@ -9,9 +10,9 @@ type IDimmerProps = {
 
 const Dimmer = ({ children, onPress }: IDimmerProps) => {
 	return (
-		<TouchableWithoutFeedback onPress={onPress}>
+		<Pressable onPress={onPress}>
 			<Styled.Dimmer>{children}</Styled.Dimmer>
-		</TouchableWithoutFeedback>
+		</Pressable>
 	);
 };
 

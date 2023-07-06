@@ -34,8 +34,10 @@ export const SnackbarProvider: React.FC<SnackbarProviderProps> = ({ children }) 
 						justifyContent: 'flex-start',
 						padding: 30,
 					},
+					{
+						pointerEvents: 'none',
+					},
 				]}
-				pointerEvents="none"
 			>
 				<SnackbarList ref={ref} />
 			</View>

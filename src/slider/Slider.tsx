@@ -1,6 +1,8 @@
 import React from 'react';
-import Animated, { useDerivedValue, useSharedValue } from 'react-native-reanimated';
 import { View } from 'react-native';
+
+import Animated, { useDerivedValue, useSharedValue } from 'react-native-reanimated';
+
 import { ColoredLine, Cursor, SliderLine } from './components';
 import {
 	useCalculatedValue,
@@ -10,8 +12,8 @@ import {
 	useUpdateOuterSharedValue,
 	useTapHandler,
 } from './hooks';
-import Text from '../text';
 import * as Styled from './styles';
+import Text from '../text';
 
 export interface SliderProps {
 	min?: number;
@@ -67,7 +69,7 @@ export const Slider: React.FC<SliderProps> = ({
 					showRipple={isActivePanGesture}
 					sliderWidth={sliderWidth}
 				/>
-				<Styled.Row pointerEvents="none">
+				<Styled.Row style={[{ pointerEvents: 'none' }]}>
 					<Text>{min}</Text>
 					<Text>{max}</Text>
 				</Styled.Row>

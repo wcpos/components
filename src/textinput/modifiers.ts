@@ -10,7 +10,7 @@ const modifiers = {
 		autoCapitalize: 'none',
 	},
 	email: {
-		keyboardType: 'email-address',
+		inputMode: 'email-address',
 		textContentType: 'emailAddress',
 		autoComplete: 'email',
 		autoCapitalize: 'none',
@@ -37,11 +37,11 @@ const modifiers = {
 	},
 	integer: {
 		textContentType: 'none',
-		keyboardType: 'number-pad',
+		inputMode: 'number-pad',
 	},
 	url: {
 		textContentType: 'URL',
-		keyboardType: 'url',
+		inputMode: 'url',
 		autoCapitalize: 'none',
 		autoComplete: 'off',
 	},
@@ -56,7 +56,7 @@ type ModifierFn = (
 	autoCapitalize?: RNTextInputProps['autoCapitalize']
 ) => Pick<
 	RNTextInputProps,
-	'keyboardType' | 'textContentType' | 'autoCapitalize' | 'autoCorrect' | 'autoComplete'
+	'inputMode' | 'textContentType' | 'autoCapitalize' | 'autoCorrect' | 'autoComplete'
 >;
 
 export const getModifiers: ModifierFn = (type = 'text', autoCapitalize = 'none') => {

@@ -1,5 +1,7 @@
 import React from 'react';
+
 import Animated, { useAnimatedProps, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+
 import ReText from './ReText';
 import * as Styled from '../styles';
 
@@ -42,7 +44,7 @@ export const Tooltip: React.FC<IProps> = ({ translateX, value, showTooltip, slid
 	// 	text: String(value.value),
 	// }));
 	return (
-		<Styled.AbsoluteView style={tooltipOpacity} pointerEvents="none">
+		<Styled.AbsoluteView style={[{ pointerEvents: 'none' }, tooltipOpacity]}>
 			<Styled.TooltipCloud style={tooltipCloudLeft}>
 				{/* <ReText text={value} /> */}
 			</Styled.TooltipCloud>
