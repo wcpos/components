@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
 
-import * as Styled from './styles';
 import Backdrop from '../backdrop';
 import Box from '../box';
 import ErrorBoundary from '../error-boundary';

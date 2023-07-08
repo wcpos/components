@@ -67,5 +67,11 @@ export const Backdrop = ({
 		</Styled.Backdrop>
 	);
 
-	return clickThrough ? contentView : <Pressable onPress={handlePress}>{contentView}</Pressable>;
+	return clickThrough ? (
+		contentView
+	) : (
+		<Pressable onPress={handlePress} style={{ height: '100%' }}>
+			{contentView}
+		</Pressable>
+	);
 };

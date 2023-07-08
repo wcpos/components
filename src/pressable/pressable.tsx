@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
 	Pressable as RNPressable,
-	StyleSheet,
 	StyleProp,
 	ViewStyle,
 	View,
@@ -17,7 +16,7 @@ export type PressableProps = import('react-native').PressableProps & {
  *
  */
 export const Pressable = React.forwardRef<View, PressableProps>((props, ref) => {
-	const { style, ...restProps } = props;
+	const { style, ...rest } = props;
 
 	const resolvedStyle = React.useCallback(
 		(state: PressableStateCallbackType) => {
@@ -35,5 +34,5 @@ export const Pressable = React.forwardRef<View, PressableProps>((props, ref) => 
 		[style]
 	);
 
-	return <RNPressable style={resolvedStyle} ref={ref} {...restProps} />;
+	return <RNPressable style={resolvedStyle} ref={ref} {...rest} />;
 });
