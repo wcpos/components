@@ -36,7 +36,8 @@ export const Tooltip = ({ children, placement = 'top', ...props }: TooltipProps)
 			withinPortal
 			onClose={() => setOpened(false)}
 			onOpen={() => setOpened(true)}
-			closeOnPressOutside={false}
+			// closeOnPressOutside={false}
+			clickThrough={true}
 			{...props}
 		>
 			<Popover.Target>{children}</Popover.Target>

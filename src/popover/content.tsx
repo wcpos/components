@@ -7,6 +7,7 @@ import {
 	withTiming,
 	Easing,
 	useSharedValue,
+	FadeInDown,
 } from 'react-native-reanimated';
 import { useTheme } from 'styled-components/native';
 
@@ -26,6 +27,7 @@ import {
 	adjustPlacement,
 } from './helpers';
 import * as Styled from './styles';
+import Backdrop from '../backdrop';
 import ErrorBoundary from '../error-boundary';
 
 /**
@@ -51,6 +53,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		targetMeasurements,
 		withArrow,
 		withinPortal,
+		clickThrough,
 	} = usePopover();
 	const [adjustedPlacement, setAdjustedPlacement] = React.useState(placement);
 
@@ -130,39 +133,47 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	 *
 	 */
 	return (
-		<MeasureWrapper
-			style={[
-				{ position: 'absolute', zIndex: theme.zIndex.popover },
-				{ width: matchWidth ? targetMeasurements.value.width || 100 : 'auto' },
-				positionStyle,
-				fadeInStyle,
-			]}
-			// entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
+		<Backdrop
+			onPress={() => {
+				onClose && onClose();
+			}}
+			invisible
+			clickThrough={clickThrough}
 		>
-			{withArrow && (isBottom(adjustedPlacement) || isRight(adjustedPlacement)) && (
-				<Arrow placement={adjustedPlacement} style={style} />
-			)}
+			<MeasureWrapper
+				style={[
+					{ position: 'absolute', zIndex: theme.zIndex.popover },
+					{ width: matchWidth ? targetMeasurements.value.width || 100 : 'auto' },
+					positionStyle,
+					fadeInStyle,
+				]}
+				// entering={FadeInDown} // Reanimated LayoutAnimation doesn't work on web, yet
+			>
+				{withArrow && (isBottom(adjustedPlacement) || isRight(adjustedPlacement)) && (
+					<Arrow placement={adjustedPlacement} style={style} />
+				)}
 
-			<Styled.RaisedBox>
-				<Styled.Popover
-					// ref={focusTrapRef}
-					/**
-					 * FIXME: `max-content` is not supported in react-native
-					 */
-					style={[
-						{ width: matchWidth ? '100%' : Platform.isNative ? 'auto' : 'max-content' },
-						{ zIndex: 2 }, // NOTE: This is to make sure the popover is above the footer
-						style,
-					]}
-				>
-					<ErrorBoundary>{children}</ErrorBoundary>
-				</Styled.Popover>
-				<Footer />
-			</Styled.RaisedBox>
+				<Styled.RaisedBox>
+					<Styled.Popover
+						// ref={focusTrapRef}
+						/**
+						 * FIXME: `max-content` is not supported in react-native
+						 */
+						style={[
+							{ width: matchWidth ? '100%' : Platform.isNative ? 'auto' : 'max-content' },
+							{ zIndex: 2 }, // NOTE: This is to make sure the popover is above the footer
+							style,
+						]}
+					>
+						<ErrorBoundary>{children}</ErrorBoundary>
+					</Styled.Popover>
+					<Footer />
+				</Styled.RaisedBox>
 
-			{withArrow && (isTop(adjustedPlacement) || isLeft(adjustedPlacement)) && (
-				<Arrow placement={adjustedPlacement} style={style} />
-			)}
-		</MeasureWrapper>
+				{withArrow && (isTop(adjustedPlacement) || isLeft(adjustedPlacement)) && (
+					<Arrow placement={adjustedPlacement} style={style} />
+				)}
+			</MeasureWrapper>
+		</Backdrop>
 	);
 };

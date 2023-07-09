@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
+import { NativeSyntheticEvent, NativeTouchEvent, StyleSheet } from 'react-native';
 
 import isFunction from 'lodash/isFunction';
 import Animated, {
@@ -70,7 +70,7 @@ export const Backdrop = ({
 	return clickThrough ? (
 		contentView
 	) : (
-		<Pressable onPress={handlePress} style={{ height: '100%' }}>
+		<Pressable style={{ ...StyleSheet.absoluteFillObject, flex: 1 }} onPress={handlePress}>
 			{contentView}
 		</Pressable>
 	);

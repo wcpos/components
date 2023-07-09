@@ -1,16 +1,16 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
-import { useSubscription, useObservable } from 'observable-hooks';
+// import { useSubscription, useObservable } from 'observable-hooks';
 import { useSharedValue, MeasuredDimensions } from 'react-native-reanimated';
-import { switchMap, tap, filter } from 'rxjs/operators';
+// import { switchMap, tap, filter } from 'rxjs/operators';
 
 // TODO - haptics is breaking Storybook
 // import { impactAsync, ImpactFeedbackStyle } from 'expo-haptics';
 
 import { Content, PopoverContentProps } from './content';
 import { PopoverContext, PortalContext } from './context';
-import { isPressInsideElement } from './helpers';
+// import { isPressInsideElement } from './helpers';
 import { Target, PopoverTargetProps } from './target';
 import Portal from '../portal';
 
@@ -89,6 +89,7 @@ export interface PopoverProps {
 export const Popover = ({
 	children,
 	closeOnPressOutside = true,
+	clickThrough = false,
 	defaultOpened,
 	matchWidth = false,
 	onChange,
@@ -210,6 +211,7 @@ export const Popover = ({
 			setSecondaryActions: updateSecondaryActions,
 			onOpen,
 			onClose,
+			clickThrough,
 		}),
 		[
 			closeOnPressOutside,
@@ -224,6 +226,7 @@ export const Popover = ({
 			trigger,
 			withArrow,
 			withinPortal,
+			clickThrough,
 		]
 	);
 

@@ -19,6 +19,7 @@ type PopoverContextProps = {
 	| 'onClose'
 	| 'primaryAction'
 	| 'secondaryActions'
+	| 'clickThrough'
 >;
 
 export const PopoverContext = React.createContext<PopoverContextProps>(null);
