@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 
-import { Box } from '../box/box';
 import { Skeleton } from '../skeleton/skeleton';
 import { Text } from '../text/text';
 

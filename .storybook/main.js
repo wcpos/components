@@ -1,7 +1,7 @@
-const path = require('path');
+import path from 'path';
 // const webpack = require('webpack');
 
-module.exports = {
+const config = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: ['@storybook/preset-create-react-app', '@storybook/addon-essentials', '@storybook/addon-actions', {
     name: '@storybook/addon-react-native-web',
@@ -47,3 +47,5 @@ module.exports = {
     autodocs: true
   }
 };
+
+export default config;

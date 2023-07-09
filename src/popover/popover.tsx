@@ -12,7 +12,6 @@ import { Content, PopoverContentProps } from './content';
 import { PopoverContext, PortalContext } from './context';
 import { isPressInsideElement } from './helpers';
 import { Target, PopoverTargetProps } from './target';
-import useGesture from '../gesture-detector';
 import Portal from '../portal';
 
 import type { PopoverFooterProps } from './footer';
@@ -173,22 +172,22 @@ export const Popover = ({
 	 * HACK: bit of a hack to detect clicks outside of the popover
 	 * This could probably be improved
 	 */
-	const { tapEvent$ } = useGesture();
-	const tapsWhenOpened$ = useObservable(
-		(inputs$) =>
-			inputs$.pipe(
-				filter(([isOpen]) => isOpen),
-				switchMap(() => tapEvent$)
-			),
-		[opened]
-	);
-	useSubscription(tapsWhenOpened$, (event) => {
-		const contentPress = isPressInsideElement(event, contentMeasurements.value);
-		const targetPress = isPressInsideElement(event, targetMeasurements.value);
-		if (closeOnPressOutside && !contentPress && !targetPress) {
-			onClose && onClose();
-		}
-	});
+	// const { tapEvent$ } = useGesture();
+	// const tapsWhenOpened$ = useObservable(
+	// 	(inputs$) =>
+	// 		inputs$.pipe(
+	// 			filter(([isOpen]) => isOpen),
+	// 			switchMap(() => tapEvent$)
+	// 		),
+	// 	[opened]
+	// );
+	// useSubscription(tapsWhenOpened$, (event) => {
+	// 	const contentPress = isPressInsideElement(event, contentMeasurements.value);
+	// 	const targetPress = isPressInsideElement(event, targetMeasurements.value);
+	// 	if (closeOnPressOutside && !contentPress && !targetPress) {
+	// 		onClose && onClose();
+	// 	}
+	// });
 
 	/**
 	 *
