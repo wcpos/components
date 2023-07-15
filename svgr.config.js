@@ -2,8 +2,8 @@ const path = require('path');
 
 function defaultIndexTemplate(filePaths) {
 	const exportEntries = filePaths.map((obj) => {
-		const basename = path.basename(obj.path, path.extname(obj.path));
-		// const exportName = /^\d/.test(basename) ? `Svg${basename}` : basename
+		// const basename = path.basename(obj.path, path.extname(obj.path));
+		const basename = path.basename(obj, path.extname(obj)); // regression in svgr v8
 		return `export { default as ${basename} } from './${basename}'`;
 	});
 	return exportEntries.join('\n');
