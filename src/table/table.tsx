@@ -20,6 +20,7 @@ import {
 	CellContainer,
 } from '../flash-list';
 
+const AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
 // const AnimatedCellContainer = Animated.createAnimatedComponent(CellContainer);
 
 /**
@@ -43,6 +44,9 @@ export type TableProps<T> = {
 
 	/**  */
 	loading?: boolean;
+
+	/**  */
+	hideHeader?: boolean;
 } & Omit<FlashListProps<T>, 'extraData' | 'renderItem'>;
 
 /**
@@ -55,6 +59,7 @@ const Table = <T extends object>({
 	extraData,
 	pageSize = 10,
 	loading,
+	hideHeader,
 	...props
 }: TableProps<T>) => {
 	/**
@@ -81,17 +86,19 @@ const Table = <T extends object>({
 	 */
 	return (
 		<Styled.Table style={style}>
-			<ErrorBoundary>
-				<Header extraData={extraData} />
-			</ErrorBoundary>
+			{!hideHeader && (
+				<ErrorBoundary>
+					<Header extraData={extraData} />
+				</ErrorBoundary>
+			)}
 			{/* 
 			FIXME: FlashList complains about rendered size being not usable, but explicitly setting doesn't fix?
 			<View style={{ flex: 1, width: 800, height: 700 }}> */}
-			<FlashList
+			<AnimatedFlashList
 				keyExtractor={keyExtractor}
 				ListEmptyComponent={props.ListEmptyComponent || <Empty />}
 				// CellRendererComponent={(props) => {
-				// 	return <CellContainer {...props} />;
+				// 	return <AnimatedCellContainer {...props} />;
 				// }}
 				renderItem={renderItem || defaultRenderItem}
 				extraData={extraData}

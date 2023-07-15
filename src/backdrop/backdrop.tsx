@@ -2,13 +2,7 @@ import * as React from 'react';
 import { NativeSyntheticEvent, NativeTouchEvent, StyleSheet } from 'react-native';
 
 import isFunction from 'lodash/isFunction';
-import Animated, {
-	useAnimatedStyle,
-	useSharedValue,
-	withTiming,
-	FadeIn,
-	FadeOut,
-} from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import * as Styled from './styles';
 import Pressable from '../pressable';
@@ -70,7 +64,10 @@ export const Backdrop = ({
 	return clickThrough ? (
 		contentView
 	) : (
-		<Pressable style={{ ...StyleSheet.absoluteFillObject, flex: 1 }} onPress={handlePress}>
+		<Pressable
+			style={{ ...StyleSheet.absoluteFillObject, flex: 1, cursor: 'default' }}
+			onPress={handlePress}
+		>
 			{contentView}
 		</Pressable>
 	);
