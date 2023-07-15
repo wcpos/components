@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[58637],{"./src/icon/svg/fontawesome/solid/chevron-left.svg":(module,__unused_webpack_exports,__webpack_require__)=>{module.exports=__webpack_require__.p+"9037f6537b23098f7cca.svg"}}]);
