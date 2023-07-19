@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleProp, ViewProps } from 'react-native';
 
-import Svg, { Path, G, Defs, Use, Symbol, SvgProps } from 'react-native-svg';
+import Svg, { Path, G, Circle, Line, SvgProps } from 'react-native-svg';
 
 interface Props extends SvgProps {
 	animate?: boolean;
@@ -34,23 +34,43 @@ const Logo: React.FC<Props> = ({ animate, width = 100, height = 100, ...props })
 				fill="#323A46"
 			/>
 			<G fill="#CD2C24">
-				<Path d="m0,90q0,-90 90,-90l90,0l0,270a90,90 0 1 1 -180,0l0,-180zm360,-90l180,0l0,270a90,90 0 1 1 -180,0l0,-270zm360,0l180,0l0,270a90,90 0 1 1 -180,0l0,-270zm360,0l90,0q90,0 90,90l0,180a90,90 0 1 1 -180,0l0,-270z" />
+				<Path
+					d="M0,90 Q0,0 90,0 L180,0 L180,270 A90,90 0 1 1 0,270 Z
+            M360,0 H540 V270 A90,90 0 1 1 360,270 Z
+            M720,0 H900 V270 A90,90 0 1 1 720,270 Z
+            M1080,0 H1170 Q1260,0 1260,90 L1260,270 A90,90 0 1 1 1080,270 Z"
+				/>
 			</G>
 			<G fill="#F5E5C0">
-				<Path d="m180,0l180,0l0,270a90,90 0 1 1 -180,0l0,-270zm360,0l180,0l0,270a90,90 0 1 1 -180,0l0,-270zm360,0l180,0l0,270a90,90 0 1 1 -180,0l0,-270z" />
+				<Path
+					d="M180,0 H360 V270 A90,90 0 1 1 180,270 Z
+            M540,0 H720 V270 A90,90 0 1 1 540,270 Z
+            M900,0 H1080 V270 A90,90 0 1 1 900,270 Z"
+				/>
 			</G>
-			<Path
-				d="m130,923.5l0,-391.5m0,130.5a130.5,130.5 0 1 0 261,0a130.5,130.5 0 1 0 -261,0"
-				fill="#FFF"
-				fillOpacity="0"
+			<Line
+				x1="130"
+				y1="923.5"
+				x2="130"
+				y2="532"
 				stroke="#FFF"
 				strokeLinecap="round"
 				strokeWidth="55"
 			/>
-			<Path
-				d="m630,531m-131,131a131,131 0 1 0 262,0a131,131 0 1 0 -262,0"
-				fill="#FFF"
-				fillOpacity="0"
+			<Circle
+				cx="260.5"
+				cy="662.5"
+				r="130.5"
+				fill="none"
+				stroke="#FFF"
+				strokeLinecap="round"
+				strokeWidth="55"
+			/>
+			<Circle
+				cx="630"
+				cy="662"
+				r="131"
+				fill="none"
 				stroke="#FFF"
 				strokeLinecap="round"
 				strokeWidth="55"

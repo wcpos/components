@@ -54,6 +54,7 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 		withArrow,
 		withinPortal,
 		clickThrough,
+		closeOnPressOutside,
 	} = usePopover();
 	const [adjustedPlacement, setAdjustedPlacement] = React.useState(placement);
 
@@ -133,13 +134,12 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 	 *
 	 */
 	return (
-		<Backdrop
-			onPress={() => {
-				onClose && onClose();
-			}}
-			invisible
-			clickThrough={clickThrough}
-		>
+		<>
+			<Backdrop
+				onPress={() => closeOnPressOutside && onClose && onClose()}
+				invisible
+				clickThrough={clickThrough}
+			/>
 			<MeasureWrapper
 				style={[
 					{ position: 'absolute', zIndex: theme.zIndex.popover },
@@ -174,6 +174,6 @@ export const Content = ({ children, style }: PopoverContentProps) => {
 					<Arrow placement={adjustedPlacement} style={style} />
 				)}
 			</MeasureWrapper>
-		</Backdrop>
+		</>
 	);
 };

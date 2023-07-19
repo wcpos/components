@@ -67,6 +67,14 @@ export interface PopoverProps {
 	/** Determines whether dropdown should be closed on outside clicks, default to true */
 	closeOnPressOutside?: boolean;
 
+	/**
+	 * If true, the popover and its backdrop won't be clickable and won't receive mouse events.
+	 *
+	 * For example, this is used by the `Tooltip` component. Prefer using the `Tooltip` component instead
+	 * of this property.
+	 */
+	clickThrough?: boolean;
+
 	/** Force popover to match the width of the triggering view. */
 	matchWidth?: boolean;
 

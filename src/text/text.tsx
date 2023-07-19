@@ -54,6 +54,13 @@ export const Text = ({
 	const adjustedType =
 		type === 'inverse' && backgroundType ? theme.inverseColors[backgroundType] : type;
 
+	/**
+	 * @TODO - do I really need to decode all values, perhaps better to have as an option for WC REST API output
+	 */
+	const decodedChildren = React.Children.map(children, (child) =>
+		typeof child === 'string' ? decode(child) : child
+	);
+
 	return (
 		<Styled.Text
 			align={align}
@@ -65,7 +72,7 @@ export const Text = ({
 			weight={weight}
 			{...props}
 		>
-			{typeof children === 'string' ? decode(children) : children}
+			{decodedChildren}
 		</Styled.Text>
 	);
 };
