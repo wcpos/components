@@ -1,1 +1,0 @@
-(self.webpackChunk_wcpos_components=self.webpackChunk_wcpos_components||[]).push([[56589],{"./src/icon/index.ts":(__unused_webpack_module,exports,__webpack_require__)=>{Object.defineProperty(exports,"__esModule",{value:!0}),Object.defineProperty(exports,"default",{enumerable:!0,get:function get(){return _icon.Icon}});var _icon=__webpack_require__("./src/icon/icon.tsx")}}]);
