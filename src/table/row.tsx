@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ViewStyle } from 'react-native';
 
+import { useTable } from './context';
 import * as Styled from './styles';
 import Box from '../box';
 
@@ -37,11 +38,11 @@ const TableRow = <T extends object>({
 	rowStyle,
 	cellStyle,
 	index,
-	extraData,
 	...props
 }: TableRowProps<T>) => {
-	const { columns } = extraData;
-	const cellRenderer = props.cellRenderer || extraData.cellRenderer;
+	const context = useTable();
+	const { columns } = context;
+	const cellRenderer = props.cellRenderer || context.cellRenderer;
 	const [cellWidths, setCellWidths] = React.useState({});
 
 	/**

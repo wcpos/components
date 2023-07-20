@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { GestureResponderEvent } from 'react-native';
 
+import { useTable } from './context';
 import * as Styled from './styles';
 import Box from '../box';
 import Pressable from '../pressable';
@@ -20,8 +21,8 @@ const alignItemsMap = {
 /**
  * TODO: set cell width here, so we only have to measure once - needs TableContext
  */
-const TableHeader = ({ extraData }) => {
-	const { columns, sort, sortBy, sortDirection, headerLabel } = extraData;
+const TableHeader = () => {
+	const { columns, sort, sortBy, sortDirection, headerLabel } = useTable();
 
 	/**
 	 *

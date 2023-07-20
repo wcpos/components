@@ -1,8 +1,15 @@
+import * as React from 'react';
 import { NativeSyntheticEvent, NativeTouchEvent, ViewStyle, StyleProp } from 'react-native';
 
 import Row from './row';
 import Table from './table';
+export { useTable } from './context';
 
+export default Object.assign(Table, { Row });
+
+/**
+ * Types
+ */
 export type { TableProps } from './table';
 
 export type SortDirection = 'asc' | 'desc';
@@ -42,12 +49,10 @@ export interface CellRendererProps<T> {
 
 export type CellRenderer<T> = (props: CellRendererProps<T>) => React.ReactNode;
 
-export interface TableExtraDataProps<T> {
+export interface TableContextProps<T> {
 	columns: import('./').ColumnProps<T>[];
 	sort?: import('./').Sort;
 	sortBy?: keyof T & string;
 	sortDirection?: import('./').SortDirection;
 	cellRenderer: CellRenderer<T>;
 }
-
-export default Object.assign(Table, { Row });

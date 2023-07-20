@@ -1,26 +1,28 @@
 import * as React from 'react';
-import { View, ViewStyle, StyleProp } from 'react-native';
+import {
+	View,
+	ViewStyle,
+	StyleProp,
+	FlatListProps,
+	ListRenderItemInfo,
+	ListRenderItem,
+} from 'react-native';
 
 import intersectionBy from 'lodash/intersectionBy';
 import isEmpty from 'lodash/isEmpty';
 import isFunction from 'lodash/isFunction';
 import Animated from 'react-native-reanimated';
 
+import { TableContext } from './context';
 import Empty from './empty';
+import { FList } from './flist';
 import Header from './header';
 import LoadingRow from './loading';
 import Row from './row';
 import * as Styled from './styles';
 import ErrorBoundary from '../error-boundary';
-import {
-	FlashList,
-	FlashListProps,
-	ListRenderItemInfo,
-	ListRenderItem,
-	CellContainer,
-} from '../flash-list';
 
-const AnimatedFlashList = Animated.createAnimatedComponent(FlashList);
+// const AnimatedFList = Animated.createAnimatedComponent(FList);
 // const AnimatedCellContainer = Animated.createAnimatedComponent(CellContainer);
 
 /**
@@ -34,7 +36,7 @@ export type TableProps<T> = {
 	footer?: React.ReactNode;
 
 	/**  */
-	extraData: import('./').TableExtraDataProps<T>;
+	context: import('./').TableContextProps<T>;
 
 	/**  */
 	renderItem?: ListRenderItem<T>;
@@ -47,7 +49,7 @@ export type TableProps<T> = {
 
 	/**  */
 	hideHeader?: boolean;
-} & Omit<FlashListProps<T>, 'extraData' | 'renderItem'>;
+} & Omit<FlatListProps<T>, 'extraData' | 'renderItem'>;
 
 /**
  *
@@ -56,7 +58,7 @@ const Table = <T extends object>({
 	style,
 	footer,
 	renderItem,
-	extraData,
+	context,
 	pageSize = 10,
 	loading,
 	hideHeader,
@@ -72,47 +74,47 @@ const Table = <T extends object>({
 	/**
 	 *
 	 */
-	const defaultRenderItem = React.useCallback(
-		({ item, index, extraData: context, target }: ListRenderItemInfo<T>) => (
+	const defaultRenderItem = React.useCallback(({ item, index }: ListRenderItemInfo<T>) => {
+		return (
 			<ErrorBoundary>
-				<Row item={item} index={index} extraData={context} target={target} />
+				<Row item={item} index={index} />
 			</ErrorBoundary>
-		),
-		[]
-	);
+		);
+	}, []);
 
 	/**
 	 *
 	 */
 	return (
-		<Styled.Table style={style}>
-			{!hideHeader && (
-				<ErrorBoundary>
-					<Header extraData={extraData} />
-				</ErrorBoundary>
-			)}
-			{/* 
+		<TableContext.Provider value={context}>
+			<Styled.Table style={style}>
+				{!hideHeader && (
+					<ErrorBoundary>
+						<Header />
+					</ErrorBoundary>
+				)}
+				{/* 
 			FIXME: FlashList complains about rendered size being not usable, but explicitly setting doesn't fix?
 			<View style={{ flex: 1, width: 800, height: 700 }}> */}
-			<AnimatedFlashList
-				keyExtractor={keyExtractor}
-				ListEmptyComponent={props.ListEmptyComponent || <Empty />}
-				// CellRendererComponent={(props) => {
-				// 	return <AnimatedCellContainer {...props} />;
-				// }}
-				renderItem={renderItem || defaultRenderItem}
-				extraData={extraData}
-				// The scrollbars on windows web and desktop are ugly
-				// TODO - perhaps have a standard scrollbar for web and desktop
-				// See: https://css-tricks.com/the-current-state-of-styling-scrollbars-in-css/#aa-a-cross-browser-demo-of-custom-scrollbars
-				showsVerticalScrollIndicator={false}
-				onEndReachedThreshold={0.5}
-				ListFooterComponent={loading ? LoadingRow : null}
-				{...props}
-			/>
-			{/* </View> */}
-			<ErrorBoundary>{footer}</ErrorBoundary>
-		</Styled.Table>
+				<FList
+					keyExtractor={keyExtractor}
+					ListEmptyComponent={props.ListEmptyComponent || <Empty />}
+					// CellRendererComponent={(props) => {
+					// 	return <AnimatedCellContainer {...props} />;
+					// }}
+					renderItem={renderItem || defaultRenderItem}
+					// The scrollbars on windows web and desktop are ugly
+					// TODO - perhaps have a standard scrollbar for web and desktop
+					// See: https://css-tricks.com/the-current-state-of-styling-scrollbars-in-css/#aa-a-cross-browser-demo-of-custom-scrollbars
+					showsVerticalScrollIndicator={false}
+					onEndReachedThreshold={0.1}
+					ListFooterComponent={loading ? LoadingRow : null}
+					{...props}
+				/>
+				{/* </View> */}
+				<ErrorBoundary>{footer}</ErrorBoundary>
+			</Styled.Table>
+		</TableContext.Provider>
 	);
 };
 
