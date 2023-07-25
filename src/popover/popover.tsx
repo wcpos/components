@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, ViewStyle, StyleProp } from 'react-native';
 
-// import { useSubscription, useObservable } from 'observable-hooks';
+import { useObservableRef } from 'observable-hooks';
 import { useSharedValue, MeasuredDimensions } from 'react-native-reanimated';
 // import { switchMap, tap, filter } from 'rxjs/operators';
 
@@ -111,8 +111,8 @@ export const Popover = ({
 	style,
 	...props
 }: PopoverProps) => {
-	const [primaryAction, setPrimaryAction] = React.useState(props.primaryAction);
-	const [secondaryActions, setSecondaryActions] = React.useState(props.secondaryActions);
+	const [primaryActionRef, primaryAction$] = useObservableRef(props.primaryAction);
+	const [secondaryActionsRef, secondaryActions$] = useObservableRef(props.secondaryActions);
 
 	const targetMeasurements = useSharedValue<MeasuredDimensions>({
 		x: 0,
@@ -144,38 +144,20 @@ export const Popover = ({
 	 */
 
 	/**
-	 * FIXME: this feels like a hack, but it works
-	 * SEE ALSO: modal
+	 * Convenience functions to set the primary and secondary actions
 	 */
-	const primaryActionUpdatedRef = React.useRef(false);
-	const secondaryActionsUpdatedRef = React.useRef(false);
-
-	const updatePrimaryAction = (newPrimaryAction) => {
-		primaryActionUpdatedRef.current = true;
-		setPrimaryAction(newPrimaryAction);
-	};
-
-	const updateSecondaryActions = (newSecondaryActions) => {
-		secondaryActionsUpdatedRef.current = true;
-		setSecondaryActions(newSecondaryActions);
-	};
-
-	// Update primaryAction and secondaryActions state when their respective props change
-	React.useEffect(() => {
-		if (!primaryActionUpdatedRef.current) {
-			setPrimaryAction(props.primaryAction);
-		} else {
-			primaryActionUpdatedRef.current = false;
-		}
-	}, [props.primaryAction]);
-
-	React.useEffect(() => {
-		if (!secondaryActionsUpdatedRef.current) {
-			setSecondaryActions(props.secondaryActions);
-		} else {
-			secondaryActionsUpdatedRef.current = false;
-		}
-	}, [props.secondaryActions]);
+	const setPrimaryAction = React.useCallback(
+		(newPrimaryAction) => {
+			primaryActionRef.current = newPrimaryAction;
+		},
+		[primaryActionRef]
+	);
+	const setSecondaryActions = React.useCallback(
+		(newSecondaryActions) => {
+			secondaryActionsRef.current = newSecondaryActions;
+		},
+		[secondaryActionsRef]
+	);
 
 	/**
 	 * HACK: bit of a hack to detect clicks outside of the popover
@@ -199,7 +181,8 @@ export const Popover = ({
 	// });
 
 	/**
-	 *
+	 * @TODO - I need to clean this up, some props can be passed directly to the content, eg:
+	 * primaryAction$ and secondaryActions$
 	 */
 	const context = React.useMemo(
 		() => ({
@@ -211,12 +194,12 @@ export const Popover = ({
 			trigger,
 			withArrow,
 			withinPortal,
-			primaryAction,
-			// setPrimaryAction,
-			secondaryActions,
-			// setSecondaryActions,
-			setPrimaryAction: updatePrimaryAction,
-			setSecondaryActions: updateSecondaryActions,
+			primaryAction: primaryActionRef.current,
+			secondaryActions: secondaryActionsRef.current,
+			setPrimaryAction,
+			setSecondaryActions,
+			primaryAction$,
+			secondaryActions$,
 			onOpen,
 			onClose,
 			clickThrough,
@@ -225,15 +208,19 @@ export const Popover = ({
 			closeOnPressOutside,
 			contentMeasurements,
 			matchWidth,
-			onClose,
-			onOpen,
 			placement,
-			primaryAction,
-			secondaryActions,
 			targetMeasurements,
 			trigger,
 			withArrow,
 			withinPortal,
+			primaryActionRef,
+			secondaryActionsRef,
+			setPrimaryAction,
+			setSecondaryActions,
+			primaryAction$,
+			secondaryActions$,
+			onOpen,
+			onClose,
 			clickThrough,
 		]
 	);

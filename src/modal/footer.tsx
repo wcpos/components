@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useObservableState } from 'observable-hooks';
+
 import { useModal } from './context';
 import Box from '../box';
 import Button from '../button';
@@ -46,10 +48,22 @@ export interface ModalFooterProps {
  */
 export const Footer = ({
 	children,
-	primaryAction,
-	secondaryActions,
+	primaryActionRef,
+	secondaryActionsRef,
+	primaryAction$,
+	secondaryActions$,
 	onPrimaryAction,
 }: ModalFooterProps) => {
+	const primaryAction = useObservableState(primaryAction$, primaryActionRef.current);
+	const secondaryActions = useObservableState(secondaryActions$, secondaryActionsRef.current);
+
+	/**
+	 * No buttons
+	 */
+	if (!primaryAction) {
+		return null;
+	}
+
 	if (primaryAction && !secondaryActions) {
 		return (
 			<Box horizontal>

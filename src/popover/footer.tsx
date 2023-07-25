@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import { useObservableState } from 'observable-hooks';
+
 import { usePopover } from './context';
 import Box from '../box';
 import Button from '../button';
@@ -39,7 +41,15 @@ export interface PopoverFooterProps {
  *
  */
 const Footer = ({ children, onPrimaryAction }: PopoverFooterProps) => {
-	const { onClose, primaryAction, secondaryActions } = usePopover();
+	const {
+		onClose,
+		primaryAction: pAction,
+		secondaryActions: sActions,
+		primaryAction$,
+		secondaryActions$,
+	} = usePopover();
+	const primaryAction = useObservableState(primaryAction$, pAction);
+	const secondaryActions = useObservableState(secondaryActions$, sActions);
 
 	/**
 	 * No buttons

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { KeyboardAvoidingView, StyleSheet, ViewStyle } from 'react-native';
 
+import { useObservableRef } from 'observable-hooks';
+
 // import wrap from 'lodash/wrap';
 
 import Platform from '@wcpos/utils/src/platform';
@@ -77,44 +79,26 @@ export const Modal = ({
 	...props
 }: ModalProps) => {
 	const [title, setTitle] = React.useState(props.title);
-	const [primaryAction, setPrimaryAction] = React.useState(props.primaryAction);
-	const [secondaryActions, setSecondaryActions] = React.useState(props.secondaryActions);
+	const [primaryActionRef, primaryAction$] = useObservableRef(props.primaryAction);
+	const [secondaryActionsRef, secondaryActions$] = useObservableRef(props.secondaryActions);
 	const hasHeader = !!title || withCloseButton;
 
 	/**
-	 * FIXME: this feels like a hack, but it works
-	 * The React.useEffect was overwriting the setPrimaryAction and setSecondaryActions
-	 * eg: on the product edit page
+	 * Convenience functions to set the primary and secondary actions
 	 */
-	const primaryActionUpdatedRef = React.useRef(false);
-	const secondaryActionsUpdatedRef = React.useRef(false);
+	const setPrimaryAction = React.useCallback(
+		(newPrimaryAction) => {
+			primaryActionRef.current = newPrimaryAction;
+		},
+		[primaryActionRef]
+	);
 
-	const updatePrimaryAction = (newPrimaryAction) => {
-		primaryActionUpdatedRef.current = true;
-		setPrimaryAction(newPrimaryAction);
-	};
-
-	const updateSecondaryActions = (newSecondaryActions) => {
-		secondaryActionsUpdatedRef.current = true;
-		setSecondaryActions(newSecondaryActions);
-	};
-
-	// Update primaryAction and secondaryActions state when their respective props change
-	React.useEffect(() => {
-		if (!primaryActionUpdatedRef.current) {
-			setPrimaryAction(props.primaryAction);
-		} else {
-			primaryActionUpdatedRef.current = false;
-		}
-	}, [props.primaryAction]);
-
-	React.useEffect(() => {
-		if (!secondaryActionsUpdatedRef.current) {
-			setSecondaryActions(props.secondaryActions);
-		} else {
-			secondaryActionsUpdatedRef.current = false;
-		}
-	}, [props.secondaryActions]);
+	const setSecondaryActions = React.useCallback(
+		(newSecondaryActions) => {
+			secondaryActionsRef.current = newSecondaryActions;
+		},
+		[secondaryActionsRef]
+	);
 
 	/**
 	 * FIXME: I'm just using portal by default, is there a case to use React Native Modal?
@@ -126,11 +110,11 @@ export const Modal = ({
 	const _context = React.useMemo(
 		() => ({
 			setTitle,
-			setPrimaryAction: updatePrimaryAction,
-			setSecondaryActions: updateSecondaryActions,
+			setPrimaryAction,
+			setSecondaryActions,
 			context,
 		}),
-		[context]
+		[context, setPrimaryAction, setSecondaryActions]
 	);
 
 	const MaybePortal = withPortal ? PortalWrapper : React.Fragment;
@@ -149,9 +133,12 @@ export const Modal = ({
 					<Container size={size} withBackdrop={withBackdrop} style={style}>
 						{hasHeader ? <Header onClose={onClose}>{title}</Header> : null}
 						<Content>{children}</Content>
-						{primaryAction ? (
-							<Footer primaryAction={primaryAction} secondaryActions={secondaryActions} />
-						) : null}
+						<Footer
+							primaryActionRef={primaryActionRef}
+							secondaryActionsRef={secondaryActionsRef}
+							primaryAction$={primaryAction$}
+							secondaryActions$={secondaryActions$}
+						/>
 					</Container>
 				</KeyboardAvoidingView>
 			</MaybePortal>
