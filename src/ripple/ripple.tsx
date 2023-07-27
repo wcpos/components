@@ -1,6 +1,11 @@
 import * as React from 'react';
 
-import Animated, { useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
+import Animated, {
+	useAnimatedStyle,
+	withTiming,
+	Easing,
+	useAnimatedReaction,
+} from 'react-native-reanimated';
 
 import * as Styled from './styles';
 
@@ -15,6 +20,13 @@ export const Ripple = ({ showRipple }: RippleProps) => {
 			easing: Easing.out(Easing.quad),
 		})})`,
 	}));
+
+	// useAnimatedReaction(
+	// 	() => showRipple.value,
+	// 	(result) => {
+	// 		console.log(`showRipple value has changed to: ${result}`);
+	// 	}
+	// );
 
 	return (
 		<Styled.RippleEffect as={Animated.View} style={[{ pointerEvents: 'none' }, rippleScale]} />
