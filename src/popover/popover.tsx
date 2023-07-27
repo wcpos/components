@@ -160,6 +160,17 @@ export const Popover = ({
 	);
 
 	/**
+	 * Sync prop changes to refs
+	 */
+	React.useEffect(() => {
+		primaryActionRef.current = props.primaryAction;
+	}, [primaryActionRef, props.primaryAction]);
+
+	React.useEffect(() => {
+		secondaryActionsRef.current = props.secondaryActions;
+	}, [props.secondaryActions, secondaryActionsRef]);
+
+	/**
 	 * HACK: bit of a hack to detect clicks outside of the popover
 	 * This could probably be improved
 	 */

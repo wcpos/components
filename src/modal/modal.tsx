@@ -101,6 +101,17 @@ export const Modal = ({
 	);
 
 	/**
+	 * Sync prop changes to refs
+	 */
+	React.useEffect(() => {
+		primaryActionRef.current = props.primaryAction;
+	}, [primaryActionRef, props.primaryAction]);
+
+	React.useEffect(() => {
+		secondaryActionsRef.current = props.secondaryActions;
+	}, [props.secondaryActions, secondaryActionsRef]);
+
+	/**
 	 * FIXME: I'm just using portal by default, is there a case to use React Native Modal?
 	 */
 
