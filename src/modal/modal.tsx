@@ -89,17 +89,25 @@ export const Modal = ({
 	 */
 	const setPrimaryAction = React.useCallback(
 		(newPrimaryAction) => {
-			primaryActionRef.current = newPrimaryAction || props.primaryAction;
+			primaryActionRef.current = newPrimaryAction;
 		},
-		[primaryActionRef, props.primaryAction]
+		[primaryActionRef]
 	);
 
 	const setSecondaryActions = React.useCallback(
 		(newSecondaryActions) => {
-			secondaryActionsRef.current = newSecondaryActions || props.secondaryActions;
+			secondaryActionsRef.current = newSecondaryActions;
 		},
-		[secondaryActionsRef, props.secondaryActions]
+		[secondaryActionsRef]
 	);
+
+	React.useEffect(() => {
+		primaryActionRef.current = props.primaryAction;
+	}, [props.primaryAction, primaryActionRef]);
+
+	React.useEffect(() => {
+		secondaryActionsRef.current = props.secondaryActions;
+	}, [props.secondaryActions, secondaryActionsRef]);
 
 	/**
 	 * FIXME: I'm just using portal by default, is there a case to use React Native Modal?
