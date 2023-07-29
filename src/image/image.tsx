@@ -31,6 +31,7 @@ const Image = ({ source, border = 'square', style, ...props }: ImageProps) => {
 				},
 				StyleSheet.flatten(style),
 			]}
+			responsivePolicy="initial"
 			contentFit="cover"
 			transition={250}
 			{...props}
