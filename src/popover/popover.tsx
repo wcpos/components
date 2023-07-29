@@ -145,30 +145,21 @@ export const Popover = ({
 
 	/**
 	 * Convenience functions to set the primary and secondary actions
+	 * Also, sync the refs with the props
 	 */
 	const setPrimaryAction = React.useCallback(
 		(newPrimaryAction) => {
-			primaryActionRef.current = newPrimaryAction;
+			primaryActionRef.current = newPrimaryAction || props.primaryAction;
 		},
-		[primaryActionRef]
+		[primaryActionRef, props.primaryAction]
 	);
+
 	const setSecondaryActions = React.useCallback(
 		(newSecondaryActions) => {
-			secondaryActionsRef.current = newSecondaryActions;
+			secondaryActionsRef.current = newSecondaryActions || props.secondaryActions;
 		},
-		[secondaryActionsRef]
+		[secondaryActionsRef, props.secondaryActions]
 	);
-
-	/**
-	 * Sync prop changes to refs
-	 */
-	React.useEffect(() => {
-		primaryActionRef.current = props.primaryAction;
-	}, [primaryActionRef, props.primaryAction]);
-
-	React.useEffect(() => {
-		secondaryActionsRef.current = props.secondaryActions;
-	}, [props.secondaryActions, secondaryActionsRef]);
 
 	/**
 	 * HACK: bit of a hack to detect clicks outside of the popover
