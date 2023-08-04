@@ -55,4 +55,5 @@ export interface TableContextProps<T> {
 	sortBy?: keyof T & string;
 	sortDirection?: import('./').SortDirection;
 	cellRenderer: CellRenderer<T>;
+	taxLocation?: 'pos' | 'base';
 }
