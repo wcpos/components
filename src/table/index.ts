@@ -1,11 +1,12 @@
 import * as React from 'react';
 import { NativeSyntheticEvent, NativeTouchEvent, ViewStyle, StyleProp } from 'react-native';
 
+import { LoadingRow } from './loading';
 import Row from './row';
 import Table from './table';
 export { useTable } from './context';
 
-export default Object.assign(Table, { Row });
+export default Object.assign(Table, { Row, LoadingRow });
 
 /**
  * Types
