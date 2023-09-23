@@ -18,6 +18,10 @@ export const TextInput = styled.TextInput<TextInputProps>`
 	Platform.OS !== 'android' &&
 	css`
 		outline-width: 0;
-		outline: none !important;
+		outline-style: none;
+		outline-color: transparent;
+		::-moz-focus-inner {
+			border: 0;
+		}
 	`}
 `;
