@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { action } from '@storybook/addon-actions';
 
-import { EdittableText, EdittableTextProps } from './edittable-text';
+import { EdittableText, EdittableTextProps } from './';
 
 import type { Meta } from '@storybook/react';
 

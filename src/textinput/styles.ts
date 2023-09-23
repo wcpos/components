@@ -18,5 +18,6 @@ export const TextInput = styled.TextInput<TextInputProps>`
 	Platform.OS !== 'android' &&
 	css`
 		outline-width: 0;
+		outline: none !important;
 	`}
 `;

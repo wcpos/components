@@ -3,7 +3,7 @@ import {
 	TextInputProps as RNTextInputProps,
 	TextInput as RNTextInput,
 	NativeSyntheticEvent,
-	TextInputContentSizeChangeEventData,
+	TextInputKeyPressEventData,
 	StyleProp,
 	TextStyle,
 } from 'react-native';
@@ -98,6 +98,9 @@ export type TextInputProps = RNTextInputProps & {
 
 	/** */
 	size?: import('@wcpos/themes').FontSizeTypes;
+
+	/** */
+	onReturnKeyPress?: () => void;
 };
 
 /**
@@ -181,6 +184,20 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 		}, [inputRef]);
 
 		/**
+		 * Allow override of return key press for multiline
+		 * Note: textinput will blur on return key press by default
+		 */
+		const handleKeyPress = React.useCallback(
+			(e: NativeSyntheticEvent<TextInputKeyPressEventData>) => {
+				if (e.nativeEvent.key === 'Enter') {
+					props.onReturnKeyPress?.();
+				}
+				props.onKeyPress?.(e);
+			},
+			[props]
+		);
+
+		/**
 		 *
 		 */
 		return (
@@ -209,7 +226,7 @@ export const TextInput = React.forwardRef<RNTextInput, TextInputProps>(
 					onBlur={onBlur}
 					// onSubmitEditing={onSubmit}
 					// selectTextOnFocus={selectTextOnFocus}
-					// onKeyPress={onKeyPress}
+					onKeyPress={handleKeyPress}
 					style={style}
 					size={size}
 					{...props}
