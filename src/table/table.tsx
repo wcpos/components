@@ -1,17 +1,11 @@
 import * as React from 'react';
 import {
-	View,
 	ViewStyle,
 	StyleProp,
 	FlatListProps,
 	ListRenderItemInfo,
 	ListRenderItem,
 } from 'react-native';
-
-import intersectionBy from 'lodash/intersectionBy';
-import isEmpty from 'lodash/isEmpty';
-import isFunction from 'lodash/isFunction';
-import Animated from 'react-native-reanimated';
 
 import { TableContext } from './context';
 import Empty from './empty';
