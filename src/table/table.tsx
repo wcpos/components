@@ -11,7 +11,7 @@ import { TableContext } from './context';
 import Empty from './empty';
 import { FList } from './flist';
 import Header from './header';
-import LoadingRow from './loading';
+import { LoadingRow } from './loading';
 import Row from './row';
 import * as Styled from './styles';
 import ErrorBoundary from '../error-boundary';
@@ -58,6 +58,9 @@ const Table = <T extends object>({
 	hideHeader,
 	...props
 }: TableProps<T>) => {
+	const [listHeight, setListHeight] = React.useState(0);
+	const [containerHeight, setContainerHeight] = React.useState(0);
+
 	/**
 	 *
 	 */
@@ -77,11 +80,32 @@ const Table = <T extends object>({
 	}, []);
 
 	/**
+	 * Measure the height of the container and list
+	 */
+	const handleContainerLayout = React.useCallback((event) => {
+		const { height } = event.nativeEvent.layout;
+		setContainerHeight(height);
+	}, []);
+
+	const handleListLayout = React.useCallback((width, height) => {
+		setListHeight(height);
+	}, []);
+
+	/**
+	 * @HACK: This is a hack to trigger onEndReached when the list is smaller than the container
+	 */
+	React.useEffect(() => {
+		if (listHeight < containerHeight && props.onEndReached) {
+			props.onEndReached({ distanceFromEnd: 0 });
+		}
+	}, [containerHeight, listHeight, props]);
+
+	/**
 	 *
 	 */
 	return (
 		<TableContext.Provider value={context}>
-			<Styled.Table style={style}>
+			<Styled.Table style={style} onLayout={handleContainerLayout}>
 				{!hideHeader && (
 					<ErrorBoundary>
 						<Header />
@@ -91,6 +115,7 @@ const Table = <T extends object>({
 			FIXME: FlashList complains about rendered size being not usable, but explicitly setting doesn't fix?
 			<View style={{ flex: 1, width: 800, height: 700 }}> */}
 				<FList
+					onContentSizeChange={handleListLayout}
 					keyExtractor={keyExtractor}
 					ListEmptyComponent={props.ListEmptyComponent || <Empty />}
 					// CellRendererComponent={(props) => {
