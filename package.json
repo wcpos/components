@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "storybook": "storybook dev -p 9009 --debug-webpack",
+    "storybook": "storybook dev -p 9009",
     "build-storybook": "storybook build -o docs-build",
     "svg": "svgr --config-file ./svgr.config.js src/icon/svg/fontawesome/solid --out-dir src/icon/components/fontawesome/solid"
   },
@@ -46,6 +46,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.23.5",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.18.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.21.0",
     "@babel/preset-env": "^7.23.5",
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",

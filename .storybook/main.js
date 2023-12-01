@@ -3,6 +3,7 @@ import path from 'path';
 
 const config = {
   stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
+
   addons: ['@storybook/preset-create-react-app', '@storybook/addon-essentials', '@storybook/addon-actions', {
     name: '@storybook/addon-react-native-web',
     options: {
@@ -12,21 +13,31 @@ const config = {
         '@wcpos/utils', 
         'react-native-reanimated', 
         'react-native-gesture-handler', 
-      ],
-      babelPlugins: ['react-native-reanimated/plugin']
+      ]
     }
   }],
+
   framework: {
     name: '@storybook/react-webpack5',
-    options: {}
+    options: {
+      builder: {
+        useSWC: true,
+      },
+    },
   },
-  babel: async options => ({
+
+  babel: async (options) => {
     // Update your babel configuration here
-    ...options,
-    presets: [['babel-preset-expo', {
-      jsxRuntime: 'automatic'
-    }], '@babel/preset-typescript']
-  }),
+    return {
+      ...options,
+      sourceType: "module",
+      presets: [
+        '@wcpos/babel-preset-expo',
+      ],
+    }
+  },
+
+  // typescript: { reactDocgen: 'react-docgen' },
   webpackFinal: async (config, {
     configType
   }) => {
@@ -40,9 +51,11 @@ const config = {
       // Mock expo-haptics
       'expo-haptics$': path.resolve(__dirname, 'utils/expo-haptics'),
     };
-    console.log(config.module.rules);
+    config.resolve.extensions.unshift('.web.ts', '.web.tsx', '.web.js', '.ts', '.tsx');
+    //console.log(config.module.rules);
     return config;
   },
+
   docs: {
     autodocs: true
   }
