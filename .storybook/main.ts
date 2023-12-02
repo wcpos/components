@@ -20,7 +20,8 @@ const config: StorybookConfig = {
           'react-native-gesture-handler',
         ],
         babelPlugins: [
-          'react-native-reanimated/plugin'
+          'react-native-reanimated/plugin',
+          'babel-plugin-styled-components'
         ],
       }
     }
@@ -39,6 +40,10 @@ const config: StorybookConfig = {
     // Update your babel configuration here
     return {
       ...options,
+      presets: [
+        ...options.presets,
+        'babel-preset-expo',
+      ],
     }
   },
 
@@ -54,7 +59,6 @@ const config: StorybookConfig = {
       // Mock expo-haptics
       'expo-haptics$': path.resolve(__dirname, 'utils/expo-haptics'),
     };
-    console.log(config.module.rules);
     return config;
   },
 
