@@ -1,14 +1,17 @@
 import React from 'react';
-// import { ThemeProvider } from 'styled-components/native';
-// import getTheme from '@wcpos/themes';
+import { ThemeProvider } from 'styled-components/native';
+import getTheme from '@wcpos/themes';
 import { Preview } from '@storybook/react';
-
-import '../global.css';
 
 const preview: Preview = {
   decorators: [
     (Story) => (
-			<Story />
+      <ThemeProvider theme={getTheme({
+				name: 'default',
+				mode: 'light',
+			})}>
+				<Story />
+			</ThemeProvider>
     ),
   ],
 };

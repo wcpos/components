@@ -1,7 +1,6 @@
 import path from 'path';
 
 import type { StorybookConfig } from '@storybook/react-webpack5';
-import nativewindPlugins from 'nativewind/babel';
 
 const config: StorybookConfig = {
   stories: ['../src/**/*.stories.tsx'],
@@ -20,6 +19,9 @@ const config: StorybookConfig = {
           'react-native-reanimated', 
           'react-native-gesture-handler',
         ],
+        babelPlugins: [
+          'react-native-reanimated/plugin'
+        ],
       }
     }
   ],
@@ -35,19 +37,9 @@ const config: StorybookConfig = {
 
   babel: async (options) => {
     // Update your babel configuration here
-    const opts = {
+    return {
       ...options,
-      presets: [
-        ...options.presets,
-        ['babel-preset-expo', { jsxImportSource: 'nativewind' }],
-      ],
-      plugins: [
-        ...(nativewindPlugins().plugins)
-      ]
-    };
-    console.log(opts);
-
-    return opts;
+    }
   },
 
   // typescript: { reactDocgen: 'react-docgen' },
@@ -62,6 +54,7 @@ const config: StorybookConfig = {
       // Mock expo-haptics
       'expo-haptics$': path.resolve(__dirname, 'utils/expo-haptics'),
     };
+    console.log(config.module.rules);
     return config;
   },
 
