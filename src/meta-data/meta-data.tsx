@@ -1,7 +1,8 @@
 import * as React from 'react';
-import TextInput from '../textinput';
-import Icon from '../icon';
+
 import * as Styled from './styles';
+import Icon from '../icon';
+import TextInput from '../textinput';
 
 export interface MetaDataProps {
 	data: { id: number; key: string; value: string }[];
