@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
+
 import captalize from 'lodash/capitalize';
 import get from 'lodash/get';
+
 import * as Styled from './styles';
 
 export interface ArrowProps {
