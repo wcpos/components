@@ -30,12 +30,12 @@ export const Background = styled.View<BackgroundProps>`
 
 	padding: ${({ size, theme }) => {
 		if (size === 'small') {
-			return `${theme.spacing.xxSmall}px ${theme.spacing.xSmall}px`;
+			return `${theme.spacing.xxSmall}px ${theme.spacing.small}px`;
 		}
 		if (size === 'large') {
-			return `${theme.spacing.small}px ${theme.spacing.medium}px`;
+			return `${theme.spacing.small}px ${theme.spacing.large}px`;
 		}
-		return `${theme.spacing.xSmall}px ${theme.spacing.small}px`;
+		return `${theme.spacing.xSmall}px ${theme.spacing.medium}px`;
 	}};
 `;
 
