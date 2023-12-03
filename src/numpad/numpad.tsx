@@ -5,7 +5,7 @@ import get from 'lodash/get';
 
 import useFocusTrap from '@wcpos/hooks/src/use-focus-trap';
 
-import { reducer, ACTIONS } from './reducer';
+import { reducer, ACTIONS, Action, Config, CalculatorState } from './reducer';
 import Box from '../box';
 import Button from '../button';
 import Icon, { IconName } from '../icon';
@@ -26,6 +26,12 @@ export interface NumpadProps {
 
 	/** Decimal or comma */
 	decimalSeparator?: string;
+
+	/** Discounts to show */
+	discounts?: number[];
+
+	/** Number of decimal places to round to */
+	precision?: number;
 }
 
 const iconMap: Record<string, IconName> = {
@@ -36,6 +42,8 @@ const iconMap: Record<string, IconName> = {
 	'÷': 'divide',
 };
 
+const columnSize = 45;
+
 /**
  * TODO: handle partial selected text?
  */
@@ -45,18 +53,34 @@ export const Numpad = ({
 	onChange,
 	decimalSeparator = '.',
 	onSubmitEditing,
+	discounts,
+	precision = 6,
 }: NumpadProps) => {
 	const [textSelected, setTextSelected] = React.useState(false);
 	const focusTrapRef = useFocusTrap();
 
 	/**
+	 * Reducer config
+	 */
+	const reducerConfig = React.useMemo<Config>(
+		() => ({
+			decimalSeparator,
+			precision,
+		}),
+		[decimalSeparator, precision]
+	);
+
+	/**
 	 *
 	 */
-	const [{ currentOperand, previousOperand, operation }, dispatch] = React.useReducer(reducer, {
-		currentOperand: initialValue,
-		previousOperand: '0',
-		operation: '',
-	});
+	const [{ currentOperand, previousOperand, operation }, dispatch] = React.useReducer(
+		(state: CalculatorState, action: Action) => reducer(state, action, reducerConfig),
+		{
+			currentOperand: initialValue,
+			previousOperand: '0',
+			operation: '',
+		}
+	);
 
 	/**
 	 *
@@ -72,12 +96,12 @@ export const Numpad = ({
 		(digit: string) => {
 			dispatch({
 				type: ACTIONS.ADD_DIGIT,
-				payload: { digit, overwrite: textSelected, decimalSeparator },
+				payload: { digit, overwrite: textSelected },
 			});
 			// @FIXME - this is a hack to make sure overwrite is not left on
 			setTextSelected(false);
 		},
-		[decimalSeparator, textSelected]
+		[textSelected]
 	);
 
 	/**
@@ -125,8 +149,20 @@ export const Numpad = ({
 	/**
 	 *
 	 */
+	const totalWidth = React.useMemo(() => {
+		const baseWidth = columnSize * 3;
+		return (
+			baseWidth +
+			(calculator ? columnSize : 0) +
+			(discounts && discounts.length > 0 ? columnSize : 0)
+		);
+	}, [calculator, discounts]);
+
+	/**
+	 *
+	 */
 	return (
-		<Box space="xxSmall" style={{ width: 140 }}>
+		<Box space="xxSmall" style={{ width: totalWidth }}>
 			<TextInput
 				ref={focusTrapRef}
 				value={currentOperand || ''}
@@ -177,8 +213,26 @@ export const Numpad = ({
 						/>
 					</Box>
 				</Box>
+				{discounts && (
+					<Box padding="xxSmall" space="xSmall" style={{ width: columnSize }}>
+						{discounts.map((discount) => (
+							<Button
+								key={discount}
+								title={`${discount}%`}
+								onPress={() =>
+									dispatch({
+										type: ACTIONS.APPLY_DISCOUNT,
+										payload: { discount },
+									})
+								}
+								style={{ flex: 1, paddingHorizontal: 0 }}
+								type="secondary"
+							/>
+						))}
+					</Box>
+				)}
 				{calculator && (
-					<Box padding="xxSmall" space="xSmall">
+					<Box padding="xxSmall" space="xSmall" style={{ width: columnSize }}>
 						<Button onPress={() => chooseOperation('÷')} style={{ flex: 1 }} type="secondary">
 							<Icon name="divide" size="xSmall" type="inverse" />
 						</Button>

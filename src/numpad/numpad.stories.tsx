@@ -20,4 +20,11 @@ calculator.args = {
 	calculator: true,
 };
 
+export const withDiscounts = (props: NumpadProps) => {
+	return <Numpad {...props} />;
+};
+withDiscounts.args = {
+	discounts: [5, 10, 15, 20],
+};
+
 export default meta;

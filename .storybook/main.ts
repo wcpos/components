@@ -42,7 +42,7 @@ const config: StorybookConfig = {
       ...options,
       presets: [
         ...options.presets,
-        'babel-preset-expo',
+        // 'babel-preset-expo',
       ],
     }
   },

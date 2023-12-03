@@ -12,6 +12,7 @@ export const ACTIONS = {
 	DELETE_DIGIT: 'delete-digit',
 	EVALUATE: 'evaluate',
 	SWITCH_SIGN: 'switch-sign',
+	APPLY_DISCOUNT: 'apply-discount',
 };
 
 export type CalculatorState = {
@@ -21,10 +22,23 @@ export type CalculatorState = {
 	previousOperand: string | null;
 };
 
+export type Config = {
+	decimalSeparator: string;
+	precision: number;
+};
+
 /**
  *
  */
-function evaluate(state: CalculatorState, decimalSeparator: string): string {
+function round(value: number, precision: number): string {
+	const multiplier = Math.pow(10, precision);
+	return (Math.round(value * multiplier) / multiplier).toString();
+}
+
+/**
+ *
+ */
+function evaluate(state: CalculatorState, decimalSeparator: string, precision: number): string {
 	const prev = parseFloat(state.previousOperand?.replace(decimalSeparator, '.') || '');
 	const current = parseFloat(state.currentOperand?.replace(decimalSeparator, '.') || '');
 	if (Number.isNaN(prev) || Number.isNaN(current)) return '';
@@ -46,14 +60,19 @@ function evaluate(state: CalculatorState, decimalSeparator: string): string {
 			break;
 	}
 
-	// replace the decimal point with the specified decimal separator before returning the result
-	return computation.toString().replace('.', decimalSeparator);
+	// Round the result and replace the decimal point with the specified decimal separator
+	const roundedResult = round(computation, precision);
+	return roundedResult.replace('.', decimalSeparator);
 }
 
 /**
  *
  */
-export function reducer(state: CalculatorState, { type, payload }: Action): CalculatorState {
+export function reducer(state: CalculatorState, action: Action, config?: Config): CalculatorState {
+	const { type, payload } = action;
+	const decimalSeparator = config?.decimalSeparator || '.';
+	const precision = config?.precision || 6;
+
 	switch (type) {
 		case ACTIONS.ADD_DIGIT:
 			if (state.overwrite || payload.overwrite) {
@@ -67,16 +86,16 @@ export function reducer(state: CalculatorState, { type, payload }: Action): Calc
 				return state;
 			}
 			if (
-				payload.digit === payload.decimalSeparator &&
+				payload.digit === decimalSeparator &&
 				state.currentOperand &&
-				state.currentOperand.includes(payload.decimalSeparator)
+				state.currentOperand.includes(decimalSeparator)
 			) {
 				return state;
 			}
-			if (payload.digit === payload.decimalSeparator && state.currentOperand == null) {
+			if (payload.digit === decimalSeparator && state.currentOperand == null) {
 				return {
 					...state,
-					currentOperand: `0${payload.decimalSeparator}`,
+					currentOperand: `0${decimalSeparator}`,
 				};
 			}
 			if (state.currentOperand === '0') {
@@ -113,7 +132,7 @@ export function reducer(state: CalculatorState, { type, payload }: Action): Calc
 
 			return {
 				...state,
-				previousOperand: evaluate(state, payload.decimalSeparator),
+				previousOperand: evaluate(state, decimalSeparator, precision),
 				operation: payload.operation,
 				currentOperand: null,
 			};
@@ -155,7 +174,7 @@ export function reducer(state: CalculatorState, { type, payload }: Action): Calc
 				overwrite: true,
 				previousOperand: null,
 				operation: null,
-				currentOperand: evaluate(state, payload.decimalSeparator),
+				currentOperand: evaluate(state, decimalSeparator, precision),
 			};
 		case ACTIONS.SWITCH_SIGN:
 			if (!state.currentOperand || state.currentOperand === '0') return state;
@@ -169,6 +188,17 @@ export function reducer(state: CalculatorState, { type, payload }: Action): Calc
 				...state,
 				currentOperand: `-${state.currentOperand}`,
 			};
+		case ACTIONS.APPLY_DISCOUNT: {
+			if (!state.currentOperand) return state;
+			const discountMultiplier = (100 - payload.discount) / 100;
+			const rawDiscountedValue = parseFloat(state.currentOperand) * discountMultiplier;
+			const discountedValue = round(rawDiscountedValue, precision);
+			return {
+				...state,
+				currentOperand: discountedValue,
+				overwrite: true,
+			};
+		}
 		default:
 			return state;
 	}

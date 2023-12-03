@@ -147,7 +147,7 @@ const Button = ({
 				horizontal
 				space="small"
 				align="center"
-				paddingX="small"
+				paddingX="none"
 				paddingY="xSmall"
 				style={{ width: '100%' }}
 				distribution="center"

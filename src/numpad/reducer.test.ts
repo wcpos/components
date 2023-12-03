@@ -9,7 +9,7 @@ describe('reducer', () => {
 	});
 
 	it('chooses operation', () => {
-		const state = { currentOperand: '1', previousOperand: '2' };
+		const state = { currentOperand: '1', previousOperand: null, operation: null };
 		const action = { type: ACTIONS.CHOOSE_OPERATION, payload: { operation: '+' } };
 		const newState = reducer(state, action);
 		expect(newState).toEqual({
@@ -38,13 +38,13 @@ describe('reducer', () => {
 		expect(newState).toEqual({ currentOperand: '1' });
 	});
 
-	it('evaluates expression', () => {
+	it('add numbers', () => {
 		const state = {
 			currentOperand: '2',
 			previousOperand: '1',
 			operation: '+',
 		};
-		const action = { type: ACTIONS.EVALUATE };
+		const action = { type: ACTIONS.EVALUATE, payload: { decimalSeparator: '.' } };
 		const newState = reducer(state, action);
 		expect(newState).toEqual({
 			overwrite: true,
@@ -54,12 +54,70 @@ describe('reducer', () => {
 		});
 	});
 
+	it('subtracts numbers', () => {
+		const state = {
+			currentOperand: '2',
+			previousOperand: '1',
+			operation: '-',
+		};
+		const action = { type: ACTIONS.EVALUATE, payload: { decimalSeparator: '.' } };
+		const newState = reducer(state, action);
+		expect(newState).toEqual({
+			overwrite: true,
+			currentOperand: '-1',
+			previousOperand: null,
+			operation: null,
+		});
+	});
+
+	it('multiplies numbers (with rounding)', () => {
+		const state = {
+			currentOperand: '3',
+			previousOperand: '3.333333333',
+			operation: '*',
+		};
+		const action = { type: ACTIONS.EVALUATE, payload: { decimalSeparator: '.' } };
+		const newState = reducer(state, action);
+		expect(newState).toEqual({
+			overwrite: true,
+			currentOperand: '10',
+			previousOperand: null,
+			operation: null,
+		});
+	});
+
 	it('should switch the sign of the current operand', () => {
 		let state = { currentOperand: '123' };
-		state = reducer(state, { type: ACTIONS.CHOOSE_OPERATION, payload: { operation: '+/-' } });
-		expect(state).toEqual({ currentOperand: '-123', operation: '+/-', previousOperand: '123' });
+		state = reducer(state, { type: ACTIONS.SWITCH_SIGN, payload: { operation: '+/-' } });
+		expect(state).toEqual({ currentOperand: '-123' });
 
-		state = reducer(state, { type: ACTIONS.CHOOSE_OPERATION, payload: { operation: '+/-' } });
-		expect(state).toEqual({ currentOperand: '123', operation: '+/-', previousOperand: '-123' });
+		state = reducer(state, { type: ACTIONS.SWITCH_SIGN, payload: { operation: '+/-' } });
+		expect(state).toEqual({ currentOperand: '123' });
+	});
+
+	describe('quick discount functionality', () => {
+		it('applies a 5% discount', () => {
+			let state = { currentOperand: '100' };
+			state = reducer(state, { type: ACTIONS.APPLY_DISCOUNT, payload: { discount: 5 } });
+			expect(state).toEqual({ currentOperand: '95', overwrite: true }); // 5% off 100 is 95
+		});
+
+		it('applies another 5% discount', () => {
+			let state = { currentOperand: '95' };
+			state = reducer(state, { type: ACTIONS.APPLY_DISCOUNT, payload: { discount: 5 } });
+			expect(state).toEqual({ currentOperand: (95 * 0.95).toString(), overwrite: true }); // 5% off 95
+		});
+
+		it('applies a third 5% discount', () => {
+			let state = { currentOperand: (95 * 0.95).toString() };
+			state = reducer(state, { type: ACTIONS.APPLY_DISCOUNT, payload: { discount: 5 } });
+			expect(state).toEqual({ currentOperand: (95 * 0.95 * 0.95).toString(), overwrite: true }); // 5% off the previous result
+		});
+
+		it('applies a -10% discount resulting in 110%', () => {
+			let state = { currentOperand: '100' };
+			state = reducer(state, { type: ACTIONS.APPLY_DISCOUNT, payload: { discount: -10 } });
+			expect(state).toEqual({ currentOperand: '110', overwrite: true }); // 110% of 100 is 110
+		});
 	});
 });
