@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { getObjectType } from './utils';
+import { TextProps } from '../../text';
 
 const dataTypeToComponent = {
 	string: 'string',
@@ -21,6 +22,7 @@ export interface JSONNodeProps {
 	keyPath?: string[];
 	deep?: number;
 	registry: any;
+	size: TextProps['size'];
 }
 
 export const JSONNode = ({
@@ -31,6 +33,7 @@ export const JSONNode = ({
 	keyPath = [],
 	deep = 0,
 	registry,
+	size,
 }: JSONNodeProps) => {
 	const dataType = getObjectType(data).toLowerCase();
 	const Component = registry[dataTypeToComponent[dataType]];
@@ -65,6 +68,7 @@ export const JSONNode = ({
 			isCollapsed={isCollapsed}
 			onExpand={onExpand}
 			registry={registry}
+			size={size}
 		/>
 	);
 };
