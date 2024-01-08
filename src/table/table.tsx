@@ -65,7 +65,7 @@ const Table = <T extends object>({
 	 *
 	 */
 	const keyExtractor = React.useCallback((item: T, index: number) => {
-		return item?.primary || `${index}`;
+		return item?.id || `${index}`;
 	}, []);
 
 	/**
