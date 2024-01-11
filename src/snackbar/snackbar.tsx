@@ -46,9 +46,9 @@ export interface SnackbarProps {
 }
 
 const durationValues = {
-	shorter: 2500,
-	default: 4000,
-	longer: 6000,
+	shorter: 4000,
+	default: 7000,
+	longer: 10000,
 };
 
 export const Snackbar = ({
