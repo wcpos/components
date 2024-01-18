@@ -1,5 +1,7 @@
 import * as React from 'react';
+
 import { format } from 'date-fns';
+
 import Text from '../text';
 
 export interface FormatDateProps {
