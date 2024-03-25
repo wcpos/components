@@ -69,7 +69,7 @@ const Table = React.forwardRef(
 		 *
 		 */
 		const keyExtractor = React.useCallback((item: T, index: number) => {
-			return item?.id || `${index}`;
+			return item?.uuid || item?.id || `${index}`;
 		}, []);
 
 		/**
