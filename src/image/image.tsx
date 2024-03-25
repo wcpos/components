@@ -26,13 +26,13 @@ const Image = ({ source, border = 'square', style, ...props }: ImageProps) => {
 						border === 'rounded'
 							? theme.rounding.small
 							: border === 'circular'
-							? theme.rounding.circle
-							: 0,
+								? theme.rounding.circle
+								: 0,
 				},
 				StyleSheet.flatten(style),
 			]}
 			responsivePolicy="initial"
-			contentFit="cover"
+			contentFit="contain"
 			transition={250}
 			{...props}
 		/>
