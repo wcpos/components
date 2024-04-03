@@ -61,7 +61,7 @@ export const EdittableText = ({
 		<View style={{ flexDirection: 'row', maxWidth: '100%' }}>
 			<TextInputContainer onPress={startEditting} style={{ maxWidth: '100%' }}>
 				<Text style={{ lineHeight: theme.font.lineHeight.large }} {...props}>
-					{children}
+					{text}
 				</Text>
 			</TextInputContainer>
 		</View>
