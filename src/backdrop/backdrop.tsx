@@ -50,8 +50,8 @@ export const Backdrop = ({
 	const contentView = (
 		<Styled.Backdrop
 			as={Animated.View}
-			entering={FadeIn}
-			exiting={FadeOut}
+			// entering={FadeIn}
+			// exiting={FadeOut} // this was causing a getBoundingClientRect error from react-native-reanimated
 			style={[
 				invisible && { backgroundColor: 'transparent' },
 				{ pointerEvents: !clickThrough ? 'auto' : 'none' },
