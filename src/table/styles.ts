@@ -13,7 +13,7 @@ export const Table = styled.View`
 `;
 
 export const Row = styled(Box)<BoxProps & { alt: boolean }>`
-	border-bottom-width: 0;
+	border-bottom-width: 0px;
 	border-style: solid;
 	border-bottom-color: ${({ theme }) => theme.colors.lightGrey};
 	background-color: ${({ alt, theme }) => (alt ? theme.colors.lightestGrey : 'transparent')};

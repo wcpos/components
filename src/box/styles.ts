@@ -36,19 +36,19 @@ export const Box = styled.View<BoxProps>`
 		distribution === 'start'
 			? 'flex-start'
 			: distribution === 'end'
-			? 'flex-end'
-			: distribution === 'center'
-			? 'center'
-			: 'space-between'};
+				? 'flex-end'
+				: distribution === 'center'
+					? 'center'
+					: 'space-between'};
 
 	align-items: ${({ align }) =>
 		align === 'fill'
 			? 'stretch'
 			: align === 'start'
-			? 'flex-start'
-			: align === 'end'
-			? 'flex-end'
-			: 'center'};
+				? 'flex-start'
+				: align === 'end'
+					? 'flex-end'
+					: 'center'};
 
 	${({ raised }) =>
 		raised &&
@@ -72,10 +72,10 @@ export const Box = styled.View<BoxProps>`
 	border-bottom-left-radius: ${({ theme, roundingBottomLeft, rounding }) =>
 		`${theme.rounding[roundingBottomLeft || rounding || 'none']}px`};
 
-	border-top-width: ${({ borderTop, border }) => (borderTop || border ? '1px' : 0)};
-	border-right-width: ${({ borderRight, border }) => (borderRight || border ? '1px' : 0)};
-	border-bottom-width: ${({ borderBottom, border }) => (borderBottom || border ? '1px' : 0)};
-	border-left-width: ${({ borderLeft, border }) => (borderLeft || border ? '1px' : 0)};
+	border-top-width: ${({ borderTop, border }) => (borderTop || border ? 1 : 0)}px;
+	border-right-width: ${({ borderRight, border }) => (borderRight || border ? 1 : 0)}px;
+	border-bottom-width: ${({ borderBottom, border }) => (borderBottom || border ? 1 : 0)}px;
+	border-left-width: ${({ borderLeft, border }) => (borderLeft || border ? 1 : 0)}px;
 	border-color: ${({ theme, border, borderTop, borderRight, borderBottom, borderLeft }) =>
 		theme.colors[border || borderTop || borderRight || borderBottom || borderLeft] ||
 		theme.colors.border};

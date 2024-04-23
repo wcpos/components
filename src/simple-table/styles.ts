@@ -7,10 +7,10 @@ export const Cell = styled(Box)<BoxProps & { flex: number; width?: number }>`
 `;
 
 export const Row = styled(Box)<BoxProps>`
-	border-bottom-width: 1;
+	border-bottom-width: 1px;
 `;
 
 export const HeaderRow = styled(Box)<BoxProps>`
-	border-bottom-width: 1;
+	border-bottom-width: 1px;
 	background-color: ${({ theme }) => theme.colors.lightGrey};
 `;
