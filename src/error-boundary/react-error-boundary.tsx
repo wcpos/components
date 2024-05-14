@@ -1,21 +1,21 @@
 import * as React from 'react';
 
-const changedArray = (a: Array<unknown> = [], b: Array<unknown> = []) =>
+const changedArray = (a: unknown[] = [], b: unknown[] = []) =>
 	a.length !== b.length || a.some((item, index) => !Object.is(item, b[index]));
 
 interface FallbackProps {
 	error: Error;
-	resetErrorBoundary: (...args: Array<unknown>) => void;
+	resetErrorBoundary: (...args: unknown[]) => void;
 }
 
 interface ErrorBoundaryPropsWithComponent {
 	onResetKeysChange?: (
-		prevResetKeys: Array<unknown> | undefined,
-		resetKeys: Array<unknown> | undefined
+		prevResetKeys: unknown[] | undefined,
+		resetKeys: unknown[] | undefined
 	) => void;
-	onReset?: (...args: Array<unknown>) => void;
+	onReset?: (...args: unknown[]) => void;
 	onError?: (error: Error, info: { componentStack: string }) => void;
-	resetKeys?: Array<unknown>;
+	resetKeys?: unknown[];
 	fallback?: never;
 	FallbackComponent: React.ComponentType<FallbackProps>;
 	fallbackRender?: never;
@@ -27,12 +27,12 @@ declare function FallbackRender(
 
 interface ErrorBoundaryPropsWithRender {
 	onResetKeysChange?: (
-		prevResetKeys: Array<unknown> | undefined,
-		resetKeys: Array<unknown> | undefined
+		prevResetKeys: unknown[] | undefined,
+		resetKeys: unknown[] | undefined
 	) => void;
-	onReset?: (...args: Array<unknown>) => void;
+	onReset?: (...args: unknown[]) => void;
 	onError?: (error: Error, info: { componentStack: string }) => void;
-	resetKeys?: Array<unknown>;
+	resetKeys?: unknown[];
 	fallback?: never;
 	FallbackComponent?: never;
 	fallbackRender: typeof FallbackRender;
@@ -40,12 +40,12 @@ interface ErrorBoundaryPropsWithRender {
 
 interface ErrorBoundaryPropsWithFallback {
 	onResetKeysChange?: (
-		prevResetKeys: Array<unknown> | undefined,
-		resetKeys: Array<unknown> | undefined
+		prevResetKeys: unknown[] | undefined,
+		resetKeys: unknown[] | undefined
 	) => void;
-	onReset?: (...args: Array<unknown>) => void;
+	onReset?: (...args: unknown[]) => void;
 	onError?: (error: Error, info: { componentStack: string }) => void;
-	resetKeys?: Array<unknown>;
+	resetKeys?: unknown[];
 	fallback: React.ReactElement<
 		unknown,
 		string | React.FunctionComponent | typeof React.Component
@@ -101,7 +101,7 @@ class ErrorBoundary extends React.Component<
 		this.props.onError?.(error, info);
 	}
 
-	resetErrorBoundary = (...args: Array<unknown>) => {
+	resetErrorBoundary = (...args: unknown[]) => {
 		this.props.onReset?.(...args);
 		this.reset();
 	};
