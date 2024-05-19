@@ -27,6 +27,13 @@ export const EdittableText = ({
 	/**
 	 *
 	 */
+	React.useEffect(() => {
+		setText(String(children));
+	}, [children]);
+
+	/**
+	 *
+	 */
 	const startEditting = React.useCallback(() => {
 		setIsEditting(true);
 	}, []);

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View } from 'react-native';
+
 import Text from '../text';
 
 type Countries =
@@ -111,7 +112,7 @@ export const FormatAddress = ({ address, showName }: FormatAddressProps) => {
 			: addresses.default;
 
 	Object.assign(addr, {
-		name: showName && `${addr.first_name} ${addr.last_name}`,
+		name: showName && `${addr.first_name || ''} ${addr.last_name || ''}`,
 		state_code: addr.state,
 		state_upper: addr.state?.toUpperCase(),
 		city_upper: addr.city?.toUpperCase(),
