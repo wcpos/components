@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ViewStyle, StyleProp } from 'react-native';
 
-import { isFunction } from 'lodash';
+import isFunction from 'lodash/isFunction';
 import isPlainObject from 'lodash/isPlainObject';
 
 import Dropdown, { DropdownProps } from '../dropdown';
