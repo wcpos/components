@@ -190,12 +190,14 @@ export function reducer(state: CalculatorState, action: Action, config?: Config)
 			};
 		case ACTIONS.APPLY_DISCOUNT: {
 			if (!state.currentOperand) return state;
+			const current = parseFloat(state.currentOperand?.replace(decimalSeparator, '.') || '');
 			const discountMultiplier = (100 - payload.discount) / 100;
-			const rawDiscountedValue = parseFloat(state.currentOperand) * discountMultiplier;
-			const discountedValue = round(rawDiscountedValue, precision);
+			const computation = current * discountMultiplier;
+			const roundedResult = round(computation, precision);
+
 			return {
 				...state,
-				currentOperand: discountedValue,
+				currentOperand: roundedResult.replace('.', decimalSeparator),
 				overwrite: true,
 			};
 		}

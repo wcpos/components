@@ -97,10 +97,14 @@ export const Menu = React.forwardRef<View, MenuProps>(
 								<Item
 									key={snakeCase(`${item.label}_${index}`)}
 									onPress={() => {
+										/**
+										 * Empty string is a valid value, but if the value is not set, return the label
+										 */
+										const val = item.value === '' ? '' : item.value || item.label;
 										if (isFunction(item.action)) {
-											item.action(item.value || item.label);
+											item.action(val);
 										}
-										isFunction(onSelect) && onSelect(item.value || item.label);
+										isFunction(onSelect) && onSelect(val);
 									}}
 									iconSpacer={iconSpacer}
 									{...item}
@@ -108,7 +112,7 @@ export const Menu = React.forwardRef<View, MenuProps>(
 									{item.label}
 								</Item>
 							);
-					  })}
+						})}
 			</Box>
 		);
 	}

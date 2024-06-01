@@ -1,4 +1,5 @@
 import React from 'react';
+import { ViewStyle, StyleProp } from 'react-native';
 
 import Box from '../box';
 import InlineError from '../inline-error';
@@ -30,6 +31,10 @@ export interface InputWithLabelProps {
 	 * TextInput component.
 	 */
 	children: React.ReactNode;
+	/**
+	 * Additional styles.
+	 */
+	style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -42,9 +47,10 @@ export const InputWithLabel = ({
 	disabled,
 	children,
 	onLabelPress,
+	style,
 }: InputWithLabelProps) => {
 	return (
-		<Box space="xSmall">
+		<Box space="xSmall" style={style}>
 			{label && (
 				<Pressable onPress={onLabelPress} disabled={disabled}>
 					<Box>

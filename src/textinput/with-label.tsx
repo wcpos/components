@@ -8,6 +8,9 @@ import { InputWithLabel, InputWithLabelProps } from '../form-layout';
 
 export type TextInputWithLabelProps = TextInputProps & Omit<InputWithLabelProps, 'children'>;
 
+/**
+ *
+ */
 export const TextInputWithLabel = React.forwardRef<RNTextInput, TextInputWithLabelProps>(
 	({ label, helpText, error, onLabelPress, ...props }, ref) => {
 		/**
