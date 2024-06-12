@@ -27,6 +27,9 @@ export interface NumpadProps {
 	/** Decimal or comma */
 	decimalSeparator?: string;
 
+	/** Decimal or comma */
+	thousandSeparator?: string;
+
 	/** Discounts to show */
 	discounts?: number[];
 
@@ -52,6 +55,7 @@ export const Numpad = ({
 	calculator = false,
 	onChange,
 	decimalSeparator = '.',
+	thousandSeparator = ',',
 	onSubmitEditing,
 	discounts,
 	precision = 6,
