@@ -1,6 +1,6 @@
 {
   "name": "@wcpos/components",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Shared components for WooCommerce POS",
   "author": "kilbot <paul@kilbot.com>",
   "homepage": "https://github.com/wcpos/components#readme",
@@ -70,9 +70,9 @@
     "react-scripts": "5.0.1",
     "react-test-renderer": "18.2.0",
     "storybook": "7.5.3",
-    "ts-jest": "^29.1.4",
+    "ts-jest": "^29.1.5",
     "typescript": "^5.4.5",
-    "webpack": "5.91.0"
+    "webpack": "5.92.0"
   },
   "eslintConfig": {
     "extends": "@wcpos/eslint-config"
